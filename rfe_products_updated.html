@@ -1,0 +1,1846 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RFE Products and Learning Stages</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 40px 20px;
+            background-color: #f8f9fa;
+            color: #2c3e50;
+            line-height: 1.5;
+        }
+        
+        .container {
+ 	    margin: 0 auto;
+ 	    max-width: 1400px;
+        }
+        
+        .main-section {
+ 	    display: flex;
+	    align-items: flex-start;
+  	    gap: 20px;
+}
+	.main-title {
+            text-align: center;
+            font-size: 32px;
+            font-weight: 600;
+            margin-bottom: 50px;
+            color: #2c3e50;
+        }
+	.main-content {
+		flex: 1;
+}
+        
+        /* Stage Headers with Sidebar */
+        .stages-header {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 20px;
+            margin-bottom: 10px;
+            align-items: start;
+        }
+        
+        .stage-column {
+            text-align: center;
+        }
+        
+        .stage-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 15px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            background-size: 36px 36px;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+        
+        
+         .ideate-icon { 
+            background-color: #4caf50;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white"><path d="M9 11H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2zm2-7h-1V2h-2v2H8V2H6v2H5c-1.1 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z"/></svg>');
+        }
+        .refine-icon { 
+            background-color: #009688;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white"><path d="M22.7 19l-9.1-9.1c.9-2.3.4-5-1.5-6.9-2-2-5-2.4-7.4-1.3L9 6 6 9 1.6 4.7C.4 7.1.9 10.1 2.9 12.1c1.9 1.9 4.6 2.4 6.9 1.5l9.1 9.1c.4.4 1 .4 1.4 0l2.3-2.3c.5-.4.5-1.1.1-1.4z"/></svg>');
+        }
+        .prove-icon { 
+            background-color: #ff5722;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>');
+        }
+        .adapt-icon { 
+            background-color: #84d0d4;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white"><path d="M19 12l-1.41-1.41L13 15.17V4h-2v11.17l-4.59-4.58L5 12l7 7 7-7z"/></svg>');
+        }
+        .scale-icon { 
+            background-color: #3f51b5;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white"><path d="M9 5v2h6.59L4 18.59 5.41 20 17 8.41V15h2V5z"/></svg>');
+        }
+         
+        .stage-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        
+        .stage-title:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        
+        .ideate-title { background-color: #4caf50; }
+        .refine-title { background-color: #009688; }
+        .prove-title { background-color: #ff5722; }
+        .adapt-title { background-color: #84d0d4; color: #2c3e50; }
+        .scale-title { background-color: #3f51b5; }
+        
+        /* Products Wrapper and Container */
+        .products-wrapper {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 20px;
+        }
+        
+        .products-container {
+            grid-column: 1 / 6;
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 15px;
+            grid-template-rows: repeat(6, 70px);
+        }
+        
+        .product-box {
+            background: #5566b0;
+            color: white;
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 14px;
+            font-weight: 500;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            cursor: pointer;
+        }
+        
+        .product-box:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        
+        /* Specific product positioning */
+        .learning-plan-design {
+            grid-column: 1 / 6;
+            grid-row: 1;
+            position: relative;
+        }
+        
+        .learning-plan-design::before {
+            content: '';
+            position: absolute;
+            top: 8px;
+            right: 12px;
+            width: 20px;
+            height: 20px;
+        }
+        
+        .problem-diagnostic {
+            grid-column: 1;
+            grid-row: 2;
+        }
+        
+        .monitoring-ta {
+            grid-column: 2 / 6;
+            grid-row: 2;
+        }
+        
+        .evidence-review {
+            grid-column: 1;
+            grid-row: 3;
+        }
+        
+        .process-evaluation {
+            grid-column: 2;
+            grid-row: 3;
+        }
+        
+        .impact-evaluation {
+            grid-column: 3;
+            grid-row: 3;
+            background: white;
+            color: #5566b0;
+            border: 2px solid #5566b0;
+        }
+        
+        .user-research {
+            grid-column: 1;
+            grid-row: 4;
+        }
+        
+        .ab-testing {
+            grid-column: 2;
+            grid-row: 4;
+        }
+        
+        .cost-effectiveness-modelling {
+            grid-column: 1 / 6;
+            grid-row: 5;
+        }
+        
+        /* Adapt stage note */
+        .adapt-note {
+            grid-column: 4;
+            grid-row: 3 / 5;
+            background: #f8f9fa;
+            border: 2px dashed #84d0d4;
+            color: #6c757d;
+            font-size: 12px;
+            font-style: italic;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 12px;
+            border-radius: 8px;
+        }
+        
+        .adapt-note-title {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #495057;
+            font-size: 10px;
+        }
+        
+        .adapt-concepts {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px;
+            margin-top: 8px;
+            width: 100%;
+        }
+        
+        .adapt-concept {
+            background: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: 500;
+            border: 1px solid #dee2e6;
+            color: #495057;
+        }
+        
+        /* Non-aligned Products Sidebar */
+        .non-aligned-container {
+	    position: relative;
+	    width: 250px;
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+            height: fit-content;
+	    flex-shrink: 0;
+	    margin-top: 280px;
+        }
+
+	.non-aligned-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #6c757d;
+            margin-bottom: 20px;
+            text-align: center;
+            font-style: italic;
+        }
+        
+        .non-aligned-products {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .non-aligned-product {
+            background: #5566b0;
+            color: white;
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: transform 0.2s ease;
+            cursor: pointer;
+        }
+        
+        .non-aligned-product:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Popup Modal Styles */
+        .popup-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+        
+        .popup-modal.active {
+            display: flex;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .popup-content {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            max-width: 800px;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+            animation: slideIn 0.3s ease;
+        }
+        
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #6c757d;
+            padding: 5px;
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+        
+        .close-btn:hover {
+            background: #f8f9fa;
+            color: #495057;
+        }
+        
+        .popup-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            padding-right: 40px;
+        }
+        
+        .popup-description {
+            color: #495057;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+        
+        .nested-boxes {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            margin: 20px 0;
+        }
+        
+        .nested-box {
+            background: #f8f9fa;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            padding: 12px;
+            text-align: center;
+            font-size: 14px;
+            font-weight: 500;
+            color: #495057;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .nested-box:hover {
+            background: #e3f2fd;
+            border-color: #2196f3;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(33, 150, 243, 0.2);
+        }
+        
+        .nested-box::after {
+            content: '→';
+            position: absolute;
+            top: 8px;
+            right: 10px;
+            font-size: 16px;
+            color: #6c757d;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+        
+        .nested-box:hover::after {
+            opacity: 1;
+        }
+        
+        .popup-link {
+            display: inline-block;
+            background: #007bff;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            margin-top: 10px;
+        }
+        
+        .popup-link:hover {
+            background: #0056b3;
+            transform: translateY(-1px);
+            text-decoration: none;
+            color: white;
+        }
+
+        /* Nested Popup Styles */
+        .nested-popup-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1100;
+            padding: 20px;
+        }
+        
+        .nested-popup-modal.active {
+            display: flex;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .nested-popup-content {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            max-width: 600px;
+            width: 100%;
+            max-height: 70vh;
+            overflow-y: auto;
+            position: relative;
+            animation: slideIn 0.3s ease;
+            border: 3px solid #007bff;
+        }
+        
+        .nested-close-btn {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: #6c757d;
+            padding: 5px;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+        
+        .nested-close-btn:hover {
+            background: #f8f9fa;
+            color: #495057;
+        }
+        
+        .nested-popup-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #007bff;
+            margin-bottom: 12px;
+            padding-right: 35px;
+        }
+        
+        .nested-popup-description {
+            color: #495057;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+        
+        .nested-popup-link {
+            display: inline-block;
+            background: #28a745;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            margin-top: 8px;
+            font-size: 13px;
+        }
+        
+        .nested-popup-link:hover {
+            background: #218838;
+            transform: translateY(-1px);
+            text-decoration: none;
+            color: white;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .stages-header {
+                grid-template-columns: repeat(5, 1fr);
+            }
+            
+            .products-wrapper {
+                grid-template-columns: repeat(5, 1fr);
+            }
+            
+            .products-container {
+                grid-column: 1 / 6;
+            }
+            
+            .non-aligned-container {
+                grid-column: 1 / 6;
+                margin-top: 20px;
+            }
+            
+            .non-aligned-products {
+                flex-direction: row;
+                flex-wrap: wrap;
+            }
+        }
+        
+        @media (max-width: 900px) {
+            .stages-header {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 15px;
+            }
+            
+            .products-wrapper {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .products-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 12px;
+            }
+            
+            .learning-plan-design {
+                grid-column: 1 / 4;
+            }
+            
+            .monitoring-ta {
+                grid-column: 1 / 4;
+                grid-row: 3;
+            }
+            
+            .problem-diagnostic {
+                grid-column: 1;
+                grid-row: 2;
+            }
+            
+            .cost-effectiveness-modelling {
+                grid-column: 1 / 4;
+                grid-row: 6;
+            }
+            
+            .adapt-note {
+                grid-column: 1 / 4;
+                grid-row: 5;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .stages-header {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+            
+            .products-wrapper {
+                grid-template-columns: 1fr;
+            }
+            
+            .products-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+            
+            .product-box {
+                grid-column: 1 !important;
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+<body>
+  <div class="container">
+	<div class="main-section">
+	<div class="main-content">
+<div class="main-title">RFE Products on (and off) the Stage-Based Learning Framework</div>
+        <!-- Stage Headers with Sidebar -->
+        <div class="stages-header">
+            <div class="stage-column">
+		<div class="stage-icon ideate-icon"></div>
+                <div class="stage-title ideate-title" data-popup="ideate-stage">Ideate</div>
+            </div>
+            <div class="stage-column">
+                <div class="stage-icon refine-icon"></div>
+                <div class="stage-title refine-title" data-popup="refine-stage">Refine</div>
+            </div>
+            <div class="stage-column">
+                <div class="stage-icon prove-icon"></div>
+                <div class="stage-title prove-title" data-popup="prove-stage">Prove</div>
+            </div>
+            <div class="stage-column">
+                <div class="stage-icon adapt-icon"></div>
+                <div class="stage-title adapt-title" data-popup="adapt-stage">Adapt</div>
+            </div>
+            <div class="stage-column">
+                <div class="stage-icon scale-icon"></div>
+                <div class="stage-title scale-title" data-popup="scale-stage">Scale</div>
+            </div>
+	</div>
+        
+        <!-- Products Grid Container -->
+        <div class="products-wrapper">
+            <div class="products-container">
+                <!-- Legend -->
+                <div style="margin-bottom: 15px; font-size: 14px; color: #6c757d; text-align: center;">
+                    <span style="color: #ffd700; font-size: 16px;">⭐</span> = Topics that all team members should know
+                </div>
+                <div class="products-grid">
+                    <!-- Learning Plan Design spans across all stages -->
+                    <div class="product-box learning-plan-design" data-popup="learning-plan-design">⭐ Learning Plan Design</div>
+                    
+                    <!-- Row 2: Problem Diagnostic + Monitoring TA -->
+                    <div class="product-box problem-diagnostic" data-popup="problem-diagnostic">Problem Diagnostic</div>
+                    <div class="product-box monitoring-ta" data-popup="monitoring-ta">Monitoring TA</div>
+                    
+                    <!-- Row 3: Evidence Review, Process Evaluation, Impact Evaluation -->
+                    <div class="product-box evidence-review" data-popup="evidence-review">Evidence Review</div>
+                    <div class="product-box process-evaluation" data-popup="process-evaluation">Process Evaluation</div>
+                    <div class="product-box impact-evaluation" data-popup="impact-evaluation">Impact Evaluation</div>
+                    
+                    <!-- Row 4: User Research, A/B Testing + Adapt Note -->
+                    <div class="product-box user-research" data-popup="user-research">User Research</div>
+                    <div class="product-box ab-testing" data-popup="ab-testing">A/B Testing</div>
+                    
+                    <!-- Adapt stage explanation -->
+                    <div class="adapt-note">
+                        <div class="adapt-note-title">RFE Products in the Adapt stage are the same as those in the Ideate & Refine Stages</div>
+                        <div class="adapt-concepts">
+                            <div class="adapt-concept">Needs Assess</div>
+                            <div class="adapt-concept">User Res.</div>
+                            <div class="adapt-concept">A/B Testing</div>
+                            <div class="adapt-concept">Process Eval</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Row 5: Cost Effectiveness Modelling spans all columns -->
+                    <div class="product-box cost-effectiveness-modelling" data-popup="cost-effectiveness-modelling">Cost Effectiveness Modelling</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+  <div class="non-aligned-container">
+      <div class="non-aligned-title">RFE Products that don't align with Learning Stages</div>
+      <div class="non-aligned-products">
+        <div class="non-aligned-product" data-popup="systems-change-mel">Systems Change MEL</div>
+        <div class="non-aligned-product" data-popup="learning-system-diagnostic">Learning System Diagnostic</div>
+        <div class="non-aligned-product" data-popup="donor-product">Donor Product</div>
+      </div>
+    </div>
+</div>
+  
+    <!-- Main Popup Modal -->
+    <div id="popupModal" class="popup-modal">
+        <div class="popup-content">
+            <button class="close-btn" onclick="closePopup()">&times;</button>
+            <div id="popupTitle" class="popup-title"></div>
+            <div id="popupDescription" class="popup-description"></div>
+            <div id="nestedBoxes" class="nested-boxes"></div>
+            <div id="popupLink"></div>
+        </div>
+    </div>
+
+    <!-- Nested Popup Modal -->
+    <div id="nestedPopupModal" class="nested-popup-modal">
+        <div class="nested-popup-content">
+            <button class="nested-close-btn" onclick="closeNestedPopup()">&times;</button>
+            <div id="nestedPopupTitle" class="nested-popup-title"></div>
+            <div id="nestedPopupDescription" class="nested-popup-description"></div>
+            <div id="nestedPopupLink"></div>
+        </div>
+    </div>
+
+    <script>
+        // Embedded popup data from CSV file
+        const popupData = {
+          "ideate-stage": {
+            "element_type": "stage",
+            "display_title": "Ideate Stage",
+            "description": "During this initial stage of program development, focus on assessing the challenge and the individuals or groups it affects, reviewing evidence on what has and has not worked, envisioning solutions, and getting in-depth feedback on program prototypes to inform design.",
+            "nested_clickable_boxes": null,
+            "resource_link": "https://example.com/ideate-resources",
+            "button_text": "Learn More About Stage Based Learning",
+            "boxes": []
+          },
+          "refine-stage": {
+            "element_type": "stage",
+            "display_title": "Refine Stage",
+            "description": "During this stage, emphasize assessment of a program's implementation quality and early signs of effectiveness to help inform design improvements and decisions for building a scalable version",
+            "nested_clickable_boxes": null,
+            "resource_link": "https://example.com/refine-resources",
+            "button_text": "Learn More About Stage Based Learning",
+            "boxes": []
+          },
+          "prove-stage": {
+            "element_type": "stage",
+            "display_title": "Prove Stage",
+            "description": "During this stage, rigorously test the effectiveness of the intervention through a well-designed impact evaluation that generates evidence of a causal relationship between the intervention and final outcomes.",
+            "nested_clickable_boxes": null,
+            "resource_link": "https://example.com/prove-resources",
+            "button_text": "Learn More About Stage Based Learning",
+            "boxes": []
+          },
+          "adapt-stage": {
+            "element_type": "stage",
+            "display_title": "Adapt Stage",
+            "description": "A program that has been proven effective can be refined to ensure its solution fits the challenge in a new context, which may be a new geography, population, delivery channel, or implementing partner.",
+            "nested_clickable_boxes": null,
+            "resource_link": "https://example.com/adapt-resources",
+            "button_text": "Learn More About Stage Based Learning",
+            "boxes": []
+          },
+          "scale-stage": {
+            "element_type": "stage",
+            "display_title": "Scale Stage",
+            "description": "When scaling, the focus should be on ensure an intervention's implementation quality is maintained when reaching more participants. This involves ongoing monitoring and exploring ways to improve cost-efficiency.",
+            "nested_clickable_boxes": null,
+            "resource_link": "https://example.com/scale-resources",
+            "button_text": "Learn More About Stage Based Learning",
+            "boxes": []
+          },
+          "learning-plan-design": {
+            "element_type": "product",
+            "display_title": "Learning Plan Design",
+            "description": "RFE's flagship product, LPD provides a comprehensive approach to MEL Planning with a focus on learning that generate actionable evidence for program improvement.",
+            "nested_clickable_boxes": "YES",
+            "resource_link": "https://example.com/learning-plan-design",
+            "button_text": "Learn More about LPD",
+            "boxes": [
+              {
+                "id": "theory_of_change",
+                "title": "Theory of Change",
+                "description": "A comprehensive map showing causal pathways leading from activities through to final outcomes",
+                "resource_link": "https://example.com/theory-of-change",
+                "button_text": "Learn More About ToC"
+              },
+              {
+                "id": "learning_questions",
+                "title": "Learning Questions",
+                "description": "Strategic questions that guide what information to collect and how to use it for program improvement.",
+                "resource_link": "https://example.com/learning-questions",
+                "button_text": "Learn more about Learning Questions"
+              },
+              {
+                "id": "learning_approaches",
+                "title": "Learning Approaches",
+                "description": "Selection of appropriate methods for generating evidence based on context and learning needs.",
+                "resource_link": "https://example.com/learning-approaches",
+                "button_text": "Learn more about Learning Approaches"
+              },
+              {
+                "id": "monitoring_indicators",
+                "title": "Monitoring Indicators",
+                "description": "Designing and prioritizing CART indicators that can inform decision-making",
+                "resource_link": "https://example.com/monitoring-indicators",
+                "button_text": "Learn more about Monitoring Indicators"
+              },
+              {
+                "id": "data_use_planning",
+                "title": "Data Use Planning",
+                "description": "Developing a systematic approach to ensuring collected data will be used for decision-making and program improvement.",
+                "resource_link": "https://ipastorage.box.com/s/mjm6g232prpckfstbylvtxkftkb62lbw",
+                "button_text": "Learn more about Data Use Planning"
+              }
+            ]
+          },
+          "theory_of_change": {
+            "element_type": "nested",
+            "display_title": "Theory of Change",
+            "description": "A comprehensive map showing causal pathways leading from activities through to final outcomes",
+            "resource_link": "https://example.com/theory-of-change",
+            "button_text": "Learn More About ToC",
+            "boxes": []
+          },
+          "learning_questions": {
+            "element_type": "nested",
+            "display_title": "Learning Questions",
+            "description": "Strategic questions that guide what information to collect and how to use it for program improvement.",
+            "resource_link": "https://example.com/learning-questions",
+            "button_text": "Learn more about Learning Questions",
+            "boxes": []
+          },
+          "learning_approaches": {
+            "element_type": "nested",
+            "display_title": "Learning Approaches",
+            "description": "Selection of appropriate methods for generating evidence based on context and learning needs.",
+            "resource_link": "https://example.com/learning-approaches",
+            "button_text": "Learn more about Learning Approaches",
+            "boxes": []
+          },
+          "monitoring_indicators": {
+            "element_type": "nested",
+            "display_title": "Monitoring Indicators",
+            "description": "Designing and prioritizing CART indicators that can inform decision-making",
+            "resource_link": "https://example.com/monitoring-indicators",
+            "button_text": "Learn more about Monitoring Indicators",
+            "boxes": []
+          },
+          "data_use_planning": {
+            "element_type": "nested",
+            "display_title": "Data Use Planning",
+            "description": "Developing a systematic approach to ensuring collected data will be used for decision-making and program improvement.",
+            "resource_link": "https://ipastorage.box.com/s/mjm6g232prpckfstbylvtxkftkb62lbw",
+            "button_text": "Learn more about Data Use Planning",
+            "boxes": []
+          },
+          "problem-diagnostic": {
+            "element_type": "product",
+            "display_title": "Problem Diagnostic",
+            "description": "A problem diagnostic is RFE's approach to doing a needs assessment that can inform effective intervention design",
+            "nested_clickable_boxes": null,
+            "resource_link": "https://ipastorage.box.com/s/me3uwr29dn5jvprqyhf8vnfdghgmihrr",
+            "button_text": "Learn More About Problem Diagnostic",
+            "boxes": []
+          },
+          "monitoring-ta": {
+            "element_type": "product",
+            "display_title": "Monitoring TA",
+            "description": "RFE builds the capacity of its partners by providing technical assistance that strengthens monitoring systems and activities. ",
+            "nested_clickable_boxes": "YES",
+            "resource_link": "https://ipastorage.box.com/s/mmlavdxsxw3aq4bimbo7cgw44mxgubo7",
+            "button_text": "Learn More About Monitoring TA",
+            "boxes": [
+              {
+                "id": "types_of_monitoring_data",
+                "title": "Types of Monitoring Data",
+                "description": "There are five types of monitoring data that organizations can use to inform decisions to improve their programming: financial data, activity data, targeting data, engagement data and feedback data.",
+                "resource_link": "https://example.com/monitoring-data-types",
+                "button_text": "Learn more about the types of Monitoring Data"
+              },
+              {
+                "id": "monitoring_indicators",
+                "title": "Monitoring Indicators",
+                "description": "Designing and prioritizing CART indicators that can inform decision-making",
+                "resource_link": "https://example.com/monitoring-indicators",
+                "button_text": "Learn more about Monitoring Indicators"
+              },
+              {
+                "id": "data_collection",
+                "title": "Data Collection",
+                "description": "Ensuring high-quality data collection",
+                "resource_link": null,
+                "button_text": "Learn more about Data Collection"
+              },
+              {
+                "id": "data_analysis",
+                "title": "Data Analysis",
+                "description": "Accurate analysis and visualization of data to inform decision making",
+                "resource_link": "https://example.com/monitoring-indicators",
+                "button_text": "Learn more about Data Analysis"
+              },
+              {
+                "id": "data_systems",
+                "title": "Data Systems",
+                "description": "Ensuring there are systems in place to store and visualize data in a way that support effective data use for decision making",
+                "resource_link": "https://example.com/data-use-planning",
+                "button_text": "Learn more about Data Systems"
+              }
+            ]
+          },
+          "types_of_monitoring_data": {
+            "element_type": "nested",
+            "display_title": "Types of Monitoring Data",
+            "description": "There are five types of monitoring data that organizations can use to inform decisions to improve their programming: financial data, activity data, targeting data, engagement data and feedback data.",
+            "resource_link": "https://example.com/monitoring-data-types",
+            "button_text": "Learn more about the types of Monitoring Data",
+            "boxes": []
+          },
+          "data_collection": {
+            "element_type": "nested",
+            "display_title": "Data Collection",
+            "description": "Ensuring high-quality data collection",
+            "resource_link": null,
+            "button_text": "Learn more about Data Collection",
+            "boxes": []
+          },
+          "data_analysis": {
+            "element_type": "nested",
+            "display_title": "Data Analysis",
+            "description": "Accurate analysis and visualization of data to inform decision making",
+            "resource_link": "https://example.com/monitoring-indicators",
+            "button_text": "Learn more about Data Analysis",
+            "boxes": []
+          },
+          "data_systems": {
+            "element_type": "nested",
+            "display_title": "Data Systems",
+            "description": "Ensuring there are systems in place to store and visualize data in a way that support effective data use for decision making",
+            "resource_link": "https://example.com/data-use-planning",
+            "button_text": "Learn more about Data Systems",
+            "boxes": []
+          },
+          "evidence-review": {
+            "element_type": "product",
+            "display_title": "Evidence Review",
+            "description": "Systematic review and synthesis of existing research to inform program design and decision-making.",
+            "nested_clickable_boxes": "YES",
+            "resource_link": "https://example.com/evidence-review",
+            "button_text": "Learn More About Evidence Review",
+            "boxes": [
+              {
+                "id": "literature_search",
+                "title": "Literature Search",
+                "description": "Comprehensive search strategies for identifying relevant research and evidence.",
+                "resource_link": "https://example.com/literature-search",
+                "button_text": "Learn Search Methods"
+              },
+              {
+                "id": "evidence_assessment",
+                "title": "Evidence Assessment",
+                "description": "Critical appraisal of research quality and relevance to the specific context.",
+                "resource_link": "https://example.com/evidence-assessment",
+                "button_text": "Access Assessment Tools"
+              },
+              {
+                "id": "synthesis_methods",
+                "title": "Synthesis Methods",
+                "description": "Approaches for combining and analyzing evidence from multiple sources.",
+                "resource_link": "https://example.com/synthesis-methods",
+                "button_text": "View Synthesis Guide"
+              },
+              {
+                "id": "generalizability_analysis",
+                "title": "Generalizability Analysis",
+                "description": "Assessment of whether findings from one context can be applied to another.",
+                "resource_link": "https://example.com/generalizability-analysis",
+                "button_text": "Learn Generalizability"
+              },
+              {
+                "id": "evidence_gaps",
+                "title": "Evidence Gaps",
+                "description": "Identification of areas where additional research or evidence is needed.",
+                "resource_link": "https://example.com/evidence-gaps",
+                "button_text": "Explore Gap Analysis"
+              }
+            ]
+          },
+          "literature_search": {
+            "element_type": "nested",
+            "display_title": "Literature Search",
+            "description": "Comprehensive search strategies for identifying relevant research and evidence.",
+            "resource_link": "https://example.com/literature-search",
+            "button_text": "Learn Search Methods",
+            "boxes": []
+          },
+          "evidence_assessment": {
+            "element_type": "nested",
+            "display_title": "Evidence Assessment",
+            "description": "Critical appraisal of research quality and relevance to the specific context.",
+            "resource_link": "https://example.com/evidence-assessment",
+            "button_text": "Access Assessment Tools",
+            "boxes": []
+          },
+          "synthesis_methods": {
+            "element_type": "nested",
+            "display_title": "Synthesis Methods",
+            "description": "Approaches for combining and analyzing evidence from multiple sources.",
+            "resource_link": "https://example.com/synthesis-methods",
+            "button_text": "View Synthesis Guide",
+            "boxes": []
+          },
+          "generalizability_analysis": {
+            "element_type": "nested",
+            "display_title": "Generalizability Analysis",
+            "description": "Assessment of whether findings from one context can be applied to another.",
+            "resource_link": "https://example.com/generalizability-analysis",
+            "button_text": "Learn Generalizability",
+            "boxes": []
+          },
+          "evidence_gaps": {
+            "element_type": "nested",
+            "display_title": "Evidence Gaps",
+            "description": "Identification of areas where additional research or evidence is needed.",
+            "resource_link": "https://example.com/evidence-gaps",
+            "button_text": "Explore Gap Analysis",
+            "boxes": []
+          },
+          "process-evaluation": {
+            "element_type": "product",
+            "display_title": "Process Evaluation",
+            "description": "Assessment of program implementation quality and stakeholder experiences to understand how programs work.",
+            "nested_clickable_boxes": "YES",
+            "resource_link": "https://example.com/process-evaluation",
+            "button_text": "Learn More About Process Evaluation",
+            "boxes": [
+              {
+                "id": "implementation_assessment",
+                "title": "Implementation Assessment",
+                "description": "Evaluation of how well the program is being implemented according to design.",
+                "resource_link": "https://example.com/implementation-assessment",
+                "button_text": "Learn Implementation Methods"
+              },
+              {
+                "id": "stakeholder_experience",
+                "title": "Stakeholder Experience",
+                "description": "Understanding participant and implementer experiences with the program.",
+                "resource_link": "https://example.com/stakeholder-experience",
+                "button_text": "Explore Experience Methods"
+              },
+              {
+                "id": "process_indicators",
+                "title": "Process Indicators",
+                "description": "Indicators that track implementation quality and process outcomes.",
+                "resource_link": "https://example.com/process-indicators",
+                "button_text": "Access Process Tools"
+              },
+              {
+                "id": "qualitative_methods",
+                "title": "Qualitative Methods",
+                "description": "Methods for collecting and analyzing qualitative data about program processes.",
+                "resource_link": "https://example.com/qualitative-process-methods",
+                "button_text": "Learn Qualitative Methods"
+              },
+              {
+                "id": "early_outcomes_tracking",
+                "title": "Early Outcomes Tracking",
+                "description": "Tracking early signs of program effectiveness during implementation.",
+                "resource_link": "https://example.com/early-outcomes-tracking",
+                "button_text": "View Early Outcomes Guide"
+              }
+            ]
+          },
+          "implementation_assessment": {
+            "element_type": "nested",
+            "display_title": "Implementation Assessment",
+            "description": "Evaluation of how well the program is being implemented according to design.",
+            "resource_link": "https://example.com/implementation-assessment",
+            "button_text": "Learn Implementation Methods",
+            "boxes": []
+          },
+          "stakeholder_experience": {
+            "element_type": "nested",
+            "display_title": "Stakeholder Experience",
+            "description": "Understanding participant and implementer experiences with the program.",
+            "resource_link": "https://example.com/stakeholder-experience",
+            "button_text": "Explore Experience Methods",
+            "boxes": []
+          },
+          "process_indicators": {
+            "element_type": "nested",
+            "display_title": "Process Indicators",
+            "description": "Indicators that track implementation quality and process outcomes.",
+            "resource_link": "https://example.com/process-indicators",
+            "button_text": "Access Process Tools",
+            "boxes": []
+          },
+          "qualitative_methods": {
+            "element_type": "nested",
+            "display_title": "Qualitative Methods",
+            "description": "Methods for collecting and analyzing qualitative data about program processes.",
+            "resource_link": "https://example.com/qualitative-process-methods",
+            "button_text": "Learn Qualitative Methods",
+            "boxes": []
+          },
+          "early_outcomes_tracking": {
+            "element_type": "nested",
+            "display_title": "Early Outcomes Tracking",
+            "description": "Tracking early signs of program effectiveness during implementation.",
+            "resource_link": "https://example.com/early-outcomes-tracking",
+            "button_text": "View Early Outcomes Guide",
+            "boxes": []
+          },
+          "user-research": {
+            "element_type": "product",
+            "display_title": "User Research",
+            "description": "Understanding user needs, behaviors, and contexts to inform intervention design and improvement.",
+            "nested_clickable_boxes": "YES",
+            "resource_link": "https://example.com/user-research",
+            "button_text": "Learn More About User Research",
+            "boxes": [
+              {
+                "id": "user_needs_assessment",
+                "title": "User Needs Assessment",
+                "description": "Systematic assessment of user needs, preferences, and constraints.",
+                "resource_link": "https://example.com/user-needs-assessment",
+                "button_text": "Learn Needs Assessment"
+              },
+              {
+                "id": "behavioral_research",
+                "title": "Behavioral Research",
+                "description": "Research into user behaviors, motivations, and decision-making processes.",
+                "resource_link": "https://example.com/behavioral-research",
+                "button_text": "Explore Behavioral Methods"
+              },
+              {
+                "id": "prototype_testing",
+                "title": "Prototype Testing",
+                "description": "Testing early versions of interventions with users to gather feedback.",
+                "resource_link": "https://example.com/prototype-testing",
+                "button_text": "Learn Prototype Methods"
+              },
+              {
+                "id": "user_journey_mapping",
+                "title": "User Journey Mapping",
+                "description": "Mapping user interactions and experiences throughout the intervention.",
+                "resource_link": "https://example.com/user-journey-mapping",
+                "button_text": "Access Journey Tools"
+              },
+              {
+                "id": "design_research",
+                "title": "Design Research",
+                "description": "Research methods that inform the design and refinement of user-facing interventions.",
+                "resource_link": "https://example.com/design-research",
+                "button_text": "View Design Research"
+              }
+            ]
+          },
+          "user_needs_assessment": {
+            "element_type": "nested",
+            "display_title": "User Needs Assessment",
+            "description": "Systematic assessment of user needs, preferences, and constraints.",
+            "resource_link": "https://example.com/user-needs-assessment",
+            "button_text": "Learn Needs Assessment",
+            "boxes": []
+          },
+          "behavioral_research": {
+            "element_type": "nested",
+            "display_title": "Behavioral Research",
+            "description": "Research into user behaviors, motivations, and decision-making processes.",
+            "resource_link": "https://example.com/behavioral-research",
+            "button_text": "Explore Behavioral Methods",
+            "boxes": []
+          },
+          "prototype_testing": {
+            "element_type": "nested",
+            "display_title": "Prototype Testing",
+            "description": "Testing early versions of interventions with users to gather feedback.",
+            "resource_link": "https://example.com/prototype-testing",
+            "button_text": "Learn Prototype Methods",
+            "boxes": []
+          },
+          "user_journey_mapping": {
+            "element_type": "nested",
+            "display_title": "User Journey Mapping",
+            "description": "Mapping user interactions and experiences throughout the intervention.",
+            "resource_link": "https://example.com/user-journey-mapping",
+            "button_text": "Access Journey Tools",
+            "boxes": []
+          },
+          "design_research": {
+            "element_type": "nested",
+            "display_title": "Design Research",
+            "description": "Research methods that inform the design and refinement of user-facing interventions.",
+            "resource_link": "https://example.com/design-research",
+            "button_text": "View Design Research",
+            "boxes": []
+          },
+          "ab-testing": {
+            "element_type": "product",
+            "display_title": "A/B Testing",
+            "description": "Controlled experiments comparing different versions of interventions to determine effectiveness.",
+            "nested_clickable_boxes": "YES",
+            "resource_link": "https://example.com/ab-testing",
+            "button_text": "Learn More About A/B Testing",
+            "boxes": [
+              {
+                "id": "experimental_design",
+                "title": "Experimental Design",
+                "description": "Design of controlled experiments including randomization and sample size calculations.",
+                "resource_link": "https://example.com/experimental-design",
+                "button_text": "Learn Experimental Design"
+              },
+              {
+                "id": "statistical_analysis",
+                "title": "Statistical Analysis",
+                "description": "Statistical methods for analyzing A/B test results and determining significance.",
+                "resource_link": "https://example.com/ab-statistical-analysis",
+                "button_text": "Access Analysis Tools"
+              },
+              {
+                "id": "digital_implementation",
+                "title": "Digital Implementation",
+                "description": "Implementation of A/B tests in digital environments and platforms.",
+                "resource_link": "https://example.com/digital-ab-testing",
+                "button_text": "Learn Digital Methods"
+              },
+              {
+                "id": "causal_inference_ab",
+                "title": "Causal Inference",
+                "description": "Understanding how A/B testing enables causal claims about intervention effectiveness.",
+                "resource_link": "https://example.com/causal-inference-ab",
+                "button_text": "Explore Causal Methods"
+              },
+              {
+                "id": "continuous_optimization",
+                "title": "Continuous Optimization",
+                "description": "Using A/B testing for ongoing program optimization and improvement.",
+                "resource_link": "https://example.com/continuous-optimization",
+                "button_text": "View Optimization Guide"
+              }
+            ]
+          },
+          "experimental_design": {
+            "element_type": "nested",
+            "display_title": "Experimental Design",
+            "description": "Design of controlled experiments including randomization and sample size calculations.",
+            "resource_link": "https://example.com/experimental-design",
+            "button_text": "Learn Experimental Design",
+            "boxes": []
+          },
+          "statistical_analysis": {
+            "element_type": "nested",
+            "display_title": "Statistical Analysis",
+            "description": "Statistical methods for analyzing A/B test results and determining significance.",
+            "resource_link": "https://example.com/ab-statistical-analysis",
+            "button_text": "Access Analysis Tools",
+            "boxes": []
+          },
+          "digital_implementation": {
+            "element_type": "nested",
+            "display_title": "Digital Implementation",
+            "description": "Implementation of A/B tests in digital environments and platforms.",
+            "resource_link": "https://example.com/digital-ab-testing",
+            "button_text": "Learn Digital Methods",
+            "boxes": []
+          },
+          "causal_inference_ab": {
+            "element_type": "nested",
+            "display_title": "Causal Inference",
+            "description": "Understanding how A/B testing enables causal claims about intervention effectiveness.",
+            "resource_link": "https://example.com/causal-inference-ab",
+            "button_text": "Explore Causal Methods",
+            "boxes": []
+          },
+          "continuous_optimization": {
+            "element_type": "nested",
+            "display_title": "Continuous Optimization",
+            "description": "Using A/B testing for ongoing program optimization and improvement.",
+            "resource_link": "https://example.com/continuous-optimization",
+            "button_text": "View Optimization Guide",
+            "boxes": []
+          },
+          "cost-effectiveness-modelling": {
+            "element_type": "product",
+            "display_title": "Cost-effectiveness Modelling",
+            "description": "Economic analysis comparing intervention costs to their outcomes to inform resource allocation decisions.",
+            "nested_clickable_boxes": "YES",
+            "resource_link": "https://example.com/cost-effectiveness-modelling",
+            "button_text": "Learn More About CE Modelling",
+            "boxes": [
+              {
+                "id": "economic_analysis",
+                "title": "Economic Analysis",
+                "description": "Methods for analyzing intervention costs and economic outcomes.",
+                "resource_link": "https://example.com/economic-analysis",
+                "button_text": "Learn Economic Methods"
+              },
+              {
+                "id": "cost_data_collection",
+                "title": "Cost Data Collection",
+                "description": "Systematic collection of cost data including direct, indirect, and opportunity costs.",
+                "resource_link": "https://example.com/cost-data-collection",
+                "button_text": "Access Cost Tools"
+              },
+              {
+                "id": "effectiveness_measurement",
+                "title": "Effectiveness Measurement",
+                "description": "Measuring intervention effectiveness for cost-effectiveness calculations.",
+                "resource_link": "https://example.com/effectiveness-measurement",
+                "button_text": "Learn Effectiveness Methods"
+              },
+              {
+                "id": "modeling_techniques",
+                "title": "Modeling Techniques",
+                "description": "Statistical and economic modeling approaches for cost-effectiveness analysis.",
+                "resource_link": "https://example.com/modeling-techniques",
+                "button_text": "Explore Modeling Methods"
+              },
+              {
+                "id": "decision_frameworks",
+                "title": "Decision Frameworks",
+                "description": "Frameworks for using cost-effectiveness analysis to inform resource allocation decisions.",
+                "resource_link": "https://example.com/ce-decision-frameworks",
+                "button_text": "View Decision Tools"
+              }
+            ]
+          },
+          "economic_analysis": {
+            "element_type": "nested",
+            "display_title": "Economic Analysis",
+            "description": "Methods for analyzing intervention costs and economic outcomes.",
+            "resource_link": "https://example.com/economic-analysis",
+            "button_text": "Learn Economic Methods",
+            "boxes": []
+          },
+          "cost_data_collection": {
+            "element_type": "nested",
+            "display_title": "Cost Data Collection",
+            "description": "Systematic collection of cost data including direct, indirect, and opportunity costs.",
+            "resource_link": "https://example.com/cost-data-collection",
+            "button_text": "Access Cost Tools",
+            "boxes": []
+          },
+          "effectiveness_measurement": {
+            "element_type": "nested",
+            "display_title": "Effectiveness Measurement",
+            "description": "Measuring intervention effectiveness for cost-effectiveness calculations.",
+            "resource_link": "https://example.com/effectiveness-measurement",
+            "button_text": "Learn Effectiveness Methods",
+            "boxes": []
+          },
+          "modeling_techniques": {
+            "element_type": "nested",
+            "display_title": "Modeling Techniques",
+            "description": "Statistical and economic modeling approaches for cost-effectiveness analysis.",
+            "resource_link": "https://example.com/modeling-techniques",
+            "button_text": "Explore Modeling Methods",
+            "boxes": []
+          },
+          "decision_frameworks": {
+            "element_type": "nested",
+            "display_title": "Decision Frameworks",
+            "description": "Frameworks for using cost-effectiveness analysis to inform resource allocation decisions.",
+            "resource_link": "https://example.com/ce-decision-frameworks",
+            "button_text": "View Decision Tools",
+            "boxes": []
+          },
+          "impact-evaluation": {
+            "element_type": "product",
+            "display_title": "Impact Evaluation",
+            "description": "Rigorous evaluation of intervention effectiveness using experimental or quasi-experimental methods.",
+            "nested_clickable_boxes": "YES",
+            "resource_link": "https://example.com/impact-evaluation",
+            "button_text": "Learn More About Impact Evaluation",
+            "boxes": [
+              {
+                "id": "evaluation_design",
+                "title": "Evaluation Design",
+                "description": "Design of impact evaluations including method selection and research protocols.",
+                "resource_link": "https://example.com/evaluation-design",
+                "button_text": "Learn Evaluation Design"
+              },
+              {
+                "id": "randomized_trials",
+                "title": "Randomized Trials",
+                "description": "Design and implementation of randomized controlled trials for impact measurement.",
+                "resource_link": "https://example.com/randomized-trials",
+                "button_text": "Access RCT Resources"
+              },
+              {
+                "id": "quasi_experimental",
+                "title": "Quasi-experimental Methods",
+                "description": "Alternative evaluation designs when randomization is not feasible.",
+                "resource_link": "https://example.com/quasi-experimental",
+                "button_text": "Learn Quasi-experimental"
+              },
+              {
+                "id": "causal_inference_impact",
+                "title": "Causal Inference",
+                "description": "Methods for establishing causal relationships between interventions and outcomes.",
+                "resource_link": "https://example.com/causal-inference-impact",
+                "button_text": "Explore Causal Methods"
+              },
+              {
+                "id": "mixed_methods",
+                "title": "Mixed Methods",
+                "description": "Combining quantitative and qualitative approaches in impact evaluation.",
+                "resource_link": "https://example.com/mixed-methods-impact",
+                "button_text": "View Mixed Methods"
+              }
+            ]
+          },
+          "evaluation_design": {
+            "element_type": "nested",
+            "display_title": "Evaluation Design",
+            "description": "Design of impact evaluations including method selection and research protocols.",
+            "resource_link": "https://example.com/evaluation-design",
+            "button_text": "Learn Evaluation Design",
+            "boxes": []
+          },
+          "randomized_trials": {
+            "element_type": "nested",
+            "display_title": "Randomized Trials",
+            "description": "Design and implementation of randomized controlled trials for impact measurement.",
+            "resource_link": "https://example.com/randomized-trials",
+            "button_text": "Access RCT Resources",
+            "boxes": []
+          },
+          "quasi_experimental": {
+            "element_type": "nested",
+            "display_title": "Quasi-experimental Methods",
+            "description": "Alternative evaluation designs when randomization is not feasible.",
+            "resource_link": "https://example.com/quasi-experimental",
+            "button_text": "Learn Quasi-experimental",
+            "boxes": []
+          },
+          "causal_inference_impact": {
+            "element_type": "nested",
+            "display_title": "Causal Inference",
+            "description": "Methods for establishing causal relationships between interventions and outcomes.",
+            "resource_link": "https://example.com/causal-inference-impact",
+            "button_text": "Explore Causal Methods",
+            "boxes": []
+          },
+          "mixed_methods": {
+            "element_type": "nested",
+            "display_title": "Mixed Methods",
+            "description": "Combining quantitative and qualitative approaches in impact evaluation.",
+            "resource_link": "https://example.com/mixed-methods-impact",
+            "button_text": "View Mixed Methods",
+            "boxes": []
+          },
+          "systems-change-mel": {
+            "element_type": "product",
+            "display_title": "Systems Change MEL",
+            "description": "MEL approaches designed for complex systems change initiatives that account for emergence and non-linear change.",
+            "nested_clickable_boxes": "YES",
+            "resource_link": "https://example.com/systems-change-mel",
+            "button_text": "Learn More About Systems Change MEL",
+            "boxes": [
+              {
+                "id": "systems_mapping",
+                "title": "Systems Mapping",
+                "description": "Tools for mapping complex systems including relationships, feedback loops, and leverage points.",
+                "resource_link": "https://example.com/systems-mapping",
+                "button_text": "Learn Systems Mapping"
+              },
+              {
+                "id": "complexity_frameworks",
+                "title": "Complexity Frameworks",
+                "description": "Frameworks for understanding and working with complex adaptive systems.",
+                "resource_link": "https://example.com/complexity-frameworks",
+                "button_text": "Explore Complexity"
+              },
+              {
+                "id": "adaptive_mel",
+                "title": "Adaptive MEL",
+                "description": "MEL approaches that can adapt and evolve as programs and systems change.",
+                "resource_link": "https://example.com/adaptive-mel",
+                "button_text": "Learn Adaptive MEL"
+              },
+              {
+                "id": "network_analysis",
+                "title": "Network Analysis",
+                "description": "Analysis of relationships and connections within complex systems.",
+                "resource_link": "https://example.com/network-analysis",
+                "button_text": "Access Network Tools"
+              },
+              {
+                "id": "systems_indicators",
+                "title": "Systems Indicators",
+                "description": "Indicators designed to capture systems-level changes and emergence.",
+                "resource_link": "https://example.com/systems-indicators",
+                "button_text": "View Systems Indicators"
+              }
+            ]
+          },
+          "systems_mapping": {
+            "element_type": "nested",
+            "display_title": "Systems Mapping",
+            "description": "Tools for mapping complex systems including relationships, feedback loops, and leverage points.",
+            "resource_link": "https://example.com/systems-mapping",
+            "button_text": "Learn Systems Mapping",
+            "boxes": []
+          },
+          "complexity_frameworks": {
+            "element_type": "nested",
+            "display_title": "Complexity Frameworks",
+            "description": "Frameworks for understanding and working with complex adaptive systems.",
+            "resource_link": "https://example.com/complexity-frameworks",
+            "button_text": "Explore Complexity",
+            "boxes": []
+          },
+          "adaptive_mel": {
+            "element_type": "nested",
+            "display_title": "Adaptive MEL",
+            "description": "MEL approaches that can adapt and evolve as programs and systems change.",
+            "resource_link": "https://example.com/adaptive-mel",
+            "button_text": "Learn Adaptive MEL",
+            "boxes": []
+          },
+          "network_analysis": {
+            "element_type": "nested",
+            "display_title": "Network Analysis",
+            "description": "Analysis of relationships and connections within complex systems.",
+            "resource_link": "https://example.com/network-analysis",
+            "button_text": "Access Network Tools",
+            "boxes": []
+          },
+          "systems_indicators": {
+            "element_type": "nested",
+            "display_title": "Systems Indicators",
+            "description": "Indicators designed to capture systems-level changes and emergence.",
+            "resource_link": "https://example.com/systems-indicators",
+            "button_text": "View Systems Indicators",
+            "boxes": []
+          },
+          "learning-system-diagnostic": {
+            "element_type": "product",
+            "display_title": "Learning System Diagnostic",
+            "description": "Assessment tool for evaluating organizational learning capabilities and identifying improvement opportunities.",
+            "nested_clickable_boxes": "YES",
+            "resource_link": "https://example.com/learning-system-diagnostic",
+            "button_text": "Learn More About Learning System Diagnostic",
+            "boxes": [
+              {
+                "id": "capacity_assessment",
+                "title": "Capacity Assessment",
+                "description": "Assessment of organizational MEL capabilities and learning systems.",
+                "resource_link": "https://example.com/capacity-assessment",
+                "button_text": "Learn Capacity Assessment"
+              },
+              {
+                "id": "diagnostic_tools",
+                "title": "Diagnostic Tools",
+                "description": "Tools and frameworks for systematically assessing learning system components.",
+                "resource_link": "https://example.com/diagnostic-tools",
+                "button_text": "Access Diagnostic Tools"
+              },
+              {
+                "id": "gap_analysis",
+                "title": "Gap Analysis",
+                "description": "Identification of gaps between current and desired learning system capabilities.",
+                "resource_link": "https://example.com/gap-analysis",
+                "button_text": "Learn Gap Analysis"
+              },
+              {
+                "id": "improvement_planning",
+                "title": "Improvement Planning",
+                "description": "Development of action plans for strengthening organizational learning systems.",
+                "resource_link": "https://example.com/improvement-planning",
+                "button_text": "View Planning Tools"
+              },
+              {
+                "id": "culture_assessment",
+                "title": "Culture Assessment",
+                "description": "Assessment of organizational culture and its support for learning and evidence use.",
+                "resource_link": "https://example.com/culture-assessment",
+                "button_text": "Explore Culture Tools"
+              }
+            ]
+          },
+          "capacity_assessment": {
+            "element_type": "nested",
+            "display_title": "Capacity Assessment",
+            "description": "Assessment of organizational MEL capabilities and learning systems.",
+            "resource_link": "https://example.com/capacity-assessment",
+            "button_text": "Learn Capacity Assessment",
+            "boxes": []
+          },
+          "diagnostic_tools": {
+            "element_type": "nested",
+            "display_title": "Diagnostic Tools",
+            "description": "Tools and frameworks for systematically assessing learning system components.",
+            "resource_link": "https://example.com/diagnostic-tools",
+            "button_text": "Access Diagnostic Tools",
+            "boxes": []
+          },
+          "gap_analysis": {
+            "element_type": "nested",
+            "display_title": "Gap Analysis",
+            "description": "Identification of gaps between current and desired learning system capabilities.",
+            "resource_link": "https://example.com/gap-analysis",
+            "button_text": "Learn Gap Analysis",
+            "boxes": []
+          },
+          "improvement_planning": {
+            "element_type": "nested",
+            "display_title": "Improvement Planning",
+            "description": "Development of action plans for strengthening organizational learning systems.",
+            "resource_link": "https://example.com/improvement-planning",
+            "button_text": "View Planning Tools",
+            "boxes": []
+          },
+          "culture_assessment": {
+            "element_type": "nested",
+            "display_title": "Culture Assessment",
+            "description": "Assessment of organizational culture and its support for learning and evidence use.",
+            "resource_link": "https://example.com/culture-assessment",
+            "button_text": "Explore Culture Tools",
+            "boxes": []
+          },
+          "donor-product": {
+            "element_type": "product",
+            "display_title": "Donor Product",
+            "description": "Support for donors in designing and managing initiatives that promote effective MEL across multiple grantees.",
+            "nested_clickable_boxes": "YES",
+            "resource_link": "https://example.com/donor-product",
+            "button_text": "Learn More About Donor Product",
+            "boxes": [
+              {
+                "id": "initiative_design",
+                "title": "Initiative Design",
+                "description": "Design of donor initiatives that promote learning and evidence use across grantee portfolios.",
+                "resource_link": "https://example.com/initiative-design",
+                "button_text": "Learn Initiative Design"
+              },
+              {
+                "id": "grantee_support",
+                "title": "Grantee Support",
+                "description": "Frameworks for supporting grantees in developing and implementing effective MEL systems.",
+                "resource_link": "https://example.com/grantee-support",
+                "button_text": "Access Support Tools"
+              },
+              {
+                "id": "community_practice",
+                "title": "Community of Practice",
+                "description": "Facilitation of learning communities among grantees and implementing partners.",
+                "resource_link": "https://example.com/community-practice",
+                "button_text": "Learn CoP Methods"
+              },
+              {
+                "id": "learning_partner_model",
+                "title": "Learning Partner Model",
+                "description": "Model for providing ongoing MEL support and capacity building to grantees.",
+                "resource_link": "https://example.com/learning-partner-model",
+                "button_text": "Explore Partner Model"
+              },
+              {
+                "id": "portfolio_learning",
+                "title": "Portfolio Learning",
+                "description": "Approaches for generating learning across a portfolio of related interventions.",
+                "resource_link": "https://example.com/portfolio-learning",
+                "button_text": "View Portfolio Methods"
+              }
+            ]
+          },
+          "initiative_design": {
+            "element_type": "nested",
+            "display_title": "Initiative Design",
+            "description": "Design of donor initiatives that promote learning and evidence use across grantee portfolios.",
+            "resource_link": "https://example.com/initiative-design",
+            "button_text": "Learn Initiative Design",
+            "boxes": []
+          },
+          "grantee_support": {
+            "element_type": "nested",
+            "display_title": "Grantee Support",
+            "description": "Frameworks for supporting grantees in developing and implementing effective MEL systems.",
+            "resource_link": "https://example.com/grantee-support",
+            "button_text": "Access Support Tools",
+            "boxes": []
+          },
+          "community_practice": {
+            "element_type": "nested",
+            "display_title": "Community of Practice",
+            "description": "Facilitation of learning communities among grantees and implementing partners.",
+            "resource_link": "https://example.com/community-practice",
+            "button_text": "Learn CoP Methods",
+            "boxes": []
+          },
+          "learning_partner_model": {
+            "element_type": "nested",
+            "display_title": "Learning Partner Model",
+            "description": "Model for providing ongoing MEL support and capacity building to grantees.",
+            "resource_link": "https://example.com/learning-partner-model",
+            "button_text": "Explore Partner Model",
+            "boxes": []
+          },
+          "portfolio_learning": {
+            "element_type": "nested",
+            "display_title": "Portfolio Learning",
+            "description": "Approaches for generating learning across a portfolio of related interventions.",
+            "resource_link": "https://example.com/portfolio-learning",
+            "button_text": "View Portfolio Methods",
+            "boxes": []
+          }
+        };
+
+        // Show main popup function
+        function showPopup(elementId) {
+            const data = popupData[elementId];
+            if (!data) {
+                console.warn('No popup data found for:', elementId);
+                return;
+            }
+
+            const modal = document.getElementById('popupModal');
+            const title = document.getElementById('popupTitle');
+            const description = document.getElementById('popupDescription');
+            const nestedBoxes = document.getElementById('nestedBoxes');
+            const linkContainer = document.getElementById('popupLink');
+
+            // Set content
+            title.textContent = data.display_title || 'Learning Topic';
+            description.textContent = data.description || 'Information about this topic.';
+            
+            // Handle nested clickable boxes
+            nestedBoxes.innerHTML = '';
+            if (data.boxes && data.boxes.length > 0) {
+                data.boxes.forEach(box => {
+                    const boxElement = document.createElement('div');
+                    boxElement.className = 'nested-box';
+                    boxElement.textContent = box.title;
+                    boxElement.setAttribute('data-nested-popup', box.id);
+                    boxElement.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        showNestedPopup(box.id);
+                    });
+                    nestedBoxes.appendChild(boxElement);
+                });
+            }
+
+            // Handle resource link
+            if (data.resource_link && data.resource_link !== '#' && data.resource_link !== 'null' && data.resource_link) {
+                linkContainer.innerHTML = `<a href="${data.resource_link}" class="popup-link" target="_blank">
+                    ${data.button_text || 'View Learning Resources'}
+                </a>`;
+            } else {
+                linkContainer.innerHTML = '';
+            }
+
+            // Show modal
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Show nested popup function
+        function showNestedPopup(boxId) {
+            const data = popupData[boxId];
+            if (!data) {
+                console.warn('No nested popup data found for:', boxId);
+                return;
+            }
+
+            const modal = document.getElementById('nestedPopupModal');
+            const title = document.getElementById('nestedPopupTitle');
+            const description = document.getElementById('nestedPopupDescription');
+            const linkContainer = document.getElementById('nestedPopupLink');
+
+            // Set content
+            title.textContent = data.display_title || 'Topic Detail';
+            description.textContent = data.description || 'Detailed information about this topic.';
+
+            // Handle resource link
+            if (data.resource_link && data.resource_link !== '#' && data.resource_link !== 'null' && data.resource_link) {
+                linkContainer.innerHTML = `<a href="${data.resource_link}" class="nested-popup-link" target="_blank">
+                    ${data.button_text || 'Learn More'}
+                </a>`;
+            } else {
+                linkContainer.innerHTML = '';
+            }
+
+            // Show nested modal
+            modal.classList.add('active');
+        }
+
+        // Close main popup function
+        function closePopup() {
+            const modal = document.getElementById('popupModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close nested popup function
+        function closeNestedPopup() {
+            const modal = document.getElementById('nestedPopupModal');
+            modal.classList.remove('active');
+        }
+
+        // Event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Popup data loaded:', Object.keys(popupData).length, 'items');
+            
+            // Add click listeners to all popup triggers
+            const popupTriggers = document.querySelectorAll('[data-popup]');
+            popupTriggers.forEach(trigger => {
+                trigger.addEventListener('click', function() {
+                    const elementId = this.getAttribute('data-popup');
+                    showPopup(elementId);
+                });
+            });
+
+            // Close main modal when clicking outside content
+            document.getElementById('popupModal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closePopup();
+                }
+            });
+
+            // Close nested modal when clicking outside content
+            document.getElementById('nestedPopupModal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeNestedPopup();
+                }
+            });
+
+            // Close modals with Escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    const nestedModal = document.getElementById('nestedPopupModal');
+                    const mainModal = document.getElementById('popupModal');
+                    
+                    if (nestedModal.classList.contains('active')) {
+                        closeNestedPopup();
+                    } else if (mainModal.classList.contains('active')) {
+                        closePopup();
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
