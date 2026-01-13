@@ -324,58 +324,57 @@
             background: white;
             border-radius: 12px;
             padding: 25px;
-            max-width: 950px;
-            width: 100%;
+            max-width: 800px;
+            width: 95%;
             max-height: 80vh;
             overflow-y: auto;
             position: relative;
             animation: slideIn 0.3s ease;
         }
         
-        /* Two-column layout: annotations left, content right - MUCH CLOSER */
-        .popup-two-column {
-            display: grid;
-            grid-template-columns: 140px 1fr; /* Even narrower left column */
-            gap: 5px; /* Tiny gap - annotations right next to content */
+        /* Single column layout - annotations span across sections */
+        .popup-single-column {
             position: relative;
             margin-top: 40px; /* Space for Learn More button */
         }
         
-        /* Left column - annotations - NARROWER */
-        .annotations-column {
-            display: flex;
-            flex-direction: column;
-            gap: 0;
+        /* Remove the old two-column layout */
+        .popup-two-column {
+            display: none;
         }
         
-        /* Right column - content sections */
-        .content-column {
-            display: flex;
-            flex-direction: column;
-        }
-        
-        /* Handwritten annotation styles - EVEN SMALLER to fit narrow column */
+        /* Handwritten annotation styles - span across sections */
         .annotation {
             font-family: 'Kalam', cursive;
             color: #8B4513;
-            font-size: 12px; /* Even smaller font */
+            font-size: 14px;
             font-weight: 500;
-            background: rgba(255, 255, 255, 0.95);
-            padding: 6px 8px; /* Even smaller padding */
-            border-radius: 4px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-            line-height: 1.2;
-            border: 1px solid #8B4513; /* Thinner border */
-            margin-bottom: 12px;
-            transform: rotate(-2deg);
+            background: rgba(255, 248, 220, 0.95);
+            padding: 8px 15px;
+            border-radius: 6px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+            line-height: 1.3;
+            border: 2px solid #8B4513;
+            margin: -5px 0 15px 0;
+            position: relative;
+            max-width: 300px;
+            z-index: 10;
+        }
+        
+        .annotation-basic {
+            transform: rotate(-1.5deg);
+            margin-left: 20px;
         }
         
         .annotation-start {
-            transform: rotate(2deg);
+            transform: rotate(1.8deg);
+            margin-left: auto;
+            margin-right: 30px;
         }
         
         .annotation-practice {
-            transform: rotate(-3deg);
+            transform: rotate(-2.2deg);
+            margin-left: 50px;
         }
         
         /* Section dividers - horizontal lines */
@@ -390,12 +389,12 @@
         .popup-header-section {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 25px;
+            gap: 15px;
             margin-bottom: 0;
         }
         
         .description-column {
-            padding: 15px;
+            padding: 12px;
             border-radius: 8px;
             background: #fafafa;
         }
@@ -417,10 +416,22 @@
         }
         
         .description-column p {
-            margin: 0;
+            margin: 0 0 10px 0;
             font-size: 14px;
             line-height: 1.5;
             color: #555;
+        }
+        
+        .description-column ul {
+            margin: 10px 0 0 0;
+            padding-left: 20px;
+            font-size: 14px;
+            line-height: 1.5;
+            color: #555;
+        }
+        
+        .description-column li {
+            margin-bottom: 6px;
         }
         
         .approaches-section {
@@ -484,7 +495,9 @@
             position: relative;
             margin: 20px auto;
             width: 400px; /* Increased from 300px */
+            max-width: 100%; /* Prevent overflow */
             height: 220px; /* Slightly taller */
+            overflow: hidden; /* Hide any overflow */
         }
         
         .pyramid-level {
@@ -515,6 +528,7 @@
         .pyramid-level-1 {
             bottom: 0;
             width: 380px; /* Widest */
+            max-width: 95%; /* Prevent overflow */
             height: 55px;
             font-size: 16px;
             font-weight: 700; /* Extra bold */
@@ -527,6 +541,7 @@
         .pyramid-level-2 {
             bottom: 60px;
             width: 280px;
+            max-width: 75%;
             height: 50px;
             background: #CD853F; /* Medium brown */
         }
@@ -535,6 +550,7 @@
         .pyramid-level-3 {
             bottom: 115px;
             width: 200px;
+            max-width: 55%;
             height: 45px;
             background: #DEB887; /* Light brown */
         }
@@ -543,6 +559,7 @@
         .pyramid-level-4 {
             bottom: 165px;
             width: 140px;
+            max-width: 40%;
             height: 40px;
             font-size: 13px;
             background: #F5DEB3; /* Very light brown/wheat */
@@ -559,80 +576,6 @@
             color: #333;
             margin-bottom: 15px;
             font-size: 18px;
-        }
-        
-        /* Handwritten annotation styles - LEFT SIDE, scrolling with content */
-        .annotation {
-            position: absolute; /* Back to absolute so they scroll with popup */
-            font-family: 'Kalam', cursive;
-            color: #8B4513; /* Pencil brown */
-            font-size: 16px;
-            font-weight: 500;
-            pointer-events: none;
-            z-index: 1500;
-            background: rgba(255, 255, 255, 0.95);
-            padding: 12px 15px;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-            line-height: 1.4;
-            border: 2px solid #8B4513;
-            max-width: 160px;
-        }
-        
-        .annotation-basic {
-            left: -140px; /* Moved closer from -180px */
-            top: 80px;
-            transform: rotate(-2deg);
-        }
-        
-        .annotation-start {
-            left: -150px; /* Moved closer from -190px */
-            top: 200px;
-            transform: rotate(2deg);
-        }
-        
-        .annotation-practice {
-            left: -135px; /* Moved closer from -175px */
-            top: 420px;
-            transform: rotate(-3deg);
-        }
-        
-        /* Simple arrows - scrolling with content */
-        .arrow {
-            position: absolute; /* Back to absolute so they scroll with popup */
-            color: #8B4513;
-            font-size: 28px;
-            font-weight: bold;
-            z-index: 1400;
-            pointer-events: none;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-        
-        .arrow-basic {
-            left: -25px;
-            top: 110px; /* Align with header section */
-        }
-        
-        .arrow-basic::before {
-            content: '→';
-        }
-        
-        .arrow-start {
-            left: -25px;
-            top: 230px; /* Align with approaches pyramid */
-        }
-        
-        .arrow-start::before {
-            content: '→';
-        }
-        
-        .arrow-practice {
-            left: -25px;
-            top: 450px; /* Align with skills section */
-        }
-        
-        .arrow-practice::before {
-            content: '→';
         }
         
         /* Enhanced learn more button positioning - more space above headers */
@@ -1029,6 +972,55 @@
                 font-size: 13px;
             }
         }
+        
+        /* Popup responsive styles */
+        @media (max-width: 900px) {
+            .popup-content {
+                max-width: 95vw;
+                padding: 20px;
+                margin: 10px;
+            }
+            
+            .popup-header-section {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .annotation {
+                max-width: 250px;
+                font-size: 13px;
+                margin-left: 10px !important;
+                margin-right: 10px !important;
+            }
+            
+            /* Adjust pyramid levels for smaller popup */
+            .pyramid-level-1 { width: 300px; }
+            .pyramid-level-2 { width: 220px; }
+            .pyramid-level-3 { width: 160px; }
+            .pyramid-level-4 { width: 110px; }
+        }
+        
+        @media (max-width: 600px) {
+            .popup-content {
+                max-width: 98vw;
+                padding: 15px;
+                margin: 5px;
+            }
+            
+            .annotation {
+                max-width: 200px;
+                font-size: 12px;
+                margin-left: 5px !important;
+                margin-right: 5px !important;
+                padding: 6px 10px;
+            }
+            
+            /* Further reduce pyramid for mobile */
+            .pyramid-level-1 { width: 250px; }
+            .pyramid-level-2 { width: 180px; }
+            .pyramid-level-3 { width: 130px; }
+            .pyramid-level-4 { width: 90px; }
+        }
     </style>
 </head>
 <body>
@@ -1119,53 +1111,44 @@
             <button class="close-btn" onclick="closePopup()">&times;</button>
             <a id="learnMoreBtn" class="learn-more-btn" href="#" target="_blank">Learn More</a>
             
-            <div class="popup-two-column">
-                <!-- LEFT COLUMN: Annotations -->
-                <div class="annotations-column">
-                    <div class="annotation annotation-basic">
-                        This is BASIC knowledge, but everyone should refresh when learning a new product!
+            <div class="popup-single-column">
+                <!-- Section 1: Headers with annotation above -->
+                <div class="annotation annotation-basic">
+                    This is BASIC knowledge, but everyone should refresh when learning a new product!
+                </div>
+                <div class="popup-header-section">
+                    <div class="description-column product-desc">
+                        <h3>Product Description</h3>
+                        <p id="productDescription"></p>
                     </div>
-                    
-                    <div class="annotation annotation-start">
-                        Start with the foundation and work UP the pyramid →
-                    </div>
-                    
-                    <div class="annotation annotation-practice">
-                        If you've familiarized yourself with general approaches, practice these skills in authentic context!
+                    <div class="description-column use-case">
+                        <h3>Use Case</h3>
+                        <p id="useCase"></p>
                     </div>
                 </div>
                 
-                <!-- RIGHT COLUMN: Content Sections -->
-                <div class="content-column">
-                    <!-- Section 1: Two-column headers -->
-                    <div class="popup-header-section">
-                        <div class="description-column product-desc">
-                            <h3>Product Description</h3>
-                            <p id="productDescription"></p>
-                        </div>
-                        <div class="description-column use-case">
-                            <h3>Use Case</h3>
-                            <p id="useCase"></p>
-                        </div>
+                <div class="section-divider"></div>
+                
+                <!-- Section 2: Approaches with annotation above -->
+                <div class="annotation annotation-start">
+                    Start with the foundation and work UP the pyramid →
+                </div>
+                <div class="approaches-section">
+                    <h3>General Approaches</h3>
+                    <div class="approaches-pyramid" id="approachesPyramid">
+                        <!-- Pyramid levels will be dynamically populated -->
                     </div>
-                    
-                    <div class="section-divider"></div>
-                    
-                    <!-- Section 2: Approaches Pyramid -->
-                    <div class="approaches-section">
-                        <h3>General Approaches</h3>
-                        <div class="approaches-pyramid" id="approachesPyramid">
-                            <!-- Pyramid levels will be dynamically populated -->
-                        </div>
-                    </div>
-                    
-                    <div class="section-divider"></div>
-                    
-                    <!-- Section 3: Skills to Know -->
-                    <div class="skills-section">
-                        <h3>Skills to Know</h3>
-                        <div id="nestedBoxes" class="nested-boxes"></div>
-                    </div>
+                </div>
+                
+                <div class="section-divider"></div>
+                
+                <!-- Section 3: Skills with annotation above -->
+                <div class="annotation annotation-practice">
+                    If you've familiarized yourself with general approaches, practice these skills in authentic context!
+                </div>
+                <div class="skills-section">
+                    <h3>Skills to Know</h3>
+                    <div id="nestedBoxes" class="nested-boxes"></div>
                 </div>
             </div>
         </div>
@@ -2155,7 +2138,7 @@
             "element_type": "product",
             "display_title": "Community of Practice",
             "description": "RFE facilitates periodic meetings with multiple organizations to increase the level of sharing learning about what works and what doesn't. CoPs are highly adaptive to donor and membership needs, meaning they may address a range of different topics, or have significantly different objectives. In many cases, it is necessary to build some kind of 'shared learning agenda' that functions like a ToC or MEL plan and aligns learning for the group around a set of focused topics or research questions.",
-            "use_case": "RFE often applies the COP in direct response to donor expectations to create a learning community among grantees. RFE might identify the COP as an appropriate product in cases where: multiple organizations show clear similarities in region, intervention, or program objectives to support shared sense-making of what works / doesn't work; there is interest in capacity building a group's MEL practices (often expressed by the donor for strengthening across a portfolio); there is interest in leveraging the collective voice of multiple organizations for disseminating evidence or influence; RFE can offer value by helping identify credible and transferrable data, and consolidating findings which hold across multiple organizations.",
+            "use_case": "RFE often applies the COP in direct response to donor expectations to create a learning community among grantees. RFE might identify the COP as an appropriate product in cases where:\n* multiple organizations show clear similarities in region, intervention, or program objectives to support shared sense-making of what works / doesn't work;\n* there is interest in capacity building a group's MEL practices (often expressed by the donor for strengthening across a portfolio);\n* there is interest in leveraging the collective voice of multiple organizations for disseminating evidence or influence;\nRFE can offer value by helping identify credible and transferrable data, and consolidating findings which hold across multiple organizations.",
             "approaches": [
               {
                 "id": "cop_foundation",
@@ -2277,7 +2260,56 @@
             
             // Set use case (from data if available, otherwise placeholder)
             if (data.use_case) {
-                useCase.textContent = data.use_case;
+                // Check if use case contains bullet points and format them properly
+                const useCaseText = data.use_case;
+                if (useCaseText.includes('*') || useCaseText.includes('•')) {
+                    // Split by newlines to preserve paragraph structure
+                    const lines = useCaseText.split('\n').map(line => line.trim()).filter(line => line);
+                    let htmlContent = '';
+                    let inBulletSection = false;
+                    let bulletItems = [];
+                    
+                    for (const line of lines) {
+                        if (line.startsWith('*') || line.startsWith('•')) {
+                            // This is a bullet point
+                            if (!inBulletSection) {
+                                inBulletSection = true;
+                            }
+                            // Remove the asterisk/bullet and clean up the text
+                            const bulletText = line.replace(/^[*•]\s*/, '').trim();
+                            if (bulletText) {
+                                bulletItems.push(bulletText);
+                            }
+                        } else {
+                            // This is regular paragraph text
+                            if (inBulletSection && bulletItems.length > 0) {
+                                // We just finished a bullet section, output it
+                                htmlContent += '<ul>';
+                                bulletItems.forEach(bullet => {
+                                    htmlContent += `<li>${bullet}</li>`;
+                                });
+                                htmlContent += '</ul>';
+                                bulletItems = [];
+                                inBulletSection = false;
+                            }
+                            // Add this line as a paragraph
+                            htmlContent += `<p>${line}</p>`;
+                        }
+                    }
+                    
+                    // Handle case where bullets are at the end
+                    if (inBulletSection && bulletItems.length > 0) {
+                        htmlContent += '<ul>';
+                        bulletItems.forEach(bullet => {
+                            htmlContent += `<li>${bullet}</li>`;
+                        });
+                        htmlContent += '</ul>';
+                    }
+                    
+                    useCase.innerHTML = htmlContent;
+                } else {
+                    useCase.innerHTML = `<p>${useCaseText}</p>`;
+                }
             } else {
                 useCase.innerHTML = '<div class="empty-placeholder">Use case details coming soon</div>';
             }
