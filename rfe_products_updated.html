@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RFE Products and Learning Stages</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -322,13 +323,422 @@
         .popup-content {
             background: white;
             border-radius: 12px;
-            padding: 30px;
-            max-width: 800px;
+            padding: 25px;
+            max-width: 950px;
             width: 100%;
             max-height: 80vh;
             overflow-y: auto;
             position: relative;
             animation: slideIn 0.3s ease;
+        }
+        
+        /* Two-column layout: annotations left, content right - MUCH CLOSER */
+        .popup-two-column {
+            display: grid;
+            grid-template-columns: 140px 1fr; /* Even narrower left column */
+            gap: 5px; /* Tiny gap - annotations right next to content */
+            position: relative;
+            margin-top: 40px; /* Space for Learn More button */
+        }
+        
+        /* Left column - annotations - NARROWER */
+        .annotations-column {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+        
+        /* Right column - content sections */
+        .content-column {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Handwritten annotation styles - EVEN SMALLER to fit narrow column */
+        .annotation {
+            font-family: 'Kalam', cursive;
+            color: #8B4513;
+            font-size: 12px; /* Even smaller font */
+            font-weight: 500;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 6px 8px; /* Even smaller padding */
+            border-radius: 4px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+            line-height: 1.2;
+            border: 1px solid #8B4513; /* Thinner border */
+            margin-bottom: 12px;
+            transform: rotate(-2deg);
+        }
+        
+        .annotation-start {
+            transform: rotate(2deg);
+        }
+        
+        .annotation-practice {
+            transform: rotate(-3deg);
+        }
+        
+        /* Section dividers - horizontal lines */
+        .section-divider {
+            height: 2px;
+            background: #e0e0e0;
+            margin: 25px 0;
+            border-radius: 1px;
+        }
+        
+        /* Enhanced popup layout sections - in right column */
+        .popup-header-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 0;
+        }
+        
+        .description-column {
+            padding: 15px;
+            border-radius: 8px;
+            background: #fafafa;
+        }
+        
+        .description-column h3 {
+            margin: 0 0 10px 0;
+            font-size: 16px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .product-desc h3 {
+            color: #228B22; /* Kelly green */
+        }
+        
+        .use-case h3 {
+            color: #007bff; /* Blue */
+        }
+        
+        .description-column p {
+            margin: 0;
+            font-size: 14px;
+            line-height: 1.5;
+            color: #555;
+        }
+        
+        .approaches-section {
+            margin: 0;
+            text-align: center;
+        }
+        
+        .approaches-section h3 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+        
+        .skills-section {
+            margin: 0;
+        }
+        
+        .skills-section h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        
+        /* Enhanced learn more button positioning - HIGHER UP */
+        .learn-more-btn {
+            position: absolute;
+            top: 8px; /* Moved higher up */
+            right: 15px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 8px 16px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            z-index: 100; /* Higher z-index */
+        }
+        
+        .learn-more-btn:hover {
+            background: #0056b3;
+            transform: translateY(-2px);
+        }
+        
+        .approaches-section {
+            margin: 30px 0;
+            text-align: center;
+        }
+        
+        .approaches-section h3 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+        
+        /* Triangle pyramid for approaches - WIDER with vertical gradient */
+        .approaches-pyramid {
+            position: relative;
+            margin: 20px auto;
+            width: 400px; /* Increased from 300px */
+            height: 220px; /* Slightly taller */
+        }
+        
+        .pyramid-level {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 500;
+            font-size: 14px;
+            border: 2px solid rgba(255,255,255,0.4);
+            text-align: center;
+            padding: 8px;
+            line-height: 1.2;
+        }
+        
+        .pyramid-level:hover {
+            transform: translateX(-50%) translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+        
+        /* Level 1 - Foundation (DARKEST - visually pops) */
+        .pyramid-level-1 {
+            bottom: 0;
+            width: 380px; /* Widest */
+            height: 55px;
+            font-size: 16px;
+            font-weight: 700; /* Extra bold */
+            background: #8B4513; /* Dark brown - foundation color */
+            border: 3px solid #FFD700; /* Gold border to make it POP */
+            box-shadow: 0 4px 15px rgba(139, 69, 19, 0.5);
+        }
+        
+        /* Level 2 - Medium dark */
+        .pyramid-level-2 {
+            bottom: 60px;
+            width: 280px;
+            height: 50px;
+            background: #CD853F; /* Medium brown */
+        }
+        
+        /* Level 3 - Medium light */
+        .pyramid-level-3 {
+            bottom: 115px;
+            width: 200px;
+            height: 45px;
+            background: #DEB887; /* Light brown */
+        }
+        
+        /* Level 4 - Lightest (top) */
+        .pyramid-level-4 {
+            bottom: 165px;
+            width: 140px;
+            height: 40px;
+            font-size: 13px;
+            background: #F5DEB3; /* Very light brown/wheat */
+            color: #8B4513; /* Dark text on light background */
+        }
+        
+        .skills-section {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #f0f0f0;
+        }
+        
+        .skills-section h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        
+        /* Handwritten annotation styles - LEFT SIDE, scrolling with content */
+        .annotation {
+            position: absolute; /* Back to absolute so they scroll with popup */
+            font-family: 'Kalam', cursive;
+            color: #8B4513; /* Pencil brown */
+            font-size: 16px;
+            font-weight: 500;
+            pointer-events: none;
+            z-index: 1500;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 12px 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            line-height: 1.4;
+            border: 2px solid #8B4513;
+            max-width: 160px;
+        }
+        
+        .annotation-basic {
+            left: -140px; /* Moved closer from -180px */
+            top: 80px;
+            transform: rotate(-2deg);
+        }
+        
+        .annotation-start {
+            left: -150px; /* Moved closer from -190px */
+            top: 200px;
+            transform: rotate(2deg);
+        }
+        
+        .annotation-practice {
+            left: -135px; /* Moved closer from -175px */
+            top: 420px;
+            transform: rotate(-3deg);
+        }
+        
+        /* Simple arrows - scrolling with content */
+        .arrow {
+            position: absolute; /* Back to absolute so they scroll with popup */
+            color: #8B4513;
+            font-size: 28px;
+            font-weight: bold;
+            z-index: 1400;
+            pointer-events: none;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .arrow-basic {
+            left: -25px;
+            top: 110px; /* Align with header section */
+        }
+        
+        .arrow-basic::before {
+            content: '→';
+        }
+        
+        .arrow-start {
+            left: -25px;
+            top: 230px; /* Align with approaches pyramid */
+        }
+        
+        .arrow-start::before {
+            content: '→';
+        }
+        
+        .arrow-practice {
+            left: -25px;
+            top: 450px; /* Align with skills section */
+        }
+        
+        .arrow-practice::before {
+            content: '→';
+        }
+        
+        /* Enhanced learn more button positioning - more space above headers */
+        .learn-more-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 8px 16px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .learn-more-btn:hover {
+            background: #0056b3;
+            transform: translateY(-2px);
+        }
+        
+        /* Empty state styling for placeholders */
+        .empty-placeholder {
+            color: #999;
+            font-style: italic;
+            text-align: center;
+            padding: 20px;
+            border: 2px dashed #ddd;
+            border-radius: 6px;
+            background: #fafafa;
+        }
+        
+        /* Approach popup (smaller overlay) */
+        .approach-popup-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000; /* Higher than main popup */
+            animation: fadeIn 0.2s ease;
+        }
+        
+        .approach-popup-modal.active {
+            display: flex;
+            animation: fadeIn 0.2s ease;
+        }
+        
+        .approach-popup-content {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 60vh;
+            overflow-y: auto;
+            position: relative;
+            animation: slideIn 0.2s ease;
+            border: 3px solid #ff6b35; /* Orange border */
+        }
+        
+        .approach-close-btn {
+            position: absolute;
+            top: 8px;
+            right: 12px;
+            background: none;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            color: #6c757d;
+            padding: 3px;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+        
+        .approach-close-btn:hover {
+            background: #f8f9fa;
+            color: #495057;
+        }
+        
+        .approach-popup-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #ff6b35;
+            margin-bottom: 12px;
+            padding-right: 30px;
+        }
+        
+        .approach-popup-description {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #333;
+            margin-bottom: 15px;
         }
         
         .close-btn {
@@ -697,6 +1107,7 @@
       <div class="non-aligned-products">
         <div class="non-aligned-product" data-popup="systems-change-mel">Systems Change MEL</div>
         <div class="non-aligned-product" data-popup="learning-system-diagnostic">Learning System Diagnostic</div>
+        <div class="non-aligned-product" data-popup="community_practice">Community of Practice</div>
         <div class="non-aligned-product" data-popup="donor-product">Donor Product</div>
       </div>
     </div>
@@ -706,10 +1117,67 @@
     <div id="popupModal" class="popup-modal">
         <div class="popup-content">
             <button class="close-btn" onclick="closePopup()">&times;</button>
-            <div id="popupTitle" class="popup-title"></div>
-            <div id="popupDescription" class="popup-description"></div>
-            <div id="nestedBoxes" class="nested-boxes"></div>
-            <div id="popupLink"></div>
+            <a id="learnMoreBtn" class="learn-more-btn" href="#" target="_blank">Learn More</a>
+            
+            <div class="popup-two-column">
+                <!-- LEFT COLUMN: Annotations -->
+                <div class="annotations-column">
+                    <div class="annotation annotation-basic">
+                        This is BASIC knowledge, but everyone should refresh when learning a new product!
+                    </div>
+                    
+                    <div class="annotation annotation-start">
+                        Start with the foundation and work UP the pyramid →
+                    </div>
+                    
+                    <div class="annotation annotation-practice">
+                        If you've familiarized yourself with general approaches, practice these skills in authentic context!
+                    </div>
+                </div>
+                
+                <!-- RIGHT COLUMN: Content Sections -->
+                <div class="content-column">
+                    <!-- Section 1: Two-column headers -->
+                    <div class="popup-header-section">
+                        <div class="description-column product-desc">
+                            <h3>Product Description</h3>
+                            <p id="productDescription"></p>
+                        </div>
+                        <div class="description-column use-case">
+                            <h3>Use Case</h3>
+                            <p id="useCase"></p>
+                        </div>
+                    </div>
+                    
+                    <div class="section-divider"></div>
+                    
+                    <!-- Section 2: Approaches Pyramid -->
+                    <div class="approaches-section">
+                        <h3>General Approaches</h3>
+                        <div class="approaches-pyramid" id="approachesPyramid">
+                            <!-- Pyramid levels will be dynamically populated -->
+                        </div>
+                    </div>
+                    
+                    <div class="section-divider"></div>
+                    
+                    <!-- Section 3: Skills to Know -->
+                    <div class="skills-section">
+                        <h3>Skills to Know</h3>
+                        <div id="nestedBoxes" class="nested-boxes"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Approach Detail Popup (smaller overlay) -->
+    <div id="approachPopupModal" class="approach-popup-modal">
+        <div class="approach-popup-content">
+            <button class="approach-close-btn" onclick="closeApproachPopup()">&times;</button>
+            <div id="approachPopupTitle" class="approach-popup-title"></div>
+            <div id="approachPopupDescription" class="approach-popup-description"></div>
+            <div id="approachPopupLink"></div>
         </div>
     </div>
 
@@ -1684,12 +2152,64 @@
             "boxes": []
           },
           "community_practice": {
-            "element_type": "nested",
+            "element_type": "product",
             "display_title": "Community of Practice",
-            "description": "Facilitation of learning communities among grantees and implementing partners.",
+            "description": "RFE facilitates periodic meetings with multiple organizations to increase the level of sharing learning about what works and what doesn't. CoPs are highly adaptive to donor and membership needs, meaning they may address a range of different topics, or have significantly different objectives. In many cases, it is necessary to build some kind of 'shared learning agenda' that functions like a ToC or MEL plan and aligns learning for the group around a set of focused topics or research questions.",
+            "use_case": "RFE often applies the COP in direct response to donor expectations to create a learning community among grantees. RFE might identify the COP as an appropriate product in cases where: multiple organizations show clear similarities in region, intervention, or program objectives to support shared sense-making of what works / doesn't work; there is interest in capacity building a group's MEL practices (often expressed by the donor for strengthening across a portfolio); there is interest in leveraging the collective voice of multiple organizations for disseminating evidence or influence; RFE can offer value by helping identify credible and transferrable data, and consolidating findings which hold across multiple organizations.",
+            "approaches": [
+              {
+                "id": "cop_foundation",
+                "title": "Build a shared learning agenda",
+                "description": "Establish a comprehensive learning framework that aligns all participating organizations around focused topics and research questions, similar to a Theory of Change or MEL plan but designed for multi-organizational learning."
+              },
+              {
+                "id": "cop_trust",
+                "title": "Establish trust and ways of working",
+                "description": "Create psychological safety and clear protocols for how the community will operate, share sensitive information, and maintain confidentiality while building authentic relationships among members."
+              },
+              {
+                "id": "cop_facilitation",
+                "title": "Facilitate routine knowledge sharing workshops",
+                "description": "Design and lead regular structured sessions that enable effective sharing of experiences, challenges, successes, and lessons learned across organizations."
+              },
+              {
+                "id": "cop_synthesis",
+                "title": "(If relevant) Synthesize findings from across COP members",
+                "description": "When relevant, consolidate and analyze learnings from multiple organizations to identify patterns, generalizable insights, and evidence that holds across different contexts."
+              }
+            ],
             "resource_link": "https://example.com/community-practice",
             "button_text": "Learn CoP Methods",
-            "boxes": []
+            "boxes": [
+              {
+                "id": "group_facilitation",
+                "title": "Group Facilitation",
+                "description": "Skills for leading effective multi-stakeholder meetings, managing group dynamics, and creating inclusive learning environments.",
+                "resource_link": "https://example.com/group-facilitation",
+                "button_text": "Learn Facilitation"
+              },
+              {
+                "id": "generalizability_theory",
+                "title": "Generalizability Theory",
+                "description": "Framework for understanding when and how learnings from one context can be applied to others, critical for multi-organizational learning.",
+                "resource_link": "https://example.com/generalizability",
+                "button_text": "Learn Generalizability"
+              },
+              {
+                "id": "evidence_synthesis",
+                "title": "Evidence Synthesis",
+                "description": "Methods for combining findings across multiple studies or organizations to identify patterns and draw broader conclusions.",
+                "resource_link": "https://example.com/evidence-synthesis",
+                "button_text": "Learn Synthesis"
+              },
+              {
+                "id": "stage_based_learning",
+                "title": "Stage Based Learning Framework",
+                "description": "RFE's framework for organizing learning and evidence generation across different phases of program development and implementation.",
+                "resource_link": "https://example.com/stage-based-learning",
+                "button_text": "Learn Framework"
+              }
+            ]
           },
           "learning_partner_model": {
             "element_type": "nested",
@@ -1706,10 +2226,38 @@
             "resource_link": "https://example.com/portfolio-learning",
             "button_text": "View Portfolio Methods",
             "boxes": []
+          },
+          "group_facilitation": {
+            "element_type": "nested",
+            "display_title": "Group Facilitation",
+            "description": "Skills for leading effective multi-stakeholder meetings, managing group dynamics, and creating inclusive learning environments.",
+            "resource_link": "https://example.com/group-facilitation",
+            "button_text": "Learn Facilitation"
+          },
+          "generalizability_theory": {
+            "element_type": "nested",
+            "display_title": "Generalizability Theory",
+            "description": "Framework for understanding when and how learnings from one context can be applied to others, critical for multi-organizational learning.",
+            "resource_link": "https://example.com/generalizability",
+            "button_text": "Learn Generalizability"
+          },
+          "evidence_synthesis": {
+            "element_type": "nested",
+            "display_title": "Evidence Synthesis",
+            "description": "Methods for combining findings across multiple studies or organizations to identify patterns and draw broader conclusions.",
+            "resource_link": "https://example.com/evidence-synthesis",
+            "button_text": "Learn Synthesis"
+          },
+          "stage_based_learning": {
+            "element_type": "nested",
+            "display_title": "Stage Based Learning Framework",
+            "description": "RFE's framework for organizing learning and evidence generation across different phases of program development and implementation.",
+            "resource_link": "https://example.com/stage-based-learning",
+            "button_text": "Learn Framework"
           }
         };
 
-        // Show main popup function
+        // Show main popup function (enhanced for three-section layout)
         function showPopup(elementId) {
             const data = popupData[elementId];
             if (!data) {
@@ -1718,16 +2266,54 @@
             }
 
             const modal = document.getElementById('popupModal');
-            const title = document.getElementById('popupTitle');
-            const description = document.getElementById('popupDescription');
+            const productDescription = document.getElementById('productDescription');
+            const useCase = document.getElementById('useCase');
+            const approachesPyramid = document.getElementById('approachesPyramid');
             const nestedBoxes = document.getElementById('nestedBoxes');
-            const linkContainer = document.getElementById('popupLink');
+            const learnMoreBtn = document.getElementById('learnMoreBtn');
 
-            // Set content
-            title.textContent = data.display_title || 'Learning Topic';
-            description.textContent = data.description || 'Information about this topic.';
+            // Set product description (maps from existing description)
+            productDescription.textContent = data.description || 'Product description will appear here.';
             
-            // Handle nested clickable boxes
+            // Set use case (from data if available, otherwise placeholder)
+            if (data.use_case) {
+                useCase.textContent = data.use_case;
+            } else {
+                useCase.innerHTML = '<div class="empty-placeholder">Use case details coming soon</div>';
+            }
+            
+            // Create approaches pyramid (from data if available)
+            if (data.approaches && data.approaches.length > 0) {
+                let pyramidHTML = '';
+                // Reverse the order so foundation is at bottom (level 1) and synthesis is at top (level 4)
+                data.approaches.forEach((approach, index) => {
+                    const levelClass = `pyramid-level-${index + 1}`; // Foundation = level 1, Synthesis = level 4
+                    pyramidHTML += `
+                        <div class="pyramid-level ${levelClass}" onclick="showApproachPopup('${approach.id}', '${approach.title}', '${approach.description}')">
+                            ${approach.title}
+                        </div>
+                    `;
+                });
+                approachesPyramid.innerHTML = pyramidHTML;
+            } else {
+                // Fallback placeholder pyramid
+                approachesPyramid.innerHTML = `
+                    <div class="pyramid-level pyramid-level-4" onclick="showApproachPopup('approach4', 'Advanced Technique', 'Detailed guidance for advanced approaches will appear here.')">
+                        Advanced Technique
+                    </div>
+                    <div class="pyramid-level pyramid-level-3" onclick="showApproachPopup('approach3', 'Intermediate Method', 'Detailed guidance for intermediate approaches will appear here.')">
+                        Intermediate Method
+                    </div>
+                    <div class="pyramid-level pyramid-level-2" onclick="showApproachPopup('approach2', 'Core Approach', 'Detailed guidance for core approaches will appear here.')">
+                        Core Approach
+                    </div>
+                    <div class="pyramid-level pyramid-level-1" onclick="showApproachPopup('approach1', 'START HERE: Foundation', 'Detailed guidance for foundational approaches will appear here.')">
+                        START HERE: Foundation
+                    </div>
+                `;
+            }
+            
+            // Handle skill boxes (existing nested boxes functionality)
             nestedBoxes.innerHTML = '';
             if (data.boxes && data.boxes.length > 0) {
                 data.boxes.forEach(box => {
@@ -1741,20 +2327,46 @@
                     });
                     nestedBoxes.appendChild(boxElement);
                 });
+            } else {
+                nestedBoxes.innerHTML = '<div class="empty-placeholder">Technical skills will appear here</div>';
             }
 
-            // Handle resource link
+            // Handle learn more button
             if (data.resource_link && data.resource_link !== '#' && data.resource_link !== 'null' && data.resource_link) {
-                linkContainer.innerHTML = `<a href="${data.resource_link}" class="popup-link" target="_blank">
-                    ${data.button_text || 'View Learning Resources'}
-                </a>`;
+                learnMoreBtn.href = data.resource_link;
+                learnMoreBtn.textContent = data.button_text || 'Learn More';
+                learnMoreBtn.style.display = 'inline-block';
             } else {
-                linkContainer.innerHTML = '';
+                learnMoreBtn.style.display = 'none';
             }
 
             // Show modal
             modal.classList.add('active');
             document.body.style.overflow = 'hidden';
+        }
+
+        // Show approach popup function (enhanced to accept description)
+        function showApproachPopup(approachId, approachTitle, approachDescription) {
+            const modal = document.getElementById('approachPopupModal');
+            const title = document.getElementById('approachPopupTitle');
+            const description = document.getElementById('approachPopupDescription');
+            const linkContainer = document.getElementById('approachPopupLink');
+
+            // Set content
+            title.textContent = approachTitle;
+            description.textContent = approachDescription || 'Detailed information about this approach will appear here.';
+            
+            // Placeholder link
+            linkContainer.innerHTML = '<a href="#" class="popup-link" target="_blank">Learn More About This Approach</a>';
+
+            // Show approach modal
+            modal.classList.add('active');
+        }
+
+        // Close approach popup function
+        function closeApproachPopup() {
+            const modal = document.getElementById('approachPopupModal');
+            modal.classList.remove('active');
         }
 
         // Show nested popup function
@@ -1827,13 +2439,23 @@
                 }
             });
 
-            // Close modals with Escape key
+            // Close approach modal when clicking outside content
+            document.getElementById('approachPopupModal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeApproachPopup();
+                }
+            });
+
+            // Close modals with Escape key (updated for approach popup)
             document.addEventListener('keydown', function(e) {
                 if (e.key === 'Escape') {
+                    const approachModal = document.getElementById('approachPopupModal');
                     const nestedModal = document.getElementById('nestedPopupModal');
                     const mainModal = document.getElementById('popupModal');
                     
-                    if (nestedModal.classList.contains('active')) {
+                    if (approachModal.classList.contains('active')) {
+                        closeApproachPopup();
+                    } else if (nestedModal.classList.contains('active')) {
                         closeNestedPopup();
                     } else if (mainModal.classList.contains('active')) {
                         closePopup();
