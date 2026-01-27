@@ -323,13 +323,15 @@
         .popup-content {
             background: white;
             border-radius: 12px;
-            padding: 25px;
-            max-width: 800px;
+            padding: 0;
+            max-width: 1000px;
             width: 95%;
             max-height: 80vh;
-            overflow-y: auto;
+            overflow: hidden;
             position: relative;
             animation: slideIn 0.3s ease;
+            display: flex;
+            flex-direction: column;
         }
         
         /* Single column layout - annotations span across sections */
@@ -391,6 +393,41 @@
             margin: 25px 0;
             border-radius: 1px;
         }
+
+        /* Learner Roadmap section - new layout for advanced tab */
+        .learner-roadmap {
+            background-color: #e8ede6;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .learner-roadmap h4 {
+            margin-top: 0;
+            margin-bottom: 15px;
+            color: #2c3e50;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .learner-roadmap p {
+            margin: 0 0 12px 0;
+            color: #333;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .learner-roadmap ul {
+            margin: 12px 0 0 20px;
+            padding: 0;
+        }
+
+        .learner-roadmap li {
+            margin-bottom: 8px;
+            color: #333;
+            font-size: 14px;
+            line-height: 1.5;
+        }
         
         /* Enhanced popup layout sections - in right column */
         .popup-header-section {
@@ -414,10 +451,12 @@
             letter-spacing: 1px;
         }
         
+        .product-desc h2,
         .product-desc h3 {
             color: #228B22; /* Kelly green */
         }
         
+        .use-case h2,
         .use-case h3 {
             color: #007bff; /* Blue */
         }
@@ -951,7 +990,7 @@
             padding: 30px;
             border-radius: 8px;
             box-shadow: 0 10px 40px rgba(0,0,0,0.3);
-            max-width: 500px;
+            max-width: 700px;
             max-height: 80vh;
             overflow-y: auto;
             position: relative;
@@ -967,6 +1006,13 @@
             border: none;
             background: none;
             cursor: pointer;
+            z-index: 10;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
         }
         
         .skill-close-btn:hover {
@@ -1172,6 +1218,8 @@
             display: flex;
             background: #f8f9fa;
             border-bottom: 2px solid #e9ecef;
+            padding: 0 25px;
+            flex-shrink: 0;
         }
         
         .tab-button {
@@ -1209,9 +1257,9 @@
         /* Tab Content */
         .tab-content {
             display: none;
-            padding: 20px;
-            height: calc(85vh - 80px);
+            padding: 25px;
             overflow-y: auto;
+            flex: 1;
         }
         
         .tab-content.active {
@@ -1645,7 +1693,7 @@
             <button class="close-btn" onclick="closePopup()">&times;</button>
             
             <!-- Product Name Header (always visible) -->
-            <div id="productNameHeader" style="text-align: center; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 2px solid #e9ecef;">
+            <div id="productNameHeader" style="text-align: center; margin-bottom: 20px; padding: 25px 25px 15px 25px; border-bottom: 2px solid #e9ecef; flex-shrink: 0;">
                 <h1 id="productNameTitle" style="color: #2c3e50; margin: 0; font-size: 28px; font-weight: 600;"></h1>
             </div>
             
@@ -1658,17 +1706,14 @@
             <!-- Basic Info Tab -->
             <div id="basicInfoTab" class="tab-content active">
                 <div class="popup-single-column">
-                    <!-- Section 1: Headers with annotation above -->
-                    <div id="basicAnnotation" class="annotation annotation-basic">
-                        This is BASIC knowledge that all RFE staff should know about products.
-                    </div>
+                    <!-- Section 1: Headers -->
                     <div class="popup-header-section">
                         <div class="description-column product-desc">
-                            <h3>Product Description</h3>
+                            <h2>Product Description</h2>
                             <p id="productDescription"></p>
                         </div>
                         <div class="description-column use-case">
-                            <h3>When to Use</h3>
+                            <h2>When to Use</h2>
                             <p id="useCase"></p>
                         </div>
                     </div>
@@ -1676,7 +1721,6 @@
                     <!-- Button container with TOC and Learn More buttons -->
                     <div class="button-container">
                         <button class="view-toc-btn" id="tocButton" onclick="handleTocButtonClick()">View Product ToC</button>
-                        <a id="learnMoreBtn" class="learn-more-btn" href="#" target="_blank">Learn More</a>
                     </div>
                     
                     <!-- Section 4: Related Products -->
@@ -1692,6 +1736,16 @@
             <!-- Advanced Info Tab -->
             <div id="advancedInfoTab" class="tab-content">
                 <div class="popup-single-column">
+                    <!-- Learner Roadmap - shown for specific products (COP) -->
+                    <div id="learnerRoadmap" class="learner-roadmap" style="display: none;">
+                        <h2>Learner Roadmap</h2>
+                        <p>Welcome advanced learners! Whatever your reason for visiting, we want to help you improve in your understanding of how to deliver the product. We assume that you are implementing the product, or will be in the near future. In this tab, you can find:</p>
+                        <ul>
+                            <li><strong>Content</strong>: Understanding the product</li>
+                            <li><strong>Practice & Feedback</strong>: Getting better at delivery</li>
+                        </ul>
+                    </div>
+                    
                     <div class="section-divider"></div>
                     
                     <!-- Section 2: Approaches with annotation above -->
@@ -1710,13 +1764,53 @@
                         </div>
                     </div>
                     
+                    <!-- NEW: Understanding the Product section with table (for COP) -->
+                    <div id="understandingProductSection" style="display: none;">
+                        <h2 style="margin-top: 0; margin-bottom: 15px; color: #2c3e50; font-size: 20px; font-weight: 600;">Understanding the Product</h2>
+                        <p>Give the <strong>product overview</strong> a read, especially the general approaches section. Also look through the <strong>common scenarios</strong> to see what type of challenges RFE usually faces when delivering the product. <a id="productOverviewLink" href="#" target="_blank" style="display: inline-block; background-color: #228B22; color: white; padding: 8px 16px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 13px;">Product Overview</a><a id="commonScenariosBtn" href="#" target="_blank" style="display: inline-block; background-color: #FF8C00; color: white; padding: 8px 16px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 13px; margin-left: 10px;">Common Scenarios</a></p>
+                        
+                        <p style="margin-top: 20px;">The below table contains the most important <strong>general approaches</strong> that RFE staff typically carry out, according to the product owner. These approaches are described in the product overview, but you can find some more specific examples here. This list is ordered by importance; we recommend starting at the top and working your way down.</p>
+                        
+                        <table id="approachesTable" style="width: 100%; border-collapse: collapse; margin-top: 15px;">
+                            <thead>
+                                <tr style="background-color: #f8f9fa; border-bottom: 2px solid #dee2e6;">
+                                    <th style="padding: 12px; text-align: left; font-weight: 600; color: #2c3e50; border-right: 1px solid #dee2e6; width: 66%;">Approach</th>
+                                    <th style="padding: 12px; text-align: left; font-weight: 600; color: #2c3e50; width: 34%;">Examples</th>
+                                </tr>
+                            </thead>
+                            <tbody id="approachesTableBody">
+                                <!-- Dynamically populated -->
+                            </tbody>
+                        </table>
+                    </div>
+                    
                     <div class="section-divider"></div>
                     
-                    <!-- Section 3: Skills with annotation above -->
-                    <div class="annotation annotation-practice">
-                        Once ADVANCED learners are familiar with the product's general approaches, the next focus should be on the soft and technical skills most required for success. Practice these skills in authentic context!                    </div>
+                    <!-- Section 3: Skills -->
+                    <div id="skillsSection">
                         <h3>Skills to Know</h3>
                         <div id="nestedBoxes" class="nested-boxes"></div>
+                    </div>
+                    
+                    <div class="section-divider"></div>
+                    
+                    <!-- Getting Practice & Feedback section -->
+                    <div id="gettingPracticeFeedbackSection">
+                        <h2 style="margin-top: 0; margin-bottom: 15px; color: #2c3e50; font-size: 20px; font-weight: 600;">Getting Practice and Feedback</h2>
+                        <p style="margin: 0 0 10px 0; color: #555; font-size: 14px; line-height: 1.5;">You should practice thinking critically about how the <u><strong>product</strong></u>, it's <u><strong>general approaches</strong></u>, <u><strong>implicit skills</strong></u>, and our <u><strong>RFE philosophy</strong></u> come together to impact the client.</p>
+                        <ul style="margin: 15px 0; padding-left: 20px; color: #333; font-size: 14px; line-height: 1.6;">
+                            <li style="margin-bottom: 12px;">If your product has <a href="#" id="scenariosLink" style="color: #0056b3; text-decoration: underline;">scenarios</a>, these can be a good place to start. Read and reflect on what you might do in the context.
+                                <ul style="margin-top: 8px; padding-left: 20px;">
+                                    <li>How would you deliver the general approaches given that scenario?</li>
+                                    <li>What RFE philosophies would you apply and how?</li>
+                                    <li>How should specific skills be contextualized for the product itself?</li>
+                                </ul>
+                            </li>
+                            <li style="margin-bottom: 12px;">Go to <a href="https://claude.ai/project/0197b25f-0c03-732e-8e6e-09611d72ec16" target="_blank" style="color: #0056b3; text-decoration: underline;"><strong>Coach Arfie</strong></a>, select 'Advanced Learning', and copy the scenario to Arfie. Tell it your ideas, and ask for more challenges from the scenario. Arfie can combine products, skills, and RFE philosophy really well if you ask it to!</li>
+                            <li style="margin-bottom: 12px;">Check out the examples in the General Approach table, and see how other projects have handled similar challenges.</li>
+                            <li style="margin-bottom: 12px;">Go to your manager and share your thinking. What feedback do they have for you?</li>
+                        </ul>
+                    </div>
                     </div>
                 </div>
             </div>
@@ -1730,7 +1824,7 @@
             <h2 id="skillPopupTitle" style="color: #2c3e50; margin-bottom: 20px; font-size: 24px; font-weight: 600;"></h2>
             <div id="skillPopupConceptsContainer" style="display: none;">
                 <h3 style="color: #2c3e50; margin-bottom: 15px;">Associated Concepts</h3>
-                <div id="skillPopupConcepts" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 10px;"></div>
+                <div id="skillPopupConcepts" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px;"></div>
             </div>
         </div>
     </div>
@@ -1781,7 +1875,7 @@
     <!-- Skill Popup Modal (displays granular concepts from associated_concepts) -->
     <div id="skillPopupModal" class="skill-popup-modal">
         <div class="skill-popup-content">
-            <button class="skill-close-btn" onclick="closeSkillPopup()">&times;</button>
+            <button class="skill-close-btn" onclick="closeSkillMapPopup()">&times;</button>
             <div class="skill-popup-title" id="skillPopupTitle"></div>
             <div class="skill-popup-concepts" id="skillPopupConcepts"></div>
         </div>
@@ -1802,8 +1896,8 @@
                         <p style="font-size: 15px; color: #333; line-height: 1.6; margin: 0 0 20px 0; text-align: center; max-width: 900px; margin-left: auto; margin-right: auto;">
                             Welcome to the skill development page. This is where you can explore our 'knowledge hierarchy' and better understand what you need to know to do your job. Look around and pay attention to the below symbols indicating the expectations for you. Everything else is considered 'as needed', meaning you should know how to implement it <em>if you are delivering it as part of your work</em>.
                         </p>
-                        <p style="font-size: 14px; color: #6c757d; font-style: italic;">⭐ = Topics that all team members should know</p>
-                        <p style="font-size: 14px; color: #6c757d; font-style: italic;">🔴 = Topics that only managers and directors should know</p>
+                        <p style="font-size: 14px; color: #6c757d; font-style: italic;"><span style="font-style: normal;">⭐</span> = Topics that all team members should know</p>
+                        <p style="font-size: 14px; color: #6c757d; font-style: italic;"><span style="font-style: normal;">🔴</span> = Topics that only managers and directors should know</p>
                     </div>
                     
                     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 20px;">
@@ -1823,15 +1917,11 @@
                             <div style="font-size: 18px; font-weight: 600; color: white; text-align: center; padding: 12px 16px; border-radius: 8px; margin-bottom: 20px; background-color: #2b4085; cursor: pointer;">RFE MEL Methodologies</div>
                             <div style="background: #f8f9fa; border-radius: 8px; padding: 20px;">
                                 
-                                <!-- RFE Products Sub-section with Dropdown -->
+                                <!-- RFE Products Direct Link Button -->
                                 <div style="margin-bottom: 25px;">
-                                    <div class="dropdown-toggle" data-target="rfe-products-items" style="font-size: 14px; font-weight: 600; color: white; text-align: center; padding: 10px 14px; border-radius: 6px; margin-bottom: 15px; background-color: #5566b0; cursor: pointer; user-select: none; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                                    <button onclick="switchToProductsTab()" style="font-size: 14px; font-weight: 600; color: white; text-align: center; padding: 10px 14px; border-radius: 6px; margin-bottom: 15px; background-color: #5566b0; cursor: pointer; user-select: none; display: flex; align-items: center; justify-content: center; gap: 8px; border: none; width: 100%;">
                                         <span>RFE Products</span>
-                                        <span class="dropdown-arrow" style="display: inline-block; font-size: 12px;">▼</span>
-                                    </div>
-                                    <div id="rfe-products-items" class="dropdown-content" style="display: none; grid-template-columns: repeat(2, 1fr); gap: 12px;">
-                                        <!-- Populated by JavaScript -->
-                                    </div>
+                                    </button>
                                 </div>
                                 
                                 <!-- MEL Competencies Sub-section with Dropdown -->
@@ -2636,7 +2726,7 @@
       "Donor advisory"
     ],
     "description": "RFE facilitates periodic meetings with multiple organizations to increase the level of sharing learning about what works and what doesn't. CoPs are highly adaptive to donor and membership needs, meaning they may address a range of different topics, or have significantly different objectives. \n\nRFE can offer value by helping identify credible and transferrable data, and consolidating findings which hold across multiple organizations. In many cases, it is necessary to build some kind of 'shared learning agenda' that functions like a ToC or MEL plan and aligns learning for the group around a set of focused topics or research questions. ",
-    "when_to_use": "RFE might identify the COP as an appropriate product in cases where:\n\n> multiple organizations show clear similarities in region, intervention, or program objectives to support shared sense-making of what works / doesn't work;\n> there is interest in capacity building a group's MEL practices (often expressed by the donor for strengthening across a portfolio);\n> there is interest in leveraging the collective voice of multiple organizations for disseminating evidence or influence;\n\nRFE often applies the COP in direct response to donor expectations to create a learning community among grantees.",
+    "when_to_use": "RFE might identify the COP as an appropriate product in cases where:\n* Multiple organizations show clear similarities in region, intervention, or program objectives to support shared sense-making of what works / doesn't work\n* There is interest in capacity building a group's MEL practices (often expressed by the donor for strengthening across a portfolio)\n* There is interest in leveraging the collective voice of multiple organizations for disseminating evidence or influence\n\nRFE often applies the COP in direct response to donor expectations to create a learning community among grantees.",
     "resource_link": "https://ipastorage.box.com/s/5nuqmky3td37c51ea5shszctiby9u4b6",
     "button_text": "Build Communities of Practice",
     "approaches": [
@@ -3475,7 +3565,6 @@
             const useCase = document.getElementById('useCase');
             const approachesPyramid = document.getElementById('approachesPyramid');
             const nestedBoxes = document.getElementById('nestedBoxes');
-            const learnMoreBtn = document.getElementById('learnMoreBtn');
             const constructionSticker = document.getElementById('productConstructionSticker');
             
             // Set product name in header
@@ -3507,19 +3596,16 @@
             productDescription.textContent = data.description || 'Product description will appear here.';
             
             // Get annotation elements
-            const basicAnnotation = document.getElementById('basicAnnotation');
             const advancedAnnotation = document.getElementById('advancedAnnotation');
             const approachesDescription = document.getElementById('approachesDescription');
             
             // Update annotations and text based on product
             if (elementId === 'learning-plan-design') {
                 // LPD-specific annotations
-                basicAnnotation.textContent = 'Unlike other products, ALL staff should be prepared to deliver the LPD product, because it is implicit in so much of our work.';
                 advancedAnnotation.textContent = 'ALL STAFF should aim to deeply understand the how the LPD makes learning Right-Fit, and be able to think critically about how the LPD can be best applied for a given client.';
                 approachesDescription.textContent = 'The following approaches associate with each unique session that RFE gives during a Learning Plan Design workshop. Starting from the first session to the last, you should feel comfortable guiding others through each step.';
             } else {
                 // Default annotations for other products
-                basicAnnotation.textContent = 'This is BASIC knowledge that all RFE staff should know about products.';
                 advancedAnnotation.textContent = 'ADVANCED learners who are delivering products should aim to deeply understand the approaches we use to make products Right-Fit, and be able to think critically about how they should best be applied for a given client.';
                 approachesDescription.textContent = 'The following approaches are the most important components that the project team is responsible for delivering. Start at the foundation of the pyramid, and work your way up.';
             }
@@ -3584,11 +3670,47 @@
             
             // Handle related products (from spreadsheet Col 9 "Associated products (programmed)")
             // MAPPING NOTE: Related Products from spreadsheet Column 9 "Associated products (programmed)"
-            // Data flow: Sheet 1 Col 9 (semicolon-separated) â†’ popupData.associated_products array 
-            //           â†’ #relatedProductsGrid (green buttons, 3 columns, BASIC INFO tab)
-            // Click behavior: Opens related product's popup via showPopup(productId)
-            // Parser: Product name â†’ product_id (lowercase, spacesâ†’-, remove parens, &â†’and)
-            // When new spreadsheet: Column 9 must contain semicolon-separated exact product names from Column 2
+            // Data flow: Sheet 1 Col 9 (semicolon-separated product names) → popupData.associated_products array
+            //           → #relatedProductsGrid (green buttons, 3 columns, BASIC INFO tab)
+            // Click behavior: Looks up product by matching display_title in popupData, then opens popup via showPopup(productId)
+            // Lookup method: Searches popupData for matching display_title (handles names with parentheses/special chars correctly)
+            // When new spreadsheet: Column 9 must contain semicolon-separated product names that EXACTLY match display_title values
+            // Example: "Learning Plan Design (LPD)" in spreadsheet matches popupData["learning-plan-design-lpd"].display_title
+            // MAPPING NOTE: Related Products from spreadsheet Column 9 "Associated products (programmed)"
+            // Data flow: Sheet 1 Col 9 (semicolon-separated product names) → popupData.associated_products array
+            //           → #relatedProductsGrid (green buttons, 3 columns, BASIC INFO tab)
+            // Click behavior: Looks up product by matching display_title in popupData, then opens popup via showPopup(productId)
+            // Lookup method: Searches popupData for matching display_title (handles names with parentheses/special chars correctly)
+            // When new spreadsheet: Column 9 must contain semicolon-separated product names that EXACTLY match display_title values
+            // Example: "Learning Plan Design (LPD)" in spreadsheet matches popupData["learning-plan-design-lpd"].display_title
+            // MAPPING NOTE: Related Products from spreadsheet Column 9 "Associated products (programmed)"
+            // Data flow: Sheet 1 Col 9 (semicolon-separated product names) → popupData.associated_products array
+            //           → #relatedProductsGrid (green buttons, 3 columns, BASIC INFO tab)
+            // Click behavior: Looks up product by matching display_title in popupData, then opens popup via showPopup(productId)
+            // Lookup method: Searches popupData for matching display_title (handles names with parentheses/special chars correctly)
+            // When new spreadsheet: Column 9 must contain semicolon-separated product names that EXACTLY match display_title values
+            // Example: "Learning Plan Design (LPD)" in spreadsheet matches popupData["learning-plan-design-lpd"].display_title
+            // MAPPING NOTE: Related Products from spreadsheet Column 9 "Associated products (programmed)"
+            // Data flow: Sheet 1 Col 9 (semicolon-separated product names) → popupData.associated_products array
+            //           → #relatedProductsGrid (green buttons, 3 columns, BASIC INFO tab)
+            // Click behavior: Looks up product by matching display_title in popupData, then opens popup via showPopup(productId)
+            // Lookup method: Searches popupData for matching display_title (handles names with parentheses/special chars correctly)
+            // When new spreadsheet: Column 9 must contain semicolon-separated product names that EXACTLY match display_title values
+            // Example: "Learning Plan Design (LPD)" in spreadsheet matches popupData["learning-plan-design-lpd"].display_title
+            // MAPPING NOTE: Related Products from spreadsheet Column 9 "Associated products (programmed)"
+            // Data flow: Sheet 1 Col 9 (semicolon-separated product names) → popupData.associated_products array
+            //           → #relatedProductsGrid (green buttons, 3 columns, BASIC INFO tab)
+            // Click behavior: Looks up product by matching display_title in popupData, then opens popup via showPopup(productId)
+            // Lookup method: Searches popupData for matching display_title (handles names with parentheses/special chars correctly)
+            // When new spreadsheet: Column 9 must contain semicolon-separated product names that EXACTLY match display_title values
+            // Example: "Learning Plan Design (LPD)" in spreadsheet matches popupData["learning-plan-design-lpd"].display_title
+            // MAPPING NOTE: Related Products from spreadsheet Column 9 "Associated products (programmed)"
+            // Data flow: Sheet 1 Col 9 (semicolon-separated product names) → popupData.associated_products array
+            //           → #relatedProductsGrid (green buttons, 3 columns, BASIC INFO tab)
+            // Click behavior: Looks up product by matching display_title in popupData, then opens popup via showPopup(productId)
+            // Lookup method: Searches popupData for matching display_title (handles names with parentheses/special chars correctly)
+            // When new spreadsheet: Column 9 must contain semicolon-separated product names that EXACTLY match display_title values
+            // Example: "Learning Plan Design (LPD)" in spreadsheet matches popupData["learning-plan-design-lpd"].display_title
             const relatedProductsGrid = document.getElementById('relatedProductsGrid');
             if (relatedProductsGrid) {
                 relatedProductsGrid.innerHTML = '';
@@ -3600,9 +3722,20 @@
                         button.textContent = productName;
                         button.addEventListener('click', function(e) {
                             e.stopPropagation();
-                            // Convert product name to product_id and open that popup
-                            const productId = productName.toLowerCase().replace(/\s+/g, '-').replace(/[&\/()]/g, 'and').replace(/-+/g, '-').trim('-');
-                            showPopup(productId);
+                            // Find the product ID by matching display_title in popupData
+                            let foundProductId = null;
+                            for (const key in popupData) {
+                                if (popupData[key].display_title === productName || popupData[key].Display_Title === productName) {
+                                    foundProductId = key;
+                                    break;
+                                }
+                            }
+                            
+                            if (foundProductId) {
+                                showPopup(foundProductId);
+                            } else {
+                                console.warn('Product not found:', productName);
+                            }
                         });
                         relatedProductsGrid.appendChild(button);
                     });
@@ -3628,6 +3761,71 @@
                 data.arrangement = 'left-right';
             } else if (elementId === 'community-of-practice') {
                 data.arrangement = 'pyramid';
+                // Show Learner Roadmap for COP and hide yellow annotation
+                document.getElementById('learnerRoadmap').style.display = 'block';
+                document.getElementById('advancedAnnotation').style.display = 'none';
+                
+                // Show Understanding Product section and hide old approaches section
+                document.getElementById('understandingProductSection').style.display = 'block';
+                document.querySelector('.approaches-section').style.display = 'none';
+                
+                // Set product overview link from spreadsheet
+                const overviewLink = document.getElementById('productOverviewLink');
+                if (data.resource_link) {
+                    overviewLink.href = data.resource_link;
+                }
+                
+                // Populate approaches table
+                const tableBody = document.getElementById('approachesTableBody');
+                tableBody.innerHTML = '';
+                
+                if (data.approaches && data.approaches.length > 0) {
+                    data.approaches.forEach((approach, index) => {
+                        const row = document.createElement('tr');
+                        row.style.borderBottom = '1px solid #dee2e6';
+                        
+                        // Approach name cell
+                        const approachCell = document.createElement('td');
+                        approachCell.style.cssText = 'padding: 12px; border-right: 1px solid #dee2e6; color: #333; font-weight: 500;';
+                        approachCell.textContent = approach.title;
+                        
+                        // Examples cell (empty for now)
+                        const examplesCell = document.createElement('td');
+                        examplesCell.style.cssText = 'padding: 12px; color: #999;';
+                        examplesCell.textContent = '';
+                        
+                        row.appendChild(approachCell);
+                        row.appendChild(examplesCell);
+                        tableBody.appendChild(row);
+                    });
+                }
+                
+                // Set up Common Scenarios button to link to first scenario
+                const commonScenariosBtn = document.getElementById('commonScenariosBtn');
+                if (data.approaches && data.approaches.length > 0 && data.approaches[0].scenario_link) {
+                    commonScenariosBtn.href = data.approaches[0].scenario_link;
+                } else {
+                    commonScenariosBtn.style.display = 'none';
+                }
+                
+                // Update Skills section for COP
+                const skillsSection = document.getElementById('skillsSection');
+                // Clear existing h3 and keep nestedBoxes
+                const skillsPara = document.createElement('p');
+                skillsPara.style.cssText = 'margin: 0 0 10px 0; color: #555; font-size: 14px; line-height: 1.5;';
+                skillsPara.textContent = 'Product owners have also identified some skills that are implicit in its delivery. While we usually don\'t have specific resources for these, you can find numerous external links to help you.';
+                skillsSection.innerHTML = '';
+                skillsSection.appendChild(skillsPara);
+                skillsSection.appendChild(nestedBoxes);
+                
+                // Set scenarios link to first scenario if available
+                const scenariosLink = document.getElementById('scenariosLink');
+                if (data.approaches && data.approaches.length > 0 && data.approaches[0].scenario) {
+                    scenariosLink.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        showApproachPopup(data.approaches[0]);
+                    });
+                }
             }
             
             // Create approaches - choose template based on product arrangement
@@ -3807,14 +4005,6 @@
             }
 
             // Handle learn more button
-            if (data.resource_link && data.resource_link !== '#' && data.resource_link !== 'null' && data.resource_link) {
-                learnMoreBtn.href = data.resource_link;
-                learnMoreBtn.textContent = data.button_text || 'Learn More';
-                learnMoreBtn.style.display = 'inline-block';
-            } else {
-                learnMoreBtn.style.display = 'none';
-            }
-
             // Show modal
             modal.classList.add('active');
             document.body.style.overflow = 'hidden';
@@ -3999,7 +4189,7 @@ You have 12 more indicators to review in 90 minutes. Create a simple tool the te
             description.innerHTML = formattedDescription;
             
             // Show annotation
-            annotationContainer.innerHTML = 'We suggest spending 10-15 minutes planning out your response to the scenario. Check the <strong>scenario documentation</strong> to check your responses next to the product owner\'s ideas, or seek feedback from Coach Arfie.';
+            annotationContainer.innerHTML = 'We suggest spending 10-15 minutes planning out your response to the scenario. Check the <strong>scenario documentation</strong> to check your responses next to the product owner\'s ideas, or seek feedback from <a href="https://claude.ai/project/0197b25f-0c03-732e-8e6e-09611d72ec16" target="_blank" style="color: #0056b3; text-decoration: underline;">Coach Arfie</a>.';
             annotationContainer.style.display = 'block';
             
             // Set documentation link
@@ -4136,6 +4326,155 @@ You have 12 more indicators to review in 90 minutes. Create a simple tool the te
             }
         }
 
+        // Function to open simple skill popup on Skills Map page
+        function openSkillMapPopup(conceptId) {
+            const data = popupData[conceptId];
+            if (!data) {
+                console.warn('No popup data found for:', conceptId);
+                return;
+            }
+            
+            const modal = document.getElementById('skillPopupModal');
+            const titleEl = document.getElementById('skillPopupTitle');
+            const conceptsContainer = document.getElementById('skillPopupConceptsContainer');
+            const conceptsGrid = document.getElementById('skillPopupConcepts');
+            
+            // Set title
+            titleEl.textContent = data.display_title || data.Display_Title;
+            
+            // Populate associated concepts if they exist
+            if (data.associated_concepts && data.associated_concepts.length > 0 && !data.associated_concepts[0].includes('No associated')) {
+                conceptsContainer.style.display = 'block';
+                conceptsGrid.innerHTML = '';
+                
+                data.associated_concepts.forEach(conceptName => {
+                    const button = document.createElement('button');
+                    
+                    // Find this concept in popupData to get its data
+                    const conceptId2 = conceptName.toLowerCase().replace(/\s+/g, '-').replace(/[&\/()]/g, 'and').replace(/-+/g, '-').trim('-');
+                    const conceptData = popupData[conceptId2];
+                    
+                    // Add star if concept is ALL must know
+                    let displayHTML = conceptName;
+                    if (conceptData && conceptData.who_must_know === 'ALL') {
+                        displayHTML = '<span style="font-style: normal;">⭐</span> ' + conceptName;
+                    }
+                    
+                    button.innerHTML = displayHTML;
+                    button.style.cssText = 'background: #e8e8e8; padding: 8px 12px; border-radius: 6px; font-size: 12px; border: 1px solid #d0d0d0; cursor: pointer; transition: all 0.2s ease; position: relative;';
+                    
+                    button.addEventListener('mouseover', function() {
+                        this.style.background = '#d8d8d8';
+                        this.style.transform = 'translateY(-1px)';
+                    });
+                    button.addEventListener('mouseout', function() {
+                        this.style.background = '#e8e8e8';
+                        this.style.transform = 'translateY(0)';
+                    });
+                    
+                    // Add hover tooltip if concept has associated_concepts
+                    if (conceptData && conceptData.associated_concepts && conceptData.associated_concepts.length > 0 && !conceptData.associated_concepts[0].includes('No associated')) {
+                        const tooltip = document.createElement('div');
+                        tooltip.setAttribute('data-skill-tooltip', 'true');
+                        tooltip.style.cssText = 'position: fixed; background: #333; color: white; padding: 10px 14px; border-radius: 6px; font-size: 12px; opacity: 0; visibility: hidden; transition: opacity 0.3s ease; z-index: 9999; pointer-events: none; min-width: 200px;';
+                        
+                        let tooltipHTML = '';
+                        conceptData.associated_concepts.forEach((concept, index) => {
+                            tooltipHTML += `<div style="margin-bottom: ${index < conceptData.associated_concepts.length - 1 ? '0.8em' : '0'}; line-height: 1.3;">• ${concept}</div>`;
+                        });
+                        tooltip.innerHTML = tooltipHTML;
+                        
+                        document.body.appendChild(tooltip);
+                        
+                        button.addEventListener('mouseover', function() {
+                            this.style.background = '#d8d8d8';
+                            this.style.transform = 'translateY(-1px)';
+                            
+                            const rect = this.getBoundingClientRect();
+                            tooltip.style.left = rect.left + 'px';
+                            tooltip.style.top = (rect.bottom + 5) + 'px';
+                            tooltip.style.width = rect.width + 'px';
+                            tooltip.style.opacity = '1';
+                            tooltip.style.visibility = 'visible';
+                        });
+                        
+                        button.addEventListener('mouseout', function() {
+                            this.style.background = '#e8e8e8';
+                            this.style.transform = 'translateY(0)';
+                            tooltip.style.opacity = '0';
+                            tooltip.style.visibility = 'hidden';
+                        });
+                    } else {
+                        // Show "None" tooltip for concepts without associated_concepts
+                        const tooltip = document.createElement('div');
+                        tooltip.setAttribute('data-skill-tooltip', 'true');
+                        tooltip.style.cssText = 'position: fixed; background: #333; color: white; padding: 10px 14px; border-radius: 6px; font-size: 12px; opacity: 0; visibility: hidden; transition: opacity 0.3s ease; z-index: 9999; pointer-events: none; min-width: 200px;';
+                        tooltip.innerHTML = '<div style="line-height: 1.3;">None</div>';
+                        
+                        document.body.appendChild(tooltip);
+                        
+                        button.addEventListener('mouseover', function() {
+                            this.style.background = '#d8d8d8';
+                            this.style.transform = 'translateY(-1px)';
+                            
+                            const rect = this.getBoundingClientRect();
+                            tooltip.style.left = rect.left + 'px';
+                            tooltip.style.top = (rect.bottom + 5) + 'px';
+                            tooltip.style.width = rect.width + 'px';
+                            tooltip.style.opacity = '1';
+                            tooltip.style.visibility = 'visible';
+                        });
+                        
+                        button.addEventListener('mouseout', function() {
+                            this.style.background = '#e8e8e8';
+                            this.style.transform = 'translateY(0)';
+                            tooltip.style.opacity = '0';
+                            tooltip.style.visibility = 'hidden';
+                        });
+                    }
+                    
+                    button.addEventListener('click', function() {
+                        openSkillMapPopup(conceptId2);
+                    });
+                    conceptsGrid.appendChild(button);
+                });
+            } else {
+                conceptsContainer.style.display = 'none';
+            }
+            
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+        
+        // Function to close skill popup
+        function closeSkillMapPopup() {
+            // Clean up all tooltips that were created and appended to body
+            document.querySelectorAll('[data-skill-tooltip="true"]').forEach(tooltip => {
+                tooltip.remove();
+            });
+            
+            document.getElementById('skillPopupModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Function to switch to Products tab
+        function switchToProductsTab() {
+            const tabButtons = document.querySelectorAll('.header-tab-button');
+            const productsView = document.getElementById('productsView');
+            const skillsMapView = document.getElementById('skillsMapView');
+            
+            // Update active tab styling
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+            const productsTabButton = document.querySelector('[data-view="productsView"]');
+            if (productsTabButton) {
+                productsTabButton.classList.add('active');
+            }
+            
+            // Show/hide views
+            productsView.style.display = 'block';
+            skillsMapView.style.display = 'none';
+        }
+
         // Event listeners
         document.addEventListener('DOMContentLoaded', function() {
             console.log('Popup data loaded:', Object.keys(popupData).length, 'items');
@@ -4156,9 +4495,9 @@ You have 12 more indicators to review in 90 minutes. Create a simple tool the te
                     
                     // Add emoji based on who_must_know field
                     if (data.who_must_know === 'ALL') {
-                        box.textContent = '⭐ ' + cleanText;
+                        box.innerHTML = '<span style="font-style: normal;">⭐</span> ' + cleanText;
                     } else if (data.who_must_know === 'managers_and_directors') {
-                        box.textContent = '🔴 ' + cleanText;
+                        box.innerHTML = '<span style="font-style: normal;">🔴</span> ' + cleanText;
                     }
                 }
             });
@@ -4300,130 +4639,6 @@ You have 12 more indicators to review in 90 minutes. Create a simple tool the te
             //   - "management-skills-and-processes" → Management Skills & Processes section
             // When spreadsheet updates: Column C values will automatically update this mapping
             
-            // Function to open simple skill popup on Skills Map page
-            function openSkillMapPopup(conceptId) {
-                const data = popupData[conceptId];
-                if (!data) {
-                    console.warn('No popup data found for:', conceptId);
-                    return;
-                }
-                
-                const modal = document.getElementById('skillPopupModal');
-                const titleEl = document.getElementById('skillPopupTitle');
-                const conceptsContainer = document.getElementById('skillPopupConceptsContainer');
-                const conceptsGrid = document.getElementById('skillPopupConcepts');
-                
-                // Set title
-                titleEl.textContent = data.display_title || data.Display_Title;
-                
-                // Populate associated concepts if they exist
-                if (data.associated_concepts && data.associated_concepts.length > 0 && !data.associated_concepts[0].includes('No associated')) {
-                    conceptsContainer.style.display = 'block';
-                    conceptsGrid.innerHTML = '';
-                    
-                    data.associated_concepts.forEach(conceptName => {
-                        const button = document.createElement('button');
-                        
-                        // Find this concept in popupData to get its data
-                        const conceptId2 = conceptName.toLowerCase().replace(/\s+/g, '-').replace(/[&\/()]/g, 'and').replace(/-+/g, '-').trim('-');
-                        const conceptData = popupData[conceptId2];
-                        
-                        // Add star if concept is ALL must know
-                        let displayText = conceptName;
-                        if (conceptData && conceptData.who_must_know === 'ALL') {
-                            displayText = '⭐ ' + conceptName;
-                        }
-                        
-                        button.textContent = displayText;
-                        button.style.cssText = 'background: #e8e8e8; padding: 8px 12px; border-radius: 6px; font-size: 12px; border: 1px solid #d0d0d0; cursor: pointer; transition: all 0.2s ease; position: relative;';
-                        
-                        button.addEventListener('mouseover', function() {
-                            this.style.background = '#d8d8d8';
-                            this.style.transform = 'translateY(-1px)';
-                        });
-                        button.addEventListener('mouseout', function() {
-                            this.style.background = '#e8e8e8';
-                            this.style.transform = 'translateY(0)';
-                        });
-                        
-                        // Add hover tooltip if concept has associated_concepts
-                        if (conceptData && conceptData.associated_concepts && conceptData.associated_concepts.length > 0 && !conceptData.associated_concepts[0].includes('No associated')) {
-                            const tooltip = document.createElement('div');
-                            tooltip.style.cssText = 'position: fixed; background: #333; color: white; padding: 10px 14px; border-radius: 6px; font-size: 12px; opacity: 0; visibility: hidden; transition: opacity 0.3s ease; z-index: 9999; pointer-events: none; min-width: 200px;';
-                            
-                            let tooltipHTML = '';
-                            conceptData.associated_concepts.forEach((concept, index) => {
-                                tooltipHTML += `<div style="margin-bottom: ${index < conceptData.associated_concepts.length - 1 ? '0.8em' : '0'}; line-height: 1.3;">• ${concept}</div>`;
-                            });
-                            tooltip.innerHTML = tooltipHTML;
-                            
-                            document.body.appendChild(tooltip);
-                            
-                            button.addEventListener('mouseover', function() {
-                                this.style.background = '#d8d8d8';
-                                this.style.transform = 'translateY(-1px)';
-                                
-                                const rect = this.getBoundingClientRect();
-                                tooltip.style.left = rect.left + 'px';
-                                tooltip.style.top = (rect.bottom + 5) + 'px';
-                                tooltip.style.width = rect.width + 'px';
-                                tooltip.style.opacity = '1';
-                                tooltip.style.visibility = 'visible';
-                            });
-                            
-                            button.addEventListener('mouseout', function() {
-                                this.style.background = '#e8e8e8';
-                                this.style.transform = 'translateY(0)';
-                                tooltip.style.opacity = '0';
-                                tooltip.style.visibility = 'hidden';
-                            });
-                        } else {
-                            // Show "None" tooltip for concepts without associated_concepts
-                            const tooltip = document.createElement('div');
-                            tooltip.style.cssText = 'position: fixed; background: #333; color: white; padding: 10px 14px; border-radius: 6px; font-size: 12px; opacity: 0; visibility: hidden; transition: opacity 0.3s ease; z-index: 9999; pointer-events: none; min-width: 200px;';
-                            tooltip.innerHTML = '<div style="line-height: 1.3;">None</div>';
-                            
-                            document.body.appendChild(tooltip);
-                            
-                            button.addEventListener('mouseover', function() {
-                                this.style.background = '#d8d8d8';
-                                this.style.transform = 'translateY(-1px)';
-                                
-                                const rect = this.getBoundingClientRect();
-                                tooltip.style.left = rect.left + 'px';
-                                tooltip.style.top = (rect.bottom + 5) + 'px';
-                                tooltip.style.width = rect.width + 'px';
-                                tooltip.style.opacity = '1';
-                                tooltip.style.visibility = 'visible';
-                            });
-                            
-                            button.addEventListener('mouseout', function() {
-                                this.style.background = '#e8e8e8';
-                                this.style.transform = 'translateY(0)';
-                                tooltip.style.opacity = '0';
-                                tooltip.style.visibility = 'hidden';
-                            });
-                        }
-                        
-                        button.addEventListener('click', function() {
-                            openSkillMapPopup(conceptId2);
-                        });
-                        conceptsGrid.appendChild(button);
-                    });
-                } else {
-                    conceptsContainer.style.display = 'none';
-                }
-                
-                modal.style.display = 'flex';
-                document.body.style.overflow = 'hidden';
-            }
-            
-            // Function to close skill popup
-            function closeSkillMapPopup() {
-                document.getElementById('skillPopupModal').style.display = 'none';
-                document.body.style.overflow = 'auto';
-            }
-            
             // Helper function to create skill item button
             function createSkillItemButton(conceptId, displayTitle, whoMustKnow, associatedConcepts) {
                 const item = document.createElement('div');
@@ -4431,14 +4646,14 @@ You have 12 more indicators to review in 90 minutes. Create a simple tool the te
                 item.style.cssText = 'background: #e8e8e8; padding: 10px 14px; border-radius: 6px; font-size: 13px; font-weight: 500; text-align: center; border: 1px solid #d0d0d0; color: #333; cursor: pointer; transition: all 0.2s ease; position: relative;';
                 
                 // Add emoji prefix based on who_must_know
-                let displayText = displayTitle;
+                let displayHTML = displayTitle;
                 if (whoMustKnow === 'ALL') {
-                    displayText = '⭐ ' + displayTitle;
+                    displayHTML = '<span style="font-style: normal;">⭐</span> ' + displayTitle;
                 } else if (whoMustKnow === 'managers_and_directors') {
-                    displayText = '🔴 ' + displayTitle;
+                    displayHTML = '<span style="font-style: normal;">🔴</span> ' + displayTitle;
                 }
                 
-                item.textContent = displayText;
+                item.innerHTML = displayHTML;
                 item.setAttribute('data-popup', conceptId);
                 
                 // Click to open skill popup (not product popup)
@@ -4462,7 +4677,6 @@ You have 12 more indicators to review in 90 minutes. Create a simple tool the te
             // Populate Skills Mapping sections from popupData
             const skillsMappingCategories = {
                 'rfe-philosophy': document.getElementById('rfe-philosophy-items'),
-                'rfe-products': document.getElementById('rfe-products-items'),
                 'mel-competencies': document.getElementById('mel-competencies-items'),
                 'internal-processes': document.getElementById('internal-processes-items'),
                 'consulting-and-communication-skills': document.getElementById('consulting-and-communication-skills-items'),
@@ -4483,8 +4697,6 @@ You have 12 more indicators to review in 90 minutes. Create a simple tool the te
                 // Map skills_mapping values to category containers
                 if (data.skills_mapping === 'rfe-philosophy') {
                     categoryKey = 'rfe-philosophy';
-                } else if (data.skills_mapping === 'rfe-product') {
-                    categoryKey = 'rfe-products';
                 } else if (data.skills_mapping === 'mel-competency') {
                     categoryKey = 'mel-competencies';
                 } else if (data.skills_mapping === 'internal-processes') {
