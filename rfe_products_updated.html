@@ -1848,7 +1848,6 @@
             <div class="tab-navigation">
                 <button class="tab-button active" onclick="switchTab(event, 'basic')">Basic Info</button>
                 <button class="tab-button" onclick="switchTab(event, 'advanced')">Advanced Info</button>
-                <button class="tab-button tab-button-nonipa" onclick="switchTab(event, 'nonipa')">Non-IPA Resources</button>
             </div>
             
             <!-- Basic Info Tab -->
@@ -1935,17 +1934,16 @@
                     <div id="advancedAnnotation" style="display:none;"></div>
                     <div id="nestedBoxes" style="display:none;"></div>
 
-                </div>
-            </div>
-            <!-- Non-IPA Resources Tab (Template A) -->
-            <!-- MAPPING NOTE: other_resources_buttons ← product_popup_lists "Other resources tab" column -->
-            <div id="nonIpaTab" class="tab-content">
-                <div class="popup-single-column">
+                    <div class="section-divider"></div>
+
+                    <!-- Non-IPA Resources (Template A) -->
+                    <!-- MAPPING NOTE: other_resources_buttons ← product_popup_lists "Other resources tab" column -->
                     <div class="adv-section">
                         <h2 class="adv-section-title">Non-IPA Resources</h2>
                         <p class="nonipa-intro">RFE staff implementing the product may want to look at how other organizations structure similar work.</p>
                         <div id="nonipa-buttons" class="adv-button-grid" style="margin-top:16px;"></div>
                     </div>
+
                 </div>
             </div>
             <!-- Template B: tabbed view for all-must-know products -->
@@ -1956,7 +1954,6 @@
                 <!-- Template B Tab Navigation -->
                 <div class="tab-navigation tb-tab-navigation">
                     <button class="tab-button tb-tab-button active" onclick="switchTbTab(event, 'tb-advanced')">Advanced Info</button>
-                    <button class="tab-button tab-button-nonipa tb-tab-button" onclick="switchTbTab(event, 'tb-nonipa')">Non-IPA Resources</button>
                 </div>
 
                 <!-- Template B: Advanced tab -->
@@ -2010,16 +2007,16 @@
                     <div id="tb-feedback-buttons" class="adv-button-grid"></div>
                 </div>
 
+                <div class="section-divider"></div>
+
+                <!-- Non-IPA Resources (Template B) -->
+                <!-- MAPPING NOTE: tb-nonipa-buttons ← product_popup_lists "Other resources tab" column -->
+                <div class="adv-section">
+                    <h2 class="adv-section-title">Non-IPA Resources</h2>
+                    <p class="nonipa-intro">RFE staff implementing the product may want to look at how other organizations structure similar work.</p>
+                    <div id="tb-nonipa-buttons" class="adv-button-grid" style="margin-top:16px;"></div>
                 </div>
 
-                <!-- Template B: Non-IPA Resources tab -->
-                <!-- MAPPING NOTE: tb-nonipa-buttons ← product_popup_lists "Other resources tab" column -->
-                <div id="tb-nonipa-tab" class="tab-content tb-tab-content" style="overflow-y:auto; padding: 25px; flex:1;">
-                    <div class="adv-section">
-                        <h2 class="adv-section-title">Non-IPA Resources</h2>
-                        <p class="nonipa-intro">RFE staff implementing the product may want to look at how other organizations structure similar work.</p>
-                        <div id="tb-nonipa-buttons" class="adv-button-grid" style="margin-top:16px;"></div>
-                    </div>
                 </div>
 
             </div>
@@ -2205,7 +2202,7 @@
         /*
            ================================================================================
            MAPPING DOCUMENTATION - SPREADSHEET TO POPUPDATA TO HTML
-           Last updated: 2026-04-14 (v28) — (Monitoring) Indicator Design: +3 buttons; RFE-aligned Indicator Design: removed
+           Last updated: 2026-04-14 (v30) — Non-IPA Resources: restored intro paragraph
            ================================================================================
 
            SPREADSHEET SOURCE:
@@ -3308,7 +3305,7 @@ function renderButtons(containerId, buttons) {
     if (!buttons || buttons.length === 0) {
         const isNonIpa = containerId === 'nonipa-buttons' || containerId === 'tb-nonipa-buttons';
         container.innerHTML = isNonIpa
-            ? '<p class="adv-coming-soon" style="font-style:italic; color:#999;">No current external resources</p>'
+            ? '<p style="font-style:italic; color:#999;">No content for product</p>'
             : '<p class="adv-coming-soon">Content coming soon.</p>';
         return;
     }
@@ -3650,7 +3647,6 @@ function closeStagePopup() {
         }
 
         // Close approach popup function
-        // Tab switching function for popup modal
         function switchTab(event, tabName) {
             // Hide all Template A tab contents (exclude tb-tab-content)
             document.querySelectorAll('.tab-content:not(.tb-tab-content)').forEach(tab => tab.classList.remove('active'));
@@ -3663,23 +3659,18 @@ function closeStagePopup() {
                 document.getElementById('basicInfoTab').classList.add('active');
             } else if (tabName === 'advanced') {
                 document.getElementById('advancedInfoTab').classList.add('active');
-            } else if (tabName === 'nonipa') {
-                document.getElementById('nonIpaTab').classList.add('active');
             }
             
             // Add active class to clicked button
             event.target.classList.add('active');
         }
 
-        // Tab switching for Template B (Advanced / Non-IPA Resources)
-        // MAPPING NOTE: tb-advanced-tab ← Advanced Info content; tb-nonipa-tab ← other_resources_buttons
+        // Tab switching for Template B
         function switchTbTab(event, tabName) {
             document.querySelectorAll('.tb-tab-content').forEach(tab => tab.classList.remove('active'));
             document.querySelectorAll('.tb-tab-button').forEach(btn => btn.classList.remove('active'));
             if (tabName === 'tb-advanced') {
                 document.getElementById('tb-advanced-tab').classList.add('active');
-            } else if (tabName === 'tb-nonipa') {
-                document.getElementById('tb-nonipa-tab').classList.add('active');
             }
             event.target.classList.add('active');
         }
