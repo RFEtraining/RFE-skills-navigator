@@ -37,7 +37,7 @@
 	.main-intro {
 	    flex-basis: 100%;
 	    font-size: 15px;
-	    color: #333;
+	    color: #555;
 	    line-height: 1.6;
 	    margin: 0 0 10px 0;
 	}
@@ -45,269 +45,317 @@
 		flex: 1;
 }
         
-        /* Stage Headers with Sidebar */
+        /* Stage Headers */
         .stages-header {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
-            gap: 20px;
-            margin-bottom: 10px;
-            align-items: start;
+            gap: 0;
+            margin-bottom: 0;
+            align-items: stretch;
+            border-radius: 12px 12px 0 0;
+            overflow: hidden;
         }
         
         .stage-column {
             text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 16px 8px 12px;
+            position: relative;
         }
+        .stage-column:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            right: 0; top: 15%; bottom: 15%;
+            width: 1px;
+            background: rgba(255,255,255,0.25);
+        }
+
+        .ideate-column  { background: #3d9e47; }
+        .refine-column  { background: #007d70; }
+        .prove-column   { background: #d94b1f; }
+        .adapt-column   { background: #5bbfc4; }
+        .scale-column   { background: #3347a3; }
         
         .stage-icon {
-            width: 60px;
-            height: 60px;
-            margin: 0 auto 15px;
-            border-radius: 12px;
+            width: 44px;
+            height: 44px;
+            margin: 0 auto 10px;
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 24px;
             color: white;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            background-size: 36px 36px;
+            background: rgba(255,255,255,0.18);
+            background-size: 28px 28px;
             background-repeat: no-repeat;
             background-position: center;
         }
         
-        
-         .ideate-icon { 
-            background-color: #4caf50;
+        .ideate-icon { 
+            background-color: rgba(255,255,255,0.15);
             background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white"><path d="M9 21c0 .5.4 1 1 1h4c.6 0 1-.5 1-1v-1H9v1zm3-19C8.1 2 5 5.1 5 9c0 2.4 1.2 4.5 3 5.7V17c0 .5.4 1 1 1h6c.6 0 1-.5 1-1v-2.3c1.8-1.3 3-3.4 3-5.7 0-3.9-3.1-7-7-7z"/></svg>');
         }
         .refine-icon { 
-            background-color: #009688;
+            background-color: rgba(255,255,255,0.15);
             background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white"><path d="M2,8 L22,8 L22,10 L2,10 Z M2,14 L22,14 L22,16 L2,16 Z M12,6 L16,6 L16,12 L12,12 Z M6,12 L10,12 L10,18 L6,18 Z"/></svg>');
         }
         .prove-icon { 
-            background-color: #ff5722;
+            background-color: rgba(255,255,255,0.15);
             background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white"><path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z"/></svg>');
         }
         .adapt-icon { 
-            background-color: #84d0d4;
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="25" cy="50" r="12" fill="none" stroke="white" stroke-width="2"/><circle cx="75" cy="50" r="12" fill="none" stroke="white" stroke-width="2"/><defs><marker id="arcArrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><polygon points="0 0, 10 3, 0 6" fill="white"/></marker></defs><path d="M 25 38 Q 50 15 75 38" stroke="white" stroke-width="2" fill="none" marker-end="url(%23arcArrowhead)"/></svg>');
+            background-color: rgba(255,255,255,0.15);
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><g transform="translate(50,50) scale(3.9) translate(-12,-12)"><path d="M17.65 6.35A7.958 7.958 0 0 0 12 4C7.58 4 4 7.58 4 12s3.58 8 8 8c3.73 0 6.84-2.55 7.73-6h-2.08A5.99 5.99 0 0 1 12 18c-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z" fill="white"/></g></svg>');
         }
         .scale-icon { 
-            background-color: #3f51b5;
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect x="20" y="60" width="10" height="20" fill="none" stroke="white" stroke-width="2"/><rect x="45" y="40" width="10" height="40" fill="none" stroke="white" stroke-width="2"/><rect x="70" y="20" width="10" height="60" fill="none" stroke="white" stroke-width="2"/><defs><marker id="arrowhead2" markerWidth="10" markerHeight="10" refX="5" refY="5" orient="auto"><polygon points="0 10, 5 0, 10 10" fill="white"/></marker></defs><path d="M 30 15 L 80 15" stroke="white" stroke-width="2" fill="none" marker-end="url(%23arrowhead2)"/></svg>');
+            background-color: rgba(255,255,255,0.15);
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect x="18" y="62" width="14" height="20" rx="2" fill="white"/><rect x="43" y="46" width="14" height="36" rx="2" fill="white"/><rect x="68" y="28" width="14" height="54" rx="2" fill="white"/><line x1="18" y1="60" x2="82" y2="26" stroke="rgba(255,255,255,0.75)" stroke-width="3" stroke-linecap="round" stroke-dasharray="5 4"/></svg>');
         }
          
         .stage-title {
-            font-size: 18px;
-            font-weight: 600;
-            color: white;
-            padding: 12px 20px;
-            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 700;
+            color: rgba(255,255,255,0.95);
+            padding: 5px 0;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
             cursor: pointer;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            transition: opacity 0.15s;
+            background: none;
         }
         
-        .stage-title:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        }
+        .stage-title:hover { opacity: 0.75; }
         
-        .ideate-title { background-color: #4caf50; }
-        .refine-title { background-color: #009688; }
-        .prove-title { background-color: #ff5722; }
-        .adapt-title { background-color: #84d0d4; color: #2c3e50; }
-        .scale-title { background-color: #3f51b5; }
+        /* These are now handled by stage-column bg */
+        .ideate-title, .refine-title, .prove-title, .adapt-title, .scale-title {
+            background-color: transparent;
+            color: rgba(255,255,255,0.95);
+        }
         
         /* Products Wrapper and Container */
         .products-wrapper {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
-            gap: 20px;
+            gap: 0;
         }
         
         .products-container {
             grid-column: 1 / 6;
-            background: white;
-            border-radius: 12px;
-            padding: 15px;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+            background: #f7f7f9;
+            border-radius: 0 0 12px 12px;
+            padding: 16px;
+            border: 1px solid #e8e8ee;
+            border-top: none;
         }
         
         .products-grid {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
-            gap: 15px;
-            grid-template-rows: repeat(6, 70px);
+            gap: 10px;
+            grid-template-rows: repeat(6, 64px);
         }
         
         .product-box {
-            background: #5566b0;
-            color: white;
+            background: #fff;
+            color: #1a1a2e;
             border-radius: 8px;
-            padding: 12px;
-            font-size: 14px;
-            font-weight: 500;
+            padding: 10px 12px;
+            font-size: 13px;
+            font-weight: 600;
             text-align: center;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            border: 1px solid #e0e0eb;
+            border-left: 4px solid #9ca3af;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
             cursor: pointer;
+            line-height: 1.3;
         }
         
         .product-box:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            box-shadow: 0 5px 16px rgba(0,0,0,0.12);
         }
-        
-        /* Specific product positioning */
+
+        /* Stage-tinted product boxes — light fill + hard left edge matching actual column position */
+
+        /* Col 1 = Ideate (green) */
+        .problem-identification {
+            background: #edf7ee;
+            border-left-color: #3d9e47;
+            color: #1a3d1e;
+        }
+        .evidence-review {
+            background: #edf7ee;
+            border-left-color: #3d9e47;
+            color: #1a3d1e;
+        }
+        .user-research {
+            background: #edf7ee;
+            border-left-color: #3d9e47;
+            color: #1a3d1e;
+        }
+
+        /* Col 2 = Refine (teal) */
+        .process-evaluation {
+            background: #e6f4f2;
+            border-left-color: #007d70;
+            color: #003d37;
+        }
+        .ab-testing {
+            background: #e6f4f2;
+            border-left-color: #007d70;
+            color: #003d37;
+        }
+
+        /* Monitoring TA spans col 2-6 → gradient from teal through prove/adapt/scale */
+        .monitoring-ta {
+            background: linear-gradient(to right, #cceae6, #fde0d6, #d6f0f1, #d9dff5);
+            border-left-color: #007d70;
+            color: #1a1a2e;
+
+        }
+
+        /* Col 3 = Prove (red-orange) — impact eval is greyed out but tinted underneath */
+        .impact-evaluation-unavailable {
+            grid-column: 3; grid-row: 3;
+            border-left: 4px solid #d94b1f !important;
+        }
+
+        /* LPD — spans ALL 5 stages → full gradient */
         .learning-plan-design {
             grid-column: 1 / 6;
             grid-row: 1;
-            position: relative;
+            background: linear-gradient(to right, #d4edda, #cceae6, #fde0d6, #d6f0f1, #d9dff5);
+            border-left: 5px solid #3d9e47;
+            color: #1a1a2e;
+            font-size: 14px;
         }
-        
-        .learning-plan-design::before {
-            content: '';
-            position: absolute;
-            top: 8px;
-            right: 12px;
-            width: 20px;
-            height: 20px;
-        }
-        
-        .problem-diagnostic {
-            grid-column: 1;
-            grid-row: 2;
-        }
-        
-        .monitoring-ta {
-            grid-column: 2 / 6;
-            grid-row: 2;
-        }
-        
-        .evidence-review {
-            grid-column: 1;
-            grid-row: 3;
-        }
-        
-        .process-evaluation {
-            grid-column: 2;
-            grid-row: 3;
-        }
-        
-        .impact-evaluation {
-            grid-column: 3;
-            grid-row: 3;
-            background: white;
-            color: #5566b0;
-            border: 2px solid #5566b0;
-        }
-        
-        .user-research {
-            grid-column: 1;
-            grid-row: 4;
-        }
-        
-        .ab-testing {
-            grid-column: 2;
-            grid-row: 4;
-        }
-        
+
+        /* Cost Effectiveness — spans ALL 5 stages → full gradient */
         .cost-effectiveness-modelling {
             grid-column: 1 / 6;
             grid-row: 5;
+            background: linear-gradient(to right, #d4edda, #cceae6, #fde0d6, #d6f0f1, #d9dff5);
+            border-left: 5px solid #3d9e47;
+            color: #1a1a2e;
+        }
+
+        /* Non-stage products sidebar — bold names */
+        .non-aligned-product { font-weight: 600; }
+
+        /* Non-aligned sidebar container */
+        .non-aligned-container {
+            position: relative;
+            width: 220px;
+            background: #faf8f4;
+            border-radius: 12px;
+            padding: 20px;
+            height: fit-content;
+            flex-shrink: 0;
+            margin-top: 280px;
+            border: 1px solid #e8e2d8;
+            border-left: 4px solid #b5a48a;
+        }
+        .non-aligned-title {
+            font-size: 11px;
+            font-weight: 700;
+            color: #9a8c78;
+            margin-bottom: 16px;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+        .non-aligned-products {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .non-aligned-product {
+            background: #fff;
+            color: #3d3428;
+            padding: 10px 14px;
+            border-radius: 7px;
+            font-size: 13px;
+            font-weight: 600;
+            text-align: center;
+            border: 1px solid #e8e2d8;
+            border-left: 3px solid #b5a48a;
+            transition: background 0.15s, transform 0.15s;
+            cursor: pointer;
+        }
+        .non-aligned-product:hover {
+            background: #f5f0e8;
+            transform: translateY(-1px);
+        }
+        
+        .learning-plan-design {
+            grid-column: 1 / 6;
+            grid-row: 1;
+        }
+
+        .evidence-review       { grid-column: 1; grid-row: 3; }
+        .process-evaluation    { grid-column: 2; grid-row: 3; }
+        .problem-identification { grid-column: 1; grid-row: 2; }
+        .monitoring-ta         { grid-column: 2 / 6; grid-row: 2; }
+        .user-research         { grid-column: 1; grid-row: 4; }
+        .ab-testing            { grid-column: 2; grid-row: 4; }
+        .cost-effectiveness-modelling { grid-column: 1 / 6; grid-row: 5; }
+
+        .impact-evaluation-unavailable {
+            grid-column: 3; grid-row: 3;
         }
         
         /* Adapt stage note */
         .adapt-note {
             grid-column: 4;
             grid-row: 3 / 5;
-            background: #f8f9fa;
-            border: 2px dashed #84d0d4;
-            color: #6c757d;
-            font-size: 12px;
-            font-style: italic;
+            background: #edf9fa;
+            border: 1.5px dashed #5bbfc4;
+            color: #3d7c80;
+            font-size: 11px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             text-align: center;
-            padding: 12px;
+            padding: 10px;
             border-radius: 8px;
         }
         
         .adapt-note-title {
-            font-weight: 600;
+            font-weight: 400;
             margin-bottom: 8px;
-            color: #495057;
-            font-size: 10px;
+            color: #2e6e72;
+            font-size: 9px;
+            line-height: 1.45;
+            font-style: italic;
         }
         
         .adapt-concepts {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 6px;
-            margin-top: 8px;
+            gap: 4px;
+            margin-top: 6px;
             width: 100%;
         }
         
         .adapt-concept {
             background: white;
-            padding: 4px 8px;
+            padding: 3px 6px;
             border-radius: 4px;
-            font-size: 10px;
-            font-weight: 500;
-            border: 1px solid #dee2e6;
-            color: #495057;
-        }
-        
-        /* Non-aligned Products Sidebar */
-        .non-aligned-container {
-	    position: relative;
-	    width: 250px;
-            background: white;
-            border-radius: 12px;
-            padding: 25px;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-            height: fit-content;
-	    flex-shrink: 0;
-	    margin-top: 280px;
-        }
-
-	.non-aligned-title {
-            font-size: 16px;
+            font-size: 9px;
             font-weight: 600;
-            color: #6c757d;
-            margin-bottom: 20px;
-            text-align: center;
-            font-style: italic;
+            border: 1px solid #b8e4e6;
+            color: #2e6e72;
         }
         
-        .non-aligned-products {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-        
-        .non-aligned-product {
-            background: #5566b0;
-            color: white;
-            padding: 12px 16px;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 500;
-            text-align: center;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            transition: transform 0.2s ease;
-            cursor: pointer;
-        }
-        
-        .non-aligned-product:hover {
-            transform: translateY(-2px);
-        }
+        /* Non-aligned sidebar styles above */
 
         /* Popup Modal Styles */
         .popup-modal {
@@ -333,9 +381,9 @@
             background: white;
             border-radius: 16px;
             padding: 0;
-            max-width: 900px;
-            width: 92%;
-            max-height: 92vh;
+            max-width: 1200px;
+            width: 95%;
+            max-height: 90vh;
             overflow: hidden;
             position: relative;
             animation: slideIn 0.3s ease;
@@ -431,6 +479,11 @@
         .v7-rm-num { font-size: 13px; font-weight: 700; color: #aaa; }
         .v7-rm-name { font-size: 14px; font-weight: 700; color: #1a1a1a; }
         .v7-rm-sub { font-size: 12px; color: #aaa; line-height: 1.4; }
+        .v7-rm-step.active { background: #e8f2fb !important; }
+        .v7-rm-step.active .v7-rm-num { color: #185FA5 !important; font-weight: 900; }
+        .v7-rm-step.active .v7-rm-name { color: #185FA5 !important; }
+        .v7-rm-step { cursor: pointer; transition: background 0.15s; }
+        .v7-rm-step:hover { background: #f0f6fc; }
         .v7-rm-step.core .v7-rm-num { color: #185FA5; animation: rm-pulse-num 3s ease-in-out infinite; }
         .v7-rm-step.core .v7-rm-name { color: #185FA5; }
         .v7-rm-step:not(.core) .v7-rm-name { color: #aaa; }
@@ -1409,6 +1462,28 @@
         .nonipa-intro { font-size: 14px; color: #555; margin-bottom: 16px; line-height: 1.5; }
         #skillPopupRelatedProductsGrid .adv-btn    { background: #00897b; color: white; cursor: pointer; }
         #skillPopupRelatedProductsGrid .adv-btn:hover { filter: brightness(0.85); }
+        #skillPopupButtons,
+        #skillPopupRelatedProductsGrid {
+            display: flex !important;
+            flex-direction: column !important;
+            flex-wrap: nowrap !important;
+            gap: 8px;
+            width: 100%;
+        }
+        #skillPopupButtons .adv-btn,
+        #skillPopupRelatedProductsGrid .adv-btn {
+            flex: 0 0 auto !important;
+            min-width: 0 !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            font-size: 12px;
+            padding: 10px 12px;
+            box-sizing: border-box;
+        }
+        #skillPopupButtons .adv-btn-title,
+        #skillPopupRelatedProductsGrid .adv-btn-title { font-size: 12px; }
+        #skillPopupButtons .adv-btn-explanation,
+        #skillPopupRelatedProductsGrid .adv-btn-explanation { font-size: 11px; }
 
         /* Template B (all-must-know): hide tab nav and Template A divs, show template-b-view */
         .popup-modal.template-b .v7-tab-nav           { display: none; }
@@ -1462,18 +1537,53 @@
 
         /* Skill popup section styles */
         .skill-popup-section {
-            margin-top: 20px;
-            padding-top: 16px;
-            border-top: 1px solid #e9ecef;
+            margin-top: 12px;
+            border-top: 0.5px solid #e0e0e0;
         }
 
         .skill-popup-section-header {
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.8px;
             color: #888;
-            margin: 0 0 10px 0;
+            margin: 0;
+        }
+
+        /* Accordion toggle button wrapping the header */
+        .skill-section-toggle {
+            width: 100%;
+            background: none;
+            border: none;
+            padding: 14px 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            text-align: left;
+            gap: 8px;
+        }
+        .skill-section-toggle:hover .skill-popup-section-header { color: #555; }
+        .skill-section-chevron {
+            flex-shrink: 0;
+            width: 16px;
+            height: 16px;
+            color: #bbb;
+            transition: transform 0.2s ease;
+        }
+        .skill-section-toggle.open .skill-section-chevron {
+            transform: rotate(180deg);
+            color: #888;
+        }
+        .skill-section-body-wrap {
+            overflow: hidden;
+            max-height: 0;
+            transition: max-height 0.25s ease, padding 0.2s ease;
+            padding-bottom: 0;
+        }
+        .skill-section-body-wrap.open {
+            max-height: 1200px;
+            padding-bottom: 14px;
         }
 
         .skill-popup-section-body {
@@ -1481,6 +1591,24 @@
             color: #555;
             line-height: 1.6;
             margin-bottom: 4px;
+        }
+        .skill-popup-section-body p {
+            margin: 0 0 10px 0;
+        }
+        .skill-popup-section-body p:last-child {
+            margin-bottom: 0;
+        }
+        .skill-popup-section-body ul,
+        .skill-popup-section-body ol {
+            margin: 6px 0 10px 20px;
+            padding: 0;
+        }
+        .skill-popup-section-body li {
+            margin-bottom: 5px;
+        }
+        .skill-popup-section-body strong {
+            font-weight: 700;
+            color: #333;
         }
 
         .skill-popup-coming-soon {
@@ -1849,29 +1977,29 @@
         <p style="font-size: 17px; color: #333; line-height: 1.7; margin: 0 0 12px 0; flex-basis: 100%;">
             A big part of the knowledge you need has to do with the RFE product suite. At the <strong>basic</strong> level, you should know which products exist, and how they fit together to deliver our desired impact. Explore the product suite and be sure to check each product's 'advanced' tab for core competencies needed — in the case you are going to be delivering that product.
         </p>
-        <p style="font-size: 14px; color: #6c757d; font-style: italic; margin: 0 0 20px 0; flex-basis: 100%; text-align: center;">
-            <span style="color: #ffc107;">&#9733;</span> = Topics that all team members should know
+        <p style="font-size: 14px; color: #6c757d; font-style: italic; margin: 0 0 20px 0; flex-basis: 100%;">
+            <span style="color: #f59e0b;">&#9733;</span> = Topics all team members should know
         </p>
 	<div class="main-content">
-        <!-- Stage Headers with Sidebar -->
+        <!-- Stage Headers -->
         <div class="stages-header">
-            <div class="stage-column">
+            <div class="stage-column ideate-column">
 		<div class="stage-icon ideate-icon"></div>
                 <div class="stage-title ideate-title" data-popup="ideate-stage">Ideate</div>
             </div>
-            <div class="stage-column">
+            <div class="stage-column refine-column">
                 <div class="stage-icon refine-icon"></div>
                 <div class="stage-title refine-title" data-popup="refine-stage">Refine</div>
             </div>
-            <div class="stage-column">
+            <div class="stage-column prove-column">
                 <div class="stage-icon prove-icon"></div>
                 <div class="stage-title prove-title" data-popup="prove-stage">Prove</div>
             </div>
-            <div class="stage-column">
+            <div class="stage-column adapt-column">
                 <div class="stage-icon adapt-icon"></div>
                 <div class="stage-title adapt-title" data-popup="adapt-stage">Adapt</div>
             </div>
-            <div class="stage-column">
+            <div class="stage-column scale-column">
                 <div class="stage-icon scale-icon"></div>
                 <div class="stage-title scale-title" data-popup="scale-stage">Scale</div>
             </div>
@@ -2010,15 +2138,15 @@
                         <div style="flex:2; text-align:center; font-size:11px; font-weight:600; letter-spacing:1px; text-transform:uppercase; animation:label-pulse-gray 3s ease-in-out infinite; animation-delay:0.15s; padding-bottom:3px; color:#bbb;">Optional — valuable for mastery</div>
                     </div>
                     <div class="v7-roadmap" style="margin-bottom:24px;">
-                        <div class="v7-rm-step core"><div class="v7-rm-num">01</div><div class="v7-rm-name">Content</div><div class="v7-rm-sub">Understand the product</div><div class="v7-rm-arrow"></div></div>
-                        <div class="v7-rm-step core"><div class="v7-rm-num">02</div><div class="v7-rm-name">Practice</div><div class="v7-rm-sub">Build delivery fluency</div><div class="v7-rm-arrow"></div></div>
-                        <div class="v7-rm-step core"><div class="v7-rm-num">03</div><div class="v7-rm-name">Feedback</div><div class="v7-rm-sub">Consolidate with a manager</div><div class="v7-rm-arrow"></div></div>
-                        <div class="v7-rm-step"><div class="v7-rm-num">+</div><div class="v7-rm-name">MEL competencies</div><div class="v7-rm-sub">Supplementary skills</div><div class="v7-rm-arrow"></div></div>
-                        <div class="v7-rm-step"><div class="v7-rm-num">+</div><div class="v7-rm-name">Additional resources</div><div class="v7-rm-sub">Optional reading</div></div>
+                        <div class="v7-rm-step core active" data-section="adv-sec-content" onclick="switchAdvSection(this,'adv')"><div class="v7-rm-num">01</div><div class="v7-rm-name">Content</div><div class="v7-rm-sub">Understand the product</div><div class="v7-rm-arrow"></div></div>
+                        <div class="v7-rm-step core" data-section="adv-sec-practice" onclick="switchAdvSection(this,'adv')"><div class="v7-rm-num">02</div><div class="v7-rm-name">Practice</div><div class="v7-rm-sub">Build delivery fluency</div><div class="v7-rm-arrow"></div></div>
+                        <div class="v7-rm-step core" data-section="adv-sec-feedback" onclick="switchAdvSection(this,'adv')"><div class="v7-rm-num">03</div><div class="v7-rm-name">Feedback</div><div class="v7-rm-sub">Consolidate with a manager</div><div class="v7-rm-arrow"></div></div>
+                        <div class="v7-rm-step" data-section="adv-sec-mel" onclick="switchAdvSection(this,'adv')"><div class="v7-rm-num">+</div><div class="v7-rm-name">MEL competencies</div><div class="v7-rm-sub">Supplementary skills</div><div class="v7-rm-arrow"></div></div>
+                        <div class="v7-rm-step" data-section="adv-sec-resources" onclick="switchAdvSection(this,'adv')"><div class="v7-rm-num">+</div><div class="v7-rm-name">Additional resources</div><div class="v7-rm-sub">Optional reading</div></div>
                     </div>
 
                     <!-- 01 Content -->
-                    <div class="v7-section-row blue">
+                    <div id="adv-sec-content" class="v7-section-row blue">
                         <div>
                             <div class="v7-sec-head blue">01 — Content</div>
                             <div id="adv-understanding-text" class="adv-section-intro"></div>
@@ -2026,10 +2154,8 @@
                         <div id="adv-understanding-buttons" class="adv-button-grid"></div>
                     </div>
 
-                    <div class="v7-divider"></div>
-
                     <!-- 02 Practice -->
-                    <div class="v7-section-row amber">
+                    <div id="adv-sec-practice" class="v7-section-row amber" style="display:none;">
                         <div>
                             <div class="v7-sec-head amber">02 — Practice</div>
                             <div id="adv-pf-text" class="adv-section-intro"></div>
@@ -2037,20 +2163,16 @@
                         <div id="adv-practice-buttons" class="adv-button-grid"></div>
                     </div>
 
-                    <div class="v7-divider"></div>
-
                     <!-- 03 Feedback -->
-                    <div class="v7-section-row amber">
+                    <div id="adv-sec-feedback" class="v7-section-row amber" style="display:none;">
                         <div>
                             <div class="v7-sec-head amber">03 — Feedback</div>
                         </div>
                         <div id="adv-feedback-buttons" class="adv-button-grid"></div>
                     </div>
 
-                    <div class="v7-divider"></div>
-
                     <!-- Supplementary MEL -->
-                    <div class="v7-section-row dim">
+                    <div id="adv-sec-mel" class="v7-section-row dim" style="display:none;">
                         <div>
                             <div class="v7-sec-head dim">Supplementary MEL competencies</div>
                             <div id="adv-supp-mel-text" class="adv-section-intro"></div>
@@ -2058,10 +2180,8 @@
                         <div id="adv-supp-mel-buttons" class="adv-button-grid"></div>
                     </div>
 
-                    <div class="v7-divider"></div>
-
                     <!-- Additional Resources -->
-                    <div class="v7-section-row dim">
+                    <div id="adv-sec-resources" class="v7-section-row dim" style="display:none;">
                         <div>
                             <div class="v7-sec-head dim">Additional resources</div>
                             <p class="nonipa-intro">Supplementary resources — IPA and external — for those who want to go further.</p>
@@ -2120,15 +2240,15 @@
                         <div style="flex:2; text-align:center; font-size:11px; font-weight:600; letter-spacing:1px; text-transform:uppercase; animation:label-pulse-gray 3s ease-in-out infinite; animation-delay:0.15s; padding-bottom:3px; color:#bbb;">Optional — valuable for mastery</div>
                     </div>
                     <div class="v7-roadmap" style="margin-bottom:24px;">
-                        <div class="v7-rm-step core"><div class="v7-rm-num">01</div><div class="v7-rm-name">Content</div><div class="v7-rm-sub">Understand the product</div><div class="v7-rm-arrow"></div></div>
-                        <div class="v7-rm-step core"><div class="v7-rm-num">02</div><div class="v7-rm-name">Practice</div><div class="v7-rm-sub">Build delivery fluency</div><div class="v7-rm-arrow"></div></div>
-                        <div class="v7-rm-step core"><div class="v7-rm-num">03</div><div class="v7-rm-name">Feedback</div><div class="v7-rm-sub">Consolidate with a manager</div><div class="v7-rm-arrow"></div></div>
-                        <div class="v7-rm-step"><div class="v7-rm-num">+</div><div class="v7-rm-name">MEL competencies</div><div class="v7-rm-sub">Supplementary skills</div><div class="v7-rm-arrow"></div></div>
-                        <div class="v7-rm-step"><div class="v7-rm-num">+</div><div class="v7-rm-name">Additional resources</div><div class="v7-rm-sub">Optional reading</div></div>
+                        <div class="v7-rm-step core active" data-section="tb-sec-content" onclick="switchAdvSection(this,'tb')"><div class="v7-rm-num">01</div><div class="v7-rm-name">Content</div><div class="v7-rm-sub">Understand the product</div><div class="v7-rm-arrow"></div></div>
+                        <div class="v7-rm-step core" data-section="tb-sec-practice" onclick="switchAdvSection(this,'tb')"><div class="v7-rm-num">02</div><div class="v7-rm-name">Practice</div><div class="v7-rm-sub">Build delivery fluency</div><div class="v7-rm-arrow"></div></div>
+                        <div class="v7-rm-step core" data-section="tb-sec-feedback" onclick="switchAdvSection(this,'tb')"><div class="v7-rm-num">03</div><div class="v7-rm-name">Feedback</div><div class="v7-rm-sub">Consolidate with a manager</div><div class="v7-rm-arrow"></div></div>
+                        <div class="v7-rm-step" data-section="tb-sec-mel" onclick="switchAdvSection(this,'tb')"><div class="v7-rm-num">+</div><div class="v7-rm-name">MEL competencies</div><div class="v7-rm-sub">Supplementary skills</div><div class="v7-rm-arrow"></div></div>
+                        <div class="v7-rm-step" data-section="tb-sec-resources" onclick="switchAdvSection(this,'tb')"><div class="v7-rm-num">+</div><div class="v7-rm-name">Additional resources</div><div class="v7-rm-sub">Optional reading</div></div>
                     </div>
 
                     <!-- 01 Content -->
-                    <div class="v7-section-row blue">
+                    <div id="tb-sec-content" class="v7-section-row blue">
                         <div>
                             <div class="v7-sec-head blue">01 — Content</div>
                             <div id="tb-understanding-text" class="adv-section-intro"></div>
@@ -2136,10 +2256,8 @@
                         <div id="tb-understanding-buttons" class="adv-button-grid"></div>
                     </div>
 
-                    <div class="v7-divider"></div>
-
                     <!-- 02 Practice -->
-                    <div class="v7-section-row amber">
+                    <div id="tb-sec-practice" class="v7-section-row amber" style="display:none;">
                         <div>
                             <div class="v7-sec-head amber">02 — Practice</div>
                             <div id="tb-pf-text" class="adv-section-intro"></div>
@@ -2147,20 +2265,16 @@
                         <div id="tb-practice-buttons" class="adv-button-grid"></div>
                     </div>
 
-                    <div class="v7-divider"></div>
-
                     <!-- 03 Feedback -->
-                    <div class="v7-section-row amber">
+                    <div id="tb-sec-feedback" class="v7-section-row amber" style="display:none;">
                         <div>
                             <div class="v7-sec-head amber">03 — Feedback</div>
                         </div>
                         <div id="tb-feedback-buttons" class="adv-button-grid"></div>
                     </div>
 
-                    <div class="v7-divider"></div>
-
                     <!-- Supplementary MEL -->
-                    <div class="v7-section-row dim">
+                    <div id="tb-sec-mel" class="v7-section-row dim" style="display:none;">
                         <div>
                             <div class="v7-sec-head dim">Supplementary MEL competencies</div>
                             <div id="tb-supp-mel-text" class="adv-section-intro"></div>
@@ -2168,10 +2282,8 @@
                         <div id="tb-supp-mel-buttons" class="adv-button-grid"></div>
                     </div>
 
-                    <div class="v7-divider"></div>
-
                     <!-- Additional Resources -->
-                    <div class="v7-section-row dim">
+                    <div id="tb-sec-resources" class="v7-section-row dim" style="display:none;">
                         <div>
                             <div class="v7-sec-head dim">Additional resources</div>
                             <p class="nonipa-intro">Supplementary resources — IPA and external — for those who want to go further.</p>
@@ -2328,37 +2440,83 @@
 
     <!-- Simple Skill Popup (for Skills Map page) -->
     <div id="skillPopupModal" class="popup-modal" style="z-index: 2000;">
-        <div class="popup-content">
-            <button class="close-btn" onclick="closeSkillMapPopup()">&times;</button>
-            <div style="padding: 25px 25px 15px 25px; border-bottom: 2px solid #e9ecef; flex-shrink: 0;">
-                <h2 id="skillPopupTitle" style="color: #2c3e50; margin: 0; font-size: 24px; font-weight: 600;"></h2>
+        <div class="popup-content" style="height:75vh; max-height:75vh;">
+
+            <!-- Hero header -->
+            <div class="popup-hero" style="flex-shrink:0;">
+                <div class="popup-hero-label">Skills Map</div>
+                <h1 id="skillPopupTitle" class="popup-hero-title"></h1>
+                <button class="close-btn" onclick="closeSkillMapPopup()">&times;</button>
             </div>
-            <div style="padding: 20px 25px; overflow-y: auto;">
-                <!-- MAPPING NOTE: description ← non_product_popup_fields Col 2 (Comprehensive description) -->
-                <div id="skillPopupDescription" class="skill-popup-section-body"></div>
 
-                <!-- MAPPING NOTE: why_it_matters ← non_product_popup_fields Col 3 -->
-                <div id="skillPopupWhyMatters" class="skill-popup-section">
-                    <h3 class="skill-popup-section-header">Why it Matters</h3>
-                    <div id="skillPopupWhyMattersBody" class="skill-popup-section-body"></div>
+            <!-- Two-column body: left scrolls, right sticky -->
+            <div style="display:flex; flex:1; overflow:hidden; min-height:0;">
+
+                <!-- LEFT: scrollable text content -->
+                <div style="flex:1; overflow-y:auto; padding:24px 28px; border-right:0.5px solid #e0e0e0;">
+
+                    <div id="skillPopupComingSoon" style="display:none;">
+                        <p class="skill-popup-coming-soon">Content coming soon.</p>
+                    </div>
+
+                    <!-- General Description -->
+                    <!-- MAPPING NOTE: description ← non_product_popup_fields Col 2 -->
+                    <div id="skillPopupDescSection" style="display:none; border-top:0.5px solid #e0e0e0;">
+                        <button class="skill-section-toggle open" onclick="toggleSkillSection(this)">
+                            <h3 class="skill-popup-section-header">General Description</h3>
+                            <svg class="skill-section-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                        </button>
+                        <div class="skill-section-body-wrap open">
+                            <div id="skillPopupDescription" class="skill-popup-section-body"></div>
+                        </div>
+                    </div>
+
+                    <!-- Why it Matters -->
+                    <!-- MAPPING NOTE: why_it_matters ← non_product_popup_fields Col 3 -->
+                    <div id="skillPopupWhyMatters" class="skill-popup-section" style="display:none;">
+                        <button class="skill-section-toggle" onclick="toggleSkillSection(this)">
+                            <h3 class="skill-popup-section-header">Why it Matters</h3>
+                            <svg class="skill-section-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                        </button>
+                        <div class="skill-section-body-wrap">
+                            <div id="skillPopupWhyMattersBody" class="skill-popup-section-body"></div>
+                        </div>
+                    </div>
+
+                    <!-- How RFE Applies -->
+                    <!-- MAPPING NOTE: how_rfe_applies ← non_product_popup_fields Col 4 -->
+                    <div id="skillPopupHowRfe" class="skill-popup-section" style="display:none;">
+                        <button class="skill-section-toggle" onclick="toggleSkillSection(this)">
+                            <h3 class="skill-popup-section-header">How RFE Applies This</h3>
+                            <svg class="skill-section-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                        </button>
+                        <div class="skill-section-body-wrap">
+                            <div id="skillPopupHowRfeBody" class="skill-popup-section-body"></div>
+                        </div>
+                    </div>
+
                 </div>
 
-                <!-- MAPPING NOTE: how_rfe_applies ← non_product_popup_fields Col 4 (How RFE Applies CART Principles) -->
-                <div id="skillPopupHowRfe" class="skill-popup-section">
-                    <h3 class="skill-popup-section-header">How RFE Applies This</h3>
-                    <div id="skillPopupHowRfeBody" class="skill-popup-section-body"></div>
+                <!-- RIGHT: sticky button column -->
+                <div style="width:280px; flex-shrink:0; overflow-y:auto; padding:24px 20px; background:#f8f8f8; display:flex; flex-direction:column; gap:20px;">
+
+                    <!-- Learning Resources -->
+                    <!-- MAPPING NOTE: popup_buttons ← non_product_popup_lists -->
+                    <div id="skillPopupResourcesSection" style="display:none;">
+                        <h3 class="skill-popup-section-header" style="margin-bottom:10px;">Learning Resources</h3>
+                        <div id="skillPopupButtons" class="adv-button-grid"></div>
+                    </div>
+
+                    <!-- Relevant RFE Products -->
+                    <!-- MAPPING NOTE: auto-populated by findProductsForSkill() -->
+                    <div id="skillPopupRelatedProducts" style="display:none;">
+                        <div style="height:0.5px; background:#e0e0e0; margin-bottom:16px;"></div>
+                        <h3 class="skill-popup-section-header" style="margin-bottom:10px;">Relevant RFE Products</h3>
+                        <div id="skillPopupRelatedProductsGrid" class="adv-button-grid"></div>
+                    </div>
+
                 </div>
 
-                <!-- Resource buttons from popup_lists -->
-                <div id="skillPopupButtons" class="adv-button-grid" style="margin-top: 20px;"></div>
-
-                <!-- MAPPING NOTE: auto-populated by findProductsForSkill() — no spreadsheet data needed -->
-                <!-- Shows any rfe-product whose adv_supp_mel_buttons includes this skill's display_title -->
-                <div id="skillPopupRelatedProducts" style="display:none; margin-top: 24px;">
-                    <div class="section-divider" style="margin: 0 0 16px 0;"></div>
-                    <h3 class="skill-popup-section-header">Relevant RFE Products</h3>
-                    <div id="skillPopupRelatedProductsGrid" class="adv-button-grid"></div>
-                </div>
             </div>
         </div>
     </div>
@@ -2367,11 +2525,11 @@
         /*
            ================================================================================
            MAPPING DOCUMENTATION - SPREADSHEET TO POPUPDATA TO HTML
-           Last updated: 2026-04-14 (v30) — Additional Resources: restored intro paragraph
+           Last updated: 2026-04-16 (v28) — Synced to mel_topics_popup_data_apr_16_2026.xlsx: CART text updated, Causal Inference removed, 36 new non-product buttons added across 11 MEL competencies
            ================================================================================
 
            SPREADSHEET SOURCE:
-           File: mel_topics_popup_data_apr_06_2026.xlsx (or later version)
+           File: mel_topics_popup_data_apr_16_2026.xlsx
            Sheets used:
              1. all_html_elements_MASTER  - Master list of all elements; defines element_type and who_must_know
              2. product_popup_fields      - Text content for each rfe-product popup (descriptions, tab intro text)
@@ -2490,7 +2648,18 @@
     "description": null,
     "why_it_matters": null,
     "how_rfe_applies": null,
-    "popup_buttons": [{"heading": "Welcome to RFE Principles", "explanation": "For onboarding staff getting started with RFE principles.", "link": "https://ipastorage.app.box.com/file/2035486396250"}, {"heading": "What is Water slidedeck", "explanation": "Review some of the assumptions that make up the RFE ecosystem.", "link": "https://ipastorage.box.com/s/m4bfki1aeefs9cinl429x60o9hrfemha"}]
+    "popup_buttons": [
+      {
+        "heading": "Welcome to RFE Principles",
+        "explanation": "For onboarding staff getting started with RFE principles.",
+        "link": "https://ipastorage.app.box.com/file/2035486396250"
+      },
+      {
+        "heading": "What is Water slidedeck",
+        "explanation": "Review some of the assumptions that make up the RFE ecosystem.",
+        "link": "https://ipastorage.box.com/s/m4bfki1aeefs9cinl429x60o9hrfemha"
+      }
+    ]
   },
   "Cart": {
     "display_title": "CART",
@@ -2502,10 +2671,29 @@
     "associated_products": null,
     "ipa_links": null,
     "external_links": "https://example.com/cart",
-    "description": "CART is a framework that guides high-quality monitoring, evaluation, and learning (MEL) decisions. The four principles—Credible, Actionable, Responsible, and Transportable—help ensure that the data we collect and the learning approaches we choose will generate useful, trustworthy evidence that leads to better programs and outcomes.\n\nCredible: Indicators should be valid and reliably measured. This means collecting high-quality data that accurately captures what you intend to measure. Your data collection should be consistent, accurate, and free from bias. The strength of credible evidence depends on your context: monitoring systems need credible data on activities, outputs, and early outcomes; impact evaluations require additional rigor, including counterfactuals or comparison groups, to make credible causal claims.\nActionable: Indicators should inform decision-making and implementation of actions. Data is only valuable if the organization commits to acting on it. Program staff and decision-makers need to use the collected data to actually change what they do—whether that's adjusting implementation, shifting strategy, or testing new approaches.\nResponsible: Indicators should take into account the costs for both the organization and beneficiaries. The benefits of data collection must outweigh the costs—whether financial, staff time, or burden on participants. This principle ensures your MEL system is efficient and not spending disproportionately on measurement relative to its learning value.\nTransportable: Indicators should generate learning for both current implementation and future design. Data should produce lessons useful for other projects in your sector, not remain isolated to one organization. Whether findings are broadly generalizable or highly contextualized, they should be documented clearly enough that other organizations can determine whether and how the learning applies to their own context.",
-    "why_it_matters": "Poor evaluation practices are surprisingly common and can waste precious resources while providing misleading information. CART principles address three critical problems that arise from common mistakes organizations make:\nBiased and unreliable data that leads to inaccurate conclusions about program effectiveness. Common mistakes include measuring impact by counting outputs (goods distributed, services provided), assuming individual stories represent overall impact, or believing that before-and-after comparisons demonstrate impact without considering what else might have caused the changes (the counterfactual—covered in more detail under RFE's 'Causal Inference' topic).\nUnused evaluation results occur when organizations collect data but never act on the findings. This \"data graveyard\" problem occurs when organizations lack specific plans for how to use results or don't have the commitment and resources to implement changes based on what they learn.\nWasteful resource allocation and data overload where organizations collect too much data, creating decision paralysis rather than clarity. The costs of data collection—including opportunity costs (what else could these resources accomplish?), financial costs, and burden on respondents—exceed the benefits. As one study showed, too many choices can actually impede decision-making.",
-    "how_rfe_applies": "At RFE, we use CART as a decision-making framework across multiple aspects of our MEL advisory work. CART is particularly valuable for prioritization—helping determine what to measure, how to measure it, and what learning approaches will generate the most value. This supports our commitment to developing right-fit MEL systems.\n\nPrioritization and Right-Fit MEL: CART helps organizations avoid both data overload and data scarcity by systematically assessing tradeoffs. The key insight: there's no one-size-fits-all approach, but organizations must actively assess what works best for their context and capacity.\nFlexible Application: CART can be applied with varying levels of rigor depending on the context. For major evaluations, we might use detailed scoring for each principle. For routine decisions, we keep CART \"in mind\" as a mental checklist to guide our recommendations.\nClient Advisory: We help clients apply CART when they're designing their own MEL systems, making decisions about what to measure, and determining how to use evaluation results effectively",
-    "popup_buttons": [{"heading": "The Goldilocks Challenge (book)", "explanation": "All RFE staff should read the Goldilocks Challenge, by Dean Karlan and Mary Kay Gugerty. This is a core resource for understanding the CART framework and how it is applied at RFE. Contact your line manager for a copy of the book if you don't have one.", "link": null}, {"heading": "CART brief", "explanation": null, "link": "https://ipastorage.app.box.com/integrations/googledss/openGoogleEditor?fileId=1955337095527&trackingId=3#"}, {"heading": "Goldilocks toolkit: Impact Measurement with the CART Principles", "explanation": null, "link": "https://poverty-action.org/goldilocks-toolkit-impact-measurement-cart-principles"}]
+    "description": "CART is a framework that guides high-quality MEL decisions. The four principles—Credible, Actionable, Responsible, and Transportable—help ensure that data collection and learning approaches generate useful, trustworthy evidence that leads to better programs and outcomes.\n\n- **Credible**: Indicators should be valid and reliably measured, with data that accurately captures what you intend to measure. The rigor required depends on context: monitoring needs credible output and early outcome data; impact evaluations require additional rigor, including counterfactuals, to make causal claims.\n- **Actionable**: Data is only valuable if organizations commit to acting on it — whether adjusting implementation, shifting strategy, or testing new approaches.\n- **Responsible**: The benefits of data collection must outweigh the costs — financial, staff time, and burden on participants — ensuring your MEL system is efficient relative to its learning value.\n- **Transportable**: Data should produce lessons useful beyond one organization, documented clearly enough that others can determine whether and how findings apply to their context.",
+    "why_it_matters": "Poor evaluation practices waste resources and produce misleading information. CART addresses three common problems: biased or unreliable data that leads to inaccurate conclusions about effectiveness; unused results, where data is collected but never acted on; and wasteful data overload, where collection costs exceed learning benefits and create decision paralysis rather than clarity.",
+    "how_rfe_applies": "CART functions as a prioritization tool — helping clients determine what to measure, how to measure it, and which learning approaches generate the most value. We apply it flexibly: rigorously for major evaluations, and as a mental checklist for routine decisions. We also use it when advising clients on designing their own MEL systems.",
+    "popup_buttons": [
+      {
+        "heading": "The Goldilocks Challenge (book)",
+        "explanation": "All RFE staff should read the Goldilocks Challenge, by Dean Karlan and Mary Kay Gugerty. This is a core resource for understanding the CART framework and how it is applied at RFE. Contact your line manager for a copy of the book if you don't have one. ",
+        "link": null,
+        "doc_type": "Button"
+      },
+      {
+        "heading": "CART brief",
+        "explanation": null,
+        "link": "https://ipastorage.app.box.com/integrations/googledss/openGoogleEditor?fileId=1955337095527&trackingId=3#",
+        "doc_type": "Button"
+      },
+      {
+        "heading": "Goldilocks toolkit: Impact Measurement with the CART Principles",
+        "explanation": null,
+        "link": "https://poverty-action.org/goldilocks-toolkit-impact-measurement-cart-principles",
+        "doc_type": "Button"
+      }
+    ]
   },
   "Learning-Cycles-Iteration-Ways-Of-Working": {
     "display_title": "Learning Cycles / Iteration ways of working",
@@ -2520,7 +2708,26 @@
     "description": "Learning cycles are repeated, ongoing processes of collecting, analyzing, and using data to continuously improve program effectiveness. Unlike traditional \"inverted pyramid\" M&E that collects massive amounts of data once or twice over a project's lifecycle, learning cycles emphasize rapid iteration and frequent feedback loops that maximize the learning-to-cost ratio.\n\nEssential Elements\n> Identify 2-3 critical learning questions for your current program stage\n> Plan data use before data collection - who will see results, when, and what decisions will be made\n> Start small - manageable data collection that can be completed quickly\n> Build in reflection time - dedicated sessions for stakeholder sense-making\n> Document adaptations - track what changes and why for organizational learning",
     "why_it_matters": "Traditional Approach Problems:\n> Data collection is front-loaded and expensive\n> Analysis happens too late to inform decisions\n> Most insights come after programs can no longer adapt\n\nLearning Cycles Benefits:\n> Higher learning-to-cost ratio: More actionable insights per dollar spent\n> Faster feedback loops: Quick course corrections when problems emerge\n> Responsive programming: Programs that adapt based on real-time evidence\n> Reduced risk: Early detection of implementation issues before scaling",
     "how_rfe_applies": "RFE integrates learning cycles into its approach across multiple products and contexts. RFE prioritizes designing short learning cycles—particularly at early program stages—to enable rapid testing, quick feedback, and frequent adaptation. The specific structure of a cycle depends on the learning context, but all cycles share common elements: planning data use upfront, identifying what decisions the data will inform, and building organizational capacity to act on findings. What unites RFE's approach is the core belief that learning only happens when organizations commit to using data to adapt, and when they have built the internal practices and skills to sustain cycles over time. Whether through Monitoring TA, User Research, A/B Testing, or Communities of Practice, RFE helps organizations establish the conditions that make short, functional learning cycles possible.",
-    "popup_buttons": [{"heading": "Learning Cycles slidedeck", "explanation": null, "link": "https://ipastorage.app.box.com/integrations/googledss/openGoogleEditor?fileId=2037481554234&trackingId=3#slide=id.p1"}, {"heading": "Learning Cycles brief", "explanation": null, "link": "https://ipastorage.app.box.com/integrations/googledss/openGoogleEditor?fileId=2037508871438&trackingId=3#?_gfid=docs_editor_frame&fileUrl=https://api.box.com/fsip/files/2037508871438&isInboundFsipRequest=true&jsh=m;/_/scs/abc-static/_/js/k%3Dgapi.lb.en.2kN9-TZiXrM.O/d%3D1/rs%3DAHpOoo_B4hu0FeWRuWHfxnZ3V0WubwN7Qw/m%3D__features__&organizationType=BUSINESS&parent=https://ipastorage.app.box.com&pfname&previewUrl=https://ipastorage.app.box.com/file/2037508871438&rpctoken=15595011&tpat=1!TXNxMVbkmLxZuYFQK7Gf9-mklhL4LUy5f6Se_bls_Vuf4nxWtcYTkD93U1oOHD_PgLOqAKK69-MUNeVmYo5SKwRLNc_AWKWp39zUIRpKwKFdSsXD4fc6nrJahtXkVfNSbD5HF9sGyWOm6Rh8xw4WFyY9M7LX3w-7kKW40ZaV_7TMvkmLy9YEwtXai1YdSVqP9XYQ0I8V3s7DcUzvT29rK-uECIY1h-_i5i7OnJLBELHlpkG4YMa4n6Ea4_68c7cXywYIkF9c7gyR0ejViu8gaXcNEKPCpxQaCmL12gWT0qGlh_HUvbuZcthA8fjsqtbfqoBXK7MYyLveVcKK7iqZ_SkjbLsFvDQlPSJOunTMUeri75ArjtHHrm0BxnspBpwY9-MisfobKiplA3bngDQMKug_xeasXy85a-gk2zi_5LFEaVVee2o_v8g.&tpatExpirationTime=1769530711000&usegapi=1"}, {"heading": "Iterative Learning Guide (CS project)", "explanation": null, "link": "https://poverty-action.org/sites/default/files/2024-10/Iterative%20Learning.pdf"}]
+    "popup_buttons": [
+      {
+        "heading": "Learning Cycles slidedeck",
+        "explanation": null,
+        "link": "https://ipastorage.app.box.com/integrations/googledss/openGoogleEditor?fileId=2037481554234&trackingId=3#slide=id.p1",
+        "doc_type": "Button"
+      },
+      {
+        "heading": "Learning Cycles brief",
+        "explanation": null,
+        "link": "https://ipastorage.app.box.com/integrations/googledss/openGoogleEditor?fileId=2037508871438&trackingId=3#?_gfid=docs_editor_frame&fileUrl=https://api.box.com/fsip/files/2037508871438&isInboundFsipRequest=true&jsh=m;/_/scs/abc-static/_/js/k%3Dgapi.lb.en.2kN9-TZiXrM.O/d%3D1/rs%3DAHpOoo_B4hu0FeWRuWHfxnZ3V0WubwN7Qw/m%3D__features__&organizationType=BUSINESS&parent=https://ipastorage.app.box.com&pfname&previewUrl=https://ipastorage.app.box.com/file/2037508871438&rpctoken=15595011&tpat=1!TXNxMVbkmLxZuYFQK7Gf9-mklhL4LUy5f6Se_bls_Vuf4nxWtcYTkD93U1oOHD_PgLOqAKK69-MUNeVmYo5SKwRLNc_AWKWp39zUIRpKwKFdSsXD4fc6nrJahtXkVfNSbD5HF9sGyWOm6Rh8xw4WFyY9M7LX3w-7kKW40ZaV_7TMvkmLy9YEwtXai1YdSVqP9XYQ0I8V3s7DcUzvT29rK-uECIY1h-_i5i7OnJLBELHlpkG4YMa4n6Ea4_68c7cXywYIkF9c7gyR0ejViu8gaXcNEKPCpxQaCmL12gWT0qGlh_HUvbuZcthA8fjsqtbfqoBXK7MYyLveVcKK7iqZ_SkjbLsFvDQlPSJOunTMUeri75ArjtHHrm0BxnspBpwY9-MisfobKiplA3bngDQMKug_xeasXy85a-gk2zi_5LFEaVVee2o_v8g.&tpatExpirationTime=1769530711000&usegapi=1",
+        "doc_type": "Button"
+      },
+      {
+        "heading": "Iterative Learning Guide (CS project)",
+        "explanation": null,
+        "link": "https://poverty-action.org/sites/default/files/2024-10/Iterative%20Learning.pdf",
+        "doc_type": "Button"
+      }
+    ]
   },
   "Stage-Based-Learning": {
     "display_title": "Stage-Based Learning",
@@ -2535,7 +2742,20 @@
     "description": "Stage-Based Learning is a strategic framework that matches evidence generation to where a program is in its development journey. Rather than applying the same evaluation approach regardless of program maturity, it recognizes that different stages require different kinds of learning to make the most effective decisions about program improvement and scaling. The framework guides implementers and funders to ask the right learning questions at the right time—focusing on program refinement in early stages and rigorous impact measurement when programs are ready to scale.",
     "why_it_matters": "Many organizations struggle with evidence generation because they apply a \"one-size-fits-all\" approach that wastes resources and provides limited actionable insights. Stage-Based Learning addresses three critical problems:\nInsufficient early-stage learning: Programs scale without adequate testing and refinement, leading to implementation problems, lower impact, and wasted scaling resources. Organizations miss opportunities to improve programs when changes are still feasible and cost-effective.\n\nPremature impact evaluations: Organizations often conduct expensive impact evaluations before programs are ready, resulting in null results that reflect poor implementation rather than program effectiveness. This wastes evaluation resources and can kill promising interventions that weren't given adequate time to be refined.\n\nMismatched evidence requirements: Funders and implementers focus on the wrong learning questions for the program's current stage, creating evaluation burden without decision-relevant insights. This leads to data collection that doesn't inform actual program decisions.\nStage-Based Learning ensures that evaluation efforts generate maximum learning value by matching evidence approaches to program maturity and decision needs",
     "how_rfe_applies": "At RFE, we use Stage-Based Learning as both a diagnostic tool and a design framework across multiple aspects of our work with implementers and funders. SBL helps ensure that evaluation investments generate actionable insights that improve program effectiveness and scaling decisions.\nProgram Assessment and Learning Plan Design: SBL helps us assess where programs are in their development journey and design appropriate learning approaches. We help organizations identify what learning questions are most important given their stage and design evaluation approaches that will inform their next stage decisions.\n\nCapacity Building and Technical Assistance: SBL guides our recommendations for organizational MEL systems, helping partners build evaluation capacity that matches their programmatic needs and avoids overwhelming early-stage organizations with evaluation requirements they can't effectively implement.\nFunder Guidance and Portfolio Strategy: We help funders apply SBL principles to their portfolios, supporting different evidence requirements for grantees at different stages. This prevents imposing impact evaluation requirements on early-stage programs while ensuring mature programs generate rigorous evidence.\nSBL isn't just about evaluation timing—it's a strategic approach to program development that maximizes learning value while minimizing wasted resources. Before designing any evaluation approach, ask: What stage is this program in, and what decisions does the organization need to make next?",
-    "popup_buttons": [{"heading": "Donor Guide: Stage Based Learning", "explanation": null, "link": "https://poverty-action.org/stage-based-learning"}, {"heading": "Early Learning Guide (POP project)", "explanation": null, "link": "https://poverty-action.org/sites/default/files/2026-02/IPA-PoP-Early-Stage-Program-Learning.pdf"}]
+    "popup_buttons": [
+      {
+        "heading": "Donor Guide: Stage Based Learning",
+        "explanation": null,
+        "link": "https://poverty-action.org/stage-based-learning",
+        "doc_type": "Button"
+      },
+      {
+        "heading": "Early Learning Guide (POP project)",
+        "explanation": null,
+        "link": "https://poverty-action.org/sites/default/files/2026-02/IPA-PoP-Early-Stage-Program-Learning.pdf",
+        "doc_type": "Button"
+      }
+    ]
   },
   "Early-Outcomes-As-The-Sweet-Spot": {
     "display_title": "Early Outcomes as the sweet spot",
@@ -2550,22 +2770,14 @@
     "description": null,
     "why_it_matters": null,
     "how_rfe_applies": null,
-    "popup_buttons": [{"heading": "No Endline, No problem? slidedeck", "explanation": null, "link": "https://ipastorage.app.box.com/file/1906607217412?s=t46mm6v713fi3n0qqdj0ig8a26r81uts"}]
-  },
-  "Causal-Inference-Rigour": {
-    "display_title": "Causal Inference / rigour",
-    "element_type": "rfe-philosophy",
-    "skills_mapping": "rfe-philosophy",
-    "who_must_know": "all-must-know",
-    "short_description": "Establishing causal relationships between interventions and outcomes",
-    "associated_concepts": null,
-    "associated_products": null,
-    "ipa_links": null,
-    "external_links": "https://example.com/causal-inference-impact",
-    "description": null,
-    "why_it_matters": null,
-    "how_rfe_applies": null,
-    "popup_buttons": []
+    "popup_buttons": [
+      {
+        "heading": "No Endline, No problem? slidedeck",
+        "explanation": null,
+        "link": "https://ipastorage.app.box.com/file/1906607217412?s=t46mm6v713fi3n0qqdj0ig8a26r81uts",
+        "doc_type": "Button"
+      }
+    ]
   },
   "Why-Learningcost-Why-Learning-Organizations": {
     "display_title": "Why learning/cost (why learning organizations)",
@@ -2580,7 +2792,20 @@
     "description": null,
     "why_it_matters": null,
     "how_rfe_applies": null,
-    "popup_buttons": [{"heading": "No Endline, No problem? slidedeck", "explanation": null, "link": "https://ipastorage.app.box.com/file/1906607217412?s=t46mm6v713fi3n0qqdj0ig8a26r81uts"}]
+    "popup_buttons": [
+      {
+        "heading": "No Endline, No problem? slidedeck",
+        "explanation": null,
+        "link": "https://ipastorage.app.box.com/file/1906607217412?s=t46mm6v713fi3n0qqdj0ig8a26r81uts",
+        "doc_type": "Button"
+      },
+      {
+        "heading": "Why Learning-focused Monitoring, Evaluation, and Learning is the Best Investment You Can Make Right Now",
+        "explanation": "IPA blog on reasons that programs should invest in MEL.",
+        "link": "https://poverty-action.org/why-learning-focused-monitoring-evaluation-and-learning-best-investment-you-can-make-right-now",
+        "doc_type": "Button"
+      }
+    ]
   },
   "Why-Capacity-Building-Approach": {
     "display_title": "Why capacity building approach",
@@ -2610,7 +2835,26 @@
     "description": null,
     "why_it_matters": null,
     "how_rfe_applies": null,
-    "popup_buttons": [{"heading": "SSIR The Generalizability Puzzle article", "explanation": null, "link": "https://ssir.org/articles/entry/the_generalizability_puzzle"}, {"heading": "J-PAL Generalizability Framework", "explanation": null, "link": "https://www.povertyactionlab.org/blog/5-24-17/practical-framework-evidence-informed-policy-addressing-generalizability-puzzle"}, {"heading": "J-PAL Generalizability slidedeck", "explanation": null, "link": "https://www.povertyactionlab.org/sites/default/files/L3_Generalizability_Fahey.pdf"}]
+    "popup_buttons": [
+      {
+        "heading": "SSIR The Generalizability Puzzle article",
+        "explanation": null,
+        "link": "https://ssir.org/articles/entry/the_generalizability_puzzle",
+        "doc_type": "Button"
+      },
+      {
+        "heading": "J-PAL Generalizability Framework",
+        "explanation": null,
+        "link": "https://www.povertyactionlab.org/blog/5-24-17/practical-framework-evidence-informed-policy-addressing-generalizability-puzzle",
+        "doc_type": "Button"
+      },
+      {
+        "heading": "J-PAL Generalizability slidedeck",
+        "explanation": null,
+        "link": "https://www.povertyactionlab.org/sites/default/files/L3_Generalizability_Fahey.pdf",
+        "doc_type": "Button"
+      }
+    ]
   },
   "Understanding-The-Rfe-Product-Suite-And-How-It-Fits-Together": {
     "display_title": "Understanding the RFE product suite and how it fits together",
@@ -2649,12 +2893,59 @@
     "adv_understanding_text": "The product owner has collected resources for you to access throughout your learning path. The buttons below are arranged in an order to help you know what to look at first, second, and so on. However, you should guide your own learning based on what you already knowa bout the product, and what you know about how the product will be delivered on your specific project.",
     "adv_supp_mel_text": "The content provided above is the core knowledge for delivering this product, but the product owner has also identified some additional skillsets that are important to the success of the product. Please review these additional skillsets here.",
     "adv_practice_feedback_text": "The product owner recommends the following resources for practice and feedback. Note that some resources may occur multiple times, because they offer both content and practice or feedback. This is intentional to guide your learning journey.",
-    "basic_related_products": [{"heading": "RFE Foundation", "explanation": "LPD is the foundation for all RFE products, beacuse it creates underlying logic that supports the strategic approach to learning about how a model works. ", "link": null}, {"heading": "Community of Practice", "explanation": "The first step to making a COP shared learning agenda is often creating a theory of change that consolidates all partners' models into one. ", "link": null}],
-    "adv_content_buttons": [{"heading": "General Learning Guide", "explanation": null, "link": null, "doc_type": "Doc", "priority": "High"}],
-    "adv_supp_mel_buttons": [{"heading": "(Monitoring) Indicator Design", "explanation": "Getting additional conceptual understanding of indicator design, with an RFE-lens focus on monitoring, can be a big help. This is a skill which can be especially tricky, and RFE staff often have to give immediate feedback to clients during the Monitoring Indicators workshop. ", "link": "https://ipastorage.app.box.com/file/2182945969965"}],
-    "adv_practice_buttons": [{"heading": "Common Scenarios", "explanation": "LPD scenarios are linked to the common challenges in the product overview document. Try out these reflection tasks, and follow up with the product owner or Arfie to get feedback. ", "link": "https://ipastorage.app.box.com/integrations/googledss/openGoogleEditor?fileId=2190698325439&trackingId=3&csrfToken=8b613719d636d23484d5381c828a01081454cde8150c3234428d65e734b6cb03#?_gfid=docs_editor_frame&csrfToken=8b613719d636d23484d5381c828a01081454cde8150c3234428d65e734b6cb03&fileUrl=https://api.box.com/fsip/files/2190698325439&isInboundFsipRequest=true&jsh=m;/_/scs/abc-static/_/js/k%3Dgapi.lb.en.PJsh2cctCQI.O/d%3D1/rs%3DAHpOoo_QlMhY2cycn60Rs8eI1WInRwuahw/m%3D__features__&organizationType=BUSINESS&parent=https://ipastorage.app.box.com&pfname&previewUrl=https://ipastorage.app.box.com/file/2190698325439&rpctoken=25068576&tpat=1!VHxWR4A53axH8t0c0G-Yccj8JCkntcVucV03F9P5iFBM7hIUzSF5q_N9SWlpZ6Ox8je2qOEHzcHCAv5l898CqEQB5fagyuGDvr1dHznRz-v8LBxTcBixIzj2-IJyWoM2SqB32UeLkV-raeLaemixSobFA6NYmU01cV5I7RMam1foN5BW8E-07s6RufKD6PvHTkE_HXlgLnZ9a0MR8B6EzgmClDI3Cj9TX7Np7m0xbkMbPLto7GfoPGMLYht5TBBkBOR5mEIKaYmu_CF1GDz3yBfqx5yIqFpGc-vAX-jCK45Ojv3wn7lYys2mkCVH3ZcX3QlhU0k2qiUZp9JBTnaLHEgH3wGHxbluIzC2qkmG8BBn2YBSwiRCLXaYc7afX4kZafqj8EKo4vMVAPywY6pGrTIoaM-Z3w504AEsgG_qCPlFrwWd5Zwwoz8.&tpatExpirationTime=1775669932000&usegapi=1", "doc_type": "Doc", "priority": "High"}],
-    "adv_feedback_buttons": [{"heading": "Talk to Lu", "explanation": "It is highly recommended to talk about options for LPD delivery with Lu. There is more flexibility for how you do LPD than meets the eye. Be prepared to think thru what would be best for the client in your context. ", "link": null, "priority": "High"}],
-    "other_resources_buttons": [{"heading": "JPAL ", "explanation": "Theory of Change and Measurement slide deck", "link": "https://www.povertyactionlab.org/sites/default/files/research-resources/L2_TOC_Measurement_2024.pdf", "doc_type": "Web"}]
+    "basic_related_products": [
+      {
+        "heading": "RFE Foundation",
+        "explanation": "LPD is the foundation for all RFE products, beacuse it creates underlying logic that supports the strategic approach to learning about how a model works. ",
+        "link": null
+      },
+      {
+        "heading": "Community of Practice",
+        "explanation": "The first step to making a COP shared learning agenda is often creating a theory of change that consolidates all partners' models into one. ",
+        "link": null
+      }
+    ],
+    "adv_content_buttons": [
+      {
+        "heading": "General Learning Guide",
+        "explanation": null,
+        "link": null,
+        "doc_type": "Doc",
+        "priority": "High"
+      }
+    ],
+    "adv_supp_mel_buttons": [
+      {
+        "heading": "(Monitoring) Indicator Design",
+        "explanation": "Getting additional conceptual understanding of indicator design, with an RFE-lens focus on monitoring, can be a big help. This is a skill which can be especially tricky, and RFE staff often have to give immediate feedback to clients during the Monitoring Indicators workshop. ",
+        "link": "https://ipastorage.app.box.com/file/2182945969965"
+      }
+    ],
+    "adv_practice_buttons": [
+      {
+        "heading": "Common Scenarios",
+        "explanation": "LPD scenarios are linked to the common challenges in the product overview document. Try out these reflection tasks, and follow up with the product owner or Arfie to get feedback. ",
+        "link": "https://ipastorage.app.box.com/integrations/googledss/openGoogleEditor?fileId=2190698325439&trackingId=3&csrfToken=8b613719d636d23484d5381c828a01081454cde8150c3234428d65e734b6cb03#?_gfid=docs_editor_frame&csrfToken=8b613719d636d23484d5381c828a01081454cde8150c3234428d65e734b6cb03&fileUrl=https://api.box.com/fsip/files/2190698325439&isInboundFsipRequest=true&jsh=m;/_/scs/abc-static/_/js/k%3Dgapi.lb.en.PJsh2cctCQI.O/d%3D1/rs%3DAHpOoo_QlMhY2cycn60Rs8eI1WInRwuahw/m%3D__features__&organizationType=BUSINESS&parent=https://ipastorage.app.box.com&pfname&previewUrl=https://ipastorage.app.box.com/file/2190698325439&rpctoken=25068576&tpat=1!VHxWR4A53axH8t0c0G-Yccj8JCkntcVucV03F9P5iFBM7hIUzSF5q_N9SWlpZ6Ox8je2qOEHzcHCAv5l898CqEQB5fagyuGDvr1dHznRz-v8LBxTcBixIzj2-IJyWoM2SqB32UeLkV-raeLaemixSobFA6NYmU01cV5I7RMam1foN5BW8E-07s6RufKD6PvHTkE_HXlgLnZ9a0MR8B6EzgmClDI3Cj9TX7Np7m0xbkMbPLto7GfoPGMLYht5TBBkBOR5mEIKaYmu_CF1GDz3yBfqx5yIqFpGc-vAX-jCK45Ojv3wn7lYys2mkCVH3ZcX3QlhU0k2qiUZp9JBTnaLHEgH3wGHxbluIzC2qkmG8BBn2YBSwiRCLXaYc7afX4kZafqj8EKo4vMVAPywY6pGrTIoaM-Z3w504AEsgG_qCPlFrwWd5Zwwoz8.&tpatExpirationTime=1775669932000&usegapi=1",
+        "doc_type": "Doc",
+        "priority": "High"
+      }
+    ],
+    "adv_feedback_buttons": [
+      {
+        "heading": "Talk to Lu",
+        "explanation": "It is highly recommended to talk about options for LPD delivery with Lu. There is more flexibility for how you do LPD than meets the eye. Be prepared to think thru what would be best for the client in your context. ",
+        "link": null,
+        "priority": "High"
+      }
+    ],
+    "other_resources_buttons": [
+      {
+        "heading": "JPAL ",
+        "explanation": "Theory of Change and Measurement slide deck",
+        "link": "https://www.povertyactionlab.org/sites/default/files/research-resources/L2_TOC_Measurement_2024.pdf",
+        "doc_type": "Web"
+      }
+    ]
   },
   "Mel-Diagnostic": {
     "display_title": "MEL Diagnostic",
@@ -2671,9 +2962,32 @@
     "adv_understanding_text": "The product owner has collected resources for you to access throughout your learning path. The buttons below are arranged in an order to help you know what to look at first, second, and so on. However, you should guide your own learning based on what you already knowa bout the product, and what you know about how the product will be delivered on your specific project.",
     "adv_supp_mel_text": "The content provided above is the core knowledge for delivering this product, but the product owner has also identified some additional skillsets that are important to the success of the product. Please review these additional skillsets here.",
     "adv_practice_feedback_text": "The product owner recommends the following resources for practice and feedback. Note that some resources may occur multiple times, because they offer both content and practice or feedback. This is intentional to guide your learning journey.",
-    "basic_related_products": [{"heading": "Monitoring TA", "explanation": "Often leads to TA to implement action steps; if not, diagnostic ensures client can implement independently", "link": null}, {"heading": "Data-Use and Evidence Culture Support (DUECS)", "explanation": "When diagnostic identifies internal learning culture challenges (vs. technical issues), leading to continued RFE engagement. ", "link": null}],
-    "adv_content_buttons": [{"heading": "General Learning Guide", "explanation": null, "link": null}],
-    "adv_supp_mel_buttons": [{"heading": "(Monitoring) Indicator Design", "explanation": "Conducting a MEL diagnostic requires evaluating the quality of indicators, requiring a strong technical base in indicator design.", "link": null}],
+    "basic_related_products": [
+      {
+        "heading": "Monitoring TA",
+        "explanation": "Often leads to TA to implement action steps; if not, diagnostic ensures client can implement independently",
+        "link": null
+      },
+      {
+        "heading": "Data-Use and Evidence Culture Support (DUECS)",
+        "explanation": "When diagnostic identifies internal learning culture challenges (vs. technical issues), leading to continued RFE engagement. ",
+        "link": null
+      }
+    ],
+    "adv_content_buttons": [
+      {
+        "heading": "General Learning Guide",
+        "explanation": null,
+        "link": null
+      }
+    ],
+    "adv_supp_mel_buttons": [
+      {
+        "heading": "(Monitoring) Indicator Design",
+        "explanation": "Conducting a MEL diagnostic requires evaluating the quality of indicators, requiring a strong technical base in indicator design.",
+        "link": null
+      }
+    ],
     "adv_practice_buttons": [],
     "adv_feedback_buttons": [],
     "other_resources_buttons": []
@@ -2693,7 +3007,28 @@
     "adv_understanding_text": "The product owner has collected resources for you to access throughout your learning path. The buttons below are arranged in an order to help you know what to look at first, second, and so on. However, you should guide your own learning based on what you already knowa bout the product, and what you know about how the product will be delivered on your specific project.",
     "adv_supp_mel_text": "The content provided above is the core knowledge for delivering this product, but the product owner has also identified some additional skillsets that are important to the success of the product. Please review these additional skillsets here.",
     "adv_practice_feedback_text": "The product owner recommends the following resources for practice and feedback. Note that some resources may occur multiple times, because they offer both content and practice or feedback. This is intentional to guide your learning journey.",
-    "basic_related_products": [{"heading": "A/B Testing", "explanation": "Monitoring TA may include other continuous monitoring products.", "link": null}, {"heading": "Cost Effectiveness Modelling", "explanation": "Monitoring TA may include other continuous monitoring products.", "link": null}, {"heading": "User Research", "explanation": "Monitoring TA may include other continuous monitoring products.", "link": null}, {"heading": "Problem Identification", "explanation": "Monitoring TA may include other continuous monitoring products.", "link": null}],
+    "basic_related_products": [
+      {
+        "heading": "A/B Testing",
+        "explanation": "Monitoring TA may include other continuous monitoring products.",
+        "link": null
+      },
+      {
+        "heading": "Cost Effectiveness Modelling",
+        "explanation": "Monitoring TA may include other continuous monitoring products.",
+        "link": null
+      },
+      {
+        "heading": "User Research",
+        "explanation": "Monitoring TA may include other continuous monitoring products.",
+        "link": null
+      },
+      {
+        "heading": "Problem Identification",
+        "explanation": "Monitoring TA may include other continuous monitoring products.",
+        "link": null
+      }
+    ],
     "adv_content_buttons": [],
     "adv_supp_mel_buttons": [],
     "adv_practice_buttons": [],
@@ -2715,7 +3050,13 @@
     "adv_understanding_text": "The product owner has collected resources for you to access throughout your learning path. The buttons below are arranged in an order to help you know what to look at first, second, and so on. However, you should guide your own learning based on what you already knowa bout the product, and what you know about how the product will be delivered on your specific project.",
     "adv_supp_mel_text": "The content provided above is the core knowledge for delivering this product, but the product owner has also identified some additional skillsets that are important to the success of the product. Please review these additional skillsets here.",
     "adv_practice_feedback_text": "The product owner recommends the following resources for practice and feedback. Note that some resources may occur multiple times, because they offer both content and practice or feedback. This is intentional to guide your learning journey.",
-    "basic_related_products": [{"heading": "Monitoring TA", "explanation": "Process evaluations may be paired with Monitoring TA, since they both measure similar indicators and levels of the theory of change. However, RFE prefers Monitoring TA, which is more continuous than process evaluations and therefore better aligned with RFE principles. ", "link": null}],
+    "basic_related_products": [
+      {
+        "heading": "Monitoring TA",
+        "explanation": "Process evaluations may be paired with Monitoring TA, since they both measure similar indicators and levels of the theory of change. However, RFE prefers Monitoring TA, which is more continuous than process evaluations and therefore better aligned with RFE principles. ",
+        "link": null
+      }
+    ],
     "adv_content_buttons": [],
     "adv_supp_mel_buttons": [],
     "adv_practice_buttons": [],
@@ -2760,8 +3101,30 @@
     "adv_supp_mel_text": "The content provided above is the core knowledge for delivering this product, but the product owner has also identified some additional skillsets that are important to the success of the product. Please review these additional skillsets here.",
     "adv_practice_feedback_text": "The product owner recommends the following resources for practice and feedback. Note that some resources may occur multiple times, because they offer both content and practice or feedback. This is intentional to guide your learning journey.",
     "basic_related_products": [],
-    "adv_content_buttons": [{"heading": "General Approach Overview", "explanation": null, "link": null}, {"heading": "Internal User Testing slide deck", "explanation": "Covers 2025 updates to the User Research product, including information on UX and Design principles. ", "link": "https://ipastorage.app.box.com/file/2002072276577"}, {"heading": "Onboarding training video", "explanation": "Previous onboarding Q&A on the User Research product. May be useful to get more explanation on the high-level elements at play in delivering the product. ", "link": "https://ipastorage.app.box.com/file/1777924281582?s=o97f8fg76pdvqv5s0ykvd70f9j3krmj4"}],
-    "adv_supp_mel_buttons": [{"heading": "User Design and Design Thinking", "explanation": "Having additional knowledge of User design and Design thinking principles will supplement your ability to deliver the User Research product. ", "link": null}],
+    "adv_content_buttons": [
+      {
+        "heading": "General Approach Overview",
+        "explanation": null,
+        "link": null
+      },
+      {
+        "heading": "Internal User Testing slide deck",
+        "explanation": "Covers 2025 updates to the User Research product, including information on UX and Design principles. ",
+        "link": "https://ipastorage.app.box.com/file/2002072276577"
+      },
+      {
+        "heading": "Onboarding training video",
+        "explanation": "Previous onboarding Q&A on the User Research product. May be useful to get more explanation on the high-level elements at play in delivering the product. ",
+        "link": "https://ipastorage.app.box.com/file/1777924281582?s=o97f8fg76pdvqv5s0ykvd70f9j3krmj4"
+      }
+    ],
+    "adv_supp_mel_buttons": [
+      {
+        "heading": "User Design and Design Thinking",
+        "explanation": "Having additional knowledge of User design and Design thinking principles will supplement your ability to deliver the User Research product. ",
+        "link": null
+      }
+    ],
     "adv_practice_buttons": [],
     "adv_feedback_buttons": [],
     "other_resources_buttons": []
@@ -2781,11 +3144,97 @@
     "adv_understanding_text": "The product owner has collected resources for you to access throughout your learning path. The buttons below are arranged in an order to help you know what to look at first, second, and so on. However, you should guide your own learning based on what you already knowa bout the product, and what you know about how the product will be delivered on your specific project.",
     "adv_supp_mel_text": "The content provided above is the core knowledge for delivering this product, but the product owner has also identified some additional skillsets that are important to the success of the product. Please review these additional skillsets here.",
     "adv_practice_feedback_text": "The product owner recommends the following resources for practice and feedback. Note that some resources may occur multiple times, because they offer both content and practice or feedback. This is intentional to guide your learning journey.",
-    "basic_related_products": [{"heading": "Learning Plan Design (LPD)", "explanation": "The first step to making a COP shared learning agenda is often creating a theory of change that consolidates all partners' models into one. ", "link": null}, {"heading": "Donor advisory", "explanation": "COPs often are used with donors aiming to coordinate their grantees' learning through the support of RFE as a 'learning partner'. In this case, RFE prefers to engage with the donor in an advisory role, so that the COP learning strategy works in alignment with RFE principles. ", "link": null}],
-    "adv_content_buttons": [{"heading": "General Learning Guide", "explanation": "Get a foundation in how RFE delivers the COP. ", "link": "https://ipastorage.app.box.com/file/2182111091147?s=kgj9oco72aqh9iyslug4bzg18jqcqoyx", "doc_type": "Doc", "priority": "High"}, {"heading": "Annotated General Approach Examples", "explanation": "Look at examples of how 3 of the general approaches were approached in past RFE COPs.", "link": "https://ipastorage.app.box.com/web_link/45064669388", "doc_type": "Doc", "priority": "High"}, {"heading": "Example 'Research Package' of Synthesized Learning", "explanation": "Get an idea of what a COP learning synthesis can look like. Notice how the resources cut across the 3 partners on the POP project. ", "link": "https://poverty-action.org/play-our-part-using-evidence-improve-early-childhood-education-through-learning-through-play", "doc_type": "Web"}, {"heading": "COP Building Blocks", "explanation": "This brief was written by the RFE team for the LEGO Foundation as a research project on what works in delivering COPs. ", "link": "https://poverty-action.org/making-collaborative-learning-work-practical-insights-effective-communities-practice", "doc_type": "Doc"}],
-    "adv_supp_mel_buttons": [{"heading": "Facilitation skills", "explanation": "COPs put a heavy burden on the ability of RFE staff to facilitate workshops amongst multiple partners and donor representatives at the same time. Since by design there are differences between COP partners, RFE must offer more facilatory support to get partners in a position where they can effectively draw insights from different data sources and partners.", "link": null}],
-    "adv_practice_buttons": [{"heading": "Common scenarios", "explanation": "Read 3 scenarios matched to 3 of the general approaches for delivering an RFE COP, and reflect on how common challenges might be overcome. ", "link": "https://ipastorage.app.box.com/file/2017011296462?s=00t1or2mi5vz06v27fa26rvrt5f7zs62", "doc_type": "Whiteboard", "priority": "High"}, {"heading": "General Learning Guide", "explanation": "Do the targeted searches in the General Approaches section. ", "link": "https://ipastorage.app.box.com/file/2182111091147?s=kgj9oco72aqh9iyslug4bzg18jqcqoyx", "doc_type": "Doc"}],
-    "adv_feedback_buttons": [{"heading": "Annotated General Approach Examples", "explanation": "After doing the Common Scenarios, return to the annotated examples to compare your own solutions with past approaches. ", "link": "https://ipastorage.app.box.com/web_link/45064669388", "doc_type": "Whiteboard"}, {"heading": "Talk to Coach Arfie", "explanation": "Copy the Common Scenarios into Arfie, and share your ideas so that you can get feedback. Ask Arfie to test how your ideas connect to the core RFE concepts. ", "link": "https://claude.ai/project/0197b25f-0c03-732e-8e6e-09611d72ec16", "priority": "High"}, {"heading": "Talk to your manager", "explanation": "Get more information on the kinds of challenges you are likely to face in your specific project. Share some of the insights from your reflections, Coach Arfie, and the annotated examples to see how these align with your project context.", "link": null}, {"heading": "Meet with Ashley", "explanation": "When you feel ready, set up a meeting with Ashley to discuss deeper challenges RFE has had in getting COPs to truly improve the MEL of partners (as opposed to being a nice community for discussing implementation pain points).", "link": null}, {"heading": "Product Overview", "explanation": "Check the Open Questions and Past Applications sections. Have others encountered similar challenge as you during practice activities? Does anythign help you work through you own ideas? ", "link": "https://ipastorage.app.box.com/file/1746049091876?s=3b3wnlnwlpknvis6pt979b15picldd1y"}],
+    "basic_related_products": [
+      {
+        "heading": "Learning Plan Design (LPD)",
+        "explanation": "The first step to making a COP shared learning agenda is often creating a theory of change that consolidates all partners' models into one. ",
+        "link": null
+      },
+      {
+        "heading": "Donor advisory",
+        "explanation": "COPs often are used with donors aiming to coordinate their grantees' learning through the support of RFE as a 'learning partner'. In this case, RFE prefers to engage with the donor in an advisory role, so that the COP learning strategy works in alignment with RFE principles. ",
+        "link": null
+      }
+    ],
+    "adv_content_buttons": [
+      {
+        "heading": "General Learning Guide",
+        "explanation": "Get a foundation in how RFE delivers the COP. ",
+        "link": "https://ipastorage.app.box.com/file/2182111091147?s=kgj9oco72aqh9iyslug4bzg18jqcqoyx",
+        "doc_type": "Doc",
+        "priority": "High"
+      },
+      {
+        "heading": "Annotated General Approach Examples",
+        "explanation": "Look at examples of how 3 of the general approaches were approached in past RFE COPs.",
+        "link": "https://ipastorage.app.box.com/web_link/45064669388",
+        "doc_type": "Doc",
+        "priority": "High"
+      },
+      {
+        "heading": "Example 'Research Package' of Synthesized Learning",
+        "explanation": "Get an idea of what a COP learning synthesis can look like. Notice how the resources cut across the 3 partners on the POP project. ",
+        "link": "https://poverty-action.org/play-our-part-using-evidence-improve-early-childhood-education-through-learning-through-play",
+        "doc_type": "Web"
+      },
+      {
+        "heading": "COP Building Blocks",
+        "explanation": "This brief was written by the RFE team for the LEGO Foundation as a research project on what works in delivering COPs. ",
+        "link": "https://poverty-action.org/making-collaborative-learning-work-practical-insights-effective-communities-practice",
+        "doc_type": "Doc"
+      }
+    ],
+    "adv_supp_mel_buttons": [
+      {
+        "heading": "Facilitation skills",
+        "explanation": "COPs put a heavy burden on the ability of RFE staff to facilitate workshops amongst multiple partners and donor representatives at the same time. Since by design there are differences between COP partners, RFE must offer more facilatory support to get partners in a position where they can effectively draw insights from different data sources and partners.",
+        "link": null
+      }
+    ],
+    "adv_practice_buttons": [
+      {
+        "heading": "Common scenarios",
+        "explanation": "Read 3 scenarios matched to 3 of the general approaches for delivering an RFE COP, and reflect on how common challenges might be overcome. ",
+        "link": "https://ipastorage.app.box.com/file/2017011296462?s=00t1or2mi5vz06v27fa26rvrt5f7zs62",
+        "doc_type": "Whiteboard",
+        "priority": "High"
+      },
+      {
+        "heading": "General Learning Guide",
+        "explanation": "Do the targeted searches in the General Approaches section. ",
+        "link": "https://ipastorage.app.box.com/file/2182111091147?s=kgj9oco72aqh9iyslug4bzg18jqcqoyx",
+        "doc_type": "Doc"
+      }
+    ],
+    "adv_feedback_buttons": [
+      {
+        "heading": "Annotated General Approach Examples",
+        "explanation": "After doing the Common Scenarios, return to the annotated examples to compare your own solutions with past approaches. ",
+        "link": "https://ipastorage.app.box.com/web_link/45064669388",
+        "doc_type": "Whiteboard"
+      },
+      {
+        "heading": "Talk to Coach Arfie",
+        "explanation": "Copy the Common Scenarios into Arfie, and share your ideas so that you can get feedback. Ask Arfie to test how your ideas connect to the core RFE concepts. ",
+        "link": "https://claude.ai/project/0197b25f-0c03-732e-8e6e-09611d72ec16",
+        "priority": "High"
+      },
+      {
+        "heading": "Talk to your manager",
+        "explanation": "Get more information on the kinds of challenges you are likely to face in your specific project. Share some of the insights from your reflections, Coach Arfie, and the annotated examples to see how these align with your project context.",
+        "link": null
+      },
+      {
+        "heading": "Meet with Ashley",
+        "explanation": "When you feel ready, set up a meeting with Ashley to discuss deeper challenges RFE has had in getting COPs to truly improve the MEL of partners (as opposed to being a nice community for discussing implementation pain points).",
+        "link": null
+      },
+      {
+        "heading": "Product Overview",
+        "explanation": "Check the Open Questions and Past Applications sections. Have others encountered similar challenge as you during practice activities? Does anythign help you work through you own ideas? ",
+        "link": "https://ipastorage.app.box.com/file/1746049091876?s=3b3wnlnwlpknvis6pt979b15picldd1y"
+      }
+    ],
     "other_resources_buttons": []
   },
   "Donor-Advisory": {
@@ -2869,12 +3318,83 @@
     "adv_understanding_text": "The product owner has collected resources for you to access throughout your learning path. The buttons below are arranged in an order to help you know what to look at first, second, and so on. However, you should guide your own learning based on what you already knowa bout the product, and what you know about how the product will be delivered on your specific project.",
     "adv_supp_mel_text": "The content provided above is the core knowledge for delivering this product, but the product owner has also identified some additional skillsets that are important to the success of the product. Please review these additional skillsets here.",
     "adv_practice_feedback_text": "The product owner recommends the following resources for practice and feedback. Note that some resources may occur multiple times, because they offer both content and practice or feedback. This is intentional to guide your learning journey.",
-    "basic_related_products": [{"heading": "User Research", "explanation": "RFE A/B tests help track outcomes at the user level, run controlled comparisons,\nand interpret results with enough confidence to act on them.", "link": null}, {"heading": "Cost Effectiveness Modelling", "explanation": "RFE A/B tests help in identifying and prioritizing what to test using a cost-effectiveness lens across reach, efficacy, and efficiency", "link": null}, {"heading": "Learning Plan Design (LPD)", "explanation": "The ToC helps teams identify the core levers of impact, the early outcomes that signal the intervention is working, and the parts where there is uncertainty or room for improvement. Especially relevant for A/B testing at the Refine, Adapt, and Scale phases of learning.", "link": null}],
-    "adv_content_buttons": [{"heading": "A/B Testing Guide", "explanation": "This brief provides a step-by-step guide for digitalfirst organizations seeking to embed A/B testing into their Monitoring, Evaluation, and Learning.", "link": "https://www.wwhge.org/wp-content/uploads/2026/03/A-Practical-Approach-to-Developing-AB-Testing-Systems-for-Digital-First-Organizations.pdf", "doc_type": "Doc", "priority": "High"}, {"heading": "A/B Testing Internal training deck", "explanation": "Used to facilitate an internal training on how RFE conducts A/B tests, and some of the focuses for meeting RFE objectives", "link": "https://ipastorage.app.box.com/file/1912268701523?s=ckz6a2wrtupixyh31w9xcd5p09u8e806", "doc_type": "Slide deck"}, {"heading": "A/B Testing Onboarding training video", "explanation": "May be useful for getting some human explanation of A/B testing from a high level", "link": "https://ipastorage.app.box.com/file/1776921357367?s=bs9ci6qptypc91mtqn8kbuqlefldu31m", "doc_type": "Video"}],
-    "adv_supp_mel_buttons": [{"heading": "Sample Sizes and Power Calculations", "explanation": "A/B Tests are essentially quick RCTs that focus on easily iterated implementation and/or user-facing elements. Power calculation ensure there is sufficient power to arrive at a conclusive finding. ", "link": null}, {"heading": "User Design and Design Thinking", "explanation": "A/B Tests often iterate on elements of human centered design, especially where digital tools are involved. ", "link": null}, {"heading": "MEL for Tech (digital innovations)", "explanation": "A/B Tests are most easy to implement using digital tools, since it is easy to roll-out different versions of the digital tool, and easier to collect metadata from the digital experience. ", "link": null}],
+    "basic_related_products": [
+      {
+        "heading": "User Research",
+        "explanation": "RFE A/B tests help track outcomes at the user level, run controlled comparisons,\nand interpret results with enough confidence to act on them.",
+        "link": null
+      },
+      {
+        "heading": "Cost Effectiveness Modelling",
+        "explanation": "RFE A/B tests help in identifying and prioritizing what to test using a cost-effectiveness lens across reach, efficacy, and efficiency",
+        "link": null
+      },
+      {
+        "heading": "Learning Plan Design (LPD)",
+        "explanation": "The ToC helps teams identify the core levers of impact, the early outcomes that signal the intervention is working, and the parts where there is uncertainty or room for improvement. Especially relevant for A/B testing at the Refine, Adapt, and Scale phases of learning.",
+        "link": null
+      }
+    ],
+    "adv_content_buttons": [
+      {
+        "heading": "A/B Testing Guide",
+        "explanation": "This brief provides a step-by-step guide for digitalfirst organizations seeking to embed A/B testing into their Monitoring, Evaluation, and Learning.",
+        "link": "https://www.wwhge.org/wp-content/uploads/2026/03/A-Practical-Approach-to-Developing-AB-Testing-Systems-for-Digital-First-Organizations.pdf",
+        "doc_type": "Doc",
+        "priority": "High"
+      },
+      {
+        "heading": "A/B Testing Internal training deck",
+        "explanation": "Used to facilitate an internal training on how RFE conducts A/B tests, and some of the focuses for meeting RFE objectives",
+        "link": "https://ipastorage.app.box.com/file/1912268701523?s=ckz6a2wrtupixyh31w9xcd5p09u8e806",
+        "doc_type": "Slide deck"
+      },
+      {
+        "heading": "A/B Testing Onboarding training video",
+        "explanation": "May be useful for getting some human explanation of A/B testing from a high level",
+        "link": "https://ipastorage.app.box.com/file/1776921357367?s=bs9ci6qptypc91mtqn8kbuqlefldu31m",
+        "doc_type": "Video"
+      }
+    ],
+    "adv_supp_mel_buttons": [
+      {
+        "heading": "Sample Sizes and Power Calculations",
+        "explanation": "A/B Tests are essentially quick RCTs that focus on easily iterated implementation and/or user-facing elements. Power calculation ensure there is sufficient power to arrive at a conclusive finding. ",
+        "link": null
+      },
+      {
+        "heading": "User Design and Design Thinking",
+        "explanation": "A/B Tests often iterate on elements of human centered design, especially where digital tools are involved. ",
+        "link": null
+      },
+      {
+        "heading": "MEL for Tech (digital innovations)",
+        "explanation": "A/B Tests are most easy to implement using digital tools, since it is easy to roll-out different versions of the digital tool, and easier to collect metadata from the digital experience. ",
+        "link": null
+      }
+    ],
     "adv_practice_buttons": [],
     "adv_feedback_buttons": [],
-    "other_resources_buttons": [{"heading": "What Works Hub (WWB)", "explanation": "A/B Testing in Education. Developed for CIES 2024", "link": "https://ipastorage.app.box.com/file/2109753107494", "doc_type": "Web"}, {"heading": "What Works Hub (WWB)", "explanation": "Cheaper by the Dozen. A report on 12 A/B tests run on Teacher Coaching engagements in search of improving the cost-effectiveness of coaching. ", "link": "https://ipastorage.app.box.com/file/2024078608363", "doc_type": "Web"}, {"heading": "Youth Impact", "explanation": "Iterative A/B Testing handbook", "link": "https://ipastorage.app.box.com/file/2109757259634", "doc_type": "Web"}]
+    "other_resources_buttons": [
+      {
+        "heading": "What Works Hub (WWB)",
+        "explanation": "A/B Testing in Education. Developed for CIES 2024",
+        "link": "https://ipastorage.app.box.com/file/2109753107494",
+        "doc_type": "Web"
+      },
+      {
+        "heading": "What Works Hub (WWB)",
+        "explanation": "Cheaper by the Dozen. A report on 12 A/B tests run on Teacher Coaching engagements in search of improving the cost-effectiveness of coaching. ",
+        "link": "https://ipastorage.app.box.com/file/2024078608363",
+        "doc_type": "Web"
+      },
+      {
+        "heading": "Youth Impact",
+        "explanation": "Iterative A/B Testing handbook",
+        "link": "https://ipastorage.app.box.com/file/2109757259634",
+        "doc_type": "Web"
+      }
+    ]
   },
   "Problem-Identification": {
     "display_title": "Problem Identification",
@@ -2955,7 +3475,26 @@
     "description": null,
     "why_it_matters": null,
     "how_rfe_applies": null,
-    "popup_buttons": [{"heading": "IDEO", "explanation": "Field guid to Human Centered Design", "link": "https://ipastorage.app.box.com/file/478207241698"}, {"heading": "ACUMEN", "explanation": "Prototyping Course manual", "link": "https://ipastorage.app.box.com/file/790980345795?s=5sehxt55psmfv1j3utw5eplt72idtzgi"}, {"heading": "10 Essential UX Principles for User-Centered Design", "explanation": "Creating meaningful digital experiences that put users first", "link": "https://medium.com/design-bootcamp/10-essential-ux-principles-for-user-centered-design-7f047ef04190"}]
+    "popup_buttons": [
+      {
+        "heading": "IDEO",
+        "explanation": "Field guid to Human Centered Design",
+        "link": "https://ipastorage.app.box.com/file/478207241698",
+        "doc_type": "Button"
+      },
+      {
+        "heading": "ACUMEN",
+        "explanation": "Prototyping Course manual",
+        "link": "https://ipastorage.app.box.com/file/790980345795?s=5sehxt55psmfv1j3utw5eplt72idtzgi",
+        "doc_type": "Button"
+      },
+      {
+        "heading": "10 Essential UX Principles for User-Centered Design",
+        "explanation": "Creating meaningful digital experiences that put users first",
+        "link": "https://medium.com/design-bootcamp/10-essential-ux-principles-for-user-centered-design-7f047ef04190",
+        "doc_type": "Button"
+      }
+    ]
   },
   "Mel-For-Tech-Digital-Innovations": {
     "display_title": "MEL for Tech (digital innovations)",
@@ -2970,7 +3509,20 @@
     "description": null,
     "why_it_matters": null,
     "how_rfe_applies": null,
-    "popup_buttons": [{"heading": "The Agency Fund", "explanation": "User Funnel Playbook for the Social Sector", "link": "https://ipastorage.app.box.com/file/2109753033577"}]
+    "popup_buttons": [
+      {
+        "heading": "The Agency Fund",
+        "explanation": "User Funnel Playbook for the Social Sector",
+        "link": "https://ipastorage.app.box.com/file/2109753033577",
+        "doc_type": "Button"
+      },
+      {
+        "heading": "Goldilocks Toolkit: Digital Green Case Study",
+        "explanation": "Older Goldilocks Toolkit brief, showcasing an agricultural tech innovation, and how RFE supported learning on the project. ",
+        "link": "https://poverty-action.org/sites/default/files/publications/Goldilocks-Toolkit-Digital-Green-Case-Study_0.pdf",
+        "doc_type": "Button"
+      }
+    ]
   },
   "Monitoring-Indicator-Design": {
     "display_title": "(Monitoring) Indicator Design",
@@ -2986,10 +3538,30 @@
     "why_it_matters": null,
     "how_rfe_applies": null,
     "popup_buttons": [
-      {"heading": "RFE-style monitoring indicator design", "explanation": "This is an brief about how we do indicator design at RFE with practice opportunities to refine your indicator design skills", "link": "https://ipastorage.app.box.com/file/2182945969965"},
-      {"heading": "Intrac", "explanation": "Monitoring and Evaluation Programme Indicators", "link": "https://ipastorage.app.box.com/file/1112041916363"},
-      {"heading": "World Bank Blogs", "explanation": "Three new papers on measuring stuff that is difficult to measure", "link": "https://blogs.worldbank.org/en/impactevaluations/three-new-papers-measuring-stuff-difficult-measure"},
-      {"heading": "JPAL Research Resources", "explanation": "Introduction to Measurement and Indicators", "link": "https://www.povertyactionlab.org/resource/introduction-measurement-and-indicators"}
+      {
+        "heading": "RFE-style monitoring indicator design",
+        "explanation": "This is an brief about how we do indicator design at RFE with practice opportunities to refine your indicator design skills",
+        "link": "https://ipastorage.app.box.com/file/2182945969965",
+        "doc_type": "Button"
+      },
+      {
+        "heading": "Intrac",
+        "explanation": "Monitoring and Evaluation Programme Indicators",
+        "link": "https://ipastorage.app.box.com/file/1112041916363",
+        "doc_type": "Button"
+      },
+      {
+        "heading": "World Bank Blogs",
+        "explanation": "Three new papers on measuring stuff that is difficult to measure",
+        "link": "https://blogs.worldbank.org/en/impactevaluations/three-new-papers-measuring-stuff-difficult-measure",
+        "doc_type": "Button"
+      },
+      {
+        "heading": "JPAL Research Resources",
+        "explanation": "Introduction to Measurement and Indicators",
+        "link": "https://www.povertyactionlab.org/resource/introduction-measurement-and-indicators",
+        "doc_type": "Button"
+      }
     ]
   },
   "Sampling": {
@@ -3005,7 +3577,26 @@
     "description": null,
     "why_it_matters": null,
     "how_rfe_applies": null,
-    "popup_buttons": []
+    "popup_buttons": [
+      {
+        "heading": "IPA Data Hub: Sample Size and Power",
+        "explanation": "IPA guide to sampling with a focus on power calculations",
+        "link": "https://data.poverty-action.org/research-design/sample-size-power.html",
+        "doc_type": "Button"
+      },
+      {
+        "heading": "J-PAL: Sampling",
+        "explanation": "Comprehensive J-PAL guide to sampling",
+        "link": "https://www.povertyactionlab.org/resource/sampling",
+        "doc_type": "Button"
+      },
+      {
+        "heading": "DIME Wiki: Sampling",
+        "explanation": "World Bank wiki on sampling",
+        "link": "https://dimewiki.worldbank.org/Sampling",
+        "doc_type": "Button"
+      }
+    ]
   },
   "Data-Collection-Instrument-Design": {
     "display_title": "Data collection Instrument Design",
@@ -3020,7 +3611,38 @@
     "description": null,
     "why_it_matters": null,
     "how_rfe_applies": null,
-    "popup_buttons": []
+    "popup_buttons": [
+      {
+        "heading": "DIME Wiki: Questionnaire Design",
+        "explanation": "World Bank wiki on doing questionnaire design well",
+        "link": "https://dimewiki.worldbank.org/Questionnaire_Design",
+        "doc_type": "Button"
+      },
+      {
+        "heading": "Dime wiki: Field Surveys",
+        "explanation": "World Bank wiki on writing and conducitng field surveys",
+        "link": "https://dimewiki.worldbank.org/Field_Surveys",
+        "doc_type": "Button"
+      },
+      {
+        "heading": "IPA Data Hub: Bench testing",
+        "explanation": "Details on conducting bench testing, a core activity for improving data collection tools before launching them in the field",
+        "link": "https://data.poverty-action.org/data-quality/bench-testing.html",
+        "doc_type": "Button"
+      },
+      {
+        "heading": "IPA Data Hub: Survey Pilots",
+        "explanation": "Details on conducting pilot, a core activity for improving data collection tools before launching them in the field",
+        "link": "https://data.poverty-action.org/data-quality/pilot-survey.html",
+        "doc_type": "Button"
+      },
+      {
+        "heading": "FHI360 Qualitative Methods Manual",
+        "explanation": "Chapters on different qual methodologies provide useful content on designing interviews and FGD tools",
+        "link": "https://www.fhi360.org/wp-content/uploads/2024/01/Qualitative-Research-Methods-A-Data-Collectors-Field-Guide.pdf#:~:text=information%20that%20participants%20provide,to%20establish%20positive%20interviewer%2Fparticipant%20dynamics",
+        "doc_type": "Button"
+      }
+    ]
   },
   "Ipa-Aligned-Data-Collection-Eg-Field-Logisticstraining-Data-Quality-Checks-Etc": {
     "display_title": "IPA-aligned Data Collection (e.g. Field logistics/training, data quality checks, etc.)",
@@ -3035,7 +3657,32 @@
     "description": null,
     "why_it_matters": null,
     "how_rfe_applies": null,
-    "popup_buttons": []
+    "popup_buttons": [
+      {
+        "heading": "IPA Data Hub: Data Collection",
+        "explanation": "Extensive methodological guide on conducting rigorous data collection",
+        "link": "https://data.poverty-action.org/data-collection/",
+        "doc_type": "Button"
+      },
+      {
+        "heading": "DIME Wiki: Enumerator Training",
+        "explanation": "World Bank wiki on methods for training an enumerator team ",
+        "link": "https://dimewiki.worldbank.org/Enumerator_Training",
+        "doc_type": "Button"
+      },
+      {
+        "heading": "J-PAL: Field Team Management",
+        "explanation": "J-PAL research resource entry on managing the field team during data collection phase",
+        "link": "https://www.povertyactionlab.org/resource/field-team-management",
+        "doc_type": "Button"
+      },
+      {
+        "heading": "J-PAL: Design and Iterate Implementation Strategy",
+        "explanation": "J-PAL research resource entry on iteratively conducting data collection to improve data quality and rigour",
+        "link": "https://www.povertyactionlab.org/resource/design-and-iterate-implementation-strategy",
+        "doc_type": "Button"
+      }
+    ]
   },
   "Qualitative-Methods-Data-Collection-Analysis-Mixed-Methods": {
     "display_title": "Qualitative methods (data collection, analysis, mixed-methods)",
@@ -3050,7 +3697,38 @@
     "description": null,
     "why_it_matters": null,
     "how_rfe_applies": null,
-    "popup_buttons": []
+    "popup_buttons": [
+      {
+        "heading": "IPA Data Hub- Qualitative methods",
+        "explanation": "General methodological support for how IPA does qualitative research.",
+        "link": "https://data.poverty-action.org/data-collection/qualitative-methods/",
+        "doc_type": "Button"
+      },
+      {
+        "heading": "J-PAL- Integrating Qual Methods into Randomized Evaluations",
+        "explanation": "Research resource on ways to do mixed methods evaluatory work. ",
+        "link": "https://www.povertyactionlab.org/resource/integrating-qualitative-methods-randomized-evaluations",
+        "doc_type": "Button"
+      },
+      {
+        "heading": "J-PAL- Implementation Qual Methods in the Field",
+        "explanation": "Research resource on ways to maintain qualitative rigour while working in the field. ",
+        "link": "https://www.povertyactionlab.org/resource/implementing-qualitative-methods-field",
+        "doc_type": "Button"
+      },
+      {
+        "heading": "RFE TTP Qualitative Research Methods Training Series",
+        "explanation": null,
+        "link": "https://ipastorage.app.box.com/folder/348528318233?s=kejn4dh4ifcdt01a4exyhlexq6yyrdn3",
+        "doc_type": "Button"
+      },
+      {
+        "heading": "FHI360 Qualitative Methods Manual",
+        "explanation": "Comprehensive manual on conducting qualitative field work. ",
+        "link": "https://www.fhi360.org/wp-content/uploads/2024/01/Qualitative-Research-Methods-A-Data-Collectors-Field-Guide.pdf#:~:text=information%20that%20participants%20provide,to%20establish%20positive%20interviewer%2Fparticipant%20dynamics",
+        "doc_type": "Button"
+      }
+    ]
   },
   "Digital-Data-Collection-Tools": {
     "display_title": "Digital data collection tools",
@@ -3065,7 +3743,32 @@
     "description": null,
     "why_it_matters": null,
     "how_rfe_applies": null,
-    "popup_buttons": []
+    "popup_buttons": [
+      {
+        "heading": "J-PAL: Conducting Remote Surveys",
+        "explanation": "Research resource entry on how to conduct rigorous remote surveys. ",
+        "link": "https://www.povertyactionlab.org/resource/resources-conducting-remote-surveys",
+        "doc_type": "Button"
+      },
+      {
+        "heading": "DIME Wiki: Innovative Data Sources",
+        "explanation": "World Bank wiki on the use of mobile big data sources for development work. ",
+        "link": "https://dimewiki.worldbank.org/Innovative_Data_Sources#Mobile_Big_Data",
+        "doc_type": "Button"
+      },
+      {
+        "heading": "DIME Wiki: Remote Sensing",
+        "explanation": "World wiki on the use of remote sensing data collection for development work ",
+        "link": "https://dimewiki.worldbank.org/Remote_Sensing",
+        "doc_type": "Button"
+      },
+      {
+        "heading": "IPA Data Hub: Digital Ethnographic Surveys",
+        "explanation": "See the digital specific section to read about considerations for conducitng digital data collection well. ",
+        "link": "https://data.poverty-action.org/data-collection/qualitative-methods/ethnographies.html#footnotes",
+        "doc_type": "Button"
+      }
+    ]
   },
   "Data-Analysis": {
     "display_title": "Data analysis",
@@ -3080,7 +3783,32 @@
     "description": null,
     "why_it_matters": null,
     "how_rfe_applies": null,
-    "popup_buttons": []
+    "popup_buttons": [
+      {
+        "heading": "J-PAL: Pre-analysis plans",
+        "explanation": "J-PAL research resource entry creating pre-analysis plans in advance of analysis phase",
+        "link": "https://www.povertyactionlab.org/resource/pre-analysis-plans",
+        "doc_type": "Button"
+      },
+      {
+        "heading": "IPA Data Hub: Data cleaning",
+        "explanation": "Extensive guide to cleaning data prior to data analysis",
+        "link": "https://data.poverty-action.org/data-cleaning/",
+        "doc_type": "Button"
+      },
+      {
+        "heading": "J-PAL: Data Analysis",
+        "explanation": "Comprehensive J-PAL research resource entry on data analysis",
+        "link": "https://www.povertyactionlab.org/resource/data-analysis",
+        "doc_type": "Button"
+      },
+      {
+        "heading": "J-PAL: Communicating to Partners about Results",
+        "explanation": "J-PAL research resource entry how to communicate analysis results for better effect with partner organizations",
+        "link": "https://www.povertyactionlab.org/resource/communicating-partner-about-results",
+        "doc_type": "Button"
+      }
+    ]
   },
   "Sample-Sizes-And-Power-Calculations": {
     "display_title": "Sample Sizes and Power Calculations",
@@ -3095,22 +3823,32 @@
     "description": null,
     "why_it_matters": null,
     "how_rfe_applies": null,
-    "popup_buttons": []
-  },
-  "Causal-Inference-Attribution-And-Counterfactuals": {
-    "display_title": "Causal inference, attribution, and counterfactuals",
-    "element_type": "mel-competency",
-    "skills_mapping": "mel-competency",
-    "who_must_know": "nice_to_know",
-    "short_description": null,
-    "associated_concepts": null,
-    "associated_products": null,
-    "ipa_links": null,
-    "external_links": null,
-    "description": null,
-    "why_it_matters": null,
-    "how_rfe_applies": null,
-    "popup_buttons": []
+    "popup_buttons": [
+      {
+        "heading": "IPA Data Hub: Sample Size Power",
+        "explanation": "Comprehensive guide to conducting power calculations",
+        "link": "https://data.poverty-action.org/research-design/sample-size-power.html",
+        "doc_type": "Button"
+      },
+      {
+        "heading": "J-PAL Essentials of Sample Size and Power",
+        "explanation": "J-PAL presentation on the importance of power calculations",
+        "link": "https://www.povertyactionlab.org/sites/default/files/L5a_Essentials%20of%20Sample%20Size%20and%20Power_2024_2.pdf",
+        "doc_type": "Button"
+      },
+      {
+        "heading": "J-PAL: Power Calculations",
+        "explanation": "Comprehensive J-PAL research resource on power calculations",
+        "link": "https://www.povertyactionlab.org/resource/power-calculations",
+        "doc_type": "Button"
+      },
+      {
+        "heading": "J-PAL: Power Calculator",
+        "explanation": "J-PAL simple power calculator app",
+        "link": "https://j-pal.shinyapps.io/power-app/",
+        "doc_type": "Button"
+      }
+    ]
   },
   "Rcts-Experimental-Design-Quasi-Experimental-Design": {
     "display_title": "RCTs / Experimental design / Quasi-Experimental design",
@@ -3125,7 +3863,26 @@
     "description": null,
     "why_it_matters": null,
     "how_rfe_applies": null,
-    "popup_buttons": []
+    "popup_buttons": [
+      {
+        "heading": "IPA Data Hub: Randomization",
+        "explanation": "IPA Guide to randomization for Impact Evaluations",
+        "link": "https://data.poverty-action.org/research-design/randomization.html",
+        "doc_type": "Button"
+      },
+      {
+        "heading": "IPA Data Hub: Addressing Common Criticisms of RCTs",
+        "explanation": "Guide to communicating the importance of RCTs",
+        "link": "https://data.poverty-action.org/research-design/addressing-rct-criticisms.html",
+        "doc_type": "Button"
+      },
+      {
+        "heading": "J-PAL: Randomization",
+        "explanation": "Comprehensive guide to randomization for Impact Evaluations",
+        "link": "https://www.povertyactionlab.org/resource/randomization",
+        "doc_type": "Button"
+      }
+    ]
   },
   "Problem-Trees": {
     "display_title": "Problem Trees",
@@ -3140,7 +3897,20 @@
     "description": null,
     "why_it_matters": null,
     "how_rfe_applies": null,
-    "popup_buttons": [{"heading": "Problem Treest at RFE", "explanation": "Slide deck on how we use Problem Trees to Right Fit evidence", "link": "https://ipastorage.app.box.com/file/799395059311?s=a6jrejwwlh7j5a0qs44pm4lfmxqsgxos"}, {"heading": "The Definitive Guide to Issue Trees", "explanation": "Article on Problem Trees in the consulting space.", "link": "https://www.craftingcases.com/issue-tree-guide/"}]
+    "popup_buttons": [
+      {
+        "heading": "Problem Trees at RFE",
+        "explanation": "Slide deck on how we use Problem Trees to Right Fit evidence",
+        "link": "https://ipastorage.app.box.com/file/799395059311?s=a6jrejwwlh7j5a0qs44pm4lfmxqsgxos",
+        "doc_type": "Button"
+      },
+      {
+        "heading": "The Definitive Guide to Issue Trees",
+        "explanation": "Article on Problem Trees in the consulting space. ",
+        "link": "https://www.craftingcases.com/issue-tree-guide/",
+        "doc_type": "Button"
+      }
+    ]
   },
   "Pyramid-Principle": {
     "display_title": "Pyramid Principle",
@@ -3155,7 +3925,20 @@
     "description": null,
     "why_it_matters": null,
     "how_rfe_applies": null,
-    "popup_buttons": [{"heading": "Pyramid Principle at RFE", "explanation": "Slide deck detailing how we use Pyramid Principle to support Right-Fit Learning", "link": "https://ipastorage.app.box.com/file/832942571792?s=eene1gy70n1o3lspgfm3ub5x4jygv9cz"}, {"heading": "Engineering' your story narrative using the Pyramid Principle", "explanation": "Article on the Pyramid Principle in consulting spaces.", "link": "https://www.linkedin.com/pulse/engineering-your-story-narrative-using-pyramid-principle-iyer/"}]
+    "popup_buttons": [
+      {
+        "heading": "Pyramid Principle at RFE",
+        "explanation": "Slide deck detailing how we use Pyramid Principle to support Right-Fit Learning",
+        "link": "https://ipastorage.app.box.com/file/832942571792?s=eene1gy70n1o3lspgfm3ub5x4jygv9cz",
+        "doc_type": "Button"
+      },
+      {
+        "heading": "Engineering' your story narrative using the Pyramid Principle",
+        "explanation": "Article on the Pyramid Principle in consulting spaces. ",
+        "link": "https://www.linkedin.com/pulse/engineering-your-story-narrative-using-pyramid-principle-iyer/",
+        "doc_type": "Button"
+      }
+    ]
   },
   "Presentation-Design": {
     "display_title": "Presentation Design",
@@ -3170,7 +3953,20 @@
     "description": null,
     "why_it_matters": null,
     "how_rfe_applies": null,
-    "popup_buttons": [{"heading": "Presentation design at RFE", "explanation": "Slide deck on how we advice to develop slide decks for Right Fit Evidence", "link": "https://ipastorage.app.box.com/file/795694715108?s=fusvry6qqw8ancl6x6n3btfchtr1s98h"}, {"heading": "Presentation design at RFE (video)", "explanation": "Live session recording on presentation design at RFE", "link": "https://ipastorage.app.box.com/file/814711239969"}]
+    "popup_buttons": [
+      {
+        "heading": "Presentation design at RFE",
+        "explanation": "Slide deck on how we advice to develop slide decks for Right Fit Evidence",
+        "link": "https://ipastorage.app.box.com/file/795694715108?s=fusvry6qqw8ancl6x6n3btfchtr1s98h",
+        "doc_type": "Button"
+      },
+      {
+        "heading": "Presentation design at RFE (video)",
+        "explanation": "Live session recording on presentation design at RFE",
+        "link": "https://ipastorage.app.box.com/file/814711239969",
+        "doc_type": "Button"
+      }
+    ]
   },
   "Facilitation-Capacity-Building-Techniques": {
     "display_title": "Facilitation & Capacity building techniques",
@@ -3185,7 +3981,20 @@
     "description": null,
     "why_it_matters": null,
     "how_rfe_applies": null,
-    "popup_buttons": [{"heading": "Remote Workshop Guide", "explanation": "RFE has collected strategies, do's, and don'ts for holding workshops online.", "link": "https://ipastorage.app.box.com/file/1250831669796?s=wbh01nhl8y0tpglpxocphw5b7u2mggaj"}, {"heading": "Playful Facilitation Guide", "explanation": "If you are interested in adding elements of play to you presentation, check here for some practical ways to facilitate meaningful play.", "link": "https://ipastorage.app.box.com/file/928419199090?s=cx5rzn5lftod86zzk2m2ws1ta5jxahvx"}]
+    "popup_buttons": [
+      {
+        "heading": "Remote Workshop Guide",
+        "explanation": "RFE has collected strategies, do's, and don'ts for holding workshops online. ",
+        "link": "https://ipastorage.app.box.com/file/1250831669796?s=wbh01nhl8y0tpglpxocphw5b7u2mggaj",
+        "doc_type": "Button"
+      },
+      {
+        "heading": "Playful Facilitation Guide",
+        "explanation": "If you are interested in adding elements of play to you presentation, check here for some practical ways to facilitate meaningful play. ",
+        "link": "https://ipastorage.app.box.com/file/928419199090?s=cx5rzn5lftod86zzk2m2ws1ta5jxahvx",
+        "doc_type": "Button"
+      }
+    ]
   },
   "Effective-Intercultural-Communication": {
     "display_title": "Effective / Intercultural Communication",
@@ -3215,7 +4024,14 @@
     "description": null,
     "why_it_matters": null,
     "how_rfe_applies": null,
-    "popup_buttons": []
+    "popup_buttons": [
+      {
+        "heading": "Anthropic Skill Jar",
+        "explanation": "Courses for getting the most out of Claude and Claude Code. ",
+        "link": "https://anthropic.skilljar.com/",
+        "doc_type": "Button"
+      }
+    ]
   },
   "Bd-Principles": {
     "display_title": "BD principles",
@@ -3245,7 +4061,20 @@
     "description": null,
     "why_it_matters": null,
     "how_rfe_applies": null,
-    "popup_buttons": [{"heading": "Onboarding slide deck for Mgrs and Directors", "explanation": "Product development at RFE (~2024)", "link": "https://ipastorage.app.box.com/file/1320838283338?s=bj68pt1i3r4pdwy6x7w735d6wt52q38y"}, {"heading": "Onboarding video for Product Dev", "explanation": "More recent presentation on how we do Product Dev (2025)", "link": "https://ipastorage.app.box.com/file/1750749085388?s=lu5nvqvgvv5h6brpqx7kxxq6urdpiztn"}]
+    "popup_buttons": [
+      {
+        "heading": "Onboarding slide deck for Mgrs and Directors",
+        "explanation": "Product development at RFE (~2024)",
+        "link": "https://ipastorage.app.box.com/file/1320838283338?s=bj68pt1i3r4pdwy6x7w735d6wt52q38y",
+        "doc_type": "Button"
+      },
+      {
+        "heading": "Onboarding video for Product Dev",
+        "explanation": "More recent presentation on how we do Product Dev (2025)",
+        "link": "https://ipastorage.app.box.com/file/1750749085388?s=lu5nvqvgvv5h6brpqx7kxxq6urdpiztn",
+        "doc_type": "Button"
+      }
+    ]
   },
   "Understanding-What-Ipa-Does-Generally": {
     "display_title": "Understanding what IPA does generally",
@@ -3305,7 +4134,14 @@
     "description": null,
     "why_it_matters": null,
     "how_rfe_applies": null,
-    "popup_buttons": [{"heading": "Leading Difficult Conversations", "explanation": "Consultant presentation for IPA managers", "link": "https://ipastorage.app.box.com/file/1089689695670?s=vi6h66krd0b6p43xvcdr8v7m4xtyw65s"}]
+    "popup_buttons": [
+      {
+        "heading": "Leading Difficult Conversations",
+        "explanation": "Consultant presentation for IPA managers",
+        "link": "https://ipastorage.app.box.com/file/1089689695670?s=vi6h66krd0b6p43xvcdr8v7m4xtyw65s",
+        "doc_type": "Button"
+      }
+    ]
   },
   "Financial-Management": {
     "display_title": "Financial Management",
@@ -3335,7 +4171,20 @@
     "description": null,
     "why_it_matters": null,
     "how_rfe_applies": null,
-    "popup_buttons": [{"heading": "Client management at RFE", "explanation": "Slide deck on how we apply client mgmt to Right Fit Evidence", "link": "https://ipastorage.app.box.com/file/864046796151?s=9s3xle4kjmgc4kppz6iyofafl74raaqp"}, {"heading": "Client management at RFE (video)", "explanation": "Live presentation on how we apply client mgmt to Right Fit Evidence", "link": "https://ipastorage.app.box.com/file/895221576372"}]
+    "popup_buttons": [
+      {
+        "heading": "Client management at RFE",
+        "explanation": "Slide deck on how we apply client mgmt to Right Fit Evidence",
+        "link": "https://ipastorage.app.box.com/file/864046796151?s=9s3xle4kjmgc4kppz6iyofafl74raaqp",
+        "doc_type": "Button"
+      },
+      {
+        "heading": "Client management at RFE (video)",
+        "explanation": "Live presentation on how we apply client mgmt to Right Fit Evidence",
+        "link": "https://ipastorage.app.box.com/file/895221576372",
+        "doc_type": "Button"
+      }
+    ]
   },
   "Working-With-Other-Ipa-Teams": {
     "display_title": "Working with other IPA teams",
@@ -3689,8 +4538,8 @@ function closeStagePopup() {
                 // MAPPING NOTE: other_resources_buttons ← product_popup_lists "Other resources tab" column
                 renderButtons('tb-nonipa-buttons', data.other_resources_buttons || []);
 
-                // Template B: no tabs to reset — single scroll view
-                // (tb-advanced-tab and tb-tab-button no longer exist in v7)
+                // Template B: reset section nav to Content
+                resetAdvSection('tb');
 
             } else {
                 modal.classList.remove('template-b');
@@ -3700,6 +4549,8 @@ function closeStagePopup() {
                 document.getElementById('basicInfoTab').classList.add('on');
                 const firstTab = document.querySelector('.v7-tab');
                 if (firstTab) firstTab.classList.add('on');
+                // Reset section nav to Content
+                resetAdvSection('adv');
             }
 
             // Hide construction sticker (all products now have content)
@@ -3829,6 +4680,55 @@ function closeStagePopup() {
                 document.getElementById('advancedInfoTab').classList.add('on');
             }
             event.target.classList.add('on');
+        }
+
+        // Roadmap strip navigation — show one section at a time
+        // prefix: 'adv' for Template A, 'tb' for Template B
+        function switchAdvSection(clickedStep, prefix) {
+            const roadmap = clickedStep.closest('.v7-roadmap');
+            // Deactivate all steps in this roadmap
+            roadmap.querySelectorAll('.v7-rm-step').forEach(s => s.classList.remove('active'));
+            clickedStep.classList.add('active');
+            // Hide all sections for this prefix
+            const sectionIds = [
+                prefix + '-sec-content',
+                prefix + '-sec-practice',
+                prefix + '-sec-feedback',
+                prefix + '-sec-mel',
+                prefix + '-sec-resources'
+            ];
+            sectionIds.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.style.display = 'none';
+            });
+            // Show the target section
+            const target = document.getElementById(clickedStep.dataset.section);
+            if (target) target.style.display = '';
+        }
+
+        function resetAdvSection(prefix) {
+            // Reset to first step active, Content section visible
+            const firstSectionId = prefix + '-sec-content';
+            const sectionIds = [
+                prefix + '-sec-content',
+                prefix + '-sec-practice',
+                prefix + '-sec-feedback',
+                prefix + '-sec-mel',
+                prefix + '-sec-resources'
+            ];
+            sectionIds.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.style.display = (id === firstSectionId) ? '' : 'none';
+            });
+            // Reset step active state — find the roadmap by data-section attribute
+            const firstStep = document.querySelector('[data-section="' + firstSectionId + '"]');
+            if (firstStep) {
+                const roadmap = firstStep.closest('.v7-roadmap');
+                if (roadmap) {
+                    roadmap.querySelectorAll('.v7-rm-step').forEach(s => s.classList.remove('active'));
+                    firstStep.classList.add('active');
+                }
+            }
         }
 
         // Tab switching for Template B
@@ -4061,37 +4961,72 @@ You have 12 more indicators to review in 90 minutes. Create a simple tool the te
                 return;
             }
 
-            const modal     = document.getElementById('skillPopupModal');
-            const titleEl   = document.getElementById('skillPopupTitle');
-            const descEl    = document.getElementById('skillPopupDescription');
-            const whyEl     = document.getElementById('skillPopupWhyMattersBody');
-            const howEl     = document.getElementById('skillPopupHowRfeBody');
-            const btnsEl    = document.getElementById('skillPopupButtons');
+            const modal          = document.getElementById('skillPopupModal');
+            const titleEl        = document.getElementById('skillPopupTitle');
+            const descSection    = document.getElementById('skillPopupDescSection');
+            const descEl         = document.getElementById('skillPopupDescription');
+            const comingSoonEl   = document.getElementById('skillPopupComingSoon');
+            const whySection     = document.getElementById('skillPopupWhyMatters');
+            const whyEl          = document.getElementById('skillPopupWhyMattersBody');
+            const howSection     = document.getElementById('skillPopupHowRfe');
+            const howEl          = document.getElementById('skillPopupHowRfeBody');
+            const btnsSection    = document.getElementById('skillPopupResourcesSection');
+            const btnsEl         = document.getElementById('skillPopupButtons');
 
-            // MAPPING NOTE: display_title ← MASTER Col 0
+            // Title
             titleEl.textContent = data.display_title;
 
-            // MAPPING NOTE: description ← non_product_popup_fields Col 2
             const descText = data.description || data.short_description;
-            descEl.innerHTML = descText
-                ? formatText(descText)
-                : '<p class="skill-popup-coming-soon">Content coming soon.</p>';
+            const buttons  = data.popup_buttons || [];
+            const hasWhy   = !!data.why_it_matters;
+            const hasHow   = !!data.how_rfe_applies;
+            const hasAnyContent = descText || hasWhy || hasHow || buttons.length > 0;
 
-            // MAPPING NOTE: why_it_matters ← non_product_popup_fields Col 3
-            whyEl.innerHTML = data.why_it_matters
-                ? formatText(data.why_it_matters)
-                : '<p class="skill-popup-coming-soon">Content coming soon.</p>';
+            const hasTextContent = descText || hasWhy || hasHow;
 
-            // MAPPING NOTE: how_rfe_applies ← non_product_popup_fields Col 4
-            howEl.innerHTML = data.how_rfe_applies
-                ? formatText(data.how_rfe_applies)
-                : '<p class="skill-popup-coming-soon">Content coming soon.</p>';
+            // Description — show section + heading only if text exists
+            if (descText) {
+                descEl.innerHTML = formatText(descText);
+                descSection.style.display = '';
+                const descToggle = descSection.querySelector('.skill-section-toggle');
+                const descWrap = descSection.querySelector('.skill-section-body-wrap');
+                if (descToggle) { descToggle.classList.remove('open'); descWrap.classList.remove('open'); }
+                comingSoonEl.style.display = 'none';
+            } else {
+                descSection.style.display = 'none';
+                // Show "Content coming soon" if no text exists anywhere (buttons don't count)
+                comingSoonEl.style.display = hasTextContent ? 'none' : '';
+            }
 
-            // Popup buttons — coloured to match section
+            // Why it Matters — only show section if data exists, collapsed by default
+            if (hasWhy) {
+                whyEl.innerHTML = formatText(data.why_it_matters);
+                whySection.style.display = '';
+                const t = whySection.querySelector('.skill-section-toggle');
+                const w = whySection.querySelector('.skill-section-body-wrap');
+                if (t) { t.classList.remove('open'); w.classList.remove('open'); }
+            } else {
+                whySection.style.display = 'none';
+                whyEl.innerHTML = '';
+            }
+
+            // How RFE Applies — only show section if data exists, collapsed by default
+            if (hasHow) {
+                howEl.innerHTML = formatText(data.how_rfe_applies);
+                howSection.style.display = '';
+                const t = howSection.querySelector('.skill-section-toggle');
+                const w = howSection.querySelector('.skill-section-body-wrap');
+                if (t) { t.classList.remove('open'); w.classList.remove('open'); }
+            } else {
+                howSection.style.display = 'none';
+                howEl.innerHTML = '';
+            }
+
+            // Learning Resources — only show section if buttons exist
             btnsEl.innerHTML = '';
-            const colour = SKILL_SECTION_COLOURS[data.element_type] || '#5566b0';
-            const buttons = data.popup_buttons || [];
             if (buttons.length > 0) {
+                btnsSection.style.display = '';
+                const colour = SKILL_SECTION_COLOURS[data.element_type] || '#5566b0';
                 buttons.forEach(btn => {
                     if (!btn.heading) return;
                     const hasLink = btn.link && btn.link !== 'None';
@@ -4111,6 +5046,8 @@ You have 12 more indicators to review in 90 minutes. Create a simple tool the te
                     `;
                     btnsEl.appendChild(el);
                 });
+            } else {
+                btnsSection.style.display = 'none';
             }
 
             modal.classList.add('active');
@@ -4162,6 +5099,13 @@ You have 12 more indicators to review in 90 minutes. Create a simple tool the te
             modal.classList.remove('active');
             modal.style.display = 'none';
             document.body.style.overflow = 'auto';
+        }
+
+        function toggleSkillSection(btn) {
+            const wrap = btn.nextElementSibling;
+            const isOpen = btn.classList.contains('open');
+            btn.classList.toggle('open', !isOpen);
+            wrap.classList.toggle('open', !isOpen);
         }
 
         // Function to switch to Products tab
@@ -4523,7 +5467,7 @@ You have 12 more indicators to review in 90 minutes. Create a simple tool the te
         text-align: right;
         line-height: 1.5;
     ">
-        Data source: mel_topics_popup_data_apr_14_2026.xlsx<br>Uploaded: Apr 14, 2026
+        Data source: mel_topics_popup_data_apr_16_2026.xlsx<br>Updated: Apr 16, 2026 (v28)
     </div>
 </body>
 </html>
