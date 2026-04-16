@@ -331,28 +331,192 @@
         
         .popup-content {
             background: white;
-            border-radius: 12px;
+            border-radius: 16px;
             padding: 0;
-            max-width: 1200px;
+            max-width: 900px;
             width: 92%;
-            max-height: 90vh;
+            max-height: 92vh;
             overflow: hidden;
             position: relative;
             animation: slideIn 0.3s ease;
             display: flex;
             flex-direction: column;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
         }
-        
-        /* Single column layout - annotations span across sections */
-        .popup-single-column {
+
+        /* ── v7 popup header ── */
+        .popup-hero {
+            padding: 24px 28px 20px;
+            border-bottom: 0.5px solid #e0e0e0;
             position: relative;
-            margin-top: 40px; /* Space for Learn More button */
+            flex-shrink: 0;
         }
-        
-        /* Remove the old two-column layout */
-        .popup-two-column {
-            display: none;
+        .popup-hero-label {
+            font-size: 13px; font-weight: 600; letter-spacing: 1.8px;
+            text-transform: uppercase; color: #aaa; margin-bottom: 6px;
         }
+        .popup-hero-title {
+            font-size: 28px; font-weight: 700; color: #1a1a1a;
+            line-height: 1.2; padding-right: 40px; margin: 0;
+        }
+
+        /* ── v7 tab nav ── */
+        .v7-tab-nav {
+            display: flex; background: #f0f0f0;
+            border-bottom: 0.5px solid #e0e0e0; flex-shrink: 0;
+            padding: 8px 16px; gap: 8px;
+        }
+        .v7-tab {
+            flex: 1; padding: 12px 20px; font-size: 16px; font-weight: 600;
+            background: transparent; border: none; border-radius: 8px;
+            border-bottom: none;
+            cursor: pointer; color: #999; transition: all 0.15s;
+        }
+        .v7-tab.on {
+            color: #fff;
+            background: #185FA5;
+            box-shadow: 0 2px 8px rgba(24,95,165,0.25);
+        }
+        .v7-tab:hover:not(.on) { background: #e4e4e4; color: #555; }
+
+        /* ── v7 tab body ── */
+        .v7-body { overflow-y: auto; flex: 1; }
+        .v7-panel { display: none; padding: 24px 28px; }
+        .v7-panel.on { display: block; }
+
+        /* ── basic tab ── */
+        .v7-basic-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 18px;
+        }
+        .v7-info-box {
+            border-radius: 10px; padding: 16px;
+            background: #f8f8f8; border: 0.5px solid #e0e0e0;
+        }
+        .v7-info-label {
+            font-size: 13px; font-weight: 700; letter-spacing: 1.2px;
+            text-transform: uppercase; margin-bottom: 10px;
+        }
+        .v7-info-box p { font-size: 15px; color: #555; line-height: 1.65; margin: 0; }
+        .v7-toc-btn {
+            display: inline-flex; align-items: center; gap: 7px;
+            background: #0F6E56; color: #E1F5EE; border: none; border-radius: 8px;
+            padding: 11px 20px; font-size: 15px; font-weight: 600;
+            cursor: pointer; margin-bottom: 20px; transition: opacity 0.15s;
+        }
+        .v7-toc-btn:hover { opacity: 0.88; }
+        .v7-related-label {
+            font-size: 13px; font-weight: 700; letter-spacing: 1.2px;
+            text-transform: uppercase; color: #aaa; margin-bottom: 10px;
+        }
+        .v7-chips { display: flex; flex-wrap: wrap; gap: 7px; }
+        .v7-chip {
+            font-size: 14px; padding: 7px 14px; border-radius: 7px;
+            background: #f8f8f8; border: 0.5px solid #ddd; color: #1a1a1a;
+            cursor: pointer; transition: border-color 0.15s;
+        }
+        .v7-chip:hover { border-color: #185FA5; color: #185FA5; }
+
+        /* ── roadmap strip ── */
+        .v7-roadmap {
+            display: flex; align-items: stretch; margin-bottom: 28px;
+            border-radius: 10px; overflow: hidden; border: 0.5px solid #e0e0e0;
+        }
+        .v7-rm-step {
+            flex: 1; padding: 14px 16px; display: flex; flex-direction: column;
+            gap: 4px; background: #f8f8f8; border-right: 0.5px solid #e0e0e0;
+            position: relative;
+        }
+        .v7-rm-step:last-child { border-right: none; }
+        .v7-rm-step.core { background: #fff; }
+        .v7-rm-num { font-size: 13px; font-weight: 700; color: #aaa; }
+        .v7-rm-name { font-size: 14px; font-weight: 700; color: #1a1a1a; }
+        .v7-rm-sub { font-size: 12px; color: #aaa; line-height: 1.4; }
+        .v7-rm-step.core .v7-rm-num { color: #185FA5; animation: rm-pulse-num 3s ease-in-out infinite; }
+        .v7-rm-step.core .v7-rm-name { color: #185FA5; }
+        .v7-rm-step:not(.core) .v7-rm-name { color: #aaa; }
+        .v7-rm-step:not(.core) .v7-rm-num  { color: #ccc; }
+        .v7-rm-step.core { animation: rm-pulse-bg 3s ease-in-out infinite; }
+        .v7-rm-step.core:nth-child(1) { animation-delay: 0s; }
+        .v7-rm-step.core:nth-child(2) { animation-delay: 0.15s; }
+        .v7-rm-step.core:nth-child(3) { animation-delay: 0.3s; }
+        @keyframes rm-pulse-bg {
+            0%, 100% { background: #fff; }
+            50% { background: #e8f2fb; }
+        }
+        @keyframes rm-pulse-num {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        @keyframes label-pulse-blue {
+            0%, 100% { opacity: 1; color: #185FA5; }
+            50% { opacity: 0.55; color: #4a8cc7; }
+        }
+        @keyframes label-pulse-gray {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.45; }
+        }
+        .v7-rm-arrow {
+            position: absolute; right: -7px; top: 50%; transform: translateY(-50%);
+            width: 13px; height: 13px; background: #fff;
+            border: 0.5px solid #e0e0e0; border-radius: 2px; rotate: 45deg;
+            z-index: 2; border-left: none; border-bottom: none;
+        }
+        .v7-rm-optional-label {
+            font-size: 11px; font-weight: 600; letter-spacing: 1px;
+            text-transform: uppercase; color: #aaa;
+            margin-top: 6px; text-align: center; padding-bottom: 2px;
+        }
+
+        /* ── section rows ── */
+        .v7-section-row {
+            display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr);
+            gap: 20px; align-items: start;
+            padding: 20px 0 20px 20px; border-left: 3px solid transparent;
+        }
+        .v7-section-row.blue { border-left-color: #6e9ec7; }
+        .v7-section-row.amber { border-left-color: #b5874a; }
+        .v7-section-row.dim { border-left-color: #B4B2A9; opacity: 0.75; }
+        .v7-section-row.dim:hover { opacity: 1; transition: opacity 0.2s; }
+        .v7-sec-head {
+            font-size: 13px; font-weight: 700; letter-spacing: 1.4px;
+            text-transform: uppercase; margin-bottom: 12px;
+        }
+        .v7-sec-head.blue { color: #4a82b0; }
+        .v7-sec-head.amber { color: #9a6e32; }
+        .v7-sec-head.dim { color: #888780; }
+        .v7-sec-text { font-size: 15px; color: #555; line-height: 1.7; margin: 0; }
+        .v7-btn-col { display: flex; flex-direction: column; gap: 8px; }
+        .v7-divider { height: 0.5px; background: #e0e0e0; margin: 4px 0; }
+
+        /* ── v7 buttons ── */
+        .v7-btn {
+            border-radius: 8px; padding: 13px 15px; color: #fff; border: none;
+            cursor: pointer; text-align: left; width: 100%;
+            transition: opacity 0.15s; display: block; text-decoration: none;
+        }
+        .v7-btn:hover { opacity: 0.88; }
+        .v7-btn-row { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; }
+        .v7-btn-icon { flex-shrink: 0; opacity: 0.8; display: flex; align-items: center; }
+        .v7-btn-title { font-size: 15px; font-weight: 600; flex: 1; color: #fff; }
+        .v7-btn-desc { font-size: 13px; opacity: 0.78; line-height: 1.4; }
+        .v7-hp {
+            display: inline-flex; align-items: center;
+            font-size: 11px; font-weight: 700; letter-spacing: 0.5px;
+            text-transform: uppercase; color: rgba(255,255,255,0.95);
+            border: 1.5px solid rgba(255,255,255,0.5); border-radius: 4px;
+            padding: 2px 7px; white-space: nowrap; flex-shrink: 0;
+        }
+
+        /* button colour per section */
+        .v7-btn.blue   { background: #185FA5; }
+        .v7-btn.amber  { background: #854F0B; }
+        .v7-btn.orange { background: #993C1D; }
+        .v7-btn.purple { background: #534AB7; }
+        .v7-btn.gray   { background: #5F5E5A; }
+
+        /* Single column layout - kept for backward compat */
+        .popup-single-column { position: relative; }
+        .popup-two-column { display: none; }
         
         /* Handwritten annotation styles - span across sections */
         .annotation {
@@ -1185,81 +1349,73 @@
             color: white;
         }
         
-        /* ── Template A/B: Advanced tab section styles ── */
+        /* ── Template A/B: section/button styles (v7) ── */
         .adv-section { margin-bottom: 10px; }
-
-        /* Section titles — clean dark, no colour bar */
-        .adv-section-title {
-            font-size: 22px; font-weight: 600; color: #2c3e50;
-            margin: 0 0 12px 0;
-        }
-        /* Sub-headings inside sections — slightly smaller, still dark */
-        .adv-subsection-title {
-            font-size: 17px; font-weight: 600; color: #2c3e50;
-            margin: 0 0 10px 0;
-        }
-
-        .adv-section-intro { font-size: 14px; color: #555; line-height: 1.6; margin: 0 0 14px 0; }
+        .adv-section-title { display: none; } /* replaced by v7-sec-head */
+        .adv-subsection-title { display: none; }
+        .adv-section-intro { font-size: 16px; color: #444; line-height: 1.7; margin: 0 0 16px 0; }
         .adv-section-intro p  { margin: 0 0 8px 0; }
         .adv-section-intro ul,
         .adv-section-intro ol { margin: 6px 0 8px 20px; padding: 0; }
         .adv-section-intro li { margin-bottom: 4px; }
 
-        /* Button grid */
-        .adv-button-grid { display: flex; flex-wrap: wrap; gap: 12px; }
+        /* Button grid — column layout in v7 */
+        .adv-button-grid { display: flex; flex-direction: column; gap: 8px; }
 
-        /* Base button */
+        /* adv-btn — now uses v7-btn styles, kept for JS compat */
         .adv-btn {
-            flex: 1 1 calc(33.333% - 8px); min-width: 180px;
-            display: flex; flex-direction: column;
-            color: white; border-radius: 8px; padding: 16px;
-            font-size: 13px; line-height: 1.4;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-            text-decoration: none; cursor: default;
+            display: block; width: 100%; border-radius: 8px; padding: 13px 15px;
+            color: white; border: none; cursor: default; text-align: left;
+            text-decoration: none; font-size: 15px; line-height: 1.4;
+            transition: opacity 0.15s;
         }
         .adv-btn.has-link { cursor: pointer; }
-        .adv-btn.has-link:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+        .adv-btn.has-link:hover { opacity: 0.88; }
+        .adv-btn-title { font-weight: 600; font-size: 15px; flex: 1; }
+        .adv-btn-explanation { font-size: 13px; opacity: 0.78; line-height: 1.4; }
+        .adv-btn-row { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; }
+        .adv-btn-icon { flex-shrink: 0; opacity: 0.8; display: flex; align-items: center; }
+        .adv-hp {
+            display: inline-flex; align-items: center;
+            font-size: 11px; font-weight: 700; letter-spacing: 0.5px;
+            text-transform: uppercase; color: #fff;
+            background: rgba(220, 60, 30, 0.75);
+            border: 1.5px solid rgba(255,120,80,0.7); border-radius: 4px;
+            padding: 2px 7px; white-space: nowrap; flex-shrink: 0;
         }
-        .adv-btn-title       { font-weight: 700; font-size: 14px; margin-bottom: 6px; }
-        .adv-btn-explanation { font-size: 13px; opacity: 0.9; flex: 1; }
-        .adv-coming-soon     { font-style: italic; color: #999; font-size: 13px; padding: 10px 0; }
+        .adv-coming-soon { font-style: italic; color: #999; font-size: 14px; padding: 10px 0; }
 
-        /* Per-section button colours — Template A */
-        #adv-understanding-buttons .adv-btn        { background: #007bff; }
-        #adv-understanding-buttons .adv-btn.has-link:hover { background: #0056b3; }
-        #adv-supp-mel-buttons .adv-btn             { background: #6f42c1; }
-        #adv-supp-mel-buttons .adv-btn.has-link:hover { background: #5a32a3; }
-        #adv-practice-buttons .adv-btn             { background: #e6a817; color: white; }
-        #adv-practice-buttons .adv-btn.has-link:hover { background: #c8911a; }
-        #adv-feedback-buttons .adv-btn             { background: #fd7e14; }
-        #adv-feedback-buttons .adv-btn.has-link:hover { background: #e06800; }
+        /* Per-section button colours — muted/desaturated so text reads first */
+        #adv-understanding-buttons .adv-btn        { background: #6e9ec7; }
+        #adv-understanding-buttons .adv-btn.has-link:hover { background: #5a8ab3; }
+        #adv-supp-mel-buttons .adv-btn             { background: #8e88c4; }
+        #adv-supp-mel-buttons .adv-btn.has-link:hover { background: #7a74b0; }
+        #adv-practice-buttons .adv-btn             { background: #b5874a; }
+        #adv-practice-buttons .adv-btn.has-link:hover { background: #a07338; }
+        #adv-feedback-buttons .adv-btn             { background: #b87355; }
+        #adv-feedback-buttons .adv-btn.has-link:hover { background: #a46040; }
+        #tb-understanding-buttons .adv-btn         { background: #6e9ec7; }
+        #tb-understanding-buttons .adv-btn.has-link:hover { background: #5a8ab3; }
+        #tb-supp-mel-buttons .adv-btn              { background: #8e88c4; }
+        #tb-supp-mel-buttons .adv-btn.has-link:hover { background: #7a74b0; }
+        #tb-practice-buttons .adv-btn              { background: #b5874a; }
+        #tb-practice-buttons .adv-btn.has-link:hover { background: #a07338; }
+        #tb-feedback-buttons .adv-btn              { background: #b87355; }
+        #tb-feedback-buttons .adv-btn.has-link:hover { background: #a46040; }
+        #nonipa-buttons .adv-btn                   { background: #8f8d89; }
+        #nonipa-buttons .adv-btn.has-link:hover    { background: #7a7875; }
+        #tb-nonipa-buttons .adv-btn                { background: #8f8d89; }
+        #tb-nonipa-buttons .adv-btn.has-link:hover { background: #7a7875; }
+        .nonipa-intro { font-size: 14px; color: #555; margin-bottom: 16px; line-height: 1.5; }
+        #skillPopupRelatedProductsGrid .adv-btn    { background: #00897b; color: white; cursor: pointer; }
+        #skillPopupRelatedProductsGrid .adv-btn:hover { filter: brightness(0.85); }
 
-        /* Per-section button colours — Template B (mirrors Template A) */
-        #tb-understanding-buttons .adv-btn         { background: #007bff; }
-        #tb-understanding-buttons .adv-btn.has-link:hover { background: #0056b3; }
-        #tb-supp-mel-buttons .adv-btn              { background: #6f42c1; }
-        #tb-supp-mel-buttons .adv-btn.has-link:hover { background: #5a32a3; }
-        #tb-practice-buttons .adv-btn              { background: #e6a817; color: white; }
-        #tb-practice-buttons .adv-btn.has-link:hover { background: #c8911a; }
-        #tb-feedback-buttons .adv-btn              { background: #fd7e14; }
-        #tb-feedback-buttons .adv-btn.has-link:hover { background: #e06800; }
-        #nonipa-buttons .adv-btn                   { background: #e67e22; color: white; }
-        #nonipa-buttons .adv-btn.has-link:hover    { background: #ca6a15; }
-        #tb-nonipa-buttons .adv-btn                { background: #e67e22; color: white; }
-        #tb-nonipa-buttons .adv-btn.has-link:hover { background: #ca6a15; }
-        .nonipa-intro { font-size: 14px; color: #2c3e50; margin-bottom: 16px; line-height: 1.5; }
-        #skillPopupRelatedProductsGrid .adv-btn          { background: #00897b; color: white; cursor: pointer; }
-        #skillPopupRelatedProductsGrid .adv-btn:hover    { filter: brightness(0.85); }
-
-        /* Template B (all-must-know): hide tab nav and both tab divs, show single scroll */
-        .popup-modal.template-b .tab-navigation        { display: none; }
-        .popup-modal.template-b #basicInfoTab           { display: none !important; }
-        .popup-modal.template-b #advancedInfoTab        { display: none !important; }
-        .popup-modal.template-b #nonIpaTab              { display: none !important; }
-        .popup-modal.template-b #template-b-view        { display: flex !important; flex-direction: column; }
+        /* Template B (all-must-know): hide tab nav and Template A divs, show template-b-view */
+        .popup-modal.template-b .v7-tab-nav           { display: none; }
+        .popup-modal.template-b #basicInfoTab          { display: none !important; }
+        .popup-modal.template-b #advancedInfoTab       { display: none !important; }
+        .popup-modal.template-b #nonIpaTab             { display: none !important; }
+        .popup-modal.template-b #template-b-view       { display: flex !important; flex-direction: column; }
 
         @keyframes fadeIn {
             from { opacity: 0; }
@@ -1333,71 +1489,30 @@
             font-style: italic;
         }
         
-        /* Tab Navigation */
+        /* Tab Navigation — kept for non-product popups (stage/skill) */
         .tab-navigation {
-            display: flex;
-            background: #f8f9fa;
+            display: flex; background: #f8f9fa;
             border-bottom: 2px solid #e9ecef;
-            padding: 0 25px;
-            flex-shrink: 0;
+            padding: 0 25px; flex-shrink: 0;
         }
-        
         .tab-button {
-            flex: 1;
-            padding: 16px 24px;
-            font-size: 16px;
-            font-weight: 600;
-            background: transparent;
-            border: none;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            color: #666;
-            position: relative;
+            flex: 1; padding: 16px 24px; font-size: 16px; font-weight: 600;
+            background: transparent; border: none; cursor: pointer;
+            transition: all 0.3s ease; color: #666; position: relative;
         }
-        
-        .tab-button.active {
-            color: #5566b0;
-            background: white;
-        }
-        
+        .tab-button.active { color: #5566b0; background: white; }
         .tab-button.active::after {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: #5566b0;
+            content: ''; position: absolute; bottom: -2px; left: 0; right: 0;
+            height: 3px; background: #5566b0;
         }
-        
-        .tab-button:hover:not(.active) {
-            background: rgba(85, 102, 176, 0.1);
-        }
-        
-        /* Tab Content */
-        .tab-content {
-            display: none;
-            padding: 25px;
-            overflow-y: auto;
-            flex: 1;
-        }
-        
-        .tab-content.active {
-            display: block;
-        }
-        
-        /* Non-IPA Resources tab — orange accent */
-        .tab-button-nonipa.active {
-            color: #e67e22;
-        }
-        .tab-button-nonipa.active::after {
-            background: #e67e22;
-        }
-        .tab-button-nonipa:hover:not(.active) {
-            background: rgba(230, 126, 34, 0.1);
-        }
+        .tab-button:hover:not(.active) { background: rgba(85,102,176,0.1); }
+        .tab-content { display: none; padding: 25px; overflow-y: auto; flex: 1; }
+        .tab-content.active { display: block; }
+        .tab-button-nonipa.active { color: #e67e22; }
+        .tab-button-nonipa.active::after { background: #e67e22; }
+        .tab-button-nonipa:hover:not(.active) { background: rgba(230,126,34,0.1); }
 
-        /* Template B tab nav and content */
+        /* Template B — second rule block (redundant but kept safe) */
         .popup-modal.template-b .tab-navigation      { display: none; }
         .popup-modal.template-b .tb-tab-navigation   { display: flex !important; }
         .popup-modal.template-b #template-b-view     { display: flex !important; flex-direction: column; }
@@ -1833,99 +1948,128 @@
         </div>
     </div>
 
-    <!-- Main Popup Modal (Tabbed interface) -->
+    <!-- Main Popup Modal — v7 template -->
     <div id="popupModal" class="popup-modal">
         <div class="popup-content">
-            <div id="productConstructionSticker" style="display: none;"></div>
-            <button class="close-btn" onclick="closePopup()">&times;</button>
-            
-            <!-- Product Name Header (always visible) -->
-            <div id="productNameHeader" style="text-align: center; margin-bottom: 20px; padding: 25px 25px 15px 25px; border-bottom: 2px solid #e9ecef; flex-shrink: 0;">
-                <h1 id="productNameTitle" style="color: #2c3e50; margin: 0; font-size: 28px; font-weight: 600;"></h1>
+            <div id="productConstructionSticker" style="display:none;"></div>
+
+            <!-- v7 Hero Header -->
+            <div class="popup-hero">
+                <div class="popup-hero-label">RFE Product</div>
+                <h1 id="productNameTitle" class="popup-hero-title"></h1>
+                <button class="close-btn" onclick="closePopup()">&times;</button>
             </div>
-            
-            <!-- Tab Navigation -->
-            <div class="tab-navigation">
-                <button class="tab-button active" onclick="switchTab(event, 'basic')">Basic Info</button>
-                <button class="tab-button" onclick="switchTab(event, 'advanced')">Advanced Info</button>
+
+            <!-- Template A: tab nav (hidden for template-b by CSS) -->
+            <!-- MAPPING NOTE: who_must_know = basic-advanced-breakdown → Template A (tabs) -->
+            <div class="v7-tab-nav">
+                <button class="v7-tab on" onclick="switchTab(event,'basic')">Basic info</button>
+                <button class="v7-tab" onclick="switchTab(event,'advanced')">Advanced info</button>
             </div>
-            
-            <!-- Basic Info Tab -->
-            <div id="basicInfoTab" class="tab-content active">
-                <div class="popup-single-column">
-                    <!-- Section 1: Headers -->
-                    <div class="popup-header-section">
-                        <div class="description-column product-desc">
-                            <h2>Product Description</h2>
+
+            <div class="v7-body">
+
+                <!-- ── TEMPLATE A: Basic Info tab ── -->
+                <!-- MAPPING NOTE: productDescription ← product_popup_fields col 3 (Basic Tab: Product Description) -->
+                <!-- MAPPING NOTE: useCase ← product_popup_fields col 5 (Basic Tab: When to use) -->
+                <!-- MAPPING NOTE: relatedProductsGrid ← product_popup_lists "Basic tab: Related Products" -->
+                <div id="basicInfoTab" class="v7-panel on">
+                    <div class="v7-basic-grid">
+                        <div class="v7-info-box">
+                            <div class="v7-info-label" style="color:#0F6E56;">Product description</div>
                             <p id="productDescription"></p>
                         </div>
-                        <div class="description-column use-case">
-                            <h2>When to Use</h2>
+                        <div class="v7-info-box">
+                            <div class="v7-info-label" style="color:#185FA5;">When to use</div>
                             <p id="useCase"></p>
                         </div>
                     </div>
-                    
-                    <!-- Button container with TOC and Learn More buttons -->
-                    <div class="button-container">
-                        <button class="view-toc-btn" id="tocButton" onclick="handleTocButtonClick()">View Product ToC</button>
-                    </div>
-                    
-                    <!-- Section 4: Related Products -->
-                    <div class="section-divider"></div>
-                    <div class="related-products-section">
-                        <h3>Related Products</h3>
-                        <p>This product has the potential to be used in coordination with other RFE products.</p>
-                        <div id="relatedProductsGrid" class="skills-grid"></div>
-                    </div>
+                    <button class="v7-toc-btn" id="tocButton" onclick="handleTocButtonClick()">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+                        View product ToC
+                    </button>
+                    <div class="v7-related-label">Related products</div>
+                    <div id="relatedProductsGrid" class="v7-chips"></div>
                 </div>
-            </div>
-            
-            <!-- Advanced Info Tab -->
-            <div id="advancedInfoTab" class="tab-content">
-                <div class="popup-single-column">
 
-                    <!-- Learner Roadmap intro box -->
-                    <div class="learner-roadmap">
-                        <h4>Learner Roadmap</h4>
-                        <p>Welcome advanced learners! Whatever your reason for visiting, we want to help you feel ready to deliver this product. The product owner curated a Learner Roadmap to provide you the following:</p>
-                        <ul>
-                            <li><strong>Content</strong>: Understanding the product</li>
-                            <li><strong>Practice &amp; Feedback</strong>: Getting better at delivery</li>
-                        </ul>
+                <!-- ── TEMPLATE A: Advanced Info tab ── -->
+                <!-- MAPPING NOTE: adv-understanding-buttons ← product_popup_lists "Advanced tab: Understanding the Product Content" -->
+                <!-- MAPPING NOTE: adv-practice-buttons ← product_popup_lists "Advanced tab: Learning Roadmap Practice" -->
+                <!-- MAPPING NOTE: adv-feedback-buttons ← product_popup_lists "Advanced tab: Learning Roadmap Feedback" -->
+                <!-- MAPPING NOTE: adv-supp-mel-buttons ← product_popup_lists "Advanced tab: Supplementary MEL Competencies" -->
+                <!-- MAPPING NOTE: nonipa-buttons ← product_popup_lists "Other resources tab" -->
+                <div id="advancedInfoTab" class="v7-panel">
+
+                    <!-- Learner Roadmap header + strip -->
+                    <div style="margin-bottom:10px;">
+                        <div style="font-size:13px;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;color:#aaa;margin-bottom:6px;">Learner Roadmap</div>
+                        <div style="font-size:15px;color:#555;line-height:1.6;">Follow steps <strong style="color:#185FA5;">01 → 02 → 03</strong> to build your delivery readiness. The remaining sections are supplementary — explore them when you want to go deeper.</div>
+                    </div>
+                    <div style="display:flex; margin-bottom:6px;">
+                        <div style="flex:3; text-align:center; font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase; animation:label-pulse-blue 3s ease-in-out infinite; padding-bottom:3px; color:#185FA5;">Prioritize Content, Practice &amp; Feedback</div>
+                        <div style="flex:2; text-align:center; font-size:11px; font-weight:600; letter-spacing:1px; text-transform:uppercase; animation:label-pulse-gray 3s ease-in-out infinite; animation-delay:0.15s; padding-bottom:3px; color:#bbb;">Optional — valuable for mastery</div>
+                    </div>
+                    <div class="v7-roadmap" style="margin-bottom:24px;">
+                        <div class="v7-rm-step core"><div class="v7-rm-num">01</div><div class="v7-rm-name">Content</div><div class="v7-rm-sub">Understand the product</div><div class="v7-rm-arrow"></div></div>
+                        <div class="v7-rm-step core"><div class="v7-rm-num">02</div><div class="v7-rm-name">Practice</div><div class="v7-rm-sub">Build delivery fluency</div><div class="v7-rm-arrow"></div></div>
+                        <div class="v7-rm-step core"><div class="v7-rm-num">03</div><div class="v7-rm-name">Feedback</div><div class="v7-rm-sub">Consolidate with a manager</div><div class="v7-rm-arrow"></div></div>
+                        <div class="v7-rm-step"><div class="v7-rm-num">+</div><div class="v7-rm-name">MEL competencies</div><div class="v7-rm-sub">Supplementary skills</div><div class="v7-rm-arrow"></div></div>
+                        <div class="v7-rm-step"><div class="v7-rm-num">+</div><div class="v7-rm-name">Additional resources</div><div class="v7-rm-sub">Optional reading</div></div>
                     </div>
 
-                    <div class="section-divider"></div>
-
-                    <!-- Understanding the Product -->
-                    <div id="adv-understanding" class="adv-section">
-                        <h2 class="adv-section-title">Understanding the Product</h2>
-                        <div id="adv-understanding-text" class="adv-section-intro"></div>
-                        <div id="adv-understanding-buttons" class="adv-button-grid"></div>
-
-                        <!-- Supplementary MEL Competencies — lives inside Understanding -->
-                        <div id="adv-supp-mel" style="margin-top: 20px;">
-                            <h3 class="adv-subsection-title">Supplementary MEL Competencies</h3>
-                            <div id="adv-supp-mel-text" class="adv-section-intro"></div>
-                            <div id="adv-supp-mel-buttons" class="adv-button-grid"></div>
+                    <!-- 01 Content -->
+                    <div class="v7-section-row blue">
+                        <div>
+                            <div class="v7-sec-head blue">01 — Content</div>
+                            <div id="adv-understanding-text" class="adv-section-intro"></div>
                         </div>
+                        <div id="adv-understanding-buttons" class="adv-button-grid"></div>
                     </div>
 
-                    <div class="section-divider"></div>
+                    <div class="v7-divider"></div>
 
-                    <!-- Getting Practice and Feedback -->
-                    <div id="adv-pf" class="adv-section">
-                        <h2 class="adv-section-title">Getting Practice and Feedback</h2>
-                        <div id="adv-pf-text" class="adv-section-intro"></div>
-
-                        <h3 class="adv-subsection-title">Practice</h3>
+                    <!-- 02 Practice -->
+                    <div class="v7-section-row amber">
+                        <div>
+                            <div class="v7-sec-head amber">02 — Practice</div>
+                            <div id="adv-pf-text" class="adv-section-intro"></div>
+                        </div>
                         <div id="adv-practice-buttons" class="adv-button-grid"></div>
+                    </div>
 
-                        <div style="margin-top: 20px;"></div>
+                    <div class="v7-divider"></div>
 
-                        <h3 class="adv-subsection-title">Feedback</h3>
+                    <!-- 03 Feedback -->
+                    <div class="v7-section-row amber">
+                        <div>
+                            <div class="v7-sec-head amber">03 — Feedback</div>
+                        </div>
                         <div id="adv-feedback-buttons" class="adv-button-grid"></div>
                     </div>
 
+                    <div class="v7-divider"></div>
+
+                    <!-- Supplementary MEL -->
+                    <div class="v7-section-row dim">
+                        <div>
+                            <div class="v7-sec-head dim">Supplementary MEL competencies</div>
+                            <div id="adv-supp-mel-text" class="adv-section-intro"></div>
+                        </div>
+                        <div id="adv-supp-mel-buttons" class="adv-button-grid"></div>
+                    </div>
+
+                    <div class="v7-divider"></div>
+
+                    <!-- Additional Resources -->
+                    <div class="v7-section-row dim">
+                        <div>
+                            <div class="v7-sec-head dim">Additional resources</div>
+                            <p class="nonipa-intro">Supplementary resources — IPA and external — for those who want to go further.</p>
+                        </div>
+                        <div id="nonipa-buttons" class="adv-button-grid"></div>
+                    </div>
+
+                    <!-- Hidden legacy divs kept for JS compat -->
                     <div id="approachesleftrightboxes" style="display:none;"></div>
                     <div id="understandingProductSection" style="display:none;"></div>
                     <div id="skillsSection" style="display:none;"></div>
@@ -1933,93 +2077,114 @@
                     <div id="learnerRoadmap" style="display:none;"></div>
                     <div id="advancedAnnotation" style="display:none;"></div>
                     <div id="nestedBoxes" style="display:none;"></div>
+                    <div id="adv-understanding" style="display:none;"></div>
+                    <div id="adv-supp-mel" style="display:none;"></div>
+                    <div id="adv-pf" style="display:none;"></div>
 
-                    <div class="section-divider"></div>
+                </div>
 
-                    <!-- Non-IPA Resources (Template A) -->
-                    <!-- MAPPING NOTE: other_resources_buttons ← product_popup_lists "Other resources tab" column -->
-                    <div class="adv-section">
-                        <h2 class="adv-section-title">Non-IPA Resources</h2>
-                        <p class="nonipa-intro">RFE staff implementing the product may want to look at how other organizations structure similar work.</p>
-                        <div id="nonipa-buttons" class="adv-button-grid" style="margin-top:16px;"></div>
+                <!-- ── TEMPLATE B: single-scroll view for all-must-know products ── -->
+                <!-- TEMPLATE NOTE: who_must_know = all-must-know → this view auto-shown via CSS .template-b -->
+                <!-- MAPPING NOTE: tb-description ← product_popup_fields col 3 -->
+                <!-- MAPPING NOTE: tb-when-to-use ← product_popup_fields col 5 -->
+                <!-- MAPPING NOTE: tb-related-products ← product_popup_lists "Basic tab: Related Products" -->
+                <!-- MAPPING NOTE: tb-understanding-buttons ← product_popup_lists "Advanced tab: Understanding the Product Content" -->
+                <!-- MAPPING NOTE: tb-practice-buttons ← product_popup_lists "Advanced tab: Learning Roadmap Practice" -->
+                <!-- MAPPING NOTE: tb-feedback-buttons ← product_popup_lists "Advanced tab: Learning Roadmap Feedback" -->
+                <!-- MAPPING NOTE: tb-supp-mel-buttons ← product_popup_lists "Advanced tab: Supplementary MEL Competencies" -->
+                <!-- MAPPING NOTE: tb-nonipa-buttons ← product_popup_lists "Other resources tab" -->
+                <div id="template-b-view" style="display:none; overflow-y:auto; padding:24px 28px; flex:1;">
+
+                    <!-- Basic info cards -->
+                    <div class="v7-basic-grid">
+                        <div class="v7-info-box">
+                            <div class="v7-info-label" style="color:#0F6E56;">Product description</div>
+                            <div id="tb-description"></div>
+                        </div>
+                        <div class="v7-info-box">
+                            <div class="v7-info-label" style="color:#185FA5;">When to use</div>
+                            <div id="tb-when-to-use"></div>
+                        </div>
                     </div>
 
-                </div>
-            </div>
-            <!-- Template B: tabbed view for all-must-know products -->
-            <!-- TEMPLATE NOTE: any future all-must-know product uses this automatically -->
-            <!-- Shown by CSS when modal has .template-b class; both Template A tab divs are hidden -->
-            <div id="template-b-view" style="display:none; flex:1; flex-direction:column; overflow:hidden;">
+                    <div class="v7-related-label" style="margin-top:4px;">Related products</div>
+                    <div id="tb-related-products" class="v7-chips" style="margin-bottom:24px;"></div>
 
-                <!-- Template B Tab Navigation -->
-                <div class="tab-navigation tb-tab-navigation">
-                    <button class="tab-button tb-tab-button active" onclick="switchTbTab(event, 'tb-advanced')">Advanced Info</button>
-                </div>
-
-                <!-- Template B: Advanced tab -->
-                <div id="tb-advanced-tab" class="tab-content tb-tab-content active" style="overflow-y:auto; padding: 25px; flex:1;">
-
-                <div id="tb-learner-roadmap" class="learner-roadmap" style="margin-bottom:20px;"></div>
-
-                <div class="section-divider"></div>
-
-                <div class="popup-header-section" style="margin-bottom:0;">
-                    <div class="description-column product-desc">
-                        <h2>Product Description</h2>
-                        <div id="tb-description"></div>
+                    <!-- Learner Roadmap header + strip (Template B) -->
+                    <div style="margin-bottom:10px;">
+                        <div style="font-size:13px;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;color:#aaa;margin-bottom:6px;">Learner Roadmap</div>
+                        <div style="font-size:15px;color:#555;line-height:1.6;">Follow steps <strong style="color:#185FA5;">01 → 02 → 03</strong> to build your delivery readiness. The remaining sections are supplementary — explore them when you want to go deeper.</div>
                     </div>
-                    <div class="description-column use-case">
-                        <h2>When to Use</h2>
-                        <div id="tb-when-to-use"></div>
+                    <div style="display:flex; margin-bottom:6px;">
+                        <div style="flex:3; text-align:center; font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase; animation:label-pulse-blue 3s ease-in-out infinite; padding-bottom:3px; color:#185FA5;">Prioritize Content, Practice &amp; Feedback</div>
+                        <div style="flex:2; text-align:center; font-size:11px; font-weight:600; letter-spacing:1px; text-transform:uppercase; animation:label-pulse-gray 3s ease-in-out infinite; animation-delay:0.15s; padding-bottom:3px; color:#bbb;">Optional — valuable for mastery</div>
                     </div>
-                </div>
+                    <div class="v7-roadmap" style="margin-bottom:24px;">
+                        <div class="v7-rm-step core"><div class="v7-rm-num">01</div><div class="v7-rm-name">Content</div><div class="v7-rm-sub">Understand the product</div><div class="v7-rm-arrow"></div></div>
+                        <div class="v7-rm-step core"><div class="v7-rm-num">02</div><div class="v7-rm-name">Practice</div><div class="v7-rm-sub">Build delivery fluency</div><div class="v7-rm-arrow"></div></div>
+                        <div class="v7-rm-step core"><div class="v7-rm-num">03</div><div class="v7-rm-name">Feedback</div><div class="v7-rm-sub">Consolidate with a manager</div><div class="v7-rm-arrow"></div></div>
+                        <div class="v7-rm-step"><div class="v7-rm-num">+</div><div class="v7-rm-name">MEL competencies</div><div class="v7-rm-sub">Supplementary skills</div><div class="v7-rm-arrow"></div></div>
+                        <div class="v7-rm-step"><div class="v7-rm-num">+</div><div class="v7-rm-name">Additional resources</div><div class="v7-rm-sub">Optional reading</div></div>
+                    </div>
 
-                <div class="section-divider"></div>
+                    <!-- 01 Content -->
+                    <div class="v7-section-row blue">
+                        <div>
+                            <div class="v7-sec-head blue">01 — Content</div>
+                            <div id="tb-understanding-text" class="adv-section-intro"></div>
+                        </div>
+                        <div id="tb-understanding-buttons" class="adv-button-grid"></div>
+                    </div>
 
-                <div class="related-products-section">
-                    <h3>Related Products</h3>
-                    <p>This product has the potential to be used in coordination with other RFE products.</p>
-                    <div id="tb-related-products" class="skills-grid"></div>
-                </div>
+                    <div class="v7-divider"></div>
 
-                <div class="section-divider"></div>
+                    <!-- 02 Practice -->
+                    <div class="v7-section-row amber">
+                        <div>
+                            <div class="v7-sec-head amber">02 — Practice</div>
+                            <div id="tb-pf-text" class="adv-section-intro"></div>
+                        </div>
+                        <div id="tb-practice-buttons" class="adv-button-grid"></div>
+                    </div>
 
-                <div class="adv-section">
-                    <h2 class="adv-section-title">Understanding the Product</h2>
-                    <div id="tb-understanding-text" class="adv-section-intro"></div>
-                    <div id="tb-understanding-buttons" class="adv-button-grid"></div>
-                    <div style="margin-top:20px;">
-                        <h3 class="adv-subsection-title">Supplementary MEL Competencies</h3>
-                        <div id="tb-supp-mel-text" class="adv-section-intro"></div>
+                    <div class="v7-divider"></div>
+
+                    <!-- 03 Feedback -->
+                    <div class="v7-section-row amber">
+                        <div>
+                            <div class="v7-sec-head amber">03 — Feedback</div>
+                        </div>
+                        <div id="tb-feedback-buttons" class="adv-button-grid"></div>
+                    </div>
+
+                    <div class="v7-divider"></div>
+
+                    <!-- Supplementary MEL -->
+                    <div class="v7-section-row dim">
+                        <div>
+                            <div class="v7-sec-head dim">Supplementary MEL competencies</div>
+                            <div id="tb-supp-mel-text" class="adv-section-intro"></div>
+                        </div>
                         <div id="tb-supp-mel-buttons" class="adv-button-grid"></div>
                     </div>
-                </div>
 
-                <div class="section-divider"></div>
+                    <div class="v7-divider"></div>
 
-                <div class="adv-section">
-                    <h2 class="adv-section-title">Getting Practice and Feedback</h2>
-                    <div id="tb-pf-text" class="adv-section-intro"></div>
-                    <h3 class="adv-subsection-title">Practice</h3>
-                    <div id="tb-practice-buttons" class="adv-button-grid"></div>
-                    <div style="margin-top:20px;"></div>
-                    <h3 class="adv-subsection-title">Feedback</h3>
-                    <div id="tb-feedback-buttons" class="adv-button-grid"></div>
-                </div>
+                    <!-- Additional Resources -->
+                    <div class="v7-section-row dim">
+                        <div>
+                            <div class="v7-sec-head dim">Additional resources</div>
+                            <p class="nonipa-intro">Supplementary resources — IPA and external — for those who want to go further.</p>
+                        </div>
+                        <div id="tb-nonipa-buttons" class="adv-button-grid"></div>
+                    </div>
 
-                <div class="section-divider"></div>
-
-                <!-- Non-IPA Resources (Template B) -->
-                <!-- MAPPING NOTE: tb-nonipa-buttons ← product_popup_lists "Other resources tab" column -->
-                <div class="adv-section">
-                    <h2 class="adv-section-title">Non-IPA Resources</h2>
-                    <p class="nonipa-intro">RFE staff implementing the product may want to look at how other organizations structure similar work.</p>
-                    <div id="tb-nonipa-buttons" class="adv-button-grid" style="margin-top:16px;"></div>
-                </div>
+                    <!-- Hidden legacy div kept for JS compat -->
+                    <div id="tb-learner-roadmap" style="display:none;"></div>
 
                 </div>
 
-            </div>
+            </div><!-- end v7-body -->
         </div>
     </div>
 
@@ -2202,7 +2367,7 @@
         /*
            ================================================================================
            MAPPING DOCUMENTATION - SPREADSHEET TO POPUPDATA TO HTML
-           Last updated: 2026-04-14 (v30) — Non-IPA Resources: restored intro paragraph
+           Last updated: 2026-04-14 (v30) — Additional Resources: restored intro paragraph
            ================================================================================
 
            SPREADSHEET SOURCE:
@@ -2254,7 +2419,7 @@
              adv_practice_buttons    <- product_popup_lists "Advanced tab: Learning Roadmap Practice"
              adv_feedback_buttons    <- product_popup_lists "Advanced tab: Learning Roadmap Feedback"
              other_resources_buttons <- product_popup_lists "Other resources tab"
-                                        [{heading, explanation, link}] — shown in "Non-IPA Resources" tab
+                                        [{heading, explanation, link}] — shown in "Additional Resources" tab
 
            Fields for non-product entries (rfe-philosophy, mel-competency, stage, consulting-and-communication-skills, etc.):
              display_title           <- all_html_elements_MASTER "Element" column
@@ -2269,13 +2434,13 @@
            ================================================================================
 
            Template A (who_must_know = "basic-advanced-breakdown"):
-             3 tabs: Basic Info | Advanced Info | Non-IPA Resources
+             3 tabs: Basic Info | Advanced Info | Additional Resources
              Basic tab:    description, when_to_use, related_products
              Advanced tab: learner roadmap, content buttons, supp MEL buttons, practice/feedback buttons
              Non-IPA tab:  other_resources_buttons (orange buttons, opens external URLs)
 
            Template B (who_must_know = "all-must-know"):
-             2 tabs: Advanced Info | Non-IPA Resources
+             2 tabs: Advanced Info | Additional Resources
              Advanced tab: same as Template A advanced
              Non-IPA tab:  same as Template A non-IPA
 
@@ -2305,7 +2470,7 @@
            - [ ] basic_related_products headings match product display_titles exactly
            - [ ] other_resources_buttons has correct external links
            - [ ] No console warnings about "key not found" or "related product not found"
-           - [ ] Non-IPA Resources tab shows orange buttons for products with data
+           - [ ] Additional Resources tab shows orange buttons for products with data
            - [ ] Teal "Relevant RFE Products" buttons appear in skill popups where expected
 
            ================================================================================
@@ -2484,12 +2649,12 @@
     "adv_understanding_text": "The product owner has collected resources for you to access throughout your learning path. The buttons below are arranged in an order to help you know what to look at first, second, and so on. However, you should guide your own learning based on what you already knowa bout the product, and what you know about how the product will be delivered on your specific project.",
     "adv_supp_mel_text": "The content provided above is the core knowledge for delivering this product, but the product owner has also identified some additional skillsets that are important to the success of the product. Please review these additional skillsets here.",
     "adv_practice_feedback_text": "The product owner recommends the following resources for practice and feedback. Note that some resources may occur multiple times, because they offer both content and practice or feedback. This is intentional to guide your learning journey.",
-    "basic_related_products": [{"heading": "RFE Foundation", "explanation": "LPD is the foundation for all RFE products, beacuse it creates underlying logic that supports the strategic approach to learning about how a model works.", "link": null}, {"heading": "Community of Practice", "explanation": "The first step to making a COP shared learning agenda is often creating a theory of change that consolidates all partners' models into one.", "link": null}],
-    "adv_content_buttons": [{"heading": "General Learning Guide", "explanation": null, "link": null}],
-    "adv_supp_mel_buttons": [{"heading": "(Monitoring) Indicator Design", "explanation": "Getting additional conceptual understanding of indicator design, with an RFE-lens focus on monitoring, can be a big help. This is a skill which can be especially tricky, and RFE staff often have to give immediate feedback to clients during the Monitoring Indicators workshop.", "link": null}],
-    "adv_practice_buttons": [{"heading": "Common Scenarios", "explanation": "LPD scenarios are linked to the common challenges in the product overview document. Try out these reflection tasks, and follow up with the product owner or Arfie to get feedback.", "link": "https://ipastorage.app.box.com/integrations/googledss/openGoogleEditor?fileId=2190698325439&trackingId=3&csrfToken=8b613719d636d23484d5381c828a01081454cde8150c3234428d65e734b6cb03#?_gfid=docs_editor_frame&csrfToken=8b613719d636d23484d5381c828a01081454cde8150c3234428d65e734b6cb03&fileUrl=https://api.box.com/fsip/files/2190698325439&isInboundFsipRequest=true&jsh=m;/_/scs/abc-static/_/js/k%3Dgapi.lb.en.PJsh2cctCQI.O/d%3D1/rs%3DAHpOoo_QlMhY2cycn60Rs8eI1WInRwuahw/m%3D__features__&organizationType=BUSINESS&parent=https://ipastorage.app.box.com&pfname&previewUrl=https://ipastorage.app.box.com/file/2190698325439&rpctoken=25068576&tpat=1!VHxWR4A53axH8t0c0G-Yccj8JCkntcVucV03F9P5iFBM7hIUzSF5q_N9SWlpZ6Ox8je2qOEHzcHCAv5l898CqEQB5fagyuGDvr1dHznRz-v8LBxTcBixIzj2-IJyWoM2SqB32UeLkV-raeLaemixSobFA6NYmU01cV5I7RMam1foN5BW8E-07s6RufKD6PvHTkE_HXlgLnZ9a0MR8B6EzgmClDI3Cj9TX7Np7m0xbkMbPLto7GfoPGMLYht5TBBkBOR5mEIKaYmu_CF1GDz3yBfqx5yIqFpGc-vAX-jCK45Ojv3wn7lYys2mkCVH3ZcX3QlhU0k2qiUZp9JBTnaLHEgH3wGHxbluIzC2qkmG8BBn2YBSwiRCLXaYc7afX4kZafqj8EKo4vMVAPywY6pGrTIoaM-Z3w504AEsgG_qCPlFrwWd5Zwwoz8.&tpatExpirationTime=1775669932000&usegapi=1"}],
-    "adv_feedback_buttons": [],
-    "other_resources_buttons": []
+    "basic_related_products": [{"heading": "RFE Foundation", "explanation": "LPD is the foundation for all RFE products, beacuse it creates underlying logic that supports the strategic approach to learning about how a model works. ", "link": null}, {"heading": "Community of Practice", "explanation": "The first step to making a COP shared learning agenda is often creating a theory of change that consolidates all partners' models into one. ", "link": null}],
+    "adv_content_buttons": [{"heading": "General Learning Guide", "explanation": null, "link": null, "doc_type": "Doc", "priority": "High"}],
+    "adv_supp_mel_buttons": [{"heading": "(Monitoring) Indicator Design", "explanation": "Getting additional conceptual understanding of indicator design, with an RFE-lens focus on monitoring, can be a big help. This is a skill which can be especially tricky, and RFE staff often have to give immediate feedback to clients during the Monitoring Indicators workshop. ", "link": "https://ipastorage.app.box.com/file/2182945969965"}],
+    "adv_practice_buttons": [{"heading": "Common Scenarios", "explanation": "LPD scenarios are linked to the common challenges in the product overview document. Try out these reflection tasks, and follow up with the product owner or Arfie to get feedback. ", "link": "https://ipastorage.app.box.com/integrations/googledss/openGoogleEditor?fileId=2190698325439&trackingId=3&csrfToken=8b613719d636d23484d5381c828a01081454cde8150c3234428d65e734b6cb03#?_gfid=docs_editor_frame&csrfToken=8b613719d636d23484d5381c828a01081454cde8150c3234428d65e734b6cb03&fileUrl=https://api.box.com/fsip/files/2190698325439&isInboundFsipRequest=true&jsh=m;/_/scs/abc-static/_/js/k%3Dgapi.lb.en.PJsh2cctCQI.O/d%3D1/rs%3DAHpOoo_QlMhY2cycn60Rs8eI1WInRwuahw/m%3D__features__&organizationType=BUSINESS&parent=https://ipastorage.app.box.com&pfname&previewUrl=https://ipastorage.app.box.com/file/2190698325439&rpctoken=25068576&tpat=1!VHxWR4A53axH8t0c0G-Yccj8JCkntcVucV03F9P5iFBM7hIUzSF5q_N9SWlpZ6Ox8je2qOEHzcHCAv5l898CqEQB5fagyuGDvr1dHznRz-v8LBxTcBixIzj2-IJyWoM2SqB32UeLkV-raeLaemixSobFA6NYmU01cV5I7RMam1foN5BW8E-07s6RufKD6PvHTkE_HXlgLnZ9a0MR8B6EzgmClDI3Cj9TX7Np7m0xbkMbPLto7GfoPGMLYht5TBBkBOR5mEIKaYmu_CF1GDz3yBfqx5yIqFpGc-vAX-jCK45Ojv3wn7lYys2mkCVH3ZcX3QlhU0k2qiUZp9JBTnaLHEgH3wGHxbluIzC2qkmG8BBn2YBSwiRCLXaYc7afX4kZafqj8EKo4vMVAPywY6pGrTIoaM-Z3w504AEsgG_qCPlFrwWd5Zwwoz8.&tpatExpirationTime=1775669932000&usegapi=1", "doc_type": "Doc", "priority": "High"}],
+    "adv_feedback_buttons": [{"heading": "Talk to Lu", "explanation": "It is highly recommended to talk about options for LPD delivery with Lu. There is more flexibility for how you do LPD than meets the eye. Be prepared to think thru what would be best for the client in your context. ", "link": null, "priority": "High"}],
+    "other_resources_buttons": [{"heading": "JPAL ", "explanation": "Theory of Change and Measurement slide deck", "link": "https://www.povertyactionlab.org/sites/default/files/research-resources/L2_TOC_Measurement_2024.pdf", "doc_type": "Web"}]
   },
   "Mel-Diagnostic": {
     "display_title": "MEL Diagnostic",
@@ -2506,9 +2671,9 @@
     "adv_understanding_text": "The product owner has collected resources for you to access throughout your learning path. The buttons below are arranged in an order to help you know what to look at first, second, and so on. However, you should guide your own learning based on what you already knowa bout the product, and what you know about how the product will be delivered on your specific project.",
     "adv_supp_mel_text": "The content provided above is the core knowledge for delivering this product, but the product owner has also identified some additional skillsets that are important to the success of the product. Please review these additional skillsets here.",
     "adv_practice_feedback_text": "The product owner recommends the following resources for practice and feedback. Note that some resources may occur multiple times, because they offer both content and practice or feedback. This is intentional to guide your learning journey.",
-    "basic_related_products": [{"heading": "Monitoring TA", "explanation": "Often leads to TA to implement action steps; if not, diagnostic ensures client can implement independently", "link": null}, {"heading": "Data-Use and Evidence Culture Support (DUECS)", "explanation": "When diagnostic identifies internal learning culture challenges (vs. technical issues), leading to continued RFE engagement.", "link": null}],
+    "basic_related_products": [{"heading": "Monitoring TA", "explanation": "Often leads to TA to implement action steps; if not, diagnostic ensures client can implement independently", "link": null}, {"heading": "Data-Use and Evidence Culture Support (DUECS)", "explanation": "When diagnostic identifies internal learning culture challenges (vs. technical issues), leading to continued RFE engagement. ", "link": null}],
     "adv_content_buttons": [{"heading": "General Learning Guide", "explanation": null, "link": null}],
-    "adv_supp_mel_buttons": [{"heading": "(Monitoring) Indicator Design", "explanation": "Conducting a MEL diagnostic requires evaluating the quality of indicators, requiring a strong technical bsae in indicator design.", "link": null}],
+    "adv_supp_mel_buttons": [{"heading": "(Monitoring) Indicator Design", "explanation": "Conducting a MEL diagnostic requires evaluating the quality of indicators, requiring a strong technical base in indicator design.", "link": null}],
     "adv_practice_buttons": [],
     "adv_feedback_buttons": [],
     "other_resources_buttons": []
@@ -2550,7 +2715,7 @@
     "adv_understanding_text": "The product owner has collected resources for you to access throughout your learning path. The buttons below are arranged in an order to help you know what to look at first, second, and so on. However, you should guide your own learning based on what you already knowa bout the product, and what you know about how the product will be delivered on your specific project.",
     "adv_supp_mel_text": "The content provided above is the core knowledge for delivering this product, but the product owner has also identified some additional skillsets that are important to the success of the product. Please review these additional skillsets here.",
     "adv_practice_feedback_text": "The product owner recommends the following resources for practice and feedback. Note that some resources may occur multiple times, because they offer both content and practice or feedback. This is intentional to guide your learning journey.",
-    "basic_related_products": [{"heading": "Monitoring TA", "explanation": "Process evaluations may be paired with Monitoring TA, since they both measure similar indicators and levels of the theory of change. However, RFE prefers Monitoring TA, which is more continuous than process evaluations and therefore better aligned with RFE principles.", "link": null}],
+    "basic_related_products": [{"heading": "Monitoring TA", "explanation": "Process evaluations may be paired with Monitoring TA, since they both measure similar indicators and levels of the theory of change. However, RFE prefers Monitoring TA, which is more continuous than process evaluations and therefore better aligned with RFE principles. ", "link": null}],
     "adv_content_buttons": [],
     "adv_supp_mel_buttons": [],
     "adv_practice_buttons": [],
@@ -2595,8 +2760,8 @@
     "adv_supp_mel_text": "The content provided above is the core knowledge for delivering this product, but the product owner has also identified some additional skillsets that are important to the success of the product. Please review these additional skillsets here.",
     "adv_practice_feedback_text": "The product owner recommends the following resources for practice and feedback. Note that some resources may occur multiple times, because they offer both content and practice or feedback. This is intentional to guide your learning journey.",
     "basic_related_products": [],
-    "adv_content_buttons": [{"heading": "General Approach Overview", "explanation": null, "link": null}, {"heading": "Internal User Testing slide deck", "explanation": "Covers 2025 updates to the User Research product, including information on UX and Design principles.", "link": "https://ipastorage.app.box.com/file/2002072276577"}, {"heading": "Onboarding training video", "explanation": "Previous onboarding Q&A on the User Research product. May be useful to get more explanation on the high-level elements at play in delivering the product.", "link": "https://ipastorage.app.box.com/file/1777924281582?s=o97f8fg76pdvqv5s0ykvd70f9j3krmj4"}],
-    "adv_supp_mel_buttons": [{"heading": "User Design and Design Thinking", "explanation": "Having additional knowledge of User design and Design thinking principles will supplement your ability to deliver the User Research product.", "link": null}],
+    "adv_content_buttons": [{"heading": "General Approach Overview", "explanation": null, "link": null}, {"heading": "Internal User Testing slide deck", "explanation": "Covers 2025 updates to the User Research product, including information on UX and Design principles. ", "link": "https://ipastorage.app.box.com/file/2002072276577"}, {"heading": "Onboarding training video", "explanation": "Previous onboarding Q&A on the User Research product. May be useful to get more explanation on the high-level elements at play in delivering the product. ", "link": "https://ipastorage.app.box.com/file/1777924281582?s=o97f8fg76pdvqv5s0ykvd70f9j3krmj4"}],
+    "adv_supp_mel_buttons": [{"heading": "User Design and Design Thinking", "explanation": "Having additional knowledge of User design and Design thinking principles will supplement your ability to deliver the User Research product. ", "link": null}],
     "adv_practice_buttons": [],
     "adv_feedback_buttons": [],
     "other_resources_buttons": []
@@ -2616,11 +2781,11 @@
     "adv_understanding_text": "The product owner has collected resources for you to access throughout your learning path. The buttons below are arranged in an order to help you know what to look at first, second, and so on. However, you should guide your own learning based on what you already knowa bout the product, and what you know about how the product will be delivered on your specific project.",
     "adv_supp_mel_text": "The content provided above is the core knowledge for delivering this product, but the product owner has also identified some additional skillsets that are important to the success of the product. Please review these additional skillsets here.",
     "adv_practice_feedback_text": "The product owner recommends the following resources for practice and feedback. Note that some resources may occur multiple times, because they offer both content and practice or feedback. This is intentional to guide your learning journey.",
-    "basic_related_products": [{"heading": "Learning Plan Design (LPD)", "explanation": "The first step to making a COP shared learning agenda is often creating a theory of change that consolidates all partners' models into one.", "link": null}, {"heading": "Donor advisory", "explanation": "COPs often are used with donors aiming to coordinate their grantees' learning through the support of RFE as a 'learning partner'. In this case, RFE prefers to engage with the donor in an advisory role, so that the COP learning strategy works in alignment with RFE principles.", "link": null}],
-    "adv_content_buttons": [{"heading": "General Learning Guide", "explanation": "Get a foundation in how RFE delivers the COP.", "link": "https://ipastorage.app.box.com/file/2182111091147?s=kgj9oco72aqh9iyslug4bzg18jqcqoyx"}, {"heading": "Annotated General Approach Examples", "explanation": "Look at examples of how 3 of the general approaches were approached in past RFE COPs.", "link": "https://ipastorage.app.box.com/web_link/45064669388"}, {"heading": "Example 'Research Package' of Synthesized Learning", "explanation": "Get an idea of what a COP learning synthesis can look like. Notice how the resources cut across the 3 partners on the POP project.", "link": "https://poverty-action.org/play-our-part-using-evidence-improve-early-childhood-education-through-learning-through-play"}, {"heading": "COP Building Blocks", "explanation": "This brief was written by the RFE team for the LEGO Foundation as a research project on what works in delivering COPs.", "link": "https://poverty-action.org/making-collaborative-learning-work-practical-insights-effective-communities-practice"}],
+    "basic_related_products": [{"heading": "Learning Plan Design (LPD)", "explanation": "The first step to making a COP shared learning agenda is often creating a theory of change that consolidates all partners' models into one. ", "link": null}, {"heading": "Donor advisory", "explanation": "COPs often are used with donors aiming to coordinate their grantees' learning through the support of RFE as a 'learning partner'. In this case, RFE prefers to engage with the donor in an advisory role, so that the COP learning strategy works in alignment with RFE principles. ", "link": null}],
+    "adv_content_buttons": [{"heading": "General Learning Guide", "explanation": "Get a foundation in how RFE delivers the COP. ", "link": "https://ipastorage.app.box.com/file/2182111091147?s=kgj9oco72aqh9iyslug4bzg18jqcqoyx", "doc_type": "Doc", "priority": "High"}, {"heading": "Annotated General Approach Examples", "explanation": "Look at examples of how 3 of the general approaches were approached in past RFE COPs.", "link": "https://ipastorage.app.box.com/web_link/45064669388", "doc_type": "Doc", "priority": "High"}, {"heading": "Example 'Research Package' of Synthesized Learning", "explanation": "Get an idea of what a COP learning synthesis can look like. Notice how the resources cut across the 3 partners on the POP project. ", "link": "https://poverty-action.org/play-our-part-using-evidence-improve-early-childhood-education-through-learning-through-play", "doc_type": "Web"}, {"heading": "COP Building Blocks", "explanation": "This brief was written by the RFE team for the LEGO Foundation as a research project on what works in delivering COPs. ", "link": "https://poverty-action.org/making-collaborative-learning-work-practical-insights-effective-communities-practice", "doc_type": "Doc"}],
     "adv_supp_mel_buttons": [{"heading": "Facilitation skills", "explanation": "COPs put a heavy burden on the ability of RFE staff to facilitate workshops amongst multiple partners and donor representatives at the same time. Since by design there are differences between COP partners, RFE must offer more facilatory support to get partners in a position where they can effectively draw insights from different data sources and partners.", "link": null}],
-    "adv_practice_buttons": [{"heading": "Common scenarios", "explanation": "Read 3 scenarios matched to 3 of the general approaches for delivering an RFE COP, and reflect on how common challenges might be overcome.", "link": "https://ipastorage.app.box.com/file/2017011296462?s=00t1or2mi5vz06v27fa26rvrt5f7zs62"}, {"heading": "General Learning Guide", "explanation": "Do the targeted searches in the General Approaches section.", "link": "https://ipastorage.app.box.com/file/2182111091147?s=kgj9oco72aqh9iyslug4bzg18jqcqoyx"}],
-    "adv_feedback_buttons": [{"heading": "Annotated General Approach Examples", "explanation": "After doing the Common Scenarios, return to the annotated examples to compare your own solutions with past approaches.", "link": "https://ipastorage.app.box.com/web_link/45064669388"}, {"heading": "Talk to Coach Arfie", "explanation": "Copy the Common Scenarios into Arfie, and share your ideas so that you can get feedback. Ask Arfie to test how your ideas connect to the core RFE concepts.", "link": "https://claude.ai/project/0197b25f-0c03-732e-8e6e-09611d72ec16"}, {"heading": "Talk to your manager", "explanation": "Get more information on the kinds of challenges you are likely to face in your specific project. Share some of the insights from your reflections, Coach Arfie, and the annotated examples to see how these align with your project context.", "link": null}, {"heading": "Meet with Ashley", "explanation": "When you feel ready, set up a meeting with Ashley to discuss deeper challenges RFE has had in getting COPs to truly improve the MEL of partners (as opposed to being a nice community for discussing implementation pain points).", "link": null}, {"heading": "Product Overview", "explanation": "Check the Open Questions and Past Applications sections. Have others encountered similar challenge as you during practice activities? Does anythign help you work through you own ideas?", "link": "https://ipastorage.app.box.com/file/1746049091876?s=3b3wnlnwlpknvis6pt979b15picldd1y"}],
+    "adv_practice_buttons": [{"heading": "Common scenarios", "explanation": "Read 3 scenarios matched to 3 of the general approaches for delivering an RFE COP, and reflect on how common challenges might be overcome. ", "link": "https://ipastorage.app.box.com/file/2017011296462?s=00t1or2mi5vz06v27fa26rvrt5f7zs62", "doc_type": "Whiteboard", "priority": "High"}, {"heading": "General Learning Guide", "explanation": "Do the targeted searches in the General Approaches section. ", "link": "https://ipastorage.app.box.com/file/2182111091147?s=kgj9oco72aqh9iyslug4bzg18jqcqoyx", "doc_type": "Doc"}],
+    "adv_feedback_buttons": [{"heading": "Annotated General Approach Examples", "explanation": "After doing the Common Scenarios, return to the annotated examples to compare your own solutions with past approaches. ", "link": "https://ipastorage.app.box.com/web_link/45064669388", "doc_type": "Whiteboard"}, {"heading": "Talk to Coach Arfie", "explanation": "Copy the Common Scenarios into Arfie, and share your ideas so that you can get feedback. Ask Arfie to test how your ideas connect to the core RFE concepts. ", "link": "https://claude.ai/project/0197b25f-0c03-732e-8e6e-09611d72ec16", "priority": "High"}, {"heading": "Talk to your manager", "explanation": "Get more information on the kinds of challenges you are likely to face in your specific project. Share some of the insights from your reflections, Coach Arfie, and the annotated examples to see how these align with your project context.", "link": null}, {"heading": "Meet with Ashley", "explanation": "When you feel ready, set up a meeting with Ashley to discuss deeper challenges RFE has had in getting COPs to truly improve the MEL of partners (as opposed to being a nice community for discussing implementation pain points).", "link": null}, {"heading": "Product Overview", "explanation": "Check the Open Questions and Past Applications sections. Have others encountered similar challenge as you during practice activities? Does anythign help you work through you own ideas? ", "link": "https://ipastorage.app.box.com/file/1746049091876?s=3b3wnlnwlpknvis6pt979b15picldd1y"}],
     "other_resources_buttons": []
   },
   "Donor-Advisory": {
@@ -2705,11 +2870,11 @@
     "adv_supp_mel_text": "The content provided above is the core knowledge for delivering this product, but the product owner has also identified some additional skillsets that are important to the success of the product. Please review these additional skillsets here.",
     "adv_practice_feedback_text": "The product owner recommends the following resources for practice and feedback. Note that some resources may occur multiple times, because they offer both content and practice or feedback. This is intentional to guide your learning journey.",
     "basic_related_products": [{"heading": "User Research", "explanation": "RFE A/B tests help track outcomes at the user level, run controlled comparisons,\nand interpret results with enough confidence to act on them.", "link": null}, {"heading": "Cost Effectiveness Modelling", "explanation": "RFE A/B tests help in identifying and prioritizing what to test using a cost-effectiveness lens across reach, efficacy, and efficiency", "link": null}, {"heading": "Learning Plan Design (LPD)", "explanation": "The ToC helps teams identify the core levers of impact, the early outcomes that signal the intervention is working, and the parts where there is uncertainty or room for improvement. Especially relevant for A/B testing at the Refine, Adapt, and Scale phases of learning.", "link": null}],
-    "adv_content_buttons": [{"heading": "A/B Testing Guide", "explanation": "This brief provides a step-by-step guide for digitalfirst organizations seeking to embed A/B testing into their Monitoring, Evaluation, and Learning.", "link": "https://www.wwhge.org/wp-content/uploads/2026/03/A-Practical-Approach-to-Developing-AB-Testing-Systems-for-Digital-First-Organizations.pdf"}, {"heading": "A/B Testing Internal training deck", "explanation": "Used to facilitate an internal training on how RFE conducts A/B tests, and some of the focuses for meeting RFE objectives", "link": "https://ipastorage.app.box.com/file/1912268701523?s=ckz6a2wrtupixyh31w9xcd5p09u8e806"}, {"heading": "A/B Testing Onboarding training video", "explanation": "May be useful for getting some human explanation of A/B testing from a high level", "link": "https://ipastorage.app.box.com/file/1776921357367?s=bs9ci6qptypc91mtqn8kbuqlefldu31m"}],
-    "adv_supp_mel_buttons": [{"heading": "Sample Sizes and Power Calculations", "explanation": "A/B Tests are essentially quick RCTs that focus on easily iterated implementation and/or user-facing elements. Power calculation ensure there is sufficient power to arrive at a conclusive finding.", "link": null}, {"heading": "User Design and Design Thinking", "explanation": "A/B Tests often iterate on elements of human centered design, especially where digital tools are involved.", "link": null}, {"heading": "MEL for Tech (digital innovations)", "explanation": "A/B Tests are most easy to implement using digital tools, since it is easy to roll-out different versions of the digital tool, and easier to collect metadata from the digital experience.", "link": null}],
+    "adv_content_buttons": [{"heading": "A/B Testing Guide", "explanation": "This brief provides a step-by-step guide for digitalfirst organizations seeking to embed A/B testing into their Monitoring, Evaluation, and Learning.", "link": "https://www.wwhge.org/wp-content/uploads/2026/03/A-Practical-Approach-to-Developing-AB-Testing-Systems-for-Digital-First-Organizations.pdf", "doc_type": "Doc", "priority": "High"}, {"heading": "A/B Testing Internal training deck", "explanation": "Used to facilitate an internal training on how RFE conducts A/B tests, and some of the focuses for meeting RFE objectives", "link": "https://ipastorage.app.box.com/file/1912268701523?s=ckz6a2wrtupixyh31w9xcd5p09u8e806", "doc_type": "Slide deck"}, {"heading": "A/B Testing Onboarding training video", "explanation": "May be useful for getting some human explanation of A/B testing from a high level", "link": "https://ipastorage.app.box.com/file/1776921357367?s=bs9ci6qptypc91mtqn8kbuqlefldu31m", "doc_type": "Video"}],
+    "adv_supp_mel_buttons": [{"heading": "Sample Sizes and Power Calculations", "explanation": "A/B Tests are essentially quick RCTs that focus on easily iterated implementation and/or user-facing elements. Power calculation ensure there is sufficient power to arrive at a conclusive finding. ", "link": null}, {"heading": "User Design and Design Thinking", "explanation": "A/B Tests often iterate on elements of human centered design, especially where digital tools are involved. ", "link": null}, {"heading": "MEL for Tech (digital innovations)", "explanation": "A/B Tests are most easy to implement using digital tools, since it is easy to roll-out different versions of the digital tool, and easier to collect metadata from the digital experience. ", "link": null}],
     "adv_practice_buttons": [],
     "adv_feedback_buttons": [],
-    "other_resources_buttons": [{"heading": "What Works Hub (WWB)", "explanation": "A/B Testing in Education. Developed for CIES 2024", "link": "https://ipastorage.app.box.com/file/2109753107494"}, {"heading": "What Works Hub (WWB)", "explanation": "Cheaper by the Dozen. A report on 12 A/B tests run on Teacher Coaching engagements in search of improving the cost-effectiveness of coaching.", "link": "https://ipastorage.app.box.com/file/2024078608363"}, {"heading": "Youth Impact", "explanation": "Iterative A/B Testing handbook", "link": "https://ipastorage.app.box.com/file/2109757259634"}]
+    "other_resources_buttons": [{"heading": "What Works Hub (WWB)", "explanation": "A/B Testing in Education. Developed for CIES 2024", "link": "https://ipastorage.app.box.com/file/2109753107494", "doc_type": "Web"}, {"heading": "What Works Hub (WWB)", "explanation": "Cheaper by the Dozen. A report on 12 A/B tests run on Teacher Coaching engagements in search of improving the cost-effectiveness of coaching. ", "link": "https://ipastorage.app.box.com/file/2024078608363", "doc_type": "Web"}, {"heading": "Youth Impact", "explanation": "Iterative A/B Testing handbook", "link": "https://ipastorage.app.box.com/file/2109757259634", "doc_type": "Web"}]
   },
   "Problem-Identification": {
     "display_title": "Problem Identification",
@@ -3293,10 +3458,33 @@ function formatText(text) {
     return html;
 }
 
+// ── HELPER: docTypeIcon — returns inline SVG for a given doc_type string
+// MAPPING NOTE: doc_type ← product_popup_lists col 2 (Doc Type)
+// Values: Doc, Web, Video, Slide deck, Whiteboard
+function docTypeIcon(docType) {
+    if (!docType) return '';
+    const s = docType.toLowerCase();
+    let path = '';
+    if (s === 'doc') {
+        path = '<path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>';
+    } else if (s === 'web') {
+        path = '<circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20"/>';
+    } else if (s === 'video') {
+        path = '<polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/>';
+    } else if (s === 'slide deck') {
+        path = '<rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>';
+    } else if (s === 'whiteboard') {
+        path = '<rect x="2" y="2" width="20" height="14" rx="2"/><path d="M2 20h20M8 20v-4M16 20v-4"/>';
+    }
+    if (!path) return '';
+    return `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.8)" stroke-width="2" style="flex-shrink:0;">${path}</svg>`;
+}
+
 // ── HELPER: renderButtons — fills a container with resource buttons
 // MAPPING NOTE: buttons come from product_popup_lists via popupData
-//   adv_*_buttons arrays: [{heading, explanation, link}]
-//   has-link class added only when link exists
+//   adv_*_buttons arrays: [{heading, explanation, link, doc_type, priority}]
+//   doc_type → inline SVG icon left of title
+//   priority === 'High' → "High priority" boxed badge right of title
 //   SUPP MEL CONTAINERS: clicking navigates to Skills Map and opens competency popup
 function renderButtons(containerId, buttons) {
     const container = document.getElementById(containerId);
@@ -3310,7 +3498,6 @@ function renderButtons(containerId, buttons) {
         return;
     }
 
-    // Detect if this is a supp MEL container — clicks navigate to Skills Map
     const isSuppMel = containerId === 'adv-supp-mel-buttons' || containerId === 'tb-supp-mel-buttons';
 
     buttons.forEach(btn => {
@@ -3318,35 +3505,37 @@ function renderButtons(containerId, buttons) {
         let el;
 
         if (isSuppMel) {
-            // Always a clickable div — clicking opens the skill competency popup
             el = document.createElement('div');
             el.className = 'adv-btn has-link';
             el.style.cursor = 'pointer';
             el.title = 'View in Skills Map';
-            el.addEventListener('click', function() {
-                navigateToSkillCompetency(btn.heading);
-            });
-            el.addEventListener('mouseover', function() { this.style.filter = 'brightness(0.85)'; });
-            el.addEventListener('mouseout',  function() { this.style.filter = ''; });
+            el.addEventListener('click', function() { navigateToSkillCompetency(btn.heading); });
+            el.addEventListener('mouseover', function() { this.style.opacity = '0.88'; });
+            el.addEventListener('mouseout',  function() { this.style.opacity = ''; });
         } else {
             el = document.createElement(hasLink ? 'a' : 'div');
             el.className = 'adv-btn' + (hasLink ? ' has-link' : '');
-            if (hasLink) {
-                el.href = btn.link;
-                el.target = '_blank';
-                el.rel = 'noopener';
-            }
+            if (hasLink) { el.href = btn.link; el.target = '_blank'; el.rel = 'noopener'; }
         }
 
+        const icon = docTypeIcon(btn.doc_type);
+        const hp = btn.priority === 'High'
+            ? '<span class="adv-hp">High priority</span>'
+            : '';
+
         el.innerHTML = `
-            <div class="adv-btn-title">${btn.heading || ''}</div>
+            <div class="adv-btn-row">
+                ${icon ? '<span class="adv-btn-icon">' + icon + '</span>' : ''}
+                <span class="adv-btn-title">${btn.heading || ''}</span>
+                ${hp}
+            </div>
             ${btn.explanation ? '<div class="adv-btn-explanation">' + btn.explanation + '</div>' : ''}
         `;
         container.appendChild(el);
     });
 }
 
-// ── HELPER: renderRelatedProducts — card buttons with heading + explanation
+// ── HELPER: renderRelatedProducts — v7 chip style
 // MAPPING NOTE: basic_related_products ← product_popup_lists "Basic tab: Related Products"
 //   [{heading, explanation, link}] — clicking opens that product's popup
 // Used by both Template A and Template B
@@ -3359,15 +3548,10 @@ function renderRelatedProducts(containerId, items) {
         return;
     }
     items.forEach(item => {
-        const card = document.createElement('div');
-        card.className = 'adv-btn has-link';
-        card.style.background = '#28a745';
-        card.style.cursor = 'pointer';
-        card.innerHTML = `
-            <div class="adv-btn-title">${item.heading}</div>
-            ${item.explanation ? '<div class="adv-btn-explanation">' + item.explanation + '</div>' : ''}
-        `;
-        card.addEventListener('click', function(e) {
+        const chip = document.createElement('div');
+        chip.className = 'v7-chip';
+        chip.textContent = item.heading;
+        chip.addEventListener('click', function(e) {
             e.stopPropagation();
             let foundId = null;
             for (const key in popupData) {
@@ -3376,17 +3560,7 @@ function renderRelatedProducts(containerId, items) {
             if (foundId) showPopup(foundId);
             else console.warn('Related product not found:', item.heading);
         });
-        card.addEventListener('mouseover', function() {
-            this.style.transform = 'translateY(-3px)';
-            this.style.boxShadow = '0 6px 16px rgba(0,0,0,0.2)';
-            this.style.background = '#1e7e34';
-        });
-        card.addEventListener('mouseout', function() {
-            this.style.transform = '';
-            this.style.boxShadow = '0 2px 8px rgba(0,0,0,0.1)';
-            this.style.background = '#28a745';
-        });
-        container.appendChild(card);
+        container.appendChild(chip);
     });
 }
 
@@ -3515,19 +3689,17 @@ function closeStagePopup() {
                 // MAPPING NOTE: other_resources_buttons ← product_popup_lists "Other resources tab" column
                 renderButtons('tb-nonipa-buttons', data.other_resources_buttons || []);
 
-                // Reset Template B tabs to Advanced on open
-                document.querySelectorAll('.tb-tab-content').forEach(t => t.classList.remove('active'));
-                document.querySelectorAll('.tb-tab-button').forEach(b => b.classList.remove('active'));
-                document.getElementById('tb-advanced-tab').classList.add('active');
-                document.querySelector('.tb-tab-button').classList.add('active');
+                // Template B: no tabs to reset — single scroll view
+                // (tb-advanced-tab and tb-tab-button no longer exist in v7)
 
             } else {
                 modal.classList.remove('template-b');
-                // Reset to basic tab for Template A
-                document.querySelectorAll('.tab-content:not(.tb-tab-content)').forEach(t => t.classList.remove('active'));
-                document.querySelectorAll('.tab-button:not(.tb-tab-button)').forEach(b => b.classList.remove('active'));
-                document.getElementById('basicInfoTab').classList.add('active');
-                document.querySelector('.tab-button:not(.tb-tab-button)').classList.add('active');
+                // Reset to basic tab for Template A (v7 classes)
+                document.querySelectorAll('.v7-panel').forEach(t => t.classList.remove('on'));
+                document.querySelectorAll('.v7-tab').forEach(b => b.classList.remove('on'));
+                document.getElementById('basicInfoTab').classList.add('on');
+                const firstTab = document.querySelector('.v7-tab');
+                if (firstTab) firstTab.classList.add('on');
             }
 
             // Hide construction sticker (all products now have content)
@@ -3648,21 +3820,15 @@ function closeStagePopup() {
 
         // Close approach popup function
         function switchTab(event, tabName) {
-            // Hide all Template A tab contents (exclude tb-tab-content)
-            document.querySelectorAll('.tab-content:not(.tb-tab-content)').forEach(tab => tab.classList.remove('active'));
-            
-            // Remove active class from Template A tab buttons only
-            document.querySelectorAll('.tab-button:not(.tb-tab-button)').forEach(btn => btn.classList.remove('active'));
-            
-            // Show selected tab
+            // v7: use v7-panel / v7-tab classes
+            document.querySelectorAll('.v7-panel').forEach(p => p.classList.remove('on'));
+            document.querySelectorAll('.v7-tab').forEach(b => b.classList.remove('on'));
             if (tabName === 'basic') {
-                document.getElementById('basicInfoTab').classList.add('active');
+                document.getElementById('basicInfoTab').classList.add('on');
             } else if (tabName === 'advanced') {
-                document.getElementById('advancedInfoTab').classList.add('active');
+                document.getElementById('advancedInfoTab').classList.add('on');
             }
-            
-            // Add active class to clicked button
-            event.target.classList.add('active');
+            event.target.classList.add('on');
         }
 
         // Tab switching for Template B
