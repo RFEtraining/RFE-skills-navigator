@@ -457,11 +457,14 @@
         }
         .v7-chips { display: flex; flex-wrap: wrap; gap: 7px; }
         .v7-chip {
-            font-size: 14px; padding: 7px 14px; border-radius: 7px;
+            font-size: 14px; padding: 10px 14px; border-radius: 7px;
             background: #f8f8f8; border: 0.5px solid #ddd; color: #1a1a1a;
-            cursor: pointer; transition: border-color 0.15s;
+            cursor: pointer; transition: border-color 0.15s; display: flex; flex-direction: column; gap: 4px;
         }
         .v7-chip:hover { border-color: #185FA5; color: #185FA5; }
+        .v7-chip-title { font-size: 14px; font-weight: 600; }
+        .v7-chip-explanation { font-size: 12px; color: #666; font-weight: 400; line-height: 1.4; }
+        .v7-chip:hover .v7-chip-explanation { color: #185FA5; }
 
         /* ── roadmap strip ── */
         .v7-roadmap {
@@ -2889,7 +2892,13 @@
     "who_must_know": "all-must-know",
     "short_description": "RFE facilitates a workshop series to design with clients a Theory of Change, Learning questions, and a MEL plan.",
     "associated_concepts": null,
-    "associated_products": null,
+    "associated_products": [
+      {
+            "heading": "Exception-Serves at the RFE Foundation",
+            "explanation": "LPD is the foundation for all RFE products, beacuse it creates underlying logic that supports the strategic approach to learning about how a model works.",
+            "link": null
+      }
+],
     "ipa_links": "https://ipastorage.box.com/s/3yuvqdfxbwa5zs9m1pqsoreh7c8ovx46",
     "external_links": null,
     "basic_description": "Through a series of collaborative workshops, we support implementers and funders in designing robust MEL plans that align teams around prioritized data collection for program improvement and strategic decision-making. Working from a clear theory of change, we support partners in identifying their most critical learning questions based on their program's stage of maturity. We then co-design right-fit methodologies and indicators matched to these questions and the theory of change, ensuring credibility (valid, reliable, and rigorous), actionability (decision-relevant), responsibility (cost-effective and responsible with participants), and transportability (within- and cross-program learning). \n\nThe resulting learning plan ensures all data collected directly informs decisions: whether understanding implementation effectiveness, identifying program improvements, or building evidence for scaling. \n\nThroughout, we focus on building internal capacity so teams can apply these credible, right-fit MEL practices consistently across current and future projects, ultimately fostering more cost-effective and impactful programs through systematic learning.",
@@ -2899,25 +2908,20 @@
     "adv_practice_feedback_text": "The product owner recommends the following resources for practice and feedback. Note that some resources may occur multiple times, because they offer both content and practice or feedback. This is intentional to guide your learning journey.",
     "basic_related_products": [
       {
-        "heading": "RFE Foundation",
-        "explanation": "LPD is the foundation for all RFE products, beacuse it creates underlying logic that supports the strategic approach to learning about how a model works. ",
-        "link": null
-      },
-      {
-        "heading": "Community of Practice",
-        "explanation": "The first step to making a COP shared learning agenda is often creating a theory of change that consolidates all partners' models into one. ",
-        "link": null
+            "heading": "Exception-Serves at the RFE Foundation",
+            "explanation": "LPD is the foundation for all RFE products, beacuse it creates underlying logic that supports the strategic approach to learning about how a model works.",
+            "link": null
       }
-    ],
+],
     "adv_content_buttons": [
       {
-        "heading": "General Learning Guide",
-        "explanation": null,
-        "link": null,
-        "doc_type": "Doc",
-        "priority": "High"
+            "heading": "General Learning Guide",
+            "explanation": null,
+            "link": "https://ipastorage.app.box.com/file/2204859368848?s=m8xozyxcp4gy8chof9z3ekjn8ae4w2vv",
+            "doc_type": "Doc",
+            "priority": "High"
       }
-    ],
+],
     "adv_supp_mel_buttons": [
       {
         "heading": "RFE Indicator Design",
@@ -2927,29 +2931,29 @@
     ],
     "adv_practice_buttons": [
       {
-        "heading": "Common Scenarios",
-        "explanation": "LPD scenarios are linked to the common challenges in the product overview document. Try out these reflection tasks, and follow up with the product owner or Arfie to get feedback. ",
-        "link": "https://ipastorage.app.box.com/integrations/googledss/openGoogleEditor?fileId=2190698325439&trackingId=3&csrfToken=8b613719d636d23484d5381c828a01081454cde8150c3234428d65e734b6cb03#?_gfid=docs_editor_frame&csrfToken=8b613719d636d23484d5381c828a01081454cde8150c3234428d65e734b6cb03&fileUrl=https://api.box.com/fsip/files/2190698325439&isInboundFsipRequest=true&jsh=m;/_/scs/abc-static/_/js/k%3Dgapi.lb.en.PJsh2cctCQI.O/d%3D1/rs%3DAHpOoo_QlMhY2cycn60Rs8eI1WInRwuahw/m%3D__features__&organizationType=BUSINESS&parent=https://ipastorage.app.box.com&pfname&previewUrl=https://ipastorage.app.box.com/file/2190698325439&rpctoken=25068576&tpat=1!VHxWR4A53axH8t0c0G-Yccj8JCkntcVucV03F9P5iFBM7hIUzSF5q_N9SWlpZ6Ox8je2qOEHzcHCAv5l898CqEQB5fagyuGDvr1dHznRz-v8LBxTcBixIzj2-IJyWoM2SqB32UeLkV-raeLaemixSobFA6NYmU01cV5I7RMam1foN5BW8E-07s6RufKD6PvHTkE_HXlgLnZ9a0MR8B6EzgmClDI3Cj9TX7Np7m0xbkMbPLto7GfoPGMLYht5TBBkBOR5mEIKaYmu_CF1GDz3yBfqx5yIqFpGc-vAX-jCK45Ojv3wn7lYys2mkCVH3ZcX3QlhU0k2qiUZp9JBTnaLHEgH3wGHxbluIzC2qkmG8BBn2YBSwiRCLXaYc7afX4kZafqj8EKo4vMVAPywY6pGrTIoaM-Z3w504AEsgG_qCPlFrwWd5Zwwoz8.&tpatExpirationTime=1775669932000&usegapi=1",
-        "doc_type": "Doc",
-        "priority": "High"
+            "heading": "Common Scenarios",
+            "explanation": "LPD scenarios are linked to the common challenges in the product overview document. Try out these reflection tasks, and follow up with the product owner or Arfie to get feedback.",
+            "link": "https://ipastorage.app.box.com/integrations/googledss/openGoogleEditor?fileId=2190698325439&trackingId=3&csrfToken=8b613719d636d23484d5381c828a01081454cde8150c3234428d65e734b6cb03#?_gfid=docs_editor_frame&csrfToken=8b613719d636d23484d5381c828a01081454cde8150c3234428d65e734b6cb03&fileUrl=https://api.box.com/fsip/files/2190698325439&isInboundFsipRequest=true&jsh=m;/_/scs/abc-static/_/js/k%3Dgapi.lb.en.PJsh2cctCQI.O/d%3D1/rs%3DAHpOoo_QlMhY2cycn60Rs8eI1WInRwuahw/m%3D__features__&organizationType=BUSINESS&parent=https://ipastorage.app.box.com&pfname&previewUrl=https://ipastorage.app.box.com/file/2190698325439&rpctoken=25068576&tpat=1!VHxWR4A53axH8t0c0G-Yccj8JCkntcVucV03F9P5iFBM7hIUzSF5q_N9SWlpZ6Ox8je2qOEHzcHCAv5l898CqEQB5fagyuGDvr1dHznRz-v8LBxTcBixIzj2-IJyWoM2SqB32UeLkV-raeLaemixSobFA6NYmU01cV5I7RMam1foN5BW8E-07s6RufKD6PvHTkE_HXlgLnZ9a0MR8B6EzgmClDI3Cj9TX7Np7m0xbkMbPLto7GfoPGMLYht5TBBkBOR5mEIKaYmu_CF1GDz3yBfqx5yIqFpGc-vAX-jCK45Ojv3wn7lYys2mkCVH3ZcX3QlhU0k2qiUZp9JBTnaLHEgH3wGHxbluIzC2qkmG8BBn2YBSwiRCLXaYc7afX4kZafqj8EKo4vMVAPywY6pGrTIoaM-Z3w504AEsgG_qCPlFrwWd5Zwwoz8.&tpatExpirationTime=1775669932000&usegapi=1",
+            "doc_type": "Doc",
+            "priority": "High"
       }
-    ],
+],
     "adv_feedback_buttons": [
       {
-        "heading": "Talk to Lu",
-        "explanation": "It is highly recommended to talk about options for LPD delivery with Lu. There is more flexibility for how you do LPD than meets the eye. Be prepared to think thru what would be best for the client in your context. ",
-        "link": null,
-        "priority": "High"
+            "heading": "Talk to Lu",
+            "explanation": "It is highly recommended to talk about options for LPD delivery with Lu. There is more flexibility for how you do LPD than meets the eye. Be prepared to think thru what would be best for the client in your context.",
+            "link": null,
+            "priority": "High"
       }
-    ],
+],
     "other_resources_buttons": [
       {
-        "heading": "JPAL ",
-        "explanation": "Theory of Change and Measurement slide deck",
-        "link": "https://www.povertyactionlab.org/sites/default/files/research-resources/L2_TOC_Measurement_2024.pdf",
-        "doc_type": "Web"
+            "heading": "JPAL",
+            "explanation": "Theory of Change and Measurement slide deck",
+            "link": "https://www.povertyactionlab.org/sites/default/files/research-resources/L2_TOC_Measurement_2024.pdf",
+            "doc_type": "Web"
       }
-    ]
+]
   },
   "Mel-Diagnostic": {
     "display_title": "MEL Diagnostic",
@@ -2958,7 +2962,18 @@
     "who_must_know": "basic-advanced-breakdown",
     "short_description": "RFE assesses partner MEL system effectiveness and provides areas for improvement.",
     "associated_concepts": null,
-    "associated_products": null,
+    "associated_products": [
+      {
+            "heading": "Monitoring TA",
+            "explanation": "Often leads to TA to implement action steps; if not, diagnostic ensures client can implement independently",
+            "link": null
+      },
+      {
+            "heading": "Data-Use and Evidence Culture Support (DUECS)",
+            "explanation": "When diagnostic identifies internal learning culture challenges (vs. technical issues), leading to continued RFE engagement.",
+            "link": null
+      }
+],
     "ipa_links": "https://ipastorage.box.com/s/epcr2nojb0s2ujjt9mtr07mjiwa8v20z",
     "external_links": null,
     "basic_description": "The goal of a diagnostic is to identify areas for improvement within a clients’ MEL system. This can apply at the level of an individual project or program, or can be used to assess the capability and functioning of an entire organization or government agency. The output of the diagnostic is a set of recommendations that can be used for the following purposes:  (1) The client implements the recommendations to improve their own MEL function and maximize their learning to cost ratio.  (2) IPA and the client use the recommendations as a basis for capacity building through a Technical Assistance engagement.   Unless a Technical Assistance stage has already been agreed upon, the recommendations should have enough detail and buy-in that the client can implement them on their own, reducing the risk that recommendations simply remain as a report and do not have the desired impact on client operations.",
@@ -2968,16 +2983,16 @@
     "adv_practice_feedback_text": "The product owner recommends the following resources for practice and feedback. Note that some resources may occur multiple times, because they offer both content and practice or feedback. This is intentional to guide your learning journey.",
     "basic_related_products": [
       {
-        "heading": "Monitoring TA",
-        "explanation": "Often leads to TA to implement action steps; if not, diagnostic ensures client can implement independently",
-        "link": null
+            "heading": "Monitoring TA",
+            "explanation": "Often leads to TA to implement action steps; if not, diagnostic ensures client can implement independently",
+            "link": null
       },
       {
-        "heading": "Data-Use and Evidence Culture Support (DUECS)",
-        "explanation": "When diagnostic identifies internal learning culture challenges (vs. technical issues), leading to continued RFE engagement. ",
-        "link": null
+            "heading": "Data-Use and Evidence Culture Support (DUECS)",
+            "explanation": "When diagnostic identifies internal learning culture challenges (vs. technical issues), leading to continued RFE engagement.",
+            "link": null
       }
-    ],
+],
     "adv_content_buttons": [
       {
         "heading": "General Learning Guide",
@@ -3003,7 +3018,28 @@
     "who_must_know": "basic-advanced-breakdown",
     "short_description": "RFE provides hands-on technical assistance to partners while they implement their learning plans.",
     "associated_concepts": null,
-    "associated_products": null,
+    "associated_products": [
+      {
+            "heading": "A/B Testing",
+            "explanation": "Monitoring TA may include other continuous monitoring products.",
+            "link": null
+      },
+      {
+            "heading": "Cost Effectiveness Modelling",
+            "explanation": "Monitoring TA may include other continuous monitoring products.",
+            "link": null
+      },
+      {
+            "heading": "User Research",
+            "explanation": "Monitoring TA may include other continuous monitoring products.",
+            "link": null
+      },
+      {
+            "heading": "Problem Identification",
+            "explanation": "Monitoring TA may include other continuous monitoring products.",
+            "link": null
+      }
+],
     "ipa_links": "https://ipastorage.box.com/s/mmlavdxsxw3aq4bimbo7cgw44mxgubo7",
     "external_links": null,
     "basic_description": "RFE’s Monitoring Technical Assistance focuses on strengthening partner’s capacity to establish and maintain monitoring systems that support continual learning cycles building partners' ability to design, collect, and utilize data from activities (outputs, and early outcomes). \n\n**The way we think about Monitoring:**\nMonitoring is the **systematic process** of collecting, analyzing, and using data (typically focused on outputs and early outcomes rather than final outcomes) to track progress, assess performance, and identify opportunities for continuous improvement. Unlike final outcomes measurement, which often requires more rigorous methods like randomized controlled trials (RCTs), monitoring emphasizes generating actionable insights that support adaptive and iterative decision-making. \n\nEffective monitoring usually follows standardized processes for tool design, data collection, and usage. This product is designed to strengthen these processes within organizations, ensuring they can be formalized and reinforced through standard operating procedures (SOPs).\n\nPlease note that other methodologies, such as A/B testing, cost-effectiveness analysis/modeling, prototyping, needs assessments, etc., are not covered here. However, they may utilize some of the data collected from continuous monitoring, so strengthening monitoring systems can be relevant to those goals.\n\nMost of RFE’s Technical Assistance is provided through **building the capacity of partners**. Occasionally, RFE may directly perform tasks that partners could handle with stronger in-house capabilities (e.g., designing a survey, collecting and/or analyzing data). This approach is preferred when RFE can add significant value and there is a high potential for the partner to adopt these practices.",
@@ -3013,26 +3049,26 @@
     "adv_practice_feedback_text": "The product owner recommends the following resources for practice and feedback. Note that some resources may occur multiple times, because they offer both content and practice or feedback. This is intentional to guide your learning journey.",
     "basic_related_products": [
       {
-        "heading": "A/B Testing",
-        "explanation": "Monitoring TA may include other continuous monitoring products.",
-        "link": null
+            "heading": "A/B Testing",
+            "explanation": "Monitoring TA may include other continuous monitoring products.",
+            "link": null
       },
       {
-        "heading": "Cost Effectiveness Modelling",
-        "explanation": "Monitoring TA may include other continuous monitoring products.",
-        "link": null
+            "heading": "Cost Effectiveness Modelling",
+            "explanation": "Monitoring TA may include other continuous monitoring products.",
+            "link": null
       },
       {
-        "heading": "User Research",
-        "explanation": "Monitoring TA may include other continuous monitoring products.",
-        "link": null
+            "heading": "User Research",
+            "explanation": "Monitoring TA may include other continuous monitoring products.",
+            "link": null
       },
       {
-        "heading": "Problem Identification",
-        "explanation": "Monitoring TA may include other continuous monitoring products.",
-        "link": null
+            "heading": "Problem Identification",
+            "explanation": "Monitoring TA may include other continuous monitoring products.",
+            "link": null
       }
-    ],
+],
     "adv_content_buttons": [],
     "adv_supp_mel_buttons": [
       {
@@ -3062,7 +3098,13 @@
     "who_must_know": "basic-advanced-breakdown",
     "short_description": "RFE's approach to evaluating interventions during implementation to determine readiness for scale by assessing whether key assumptions hold true, outputs are achieved, and early outcomes align with theory of change targets.",
     "associated_concepts": null,
-    "associated_products": null,
+    "associated_products": [
+      {
+            "heading": "Monitoring TA",
+            "explanation": "Process evaluations may be paired with Monitoring TA, since they both measure similar indicators and levels of the theory of change. However, RFE prefers Monitoring TA, which is more continuous than process evaluations and therefore better aligned with RFE principles.",
+            "link": null
+      }
+],
     "ipa_links": "https://ipastorage.box.com/s/evvtem4u7qrrqjbr3x3iczwpgciavtui",
     "external_links": null,
     "basic_description": "The goal of RFE process evaluations is to progress an intervention or program efficiently towards scale by evaluating what (if any) aspects need further refinement before moving to the next stage of investment in implementation scale or final outcome evaluation. Process evaluations are often used in the pilot phase of a project to validate whether assumptions are holding true, and whether outputs and early outcomes are being achieved. This helps inform scaling decisions and improvements in later stages of the project. This will culminate in a reflection on the IPA-analyzed results of this process evaluation to assess progress against their theory of change and evaluation criteria targets, using this data to consider what the next stage of implementation and learning progression might look like to advance or refine each innovation. We also call this product a “Process Evaluation Plus” to differentiate it from traditional process evaluations, which focus only on assessing outputs.\n\nAs previously mentioned, process evaluations use the detailed TOC of the project (identifying outputs and early outcomes), and its associated assumptions, learning questions and indicators, as a backbone. Given the absence of a control group, the evaluation is focused on verifying whether key assumptions are holding true and whether key outputs and early outcomes are being achieved. The process evaluation intends to cover prioritized aspects of the TOC of projects which would make sense to evaluate without a counterfactual, as attribution is key to be able to recommend the scaling of certain interventions.",
@@ -3072,11 +3114,11 @@
     "adv_practice_feedback_text": "The product owner recommends the following resources for practice and feedback. Note that some resources may occur multiple times, because they offer both content and practice or feedback. This is intentional to guide your learning journey.",
     "basic_related_products": [
       {
-        "heading": "Monitoring TA",
-        "explanation": "Process evaluations may be paired with Monitoring TA, since they both measure similar indicators and levels of the theory of change. However, RFE prefers Monitoring TA, which is more continuous than process evaluations and therefore better aligned with RFE principles. ",
-        "link": null
+            "heading": "Monitoring TA",
+            "explanation": "Process evaluations may be paired with Monitoring TA, since they both measure similar indicators and levels of the theory of change. However, RFE prefers Monitoring TA, which is more continuous than process evaluations and therefore better aligned with RFE principles.",
+            "link": null
       }
-    ],
+],
     "adv_content_buttons": [],
     "adv_supp_mel_buttons": [
       {
@@ -3123,7 +3165,7 @@
     "who_must_know": "basic-advanced-breakdown",
     "short_description": "RFE's approach to uncovering user needs, challenges, and behaviors to help design programs that are usable, accessible, engaging, and cost-effective.",
     "associated_concepts": null,
-    "associated_products": null,
+    "associated_products": [],
     "ipa_links": "https://ipastorage.box.com/s/k1gm9ve8xe8663mmmb1z0yb8h3r3rgcw",
     "external_links": null,
     "basic_description": "Our User Research product supports partners in designing, refining and adapting interventions to new contexts, by uncovering user needs, challenges, and behaviors to inform program design and ensure products are usable, accessible, and maximize engagement and cost-effectiveness. Through systematic user-centered methodologies, we aim to help organizations improve both existing and new interventions by doing either one or all of the following:\n\n**User Research** is a process that helps partners understand how users experience and interact with their products or services. In RFE, this process involves creating **User Personas**, mapping **User Journeys**, and identifying **pain points**—the specific challenges or barriers users face. These insights are then tested and refined through **User Testing**, a set of learning activities designed to generate evidence on how users respond to different design choices. Examples of user testing methods include **Prototyping**, **Observations**, and **A/B Tests**. It is important to note that prototyping is just one of several learning approaches available within user testing; each method offers different types of insights depending on the stage of program design and the questions being explored.\n\nThe resulting user research cycle aims to help teams understand their target users more deeply, receive direct user feedback, design more effective interventions, and iterate based on evidence rather than assumptions. The ultimate goal is to foster more user-centered, cost-effective programs that achieve greater impact through improved usability and engagement. This approach is particularly valuable during the Design, Refine, and Adapt phases, ensuring that user insights inform decision-making at uncertain and flexible moments.",
@@ -3134,21 +3176,21 @@
     "basic_related_products": [],
     "adv_content_buttons": [
       {
-        "heading": "General Approach Overview",
-        "explanation": null,
-        "link": null
+            "heading": "General Approach Overview",
+            "explanation": null,
+            "link": null
       },
       {
-        "heading": "Internal User Testing slide deck",
-        "explanation": "Covers 2025 updates to the User Research product, including information on UX and Design principles. ",
-        "link": "https://ipastorage.app.box.com/file/2002072276577"
+            "heading": "Internal User Testing slide deck",
+            "explanation": "Covers 2025 updates to the User Research product, including information on UX and Design principles.",
+            "link": "https://ipastorage.app.box.com/file/2002072276577"
       },
       {
-        "heading": "Onboarding training video",
-        "explanation": "Previous onboarding Q&A on the User Research product. May be useful to get more explanation on the high-level elements at play in delivering the product. ",
-        "link": "https://ipastorage.app.box.com/file/1777924281582?s=o97f8fg76pdvqv5s0ykvd70f9j3krmj4"
+            "heading": "Onboarding training video",
+            "explanation": "Previous onboarding Q&A on the User Research product. May be useful to get more explanation on the high-level elements at play in delivering the product.",
+            "link": "https://ipastorage.app.box.com/file/1777924281582?s=o97f8fg76pdvqv5s0ykvd70f9j3krmj4"
       }
-    ],
+],
     "adv_supp_mel_buttons": [
       {
             "heading": "Data Collection (e.g. Field logistics/training, data quality checks, etc.)",
@@ -3168,7 +3210,26 @@
 ],
     "adv_practice_buttons": [],
     "adv_feedback_buttons": [],
-    "other_resources_buttons": []
+    "other_resources_buttons": [
+      {
+            "heading": "IDEO",
+            "explanation": "Field guid to Human Centered Design",
+            "link": "https://ipastorage.app.box.com/file/478207241698",
+            "doc_type": "Web"
+      },
+      {
+            "heading": "ACUMEN",
+            "explanation": "Prototyping Course manual",
+            "link": "https://ipastorage.app.box.com/file/790980345795?s=5sehxt55psmfv1j3utw5eplt72idtzgi",
+            "doc_type": "Doc"
+      },
+      {
+            "heading": "10 Essential UX Principles for User-Centered Design",
+            "explanation": "Creating meaningful digital experiences that put users first",
+            "link": "https://medium.com/design-bootcamp/10-essential-ux-principles-for-user-centered-design-7f047ef04190",
+            "doc_type": "Web"
+      }
+]
   },
   "Community-Of-Practice": {
     "display_title": "Community of Practice",
@@ -3177,7 +3238,18 @@
     "who_must_know": "basic-advanced-breakdown",
     "short_description": "RFE facilitates workshops for a group of clients to discuss methods, share findings, and extract actionable insights.",
     "associated_concepts": null,
-    "associated_products": null,
+    "associated_products": [
+      {
+            "heading": "Learning Plan Design (LPD)",
+            "explanation": "The first step to making a COP shared learning agenda is often creating a theory of change that consolidates all partners' models into one.",
+            "link": null
+      },
+      {
+            "heading": "Donor advisory",
+            "explanation": "COPs often are used with donors aiming to coordinate their grantees' learning through the support of RFE as a 'learning partner'. In this case, RFE prefers to engage with the donor in an advisory role, so that the COP learning strategy works in alignment with RFE principles.",
+            "link": null
+      }
+],
     "ipa_links": "https://ipastorage.app.box.com/file/1746049091876?s=3b3wnlnwlpknvis6pt979b15picldd1y",
     "external_links": null,
     "basic_description": "When facilitated by RFE, a Community of Practice (COP) is a group of organizations (or individuals) who share a common learning goal. The value of a COP is the ability to build relationships and create regular opportunities that facilitate meaningful engagement in evidence-based learning.  COPs offer members exposure to a wider variety of evidence and MEL approaches, as well as the opportunity to enhance learning through a collective learning agenda. Specific learning objectives will vary, but often will involve generating and/or sharing evidence within the COP or beyond. Learning-oriented COPs may also have other objectives, such as collective advocacy or coordination of activities.  The specific objectives of a COP should be determined with the participation of all members to ensure buy-in and meaningful participation.",
@@ -3187,97 +3259,95 @@
     "adv_practice_feedback_text": "The product owner recommends the following resources for practice and feedback. Note that some resources may occur multiple times, because they offer both content and practice or feedback. This is intentional to guide your learning journey.",
     "basic_related_products": [
       {
-        "heading": "Learning Plan Design (LPD)",
-        "explanation": "The first step to making a COP shared learning agenda is often creating a theory of change that consolidates all partners' models into one. ",
-        "link": null
+            "heading": "Learning Plan Design (LPD)",
+            "explanation": "The first step to making a COP shared learning agenda is often creating a theory of change that consolidates all partners' models into one.",
+            "link": null
       },
       {
-        "heading": "Donor advisory",
-        "explanation": "COPs often are used with donors aiming to coordinate their grantees' learning through the support of RFE as a 'learning partner'. In this case, RFE prefers to engage with the donor in an advisory role, so that the COP learning strategy works in alignment with RFE principles. ",
-        "link": null
+            "heading": "Donor advisory",
+            "explanation": "COPs often are used with donors aiming to coordinate their grantees' learning through the support of RFE as a 'learning partner'. In this case, RFE prefers to engage with the donor in an advisory role, so that the COP learning strategy works in alignment with RFE principles.",
+            "link": null
       }
-    ],
+],
     "adv_content_buttons": [
       {
-        "heading": "General Learning Guide",
-        "explanation": "Get a foundation in how RFE delivers the COP. ",
-        "link": "https://ipastorage.app.box.com/file/2182111091147?s=kgj9oco72aqh9iyslug4bzg18jqcqoyx",
-        "doc_type": "Doc",
-        "priority": "High"
+            "heading": "General Learning Guide",
+            "explanation": "Get a foundation in how RFE delivers the COP.",
+            "link": "https://ipastorage.app.box.com/file/2182111091147?s=kgj9oco72aqh9iyslug4bzg18jqcqoyx",
+            "doc_type": "Doc",
+            "priority": "High"
       },
       {
-        "heading": "Annotated General Approach Examples",
-        "explanation": "Look at examples of how 3 of the general approaches were approached in past RFE COPs.",
-        "link": "https://ipastorage.app.box.com/web_link/45064669388",
-        "doc_type": "Doc",
-        "priority": "High"
+            "heading": "Annotated General Approach Examples",
+            "explanation": "Look at examples of how 3 of the general approaches were approached in past RFE COPs.",
+            "link": "https://ipastorage.app.box.com/web_link/45064669388",
+            "doc_type": "Doc",
+            "priority": "High"
       },
       {
-        "heading": "Example 'Research Package' of Synthesized Learning",
-        "explanation": "Get an idea of what a COP learning synthesis can look like. Notice how the resources cut across the 3 partners on the POP project. ",
-        "link": "https://poverty-action.org/play-our-part-using-evidence-improve-early-childhood-education-through-learning-through-play",
-        "doc_type": "Web"
+            "heading": "Example 'Research Package' of Synthesized Learning",
+            "explanation": "Get an idea of what a COP learning synthesis can look like. Notice how the resources cut across the 3 partners on the POP project.",
+            "link": "https://poverty-action.org/play-our-part-using-evidence-improve-early-childhood-education-through-learning-through-play",
+            "doc_type": "Web"
       },
       {
-        "heading": "COP Building Blocks",
-        "explanation": "This brief was written by the RFE team for the LEGO Foundation as a research project on what works in delivering COPs. ",
-        "link": "https://poverty-action.org/making-collaborative-learning-work-practical-insights-effective-communities-practice",
-        "doc_type": "Doc"
+            "heading": "COP Building Blocks",
+            "explanation": "This brief was written by the RFE team for the LEGO Foundation as a research project on what works in delivering COPs.",
+            "link": "https://poverty-action.org/making-collaborative-learning-work-practical-insights-effective-communities-practice",
+            "doc_type": "Doc"
       }
-    ],
+],
     "adv_supp_mel_buttons": [
-      
-    
       {
-        "heading": "Facilitation & Capacity building techniques",
-        "explanation": "COPs put a heavy burden on the ability of RFE staff to facilitate workshops amongst multiple partners and donor representatives at the same time. Since by design there are differences between COP partners, RFE must offer more facilitory support to get partners in a position where they can effectively draw insights from different data sources and partners.",
-        "link": null
+            "heading": "Facilitation & Capacity building techniques",
+            "explanation": "COPs put a heavy burden on the ability of RFE staff to facilitate workshops amongst multiple partners and donor representatives at the same time. Since by design there are differences between COP partners, RFE must offer more facilatory support to get partners in a position where they can effectively draw insights from different data sources and partners.",
+            "link": null
       }
-    ],
+],
     "adv_practice_buttons": [
       {
-        "heading": "Common scenarios",
-        "explanation": "Read 3 scenarios matched to 3 of the general approaches for delivering an RFE COP, and reflect on how common challenges might be overcome. ",
-        "link": "https://ipastorage.app.box.com/file/2017011296462?s=00t1or2mi5vz06v28fa26rvrt5f7zs62",
-        "doc_type": "Whiteboard",
-        "priority": "High"
+            "heading": "Common scenarios",
+            "explanation": "Read 3 scenarios matched to 3 of the general approaches for delivering an RFE COP, and reflect on how common challenges might be overcome.",
+            "link": "https://ipastorage.app.box.com/file/2017011296462?s=00t1or2mi5vz06v27fa26rvrt5f7zs62",
+            "doc_type": "Whiteboard",
+            "priority": "High"
       },
       {
-        "heading": "General Learning Guide",
-        "explanation": "Do the targeted searches in the General Approaches section. ",
-        "link": "https://ipastorage.app.box.com/file/2182111091147?s=kgj9oco72aqh9iyslug4bzg18jqcqoyx",
-        "doc_type": "Doc"
+            "heading": "General Learning Guide",
+            "explanation": "Do the targeted searches in the General Approaches section.",
+            "link": "https://ipastorage.app.box.com/file/2182111091147?s=kgj9oco72aqh9iyslug4bzg18jqcqoyx",
+            "doc_type": "Doc"
       }
-    ],
+],
     "adv_feedback_buttons": [
       {
-        "heading": "Annotated General Approach Examples",
-        "explanation": "After doing the Common Scenarios, return to the annotated examples to compare your own solutions with past approaches. ",
-        "link": "https://ipastorage.app.box.com/web_link/45064669388",
-        "doc_type": "Whiteboard"
+            "heading": "Annotated General Approach Examples",
+            "explanation": "After doing the Common Scenarios, return to the annotated examples to compare your own solutions with past approaches.",
+            "link": "https://ipastorage.app.box.com/web_link/45064669388",
+            "doc_type": "Whiteboard"
       },
       {
-        "heading": "Talk to Coach Arfie",
-        "explanation": "Copy the Common Scenarios into Arfie, and share your ideas so that you can get feedback. Ask Arfie to test how your ideas connect to the core RFE concepts. ",
-        "link": "https://claude.ai/project/0197b25f-0c03-732e-8e6e-09611d72ec16",
-        "priority": "High"
+            "heading": "Talk to Coach Arfie",
+            "explanation": "Copy the Common Scenarios into Arfie, and share your ideas so that you can get feedback. Ask Arfie to test how your ideas connect to the core RFE concepts.",
+            "link": "https://claude.ai/project/0197b25f-0c03-732e-8e6e-09611d72ec16",
+            "priority": "High"
       },
       {
-        "heading": "Talk to your manager",
-        "explanation": "Get more information on the kinds of challenges you are likely to face in your specific project. Share some of the insights from your reflections, Coach Arfie, and the annotated examples to see how these align with your project context.",
-        "link": null
+            "heading": "Talk to your manager",
+            "explanation": "Get more information on the kinds of challenges you are likely to face in your specific project. Share some of the insights from your reflections, Coach Arfie, and the annotated examples to see how these align with your project context.",
+            "link": null
       },
       {
-        "heading": "Meet with Ashley",
-        "explanation": "When you feel ready, set up a meeting with Ashley to discuss deeper challenges RFE has had in getting COPs to truly improve the MEL of partners (as opposed to being a nice community for discussing implementation pain points).",
-        "link": null
+            "heading": "Meet with Ashley",
+            "explanation": "When you feel ready, set up a meeting with Ashley to discuss deeper challenges RFE has had in getting COPs to truly improve the MEL of partners (as opposed to being a nice community for discussing implementation pain points).",
+            "link": null
       },
       {
-        "heading": "Product Overview",
-        "explanation": "Check the Open Questions and Past Applications sections. Have others encountered similar challenge as you during practice activities? Does anythign help you work through you own ideas? ",
-        "link": "https://ipastorage.app.box.com/file/1746049091876?s=3b3wnlnwlpknvis6pt979b15picldd1y"
+            "heading": "Product Overview",
+            "explanation": "Check the Open Questions and Past Applications sections. Have others encountered similar challenge as you during practice activities? Does anythign help you work through you own ideas?",
+            "link": "https://ipastorage.app.box.com/file/1746049091876?s=3b3wnlnwlpknvis6pt979b15picldd1y"
       }
-    ],
+],
     "other_resources_buttons": []
   },
   "Donor-Advisory": {
@@ -3353,7 +3423,23 @@
     "who_must_know": "basic-advanced-breakdown",
     "short_description": "Comprehensive methodology for experimental testing and optimization",
     "associated_concepts": null,
-    "associated_products": null,
+    "associated_products": [
+      {
+            "heading": "User Research",
+            "explanation": "RFE A/B tests help track outcomes at the user level, run controlled comparisons,\nand interpret results with enough confidence to act on them. User design principles may be relevant for A/B testing work.",
+            "link": null
+      },
+      {
+            "heading": "Cost Effectiveness Modelling",
+            "explanation": "RFE A/B tests help in identifying and prioritizing what to test using a cost-effectiveness lens across reach, efficacy, and efficiency",
+            "link": null
+      },
+      {
+            "heading": "Learning Plan Design (LPD)",
+            "explanation": "The ToC helps teams identify the core levers of impact, the early outcomes that signal the intervention is working, and the parts where there is uncertainty or room for improvement. Especially relevant for A/B testing at the Refine, Adapt, and Scale phases of learning.",
+            "link": null
+      }
+],
     "ipa_links": "https://ipastorage.box.com/s/7cge9fclybbz20etdpykb8b8ahkvtudc",
     "external_links": null,
     "basic_description": "A/B testing is a rigorous experimental methodology used to compare two versions of a program or product to determine which one performs better against a specific metric. Unlike impact evaluations that assess the overall effectiveness of a program, A/B testing focuses on isolating the effect of a single change while keeping all other variables constant. The approach described in this product is to randomly assign one group of users to a version (A) and another group to a modified version (B). After a defined period, the results are analyzed to determine whether one version statistically outperforms the other in achieving the desired outcome. \n\nA/B testing has a wide range of use cases across industries and sectors. In the social sector, it can be used for product or program refinement by testing changes to program components or product characteristics to improve its cost-effectiveness and scalability. Most of the content and guidance in this document addresses A/B testing in social tech organizations, emphasizing the unique advantages of their digital nature and existing data systems to run rapid, large-scale experiments.\n\nAt RFE, A/B testing engagements focus on supporting tech-driven organizations to:\n1) Design a Learning Roadmap to identify what to test and how to measure it\n2) Set-up the necessary technological infrastructure to run A/B tests\n3) Implement and monitor A/B tests to drive continuous learning and improvement\n4) The objective is to help organizations build the framework and infrastructure needed to systematically test and refine their products or services. By adopting this rigorous methodology, organizations can make data-driven decisions that enhance the efficiency, impact, and overall cost-effectiveness of their programs.",
@@ -3363,45 +3449,52 @@
     "adv_practice_feedback_text": "The product owner recommends the following resources for practice and feedback. Note that some resources may occur multiple times, because they offer both content and practice or feedback. This is intentional to guide your learning journey.",
     "basic_related_products": [
       {
-        "heading": "User Research",
-        "explanation": "RFE A/B tests help track outcomes at the user level, run controlled comparisons,\nand interpret results with enough confidence to act on them.",
-        "link": null
+            "heading": "User Research",
+            "explanation": "RFE A/B tests help track outcomes at the user level, run controlled comparisons,\nand interpret results with enough confidence to act on them. User design principles may be relevant for A/B testing work.",
+            "link": null
       },
       {
-        "heading": "Cost Effectiveness Modelling",
-        "explanation": "RFE A/B tests help in identifying and prioritizing what to test using a cost-effectiveness lens across reach, efficacy, and efficiency",
-        "link": null
+            "heading": "Cost Effectiveness Modelling",
+            "explanation": "RFE A/B tests help in identifying and prioritizing what to test using a cost-effectiveness lens across reach, efficacy, and efficiency",
+            "link": null
       },
       {
-        "heading": "Learning Plan Design (LPD)",
-        "explanation": "The ToC helps teams identify the core levers of impact, the early outcomes that signal the intervention is working, and the parts where there is uncertainty or room for improvement. Especially relevant for A/B testing at the Refine, Adapt, and Scale phases of learning.",
-        "link": null
+            "heading": "Learning Plan Design (LPD)",
+            "explanation": "The ToC helps teams identify the core levers of impact, the early outcomes that signal the intervention is working, and the parts where there is uncertainty or room for improvement. Especially relevant for A/B testing at the Refine, Adapt, and Scale phases of learning.",
+            "link": null
       }
-    ],
+],
     "adv_content_buttons": [
       {
-        "heading": "A/B Testing Guide",
-        "explanation": "This brief provides a step-by-step guide for digitalfirst organizations seeking to embed A/B testing into their Monitoring, Evaluation, and Learning.",
-        "link": "https://www.wwhge.org/wp-content/uploads/2026/03/A-Practical-Approach-to-Developing-AB-Testing-Systems-for-Digital-First-Organizations.pdf",
-        "doc_type": "Doc",
-        "priority": "High"
+            "heading": "A/B Testing Guide",
+            "explanation": "This brief provides a step-by-step guide for digitalfirst organizations seeking to embed A/B testing into their Monitoring, Evaluation, and Learning.",
+            "link": "https://www.wwhge.org/wp-content/uploads/2026/03/A-Practical-Approach-to-Developing-AB-Testing-Systems-for-Digital-First-Organizations.pdf",
+            "doc_type": "Doc",
+            "priority": "High"
       },
       {
-        "heading": "A/B Testing Internal training deck",
-        "explanation": "Used to facilitate an internal training on how RFE conducts A/B tests, and some of the focuses for meeting RFE objectives",
-        "link": "https://ipastorage.app.box.com/file/1912268701523?s=ckz6a2wrtupixyh31w9xcd5p09u8e806",
-        "doc_type": "Slide deck"
+            "heading": "IPA Data Hub: A/B Testing",
+            "explanation": "Guide to conducting A/B testing (built by the RFE team)",
+            "link": "https://data.poverty-action.org/monitoring-evaluation-learning/ab-testing/",
+            "doc_type": "Web",
+            "priority": "High"
       },
       {
-        "heading": "A/B Testing Onboarding training video",
-        "explanation": "May be useful for getting some human explanation of A/B testing from a high level",
-        "link": "https://ipastorage.app.box.com/file/1776921357367?s=bs9ci6qptypc91mtqn8kbuqlefldu31m",
-        "doc_type": "Video"
+            "heading": "A/B Testing Internal training deck",
+            "explanation": "Used to facilitate an internal training on how RFE conducts A/B tests, and some of the focuses for meeting RFE objectives",
+            "link": "https://ipastorage.app.box.com/file/1912268701523?s=ckz6a2wrtupixyh31w9xcd5p09u8e806",
+            "doc_type": "Slide deck"
+      },
+      {
+            "heading": "A/B Testing Onboarding training video",
+            "explanation": "May be useful for getting some human explanation of A/B testing from a high level",
+            "link": "https://ipastorage.app.box.com/file/1776921357367?s=bs9ci6qptypc91mtqn8kbuqlefldu31m",
+            "doc_type": "Video"
       }
-    ],
+],
     "adv_supp_mel_buttons": [
       {
-            "heading": "Sampling Methods and Power Calculations",
+            "heading": "Sample Sizes and Power Calculations",
             "explanation": "A/B Tests are essentially quick RCTs that focus on easily iterated implementation and/or user-facing elements. Power calculation ensure there is sufficient power to arrive at a conclusive finding.",
             "link": null
       },
@@ -3420,24 +3513,24 @@
     "adv_feedback_buttons": [],
     "other_resources_buttons": [
       {
-        "heading": "What Works Hub (WWB)",
-        "explanation": "A/B Testing in Education. Developed for CIES 2024",
-        "link": "https://ipastorage.app.box.com/file/2109753107494",
-        "doc_type": "Web"
+            "heading": "What Works Hub (WWB)",
+            "explanation": "A/B Testing in Education. Developed for CIES 2024",
+            "link": "https://ipastorage.app.box.com/file/2109753107494",
+            "doc_type": "Web"
       },
       {
-        "heading": "What Works Hub (WWB)",
-        "explanation": "Cheaper by the Dozen. A report on 12 A/B tests run on Teacher Coaching engagements in search of improving the cost-effectiveness of coaching. ",
-        "link": "https://ipastorage.app.box.com/file/2024078608363",
-        "doc_type": "Web"
+            "heading": "What Works Hub (WWB)",
+            "explanation": "Cheaper by the Dozen. A report on 12 A/B tests run on Teacher Coaching engagements in search of improving the cost-effectiveness of coaching.",
+            "link": "https://ipastorage.app.box.com/file/2024078608363",
+            "doc_type": "Web"
       },
       {
-        "heading": "Youth Impact",
-        "explanation": "Iterative A/B Testing handbook",
-        "link": "https://ipastorage.app.box.com/file/2109757259634",
-        "doc_type": "Web"
+            "heading": "Youth Impact",
+            "explanation": "Iterative A/B Testing handbook",
+            "link": "https://ipastorage.app.box.com/file/2109757259634",
+            "doc_type": "Web"
       }
-    ]
+]
   },
   "Problem-Identification": {
     "display_title": "Problem Identification",
@@ -4392,7 +4485,7 @@ function renderRelatedProducts(containerId, items) {
     items.forEach(item => {
         const chip = document.createElement('div');
         chip.className = 'v7-chip';
-        chip.textContent = item.heading;
+        chip.innerHTML = `<div class="v7-chip-title">${item.heading}</div>${item.explanation ? '<div class="v7-chip-explanation">' + item.explanation + '</div>' : ''}`;
         chip.addEventListener('click', function(e) {
             e.stopPropagation();
             let foundId = null;
