@@ -137,13 +137,12 @@
         
         /* Products Wrapper and Container */
         .products-wrapper {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 0;
+            display: block;
         }
         
         .products-container {
-            grid-column: 1 / 6;
+            flex: 1;
+            min-width: 0;
             background: #f7f7f9;
             border-radius: 0 0 12px 12px;
             padding: 16px;
@@ -215,8 +214,8 @@
 
         /* Monitoring TA spans col 2-6 → gradient from teal through prove/adapt/scale */
         .monitoring-ta {
-            background: linear-gradient(to right, #cceae6, #fde0d6, #d6f0f1, #d9dff5);
-            border-left-color: #007d70;
+            background: #f0ede8;
+            border-left-color: #888078;
             color: #1a1a2e;
 
         }
@@ -231,8 +230,8 @@
         .learning-plan-design {
             grid-column: 1 / 6;
             grid-row: 1;
-            background: linear-gradient(to right, #d4edda, #cceae6, #fde0d6, #d6f0f1, #d9dff5);
-            border-left: 5px solid #3d9e47;
+            background: #f0ede8;
+            border-left: 5px solid #888078;
             color: #1a1a2e;
             font-size: 14px;
         }
@@ -241,8 +240,8 @@
         .cost-effectiveness-modelling {
             grid-column: 1 / 6;
             grid-row: 5;
-            background: linear-gradient(to right, #d4edda, #cceae6, #fde0d6, #d6f0f1, #d9dff5);
-            border-left: 5px solid #3d9e47;
+            background: #f0ede8;
+            border-left: 5px solid #888078;
             color: #1a1a2e;
         }
 
@@ -258,7 +257,7 @@
             padding: 20px;
             height: fit-content;
             flex-shrink: 0;
-            margin-top: 280px;
+            margin-top: 0;
             border: 1px solid #e8e2d8;
             border-left: 4px solid #b5a48a;
         }
@@ -1772,7 +1771,7 @@
             
             .non-aligned-container {
                 grid-column: 1 / 6;
-                margin-top: 20px;
+                margin-top: 0;
             }
             
             .non-aligned-products {
@@ -1981,6 +1980,11 @@
             <span style="color: #f59e0b;">&#9733;</span> = Topics all team members should know
         </p>
 	<div class="main-content">
+        <!-- Stage Headers + Products Grid + Non-aligned Sidebar -->
+        <div style="display: flex; flex-direction: row; align-items: flex-start; gap: 16px;">
+
+            <!-- Left: stage headers stacked above products grid -->
+            <div style="flex: 1; min-width: 0;">
         <!-- Stage Headers -->
         <div class="stages-header">
             <div class="stage-column ideate-column">
@@ -2040,11 +2044,14 @@
                     <!-- Row 5: Cost Effectiveness Modelling spans all columns -->
                     <div class="product-box cost-effectiveness-modelling" data-popup="cost-effectiveness-modelling">Cost Effectiveness Modelling</div>
                 </div>
-            </div>
-        </div>
-    </div>
+            
 
-  <div class="non-aligned-container">
+    </div>
+        </div>
+            </div>
+
+            <!-- Right: non-stage products sidebar -->
+            <div class="non-aligned-container">
       <div class="non-aligned-title">RFE Products that don't align with Learning Stages</div>
       <div class="non-aligned-products">
         <div class="non-aligned-product" data-popup="systems-change-mel">Systems Change MEL</div>
@@ -2054,6 +2061,11 @@
         <div class="non-aligned-product" data-popup="donor-advisory">Donor Advisory</div>
       </div>
     </div>
+
+        </div>
+    </div>
+
+
 </div>
   
     <!-- Stage Popup Modal (Simple text-only) -->
@@ -2141,7 +2153,7 @@
                         <div class="v7-rm-step core active" data-section="adv-sec-content" onclick="switchAdvSection(this,'adv')"><div class="v7-rm-num">01</div><div class="v7-rm-name">Content</div><div class="v7-rm-sub">Understand the product</div><div class="v7-rm-arrow"></div></div>
                         <div class="v7-rm-step core" data-section="adv-sec-practice" onclick="switchAdvSection(this,'adv')"><div class="v7-rm-num">02</div><div class="v7-rm-name">Practice</div><div class="v7-rm-sub">Build delivery fluency</div><div class="v7-rm-arrow"></div></div>
                         <div class="v7-rm-step core" data-section="adv-sec-feedback" onclick="switchAdvSection(this,'adv')"><div class="v7-rm-num">03</div><div class="v7-rm-name">Feedback</div><div class="v7-rm-sub">Consolidate with a manager</div><div class="v7-rm-arrow"></div></div>
-                        <div class="v7-rm-step" data-section="adv-sec-mel" onclick="switchAdvSection(this,'adv')"><div class="v7-rm-num">+</div><div class="v7-rm-name">MEL competencies</div><div class="v7-rm-sub">Supplementary skills</div><div class="v7-rm-arrow"></div></div>
+                        <div class="v7-rm-step" data-section="adv-sec-mel" onclick="switchAdvSection(this,'adv')"><div class="v7-rm-num">+</div><div class="v7-rm-name">MEL Skills</div><div class="v7-rm-sub">Supplementary skills</div><div class="v7-rm-arrow"></div></div>
                         <div class="v7-rm-step" data-section="adv-sec-resources" onclick="switchAdvSection(this,'adv')"><div class="v7-rm-num">+</div><div class="v7-rm-name">Additional resources</div><div class="v7-rm-sub">Optional reading</div></div>
                     </div>
 
@@ -2174,7 +2186,7 @@
                     <!-- Supplementary MEL -->
                     <div id="adv-sec-mel" class="v7-section-row dim" style="display:none;">
                         <div>
-                            <div class="v7-sec-head dim">Supplementary MEL competencies</div>
+                            <div class="v7-sec-head dim">Supplementary MEL Skills</div>
                             <div id="adv-supp-mel-text" class="adv-section-intro"></div>
                         </div>
                         <div id="adv-supp-mel-buttons" class="adv-button-grid"></div>
@@ -2243,7 +2255,7 @@
                         <div class="v7-rm-step core active" data-section="tb-sec-content" onclick="switchAdvSection(this,'tb')"><div class="v7-rm-num">01</div><div class="v7-rm-name">Content</div><div class="v7-rm-sub">Understand the product</div><div class="v7-rm-arrow"></div></div>
                         <div class="v7-rm-step core" data-section="tb-sec-practice" onclick="switchAdvSection(this,'tb')"><div class="v7-rm-num">02</div><div class="v7-rm-name">Practice</div><div class="v7-rm-sub">Build delivery fluency</div><div class="v7-rm-arrow"></div></div>
                         <div class="v7-rm-step core" data-section="tb-sec-feedback" onclick="switchAdvSection(this,'tb')"><div class="v7-rm-num">03</div><div class="v7-rm-name">Feedback</div><div class="v7-rm-sub">Consolidate with a manager</div><div class="v7-rm-arrow"></div></div>
-                        <div class="v7-rm-step" data-section="tb-sec-mel" onclick="switchAdvSection(this,'tb')"><div class="v7-rm-num">+</div><div class="v7-rm-name">MEL competencies</div><div class="v7-rm-sub">Supplementary skills</div><div class="v7-rm-arrow"></div></div>
+                        <div class="v7-rm-step" data-section="tb-sec-mel" onclick="switchAdvSection(this,'tb')"><div class="v7-rm-num">+</div><div class="v7-rm-name">MEL Skills</div><div class="v7-rm-sub">Supplementary skills</div><div class="v7-rm-arrow"></div></div>
                         <div class="v7-rm-step" data-section="tb-sec-resources" onclick="switchAdvSection(this,'tb')"><div class="v7-rm-num">+</div><div class="v7-rm-name">Additional resources</div><div class="v7-rm-sub">Optional reading</div></div>
                     </div>
 
@@ -2276,7 +2288,7 @@
                     <!-- Supplementary MEL -->
                     <div id="tb-sec-mel" class="v7-section-row dim" style="display:none;">
                         <div>
-                            <div class="v7-sec-head dim">Supplementary MEL competencies</div>
+                            <div class="v7-sec-head dim">Supplementary MEL Skills</div>
                             <div id="tb-supp-mel-text" class="adv-section-intro"></div>
                         </div>
                         <div id="tb-supp-mel-buttons" class="adv-button-grid"></div>
@@ -2375,29 +2387,21 @@
                             </div>
                         </div>
                         
-                        <!-- RFE MEL Methodologies Section (rfe-product + mel-competency) -->
+                        <!-- RFE Products Section -->
                         <div style="background: white; border-radius: 12px; padding: 20px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); border: 2px solid #999;">
-                            <div style="font-size: 18px; font-weight: 600; color: white; text-align: center; padding: 12px 16px; border-radius: 8px; margin-bottom: 20px; background-color: #2b4085; cursor: pointer;">RFE MEL Methodologies</div>
+                            <div onclick="switchToProductsTab()" style="font-size: 18px; font-weight: 600; color: white; text-align: center; padding: 12px 16px; border-radius: 8px; margin-bottom: 20px; background-color: #2b4085; cursor: pointer;">RFE Products</div>
                             <div style="background: #f8f9fa; border-radius: 8px; padding: 20px;">
-                                
-                                <!-- RFE Products Direct Link Button -->
-                                <div style="margin-bottom: 25px;">
-                                    <div onclick="switchToProductsTab()" style="font-size: 14px; font-weight: 600; color: white; text-align: center; padding: 10px 14px; border-radius: 6px; margin-bottom: 15px; background-color: #5566b0; cursor: pointer; user-select: none; display: flex; align-items: center; justify-content: center; gap: 8px;">
-                                        <span>RFE Products</span>
-                                    </div>
-                                </div>
+                                <p style="font-size: 13px; font-style: italic; color: #666; text-align: center; margin: 0;">RFE products are explored on the Products page.</p>
+                            </div>
+                        </div>
 
-                                <!-- MEL Competencies Sub-section with Dropdown -->
-                                <div>
-                                    <div class="dropdown-toggle" data-target="mel-competencies-items" style="font-size: 14px; font-weight: 600; color: white; text-align: center; padding: 10px 14px; border-radius: 6px; margin-bottom: 15px; background-color: #5566b0; cursor: pointer; user-select: none; display: flex; align-items: center; justify-content: center; gap: 8px;">
-                                        <span>MEL Competencies</span>
-                                        <span class="dropdown-arrow" style="display: inline-block; font-size: 12px;">▼</span>
-                                    </div>
-                                    <div id="mel-competencies-items" class="dropdown-content" style="display: none; grid-template-columns: repeat(2, 1fr); gap: 12px;">
-                                        <!-- Populated by JavaScript -->
-                                    </div>
+                        <!-- MEL Skills Section -->
+                        <div style="background: white; border-radius: 12px; padding: 20px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); border: 2px solid #999;">
+                            <div style="font-size: 18px; font-weight: 600; color: white; text-align: center; padding: 12px 16px; border-radius: 8px; margin-bottom: 20px; background-color: #2b4085;">MEL Skills</div>
+                            <div style="background: #f8f9fa; border-radius: 8px; padding: 20px; min-height: 150px;">
+                                <div id="mel-competencies-items" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;">
+                                    <!-- Populated by JavaScript -->
                                 </div>
-
                             </div>
                         </div>
                         
@@ -2525,11 +2529,11 @@
         /*
            ================================================================================
            MAPPING DOCUMENTATION - SPREADSHEET TO POPUPDATA TO HTML
-           Last updated: 2026-04-16 (v28) — Synced to mel_topics_popup_data_apr_16_2026.xlsx: CART text updated, Causal Inference removed, 36 new non-product buttons added across 11 MEL competencies
+           Last updated: 2026-04-21 (v28) — Synced to mel_topics_popup_data_apr_21_2026.xlsx: MEL skills renamed/restructured, new product→skill linkages added
            ================================================================================
 
            SPREADSHEET SOURCE:
-           File: mel_topics_popup_data_apr_16_2026.xlsx
+           File: mel_topics_popup_data_apr_21_2026.xlsx
            Sheets used:
              1. all_html_elements_MASTER  - Master list of all elements; defines element_type and who_must_know
              2. product_popup_fields      - Text content for each rfe-product popup (descriptions, tab intro text)
@@ -2549,7 +2553,7 @@
            ================================================================================
 
            Each key in popupData maps to one element. Key format: Title-Case-Hyphenated
-           (e.g. "Learning-Plan-Design-Lpd", "User-Design-And-Design-Thinking")
+           (e.g. "Learning-Plan-Design-Lpd",   "User-Design-And-Design-Thinking")
 
            CRITICAL NAMING RULE:
            - display_title must EXACTLY match the Element name in all_html_elements_MASTER
@@ -2916,7 +2920,7 @@
     ],
     "adv_supp_mel_buttons": [
       {
-        "heading": "(Monitoring) Indicator Design",
+        "heading": "RFE Indicator Design",
         "explanation": "Getting additional conceptual understanding of indicator design, with an RFE-lens focus on monitoring, can be a big help. This is a skill which can be especially tricky, and RFE staff often have to give immediate feedback to clients during the Monitoring Indicators workshop. ",
         "link": "https://ipastorage.app.box.com/file/2182945969965"
       }
@@ -2983,7 +2987,7 @@
     ],
     "adv_supp_mel_buttons": [
       {
-        "heading": "(Monitoring) Indicator Design",
+        "heading": "RFE Indicator Design",
         "explanation": "Conducting a MEL diagnostic requires evaluating the quality of indicators, requiring a strong technical base in indicator design.",
         "link": null
       }
@@ -3030,7 +3034,23 @@
       }
     ],
     "adv_content_buttons": [],
-    "adv_supp_mel_buttons": [],
+    "adv_supp_mel_buttons": [
+      {
+            "heading": "RFE Indicator Design",
+            "explanation": null,
+            "link": null
+      },
+      {
+            "heading": "Instrument Design",
+            "explanation": null,
+            "link": null
+      },
+      {
+            "heading": "Data Collection (e.g. Field logistics/training, data quality checks, etc.)",
+            "explanation": null,
+            "link": null
+      }
+],
     "adv_practice_buttons": [],
     "adv_feedback_buttons": [],
     "other_resources_buttons": []
@@ -3058,7 +3078,18 @@
       }
     ],
     "adv_content_buttons": [],
-    "adv_supp_mel_buttons": [],
+    "adv_supp_mel_buttons": [
+      {
+            "heading": "Sampling Methods and Power Calculations",
+            "explanation": null,
+            "link": null
+      },
+      {
+            "heading": "Data Collection (e.g. Field logistics/training, data quality checks, etc.)",
+            "explanation": null,
+            "link": null
+      }
+],
     "adv_practice_buttons": [],
     "adv_feedback_buttons": [],
     "other_resources_buttons": []
@@ -3120,11 +3151,21 @@
     ],
     "adv_supp_mel_buttons": [
       {
-        "heading": "User Design and Design Thinking",
-        "explanation": "Having additional knowledge of User design and Design thinking principles will supplement your ability to deliver the User Research product. ",
-        "link": null
+            "heading": "Data Collection (e.g. Field logistics/training, data quality checks, etc.)",
+            "explanation": null,
+            "link": null
+      },
+      {
+            "heading": "Qualitative methods (data collection, analysis, mixed-methods)",
+            "explanation": null,
+            "link": null
+      },
+      {
+            "heading": "Instrument Design",
+            "explanation": null,
+            "link": null
       }
-    ],
+],
     "adv_practice_buttons": [],
     "adv_feedback_buttons": [],
     "other_resources_buttons": []
@@ -3185,9 +3226,11 @@
       }
     ],
     "adv_supp_mel_buttons": [
+      
+    
       {
-        "heading": "Facilitation skills",
-        "explanation": "COPs put a heavy burden on the ability of RFE staff to facilitate workshops amongst multiple partners and donor representatives at the same time. Since by design there are differences between COP partners, RFE must offer more facilatory support to get partners in a position where they can effectively draw insights from different data sources and partners.",
+        "heading": "Facilitation & Capacity building techniques",
+        "explanation": "COPs put a heavy burden on the ability of RFE staff to facilitate workshops amongst multiple partners and donor representatives at the same time. Since by design there are differences between COP partners, RFE must offer more facilitory support to get partners in a position where they can effectively draw insights from different data sources and partners.",
         "link": null
       }
     ],
@@ -3195,7 +3238,7 @@
       {
         "heading": "Common scenarios",
         "explanation": "Read 3 scenarios matched to 3 of the general approaches for delivering an RFE COP, and reflect on how common challenges might be overcome. ",
-        "link": "https://ipastorage.app.box.com/file/2017011296462?s=00t1or2mi5vz06v27fa26rvrt5f7zs62",
+        "link": "https://ipastorage.app.box.com/file/2017011296462?s=00t1or2mi5vz06v28fa26rvrt5f7zs62",
         "doc_type": "Whiteboard",
         "priority": "High"
       },
@@ -3358,21 +3401,21 @@
     ],
     "adv_supp_mel_buttons": [
       {
-        "heading": "Sample Sizes and Power Calculations",
-        "explanation": "A/B Tests are essentially quick RCTs that focus on easily iterated implementation and/or user-facing elements. Power calculation ensure there is sufficient power to arrive at a conclusive finding. ",
-        "link": null
+            "heading": "Sampling Methods and Power Calculations",
+            "explanation": "A/B Tests are essentially quick RCTs that focus on easily iterated implementation and/or user-facing elements. Power calculation ensure there is sufficient power to arrive at a conclusive finding.",
+            "link": null
       },
       {
-        "heading": "User Design and Design Thinking",
-        "explanation": "A/B Tests often iterate on elements of human centered design, especially where digital tools are involved. ",
-        "link": null
+            "heading": "Digital data collection tools",
+            "explanation": "A/B Tests are often most feasible through digital tools which can collect valuable metadata. RFE also focuses on developing clients' digital systems capacity as a part of the A/B testing product, in order to ensure the partner can implement A/B Testing independently of RFE services.",
+            "link": null
       },
       {
-        "heading": "MEL for Tech (digital innovations)",
-        "explanation": "A/B Tests are most easy to implement using digital tools, since it is easy to roll-out different versions of the digital tool, and easier to collect metadata from the digital experience. ",
-        "link": null
+            "heading": "Attribution, Causal Inference, and Experimental Design",
+            "explanation": null,
+            "link": null
       }
-    ],
+],
     "adv_practice_buttons": [],
     "adv_feedback_buttons": [],
     "other_resources_buttons": [
@@ -3462,317 +3505,239 @@
     "adv_feedback_buttons": [],
     "other_resources_buttons": []
   },
-  "User-Design-And-Design-Thinking": {
-    "display_title": "User Design and Design Thinking",
-    "element_type": "mel-competency",
+    "RFE-Indicator-Design": {
+    "display_title": "RFE Indicator Design",
+    "element_type": "mel-skill",
+    "skills_mapping": "mel-competency",
+    "who_must_know": "all-must-know",
+    "short_description": null,
+    "associated_concepts": null,
+    "associated_products": "Learning Plan Design (LPD), MEL Diagnostic, Monitoring TA",
+    "ipa_links": null,
+    "external_links": null,
+    "description": "Indicators are measurable signals that tell you whether change is happening. Good indicator design means selecting measures that accurately reflect your theory of change — from outputs and early outcomes through to longer-term impact. In research and evaluation contexts, this involves choosing between different indicator types (e.g. self-reported, observed, administrative) and balancing precision with practicality.",
+    "why_it_matters": "Poorly designed indicators are one of the most common ways MEL systems fail. Indicators that are too distal, too proximate, or simply unmeasurable produce data that can't answer your learning questions — wasting resources and potentially misleading program decisions.",
+    "how_rfe_applies": "At RFE, indicator design is grounded in CART principles — particularly credibility and actionability. We help clients move away from output-counting toward early outcomes that are both attributable and meaningful. A key part of our advisory work is helping clients resist the temptation to measure everything, instead identifying the smallest set of indicators that will generate the most decision-relevant learning. Indicator design is a core activity in products like Learning Plan Design and Monitoring TA, and connects closely to Theory of Change work — because without a clear causal logic, it's difficult to know what's worth measuring in the first place.",
+    "popup_buttons": [
+      {
+            "heading": "RFE-style monitoring indicator design",
+            "explanation": "This is an brief about how we do indicator design at RFE with practice opportunities to refine your indicator design skills",
+            "link": "https://ipastorage.app.box.com/file/2182945969965",
+            "doc_type": "Button"
+      },
+      {
+            "heading": "Intrac",
+            "explanation": "Monitoring and Evaluation Programme Indicators",
+            "link": "https://ipastorage.app.box.com/file/1112041916363",
+            "doc_type": "Button"
+      },
+      {
+            "heading": "World Bank Blogs",
+            "explanation": "Three new papers on measuring stuff that is difficult to measure",
+            "link": "https://blogs.worldbank.org/en/impactevaluations/three-new-papers-measuring-stuff-difficult-measure",
+            "doc_type": "Button"
+      },
+      {
+            "heading": "JPAL Research Resources",
+            "explanation": "Introduction to Measurement and Indicators",
+            "link": "https://www.povertyactionlab.org/resource/introduction-measurement-and-indicators",
+            "doc_type": "Button"
+      }
+]
+  },
+    "Sampling-Methods-and-Power-Calculations": {
+    "display_title": "Sampling Methods and Power Calculations",
+    "element_type": "mel-skill",
     "skills_mapping": "mel-competency",
     "who_must_know": "nice_to_know",
     "short_description": null,
     "associated_concepts": null,
-    "associated_products": null,
+    "associated_products": "A/B Testing, Process Evaluation",
     "ipa_links": null,
     "external_links": null,
-    "description": null,
-    "why_it_matters": null,
-    "how_rfe_applies": null,
+    "description": "Sampling is the process of selecting who or what to include in a study. The right approach depends entirely on your research question and method — probability sampling for generalizable quantitative findings, purposive sampling for qualitative work where you want specific perspectives, and convenience sampling where resources are constrained. When studies aim to detect the effect of an intervention, power calculations determine the minimum sample size needed to reliably detect a meaningful change — if one exists.",
+    "why_it_matters": "Poor sampling decisions undermine even well-designed studies. A sample that's too small, unrepresentative, or mismatched to the research question produces findings you can't trust or act on. In evaluation contexts specifically, an underpowered study can produce inconclusive results that are misread as evidence a program doesn't work — unfairly damaging a program's reputation and misleading future investment.",
+    "how_rfe_applies": "At RFE, sampling decisions come up across many products — from qualitative interviews in User Research and Problem Diagnostics, to power calculations in A/B Testing TA and impact evaluations. A core part of our advisory role is helping clients match their sampling approach to their method and learning question, rather than defaulting to larger samples as a proxy for rigor. We connect these decisions back to CART principles: a sample that can't answer your learning question fails on both credibility and responsibility grounds.",
     "popup_buttons": [
       {
-        "heading": "IDEO",
-        "explanation": "Field guid to Human Centered Design",
-        "link": "https://ipastorage.app.box.com/file/478207241698",
-        "doc_type": "Button"
+            "heading": "IPA Data Hub: Sample Size Power",
+            "explanation": "Comprehensive guide to conducting power calculations",
+            "link": "https://data.poverty-action.org/research-design/sample-size-power.html",
+            "doc_type": "Button"
       },
       {
-        "heading": "ACUMEN",
-        "explanation": "Prototyping Course manual",
-        "link": "https://ipastorage.app.box.com/file/790980345795?s=5sehxt55psmfv1j3utw5eplt72idtzgi",
-        "doc_type": "Button"
+            "heading": "J-PAL: Sampling",
+            "explanation": "Comprehensive J-PAL guide to sampling",
+            "link": "https://www.povertyactionlab.org/resource/sampling",
+            "doc_type": "Button"
       },
       {
-        "heading": "10 Essential UX Principles for User-Centered Design",
-        "explanation": "Creating meaningful digital experiences that put users first",
-        "link": "https://medium.com/design-bootcamp/10-essential-ux-principles-for-user-centered-design-7f047ef04190",
-        "doc_type": "Button"
+            "heading": "J-PAL: Power Calculations",
+            "explanation": "Comprehensive J-PAL research resource on power calculations",
+            "link": "https://www.povertyactionlab.org/resource/power-calculations",
+            "doc_type": "Button"
+      },
+      {
+            "heading": "DIME Wiki: Sampling",
+            "explanation": "World Bank wiki on sampling",
+            "link": "https://dimewiki.worldbank.org/Sampling",
+            "doc_type": "Button"
+      },
+      {
+            "heading": "Cluster design calculator template",
+            "explanation": "Filled example of cluster design power calculations with 5 different possibilities based on different sampling assumptions. Create by Steve Glazerman.",
+            "link": "https://ipastorage.app.box.com/file/2205396664532",
+            "doc_type": "Button"
+      },
+      {
+            "heading": "J-PAL Essentials of Sample Size and Power",
+            "explanation": "J-PAL presentation on the importance of power calculations",
+            "link": "https://www.povertyactionlab.org/sites/default/files/L5a_Essentials%20of%20Sample%20Size%20and%20Power_2024_2.pdf",
+            "doc_type": "Button"
+      },
+      {
+            "heading": "J-PAL: Power Calculator",
+            "explanation": "J-PAL simple power calculator app",
+            "link": "https://j-pal.shinyapps.io/power-app/",
+            "doc_type": "Button"
       }
-    ]
+]
   },
-  "Mel-For-Tech-Digital-Innovations": {
-    "display_title": "MEL for Tech (digital innovations)",
-    "element_type": "mel-competency",
-    "skills_mapping": "mel-competency",
-    "who_must_know": "nice_to_know",
-    "short_description": null,
-    "associated_concepts": null,
-    "associated_products": null,
-    "ipa_links": null,
-    "external_links": null,
-    "description": null,
-    "why_it_matters": null,
-    "how_rfe_applies": null,
-    "popup_buttons": [
-      {
-        "heading": "The Agency Fund",
-        "explanation": "User Funnel Playbook for the Social Sector",
-        "link": "https://ipastorage.app.box.com/file/2109753033577",
-        "doc_type": "Button"
-      },
-      {
-        "heading": "Goldilocks Toolkit: Digital Green Case Study",
-        "explanation": "Older Goldilocks Toolkit brief, showcasing an agricultural tech innovation, and how RFE supported learning on the project. ",
-        "link": "https://poverty-action.org/sites/default/files/publications/Goldilocks-Toolkit-Digital-Green-Case-Study_0.pdf",
-        "doc_type": "Button"
-      }
-    ]
-  },
-  "Monitoring-Indicator-Design": {
-    "display_title": "(Monitoring) Indicator Design",
-    "element_type": "mel-competency",
+    "Instrument-Design": {
+    "display_title": "Instrument Design",
+    "element_type": "mel-skill",
     "skills_mapping": "mel-competency",
     "who_must_know": "all-must-know",
     "short_description": null,
     "associated_concepts": null,
-    "associated_products": null,
+    "associated_products": "Monitoring TA, User Research",
     "ipa_links": null,
     "external_links": null,
-    "description": null,
-    "why_it_matters": null,
-    "how_rfe_applies": null,
+    "description": "An instrument is any tool used to collect data — surveys, interview guides, observation checklists, knowledge tests, and more. Good instrument design means crafting questions and structures that reliably capture what you actually want to measure, in a form your respondents can meaningfully engage with. This includes decisions about question type, ordering, language, length, and how the instrument will be administered (in-person, phone, digital, etc.). Piloting instruments before full rollout is a critical — and often skipped — step.",
+    "why_it_matters": "Even a well-designed study can produce unreliable data if the instrument is poorly constructed. Leading questions, ambiguous wording, or culturally inappropriate framing introduce bias before data collection even begins. An instrument that's too long or burdensome also violates respondent dignity — a real ethical consideration when working with vulnerable populations.",
+    "how_rfe_applies": "Instrument design comes up across nearly all RFE products — from monitoring surveys and pre-post knowledge tests in Monitoring TA, to interview guides and observation protocols in Process Evaluation and User Research. We help clients think carefully about the tradeoff between comprehensiveness and respondent burden — a core Responsible CART consideration. We also emphasize piloting as a non-negotiable step, and connect instrument quality directly to credibility: a technically sound study design is only as good as the tool used to collect its data.",
     "popup_buttons": [
       {
-        "heading": "RFE-style monitoring indicator design",
-        "explanation": "This is an brief about how we do indicator design at RFE with practice opportunities to refine your indicator design skills",
-        "link": "https://ipastorage.app.box.com/file/2182945969965",
-        "doc_type": "Button"
+            "heading": "DIME Wiki: Questionnaire Design",
+            "explanation": "World Bank wiki on doing questionnaire design well",
+            "link": "https://dimewiki.worldbank.org/Questionnaire_Design",
+            "doc_type": "Button"
       },
       {
-        "heading": "Intrac",
-        "explanation": "Monitoring and Evaluation Programme Indicators",
-        "link": "https://ipastorage.app.box.com/file/1112041916363",
-        "doc_type": "Button"
+            "heading": "Dime wiki: Field Surveys",
+            "explanation": "World Bank wiki on writing and conducitng field surveys",
+            "link": "https://dimewiki.worldbank.org/Field_Surveys",
+            "doc_type": "Button"
       },
       {
-        "heading": "World Bank Blogs",
-        "explanation": "Three new papers on measuring stuff that is difficult to measure",
-        "link": "https://blogs.worldbank.org/en/impactevaluations/three-new-papers-measuring-stuff-difficult-measure",
-        "doc_type": "Button"
+            "heading": "IPA Data Hub: Bench testing",
+            "explanation": "Details on conducting bench testing, a core activity for improving data collection tools before launching them in the field",
+            "link": "https://data.poverty-action.org/data-quality/bench-testing.html",
+            "doc_type": "Button"
       },
       {
-        "heading": "JPAL Research Resources",
-        "explanation": "Introduction to Measurement and Indicators",
-        "link": "https://www.povertyactionlab.org/resource/introduction-measurement-and-indicators",
-        "doc_type": "Button"
+            "heading": "IPA Data Hub: Survey Pilots",
+            "explanation": "Details on conducting pilot, a core activity for improving data collection tools before launching them in the field",
+            "link": "https://data.poverty-action.org/data-quality/pilot-survey.html",
+            "doc_type": "Button"
+      },
+      {
+            "heading": "FHI360 Qualitative Methods Manual",
+            "explanation": "Chapters on different qual methodologies provide useful content on designing interviews and FGD tools",
+            "link": "https://www.fhi360.org/wp-content/uploads/2024/01/Qualitative-Research-Methods-A-Data-Collectors-Field-Guide.pdf#:~:text=information%20that%20participants%20provide,to%20establish%20positive%20interviewer%2Fparticipant%20dynamics",
+            "doc_type": "Button"
       }
-    ]
+]
   },
-  "Sampling": {
-    "display_title": "Sampling",
-    "element_type": "mel-competency",
-    "skills_mapping": "mel-competency",
-    "who_must_know": "all-must-know",
-    "short_description": null,
-    "associated_concepts": null,
-    "associated_products": null,
-    "ipa_links": null,
-    "external_links": null,
-    "description": null,
-    "why_it_matters": null,
-    "how_rfe_applies": null,
-    "popup_buttons": [
-      {
-        "heading": "IPA Data Hub: Sample Size and Power",
-        "explanation": "IPA guide to sampling with a focus on power calculations",
-        "link": "https://data.poverty-action.org/research-design/sample-size-power.html",
-        "doc_type": "Button"
-      },
-      {
-        "heading": "J-PAL: Sampling",
-        "explanation": "Comprehensive J-PAL guide to sampling",
-        "link": "https://www.povertyactionlab.org/resource/sampling",
-        "doc_type": "Button"
-      },
-      {
-        "heading": "DIME Wiki: Sampling",
-        "explanation": "World Bank wiki on sampling",
-        "link": "https://dimewiki.worldbank.org/Sampling",
-        "doc_type": "Button"
-      }
-    ]
-  },
-  "Data-Collection-Instrument-Design": {
-    "display_title": "Data collection Instrument Design",
-    "element_type": "mel-competency",
-    "skills_mapping": "mel-competency",
-    "who_must_know": "all-must-know",
-    "short_description": null,
-    "associated_concepts": null,
-    "associated_products": null,
-    "ipa_links": null,
-    "external_links": null,
-    "description": null,
-    "why_it_matters": null,
-    "how_rfe_applies": null,
-    "popup_buttons": [
-      {
-        "heading": "DIME Wiki: Questionnaire Design",
-        "explanation": "World Bank wiki on doing questionnaire design well",
-        "link": "https://dimewiki.worldbank.org/Questionnaire_Design",
-        "doc_type": "Button"
-      },
-      {
-        "heading": "Dime wiki: Field Surveys",
-        "explanation": "World Bank wiki on writing and conducitng field surveys",
-        "link": "https://dimewiki.worldbank.org/Field_Surveys",
-        "doc_type": "Button"
-      },
-      {
-        "heading": "IPA Data Hub: Bench testing",
-        "explanation": "Details on conducting bench testing, a core activity for improving data collection tools before launching them in the field",
-        "link": "https://data.poverty-action.org/data-quality/bench-testing.html",
-        "doc_type": "Button"
-      },
-      {
-        "heading": "IPA Data Hub: Survey Pilots",
-        "explanation": "Details on conducting pilot, a core activity for improving data collection tools before launching them in the field",
-        "link": "https://data.poverty-action.org/data-quality/pilot-survey.html",
-        "doc_type": "Button"
-      },
-      {
-        "heading": "FHI360 Qualitative Methods Manual",
-        "explanation": "Chapters on different qual methodologies provide useful content on designing interviews and FGD tools",
-        "link": "https://www.fhi360.org/wp-content/uploads/2024/01/Qualitative-Research-Methods-A-Data-Collectors-Field-Guide.pdf#:~:text=information%20that%20participants%20provide,to%20establish%20positive%20interviewer%2Fparticipant%20dynamics",
-        "doc_type": "Button"
-      }
-    ]
-  },
-  "Ipa-Aligned-Data-Collection-Eg-Field-Logisticstraining-Data-Quality-Checks-Etc": {
-    "display_title": "IPA-aligned Data Collection (e.g. Field logistics/training, data quality checks, etc.)",
-    "element_type": "mel-competency",
+    "Data-Collection-e-g-Field-logistics-training-data-quality-checks-etc": {
+    "display_title": "Data Collection (e.g. Field logistics/training, data quality checks, etc.)",
+    "element_type": "mel-skill",
     "skills_mapping": "mel-competency",
     "who_must_know": "advanced-users-only",
     "short_description": null,
     "associated_concepts": null,
-    "associated_products": null,
+    "associated_products": "Monitoring TA, Process Evaluation, User Research",
     "ipa_links": null,
     "external_links": null,
-    "description": null,
-    "why_it_matters": null,
-    "how_rfe_applies": null,
+    "description": "Data collection covers everything that happens between designing your instruments and having clean, usable data — including field logistics, enumerator training, protocols and procedures manuals, and data quality checks. Good data collection requires balancing three things that are often in tension: time, cost, and quality. Methods vary widely depending on context — from large-scale quantitative surveys to qualitative interviews, observation, or phone-based data collection.",
+    "why_it_matters": "A well-designed study with a strong instrument can still produce unreliable data if collection is poorly managed. Common failure points include inconsistent enumerator training, inadequate quality checks, and logistics breakdowns. These problems are often invisible until analysis — at which point it's too late to fix them.",
+    "how_rfe_applies": "Data collection support is a core component of Monitoring TA, where we help clients build sustainable, high-quality collection systems. A recurring focus in our advisory work is reliability and credibility — asking hard questions like: Are enumerators applying the instrument consistently? Are respondents interpreting questions as intended? Are quality checks catching errors in real time, or only after the fact? We help clients implement concrete mechanisms — back checks, spot checks, and high-frequency monitoring — to catch problems early. We also pay close attention to enumerator behavior as a source of bias, since even well-trained teams can introduce systematic error through leading, skipping, or fabricating responses.",
     "popup_buttons": [
       {
-        "heading": "IPA Data Hub: Data Collection",
-        "explanation": "Extensive methodological guide on conducting rigorous data collection",
-        "link": "https://data.poverty-action.org/data-collection/",
-        "doc_type": "Button"
+            "heading": "IPA Data Hub: Data Collection",
+            "explanation": "Extensive methodological guide on conducting rigorous data collection",
+            "link": "https://data.poverty-action.org/data-collection/",
+            "doc_type": "Button"
       },
       {
-        "heading": "DIME Wiki: Enumerator Training",
-        "explanation": "World Bank wiki on methods for training an enumerator team ",
-        "link": "https://dimewiki.worldbank.org/Enumerator_Training",
-        "doc_type": "Button"
+            "heading": "DIME Wiki: Enumerator Training",
+            "explanation": "World Bank wiki on methods for training an enumerator team",
+            "link": "https://dimewiki.worldbank.org/Enumerator_Training",
+            "doc_type": "Button"
       },
       {
-        "heading": "J-PAL: Field Team Management",
-        "explanation": "J-PAL research resource entry on managing the field team during data collection phase",
-        "link": "https://www.povertyactionlab.org/resource/field-team-management",
-        "doc_type": "Button"
+            "heading": "J-PAL: Field Team Management",
+            "explanation": "J-PAL research resource entry on managing the field team during data collection phase",
+            "link": "https://www.povertyactionlab.org/resource/field-team-management",
+            "doc_type": "Button"
       },
       {
-        "heading": "J-PAL: Design and Iterate Implementation Strategy",
-        "explanation": "J-PAL research resource entry on iteratively conducting data collection to improve data quality and rigour",
-        "link": "https://www.povertyactionlab.org/resource/design-and-iterate-implementation-strategy",
-        "doc_type": "Button"
+            "heading": "J-PAL: Design and Iterate Implementation Strategy",
+            "explanation": "J-PAL research resource entry on iteratively conducting data collection to improve data quality and rigour",
+            "link": "https://www.povertyactionlab.org/resource/design-and-iterate-implementation-strategy",
+            "doc_type": "Button"
       }
-    ]
+]
   },
-  "Qualitative-Methods-Data-Collection-Analysis-Mixed-Methods": {
-    "display_title": "Qualitative methods (data collection, analysis, mixed-methods)",
-    "element_type": "mel-competency",
-    "skills_mapping": "mel-competency",
-    "who_must_know": "advanced-users-only",
-    "short_description": null,
-    "associated_concepts": null,
-    "associated_products": null,
-    "ipa_links": null,
-    "external_links": null,
-    "description": null,
-    "why_it_matters": null,
-    "how_rfe_applies": null,
-    "popup_buttons": [
-      {
-        "heading": "IPA Data Hub- Qualitative methods",
-        "explanation": "General methodological support for how IPA does qualitative research.",
-        "link": "https://data.poverty-action.org/data-collection/qualitative-methods/",
-        "doc_type": "Button"
-      },
-      {
-        "heading": "J-PAL- Integrating Qual Methods into Randomized Evaluations",
-        "explanation": "Research resource on ways to do mixed methods evaluatory work. ",
-        "link": "https://www.povertyactionlab.org/resource/integrating-qualitative-methods-randomized-evaluations",
-        "doc_type": "Button"
-      },
-      {
-        "heading": "J-PAL- Implementation Qual Methods in the Field",
-        "explanation": "Research resource on ways to maintain qualitative rigour while working in the field. ",
-        "link": "https://www.povertyactionlab.org/resource/implementing-qualitative-methods-field",
-        "doc_type": "Button"
-      },
-      {
-        "heading": "RFE TTP Qualitative Research Methods Training Series",
-        "explanation": null,
-        "link": "https://ipastorage.app.box.com/folder/348528318233?s=kejn4dh4ifcdt01a4exyhlexq6yyrdn3",
-        "doc_type": "Button"
-      },
-      {
-        "heading": "FHI360 Qualitative Methods Manual",
-        "explanation": "Comprehensive manual on conducting qualitative field work. ",
-        "link": "https://www.fhi360.org/wp-content/uploads/2024/01/Qualitative-Research-Methods-A-Data-Collectors-Field-Guide.pdf#:~:text=information%20that%20participants%20provide,to%20establish%20positive%20interviewer%2Fparticipant%20dynamics",
-        "doc_type": "Button"
-      }
-    ]
-  },
-  "Digital-Data-Collection-Tools": {
+    "Digital-data-collection-tools": {
     "display_title": "Digital data collection tools",
-    "element_type": "mel-competency",
+    "element_type": "mel-skill",
     "skills_mapping": "mel-competency",
     "who_must_know": "nice_to_know",
     "short_description": null,
     "associated_concepts": null,
-    "associated_products": null,
+    "associated_products": "A/B Testing",
     "ipa_links": null,
     "external_links": null,
-    "description": null,
-    "why_it_matters": null,
-    "how_rfe_applies": null,
+    "description": "Digital data collection tools replace paper-based systems with software platforms that capture, store, and transmit data electronically. Common tools in international development contexts include SurveyCTO, KoboToolbox, and ODK for surveys, and CommCare or PowerBI for data management and visualization. Choosing the right tool involves weighing factors like connectivity in the operating context, enumerator technical capacity, cost, and the complexity of the survey logic required.",
+    "why_it_matters": "Digital tools can dramatically improve data quality and efficiency — enabling real-time validation, automatic skip logic, GPS tracking, and audio reviews that paper simply can't offer. But they are not a silver bullet: poorly programmed tools or undertrained enumerators can introduce new sources of error, and over-reliance on dashboards can create a false sense that data is being 'used' when it isn't.",
+    "how_rfe_applies": "Digital tools come up most directly in Monitoring TA, where we help clients select, program, and implement appropriate platforms for their context and capacity. A key part of our advisory role is pushing back on the assumption that more sophisticated tools equal better data — the right tool is the one the team can actually use well. We also help clients think beyond data collection to data systems: how tools connect to dashboards, how data flows to decision-makers, and whether the infrastructure supports genuine actionability — a core CART principle. In A/B Testing TA, this takes on particular importance: a core part of our role is helping partners build or adapt the digital infrastructure needed to assign, track, and compare treatment groups in real time — making the partner's own systems the engine of the test, not just a passive data source.",
     "popup_buttons": [
       {
-        "heading": "J-PAL: Conducting Remote Surveys",
-        "explanation": "Research resource entry on how to conduct rigorous remote surveys. ",
-        "link": "https://www.povertyactionlab.org/resource/resources-conducting-remote-surveys",
-        "doc_type": "Button"
+            "heading": "J-PAL: Conducting Remote Surveys",
+            "explanation": "Research resource entry on how to conduct rigorous remote surveys.",
+            "link": "https://www.povertyactionlab.org/resource/resources-conducting-remote-surveys",
+            "doc_type": "Button"
       },
       {
-        "heading": "DIME Wiki: Innovative Data Sources",
-        "explanation": "World Bank wiki on the use of mobile big data sources for development work. ",
-        "link": "https://dimewiki.worldbank.org/Innovative_Data_Sources#Mobile_Big_Data",
-        "doc_type": "Button"
+            "heading": "DIME Wiki: Innovative Data Sources",
+            "explanation": "World Bank wiki on the use of mobile big data sources for development work.",
+            "link": "https://dimewiki.worldbank.org/Innovative_Data_Sources#Mobile_Big_Data",
+            "doc_type": "Button"
       },
       {
-        "heading": "DIME Wiki: Remote Sensing",
-        "explanation": "World wiki on the use of remote sensing data collection for development work ",
-        "link": "https://dimewiki.worldbank.org/Remote_Sensing",
-        "doc_type": "Button"
+            "heading": "DIME Wiki: Remote Sensing",
+            "explanation": "World wiki on the use of remote sensing data collection for development work",
+            "link": "https://dimewiki.worldbank.org/Remote_Sensing",
+            "doc_type": "Button"
       },
       {
-        "heading": "IPA Data Hub: Digital Ethnographic Surveys",
-        "explanation": "See the digital specific section to read about considerations for conducitng digital data collection well. ",
-        "link": "https://data.poverty-action.org/data-collection/qualitative-methods/ethnographies.html#footnotes",
-        "doc_type": "Button"
+            "heading": "IPA Data Hub: Digital Ethnographic Surveys",
+            "explanation": "See the digital specific section to read about considerations for conducitng digital data collection well.",
+            "link": "https://data.poverty-action.org/data-collection/qualitative-methods/ethnographies.html#footnotes",
+            "doc_type": "Button"
+      },
+      {
+            "heading": "The Agency Fund",
+            "explanation": "User Funnel Playbook for the Social Sector. A different approach to assessing effectiveness for digital innovations",
+            "link": "https://ipastorage.app.box.com/file/2109753033577",
+            "doc_type": "Button"
       }
-    ]
+]
   },
-  "Data-Analysis": {
+    "Data-analysis": {
     "display_title": "Data analysis",
-    "element_type": "mel-competency",
+    "element_type": "mel-skill",
     "skills_mapping": "mel-competency",
     "who_must_know": "advanced-users-only",
     "short_description": null,
@@ -3780,39 +3745,39 @@
     "associated_products": null,
     "ipa_links": null,
     "external_links": null,
-    "description": null,
-    "why_it_matters": null,
-    "how_rfe_applies": null,
+    "description": "Data analysis is the process of transforming raw data into findings that can inform decisions. This includes data cleaning, quantitative analysis (descriptive statistics, regression, significance testing), and qualitative analysis (thematic coding, pattern identification). Good analysis starts before data collection — with a clear analysis plan that links each indicator back to the learning questions it is meant to answer.",
+    "why_it_matters": "Analysis is where data either earns its keep or exposes the weaknesses of earlier decisions. Common problems include analyzing data that was never connected to a clear decision, drawing causal conclusions from descriptive data, and producing findings too late or in formats that decision-makers can't use. Data without a credible analysis plan often ends up in a 'data graveyard' — collected but never acted upon.",
+    "how_rfe_applies": "At RFE, we treat analysis as inseparable from data use planning — helping clients think ahead about who will use findings, when, and for what decisions, before a single data point is collected. This connects directly to the Actionable CART principle. In Monitoring TA, we support partners in cleaning and analyzing complex datasets, and in facilitating Pause and Reflect sessions that bridge the gap between findings and program decisions. We also help clients distinguish between what their data can credibly show — particularly around attribution — and what requires stronger methods to claim.",
     "popup_buttons": [
       {
-        "heading": "J-PAL: Pre-analysis plans",
-        "explanation": "J-PAL research resource entry creating pre-analysis plans in advance of analysis phase",
-        "link": "https://www.povertyactionlab.org/resource/pre-analysis-plans",
-        "doc_type": "Button"
+            "heading": "J-PAL: Pre-analysis plans",
+            "explanation": "J-PAL research resource entry creating pre-analysis plans in advance of analysis phase",
+            "link": "https://www.povertyactionlab.org/resource/pre-analysis-plans",
+            "doc_type": "Button"
       },
       {
-        "heading": "IPA Data Hub: Data cleaning",
-        "explanation": "Extensive guide to cleaning data prior to data analysis",
-        "link": "https://data.poverty-action.org/data-cleaning/",
-        "doc_type": "Button"
+            "heading": "IPA Data Hub: Data cleaning",
+            "explanation": "Extensive guide to cleaning data prior to data analysis",
+            "link": "https://data.poverty-action.org/data-cleaning/",
+            "doc_type": "Button"
       },
       {
-        "heading": "J-PAL: Data Analysis",
-        "explanation": "Comprehensive J-PAL research resource entry on data analysis",
-        "link": "https://www.povertyactionlab.org/resource/data-analysis",
-        "doc_type": "Button"
+            "heading": "J-PAL: Data Analysis",
+            "explanation": "Comprehensive J-PAL research resource entry on data analysis",
+            "link": "https://www.povertyactionlab.org/resource/data-analysis",
+            "doc_type": "Button"
       },
       {
-        "heading": "J-PAL: Communicating to Partners about Results",
-        "explanation": "J-PAL research resource entry how to communicate analysis results for better effect with partner organizations",
-        "link": "https://www.povertyactionlab.org/resource/communicating-partner-about-results",
-        "doc_type": "Button"
+            "heading": "J-PAL: Communicating to Partners about Results",
+            "explanation": "J-PAL research resource entry how to communicate analysis results for better effect with partner organizations",
+            "link": "https://www.povertyactionlab.org/resource/communicating-partner-about-results",
+            "doc_type": "Button"
       }
-    ]
+]
   },
-  "Sample-Sizes-And-Power-Calculations": {
-    "display_title": "Sample Sizes and Power Calculations",
-    "element_type": "mel-competency",
+    "Data-visualization-and-storytelling": {
+    "display_title": "Data visualization and storytelling",
+    "element_type": "mel-skill",
     "skills_mapping": "mel-competency",
     "who_must_know": "nice_to_know",
     "short_description": null,
@@ -3820,69 +3785,97 @@
     "associated_products": null,
     "ipa_links": null,
     "external_links": null,
-    "description": null,
-    "why_it_matters": null,
-    "how_rfe_applies": null,
+    "description": "Data visualization is the practice of representing data graphically — through charts, tables, dashboards, and other visual formats — to make findings accessible and interpretable. Storytelling goes one step further: structuring findings into a clear narrative that connects evidence to decisions. Together, they determine whether analysis actually reaches and influences its intended audience. Good visualization is not about making data look attractive — it's about making the right findings visible to the right people at the right moment.",
+    "why_it_matters": "Even rigorous, well-analyzed data can fail to drive change if it isn't communicated effectively. Decision-makers rarely engage with raw outputs — they need findings framed around the questions they're actually trying to answer. Poorly designed dashboards can create an illusion of data use while burying the insights that matter most.",
+    "how_rfe_applies": "At RFE, data visualization and storytelling are closely tied to the Actionable CART principle — we think of them as the last mile of evidence use. In Monitoring TA and Data Use and Evidence Culture Support, we help partners design dashboards and reports that are built around decisions, not just data availability. A recurring challenge we address is the gap between what MEL teams produce and what program teams actually read and use — which is often as much a communication and framing problem as a technical one. We also coach partners on presenting findings in Pause and Reflect workshops, where how data is introduced and sequenced can make the difference between genuine reflection and a box-ticking exercise.",
     "popup_buttons": [
       {
-        "heading": "IPA Data Hub: Sample Size Power",
-        "explanation": "Comprehensive guide to conducting power calculations",
-        "link": "https://data.poverty-action.org/research-design/sample-size-power.html",
-        "doc_type": "Button"
-      },
-      {
-        "heading": "J-PAL Essentials of Sample Size and Power",
-        "explanation": "J-PAL presentation on the importance of power calculations",
-        "link": "https://www.povertyactionlab.org/sites/default/files/L5a_Essentials%20of%20Sample%20Size%20and%20Power_2024_2.pdf",
-        "doc_type": "Button"
-      },
-      {
-        "heading": "J-PAL: Power Calculations",
-        "explanation": "Comprehensive J-PAL research resource on power calculations",
-        "link": "https://www.povertyactionlab.org/resource/power-calculations",
-        "doc_type": "Button"
-      },
-      {
-        "heading": "J-PAL: Power Calculator",
-        "explanation": "J-PAL simple power calculator app",
-        "link": "https://j-pal.shinyapps.io/power-app/",
-        "doc_type": "Button"
+            "heading": "IPA Data Hub: Data visualization",
+            "explanation": "Comprehensive guide to conducting data visualization",
+            "link": "https://data.poverty-action.org/data-science/data-visualization/",
+            "doc_type": "Button"
       }
-    ]
+]
   },
-  "Rcts-Experimental-Design-Quasi-Experimental-Design": {
-    "display_title": "RCTs / Experimental design / Quasi-Experimental design",
-    "element_type": "mel-competency",
+    "Qualitative-methods-data-collection-analysis-mixed-methods": {
+    "display_title": "Qualitative methods (data collection, analysis, mixed-methods)",
+    "element_type": "mel-skill",
+    "skills_mapping": "mel-competency",
+    "who_must_know": "advanced-users-only",
+    "short_description": null,
+    "associated_concepts": null,
+    "associated_products": "User Research",
+    "ipa_links": null,
+    "external_links": null,
+    "description": "Qualitative methods cover a diverse set of approaches for collecting and analyzing non-numerical data — including in-depth interviews, focus groups, observation, key informant interviews, and thematic analysis. What unites them is a focus on understanding how and why — exploring perceptions, experiences, and context that quantitative data alone cannot capture. This category also includes mixed methods, where qualitative and quantitative approaches are intentionally combined to answer different parts of the same research question, often strengthening both.",
+    "why_it_matters": "Qualitative methods are frequently undervalued in evaluation contexts dominated by quantitative rigor — but they often answer the most important questions: Why didn't the program work as expected? What are beneficiaries actually experiencing? What implementation barriers are invisible in the numbers? Without qualitative insight, programs risk optimizing for what is measurable rather than what matters.",
+    "how_rfe_applies": "Qualitative methods appear across nearly all RFE products — from User Research and Problem Diagnostics (where interviews and observation surface implementation realities) to Process Evaluation (where focus groups and key informant interviews assess fidelity and barriers). A distinctive RFE angle is our emphasis on right-fit methods: we help clients resist the false hierarchy that puts quantitative approaches above qualitative ones, and instead ask which method best answers a given learning question. We also help clients see qualitative methods as a genuine partner to quantitative work — used to identify the right indicators before a quantitative study is designed, to triangulate and contextualize findings as they emerge, and to investigate what drove quantitative results that are surprising, mixed, or hard to act on without deeper understanding.",
+    "popup_buttons": [
+      {
+            "heading": "IPA Data Hub- Qualitative methods",
+            "explanation": "General methodological support for how IPA does qualitative research.",
+            "link": "https://data.poverty-action.org/data-collection/qualitative-methods/",
+            "doc_type": "Button"
+      },
+      {
+            "heading": "J-PAL- Integrating Qual Methods into Randomized Evaluations",
+            "explanation": "Research resource on ways to do mixed methods evaluatory work.",
+            "link": "https://www.povertyactionlab.org/resource/integrating-qualitative-methods-randomized-evaluations",
+            "doc_type": "Button"
+      },
+      {
+            "heading": "J-PAL- Implementation Qual Methods in the Field",
+            "explanation": "Research resource on ways to maintain qualitative rigour while working in the field.",
+            "link": "https://www.povertyactionlab.org/resource/implementing-qualitative-methods-field",
+            "doc_type": "Button"
+      },
+      {
+            "heading": "RFE TTP Qualitative Research Methods Training Series",
+            "explanation": null,
+            "link": "https://ipastorage.app.box.com/folder/348528318233?s=kejn4dh4ifcdt01a4exyhlexq6yyrdn3",
+            "doc_type": "Button"
+      },
+      {
+            "heading": "FHI360 Qualitative Methods Manual",
+            "explanation": "Comprehensive manual on conducting qualitative field work.",
+            "link": "https://www.fhi360.org/wp-content/uploads/2024/01/Qualitative-Research-Methods-A-Data-Collectors-Field-Guide.pdf#:~:text=information%20that%20participants%20provide,to%20establish%20positive%20interviewer%2Fparticipant%20dynamics",
+            "doc_type": "Button"
+      }
+]
+  },
+    "Attribution-Causal-Inference-and-Experimental-Design": {
+    "display_title": "Attribution, Causal Inference, and Experimental Design",
+    "element_type": "mel-skill",
     "skills_mapping": "mel-competency",
     "who_must_know": "nice_to_know",
-    "short_description": "Randomized Controlled Trials for measuring causal impact",
+    "short_description": null,
     "associated_concepts": null,
-    "associated_products": null,
+    "associated_products": "A/B Testing",
     "ipa_links": null,
-    "external_links": "https://example.com/rcts",
-    "description": null,
-    "why_it_matters": null,
-    "how_rfe_applies": null,
+    "external_links": null,
+    "description": "Establishing attribution — whether a program actually caused an observed change — requires methods that can credibly estimate what would have happened without the intervention. Randomized Controlled Trials (RCTs) are considered the gold standard because random assignment to treatment and control groups eliminates selection bias and creates genuinely comparable groups. Quasi-experimental methods (such as difference-in-differences, regression discontinuity, and matching) attempt to construct credible comparisons when randomization isn't possible, but require stronger assumptions and expert judgment to execute well.",
+    "why_it_matters": "Without a credible counterfactual, it is impossible to know whether observed changes are due to the intervention or something else entirely. Before-and-after comparisons, output counts, and anecdotal success stories are not substitutes for causal evidence. Organizations that skip this step risk investing in programs that aren't working, or abandoning programs that are.",
+    "how_rfe_applies": "IPA's research department often leads RCT design and implementation, while RFE's work tends to sit at the edges of the causal evidence cycle. Before an RCT, we often help partners strengthen program design and build the implementation quality needed for an intervention to be worth evaluating — work that directly supports stage-based learning at the IDEATE and REFINE stages. After an RCT, we often help organizations apply previously evaluated models in new contexts, using implementation research to understand how findings translate and what adaptations are needed. In OneIPA projects, RFE and research services are combined, requiring RFE staff to engage directly alongside researchers throughout the evaluation process. In all of these contexts, a working knowledge of causal inference and experimental design is essential for RFE staff to engage credibly with partners and IPA colleagues — even when we are not leading the evaluation itself.",
     "popup_buttons": [
       {
-        "heading": "IPA Data Hub: Randomization",
-        "explanation": "IPA Guide to randomization for Impact Evaluations",
-        "link": "https://data.poverty-action.org/research-design/randomization.html",
-        "doc_type": "Button"
+            "heading": "IPA Data Hub: Randomization",
+            "explanation": "IPA Guide to randomization for Impact Evaluations",
+            "link": "https://data.poverty-action.org/research-design/randomization.html",
+            "doc_type": "Button"
       },
       {
-        "heading": "IPA Data Hub: Addressing Common Criticisms of RCTs",
-        "explanation": "Guide to communicating the importance of RCTs",
-        "link": "https://data.poverty-action.org/research-design/addressing-rct-criticisms.html",
-        "doc_type": "Button"
+            "heading": "IPA Data Hub: Addressing Common Criticisms of RCTs",
+            "explanation": "Guide to communicating the importance of RCTs",
+            "link": "https://data.poverty-action.org/research-design/addressing-rct-criticisms.html",
+            "doc_type": "Button"
       },
       {
-        "heading": "J-PAL: Randomization",
-        "explanation": "Comprehensive guide to randomization for Impact Evaluations",
-        "link": "https://www.povertyactionlab.org/resource/randomization",
-        "doc_type": "Button"
+            "heading": "J-PAL: Randomization",
+            "explanation": "Comprehensive guide to randomization for Impact Evaluations",
+            "link": "https://www.povertyactionlab.org/resource/randomization",
+            "doc_type": "Button"
       }
-    ]
+]
   },
   "Problem-Trees": {
     "display_title": "Problem Trees",
@@ -3975,7 +3968,7 @@
     "who_must_know": "all-must-know",
     "short_description": null,
     "associated_concepts": null,
-    "associated_products": null,
+    "associated_products": "Community of Practice",
     "ipa_links": null,
     "external_links": null,
     "description": null,
@@ -5467,7 +5460,7 @@ You have 12 more indicators to review in 90 minutes. Create a simple tool the te
         text-align: right;
         line-height: 1.5;
     ">
-        Data source: mel_topics_popup_data_apr_16_2026.xlsx<br>Updated: Apr 16, 2026 (v28)
+        Data source: mel_topics_popup_data_apr_21_2026.xlsx<br>Updated: Apr 21, 2026 (v28)
     </div>
 </body>
 </html>
