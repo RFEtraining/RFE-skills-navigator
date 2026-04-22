@@ -5690,6 +5690,11 @@ You have 12 more indicators to review in 90 minutes. Create a simple tool the te
                     return;
                 }
                 
+                // Skip the top-level RFE Philosophy entry — it's triggered by the section header, not a pill
+                if (conceptId === 'Rfe-Philosophy') {
+                    return;
+                }
+                
                 let categoryKey = null;
                 
                 // Map skills_mapping values to category containers
