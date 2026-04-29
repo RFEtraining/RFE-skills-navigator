@@ -1618,6 +1618,69 @@
             color: #aaa;
             font-style: italic;
         }
+
+        /* Skill roadmap toggle (Content > Practice) */
+        .skill-roadmap-toggle {
+            display: flex;
+            gap: 0;
+            background: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+        }
+        .skill-roadmap-option {
+            flex: 1;
+            padding: 14px 12px;
+            cursor: pointer;
+            text-align: center;
+            position: relative;
+            transition: all 0.2s ease;
+            background: #f5f5f5;
+            border-right: 1px solid #e8e8e8;
+        }
+        .skill-roadmap-option:last-child {
+            border-right: none;
+        }
+        .skill-roadmap-option:hover {
+            background: #ebebeb;
+        }
+        .skill-roadmap-option.active {
+            background: #fff;
+            box-shadow: inset 0 -3px 0 #185FA5;
+        }
+        .skill-roadmap-label {
+            font-size: 13px;
+            font-weight: 700;
+            color: #666;
+            margin-bottom: 2px;
+            transition: color 0.2s ease;
+        }
+        .skill-roadmap-option.active .skill-roadmap-label {
+            color: #185FA5;
+        }
+        .skill-roadmap-sub {
+            font-size: 10px;
+            color: #999;
+            line-height: 1.3;
+        }
+        .skill-roadmap-arrow {
+            position: absolute;
+            right: -8px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 0;
+            height: 0;
+            border-top: 8px solid transparent;
+            border-bottom: 8px solid transparent;
+            border-left: 8px solid #e8e8e8;
+            z-index: 1;
+        }
+        .skill-roadmap-option.active .skill-roadmap-arrow {
+            border-left-color: #fff;
+        }
+        .skill-roadmap-option:last-child .skill-roadmap-arrow {
+            display: none;
+        }
         
         /* Tab Navigation — kept for non-product popups (stage/skill) */
         .tab-navigation {
@@ -2502,24 +2565,41 @@
                         </div>
                     </div>
 
+                    <!-- Relevant RFE Products (always open, no toggle) -->
+                    <!-- MAPPING NOTE: auto-populated by findProductsForSkill() -->
+                    <div id="skillPopupRelatedProducts" class="skill-popup-section" style="display:none;">
+                        <div style="padding:14px 0 8px 0;">
+                            <h3 class="skill-popup-section-header">Relevant RFE Products</h3>
+                        </div>
+                        <div id="skillPopupRelatedProductsGrid" class="adv-button-grid"></div>
+                    </div>
+
                 </div>
 
                 <!-- RIGHT: sticky button column -->
-                <div style="width:280px; flex-shrink:0; overflow-y:auto; padding:24px 20px; background:#f8f8f8; display:flex; flex-direction:column; gap:20px;">
+                <div style="width:380px; flex-shrink:0; overflow-y:auto; padding:24px 20px; background:#f8f8f8; display:flex; flex-direction:column; gap:20px;">
 
-                    <!-- Learning Resources -->
-                    <!-- MAPPING NOTE: popup_buttons ← non_product_popup_lists -->
-                    <div id="skillPopupResourcesSection" style="display:none;">
-                        <h3 class="skill-popup-section-header" style="margin-bottom:10px;">Learning Resources</h3>
-                        <div id="skillPopupButtons" class="adv-button-grid"></div>
+                    <!-- Learning Roadmap Toggle -->
+                    <div id="skillPopupRoadmapSection" style="display:none;">
+                        <div style="font-size:11px;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;color:#aaa;margin-bottom:8px;">Learning Roadmap</div>
+                        <div class="skill-roadmap-toggle">
+                            <div class="skill-roadmap-option active" data-roadmap="content" onclick="switchSkillRoadmap(this, 'content')">
+                                <div class="skill-roadmap-label">Content</div>
+                                <div class="skill-roadmap-sub">Understanding concepts</div>
+                                <div class="skill-roadmap-arrow"></div>
+                            </div>
+                            <div class="skill-roadmap-option" data-roadmap="practice" onclick="switchSkillRoadmap(this, 'practice')">
+                                <div class="skill-roadmap-label">Practice</div>
+                                <div class="skill-roadmap-sub">Application & exercises</div>
+                            </div>
+                        </div>
                     </div>
 
-                    <!-- Relevant RFE Products -->
-                    <!-- MAPPING NOTE: auto-populated by findProductsForSkill() -->
-                    <div id="skillPopupRelatedProducts" style="display:none;">
-                        <div style="height:0.5px; background:#e0e0e0; margin-bottom:16px;"></div>
-                        <h3 class="skill-popup-section-header" style="margin-bottom:10px;">Relevant RFE Products</h3>
-                        <div id="skillPopupRelatedProductsGrid" class="adv-button-grid"></div>
+                    <!-- Learning Resources -->
+                    <!-- MAPPING NOTE: popup_buttons ← non_product_popup_lists filtered by Learning Roadmap -->
+                    <div id="skillPopupResourcesSection" style="display:none;">
+                        <h3 class="skill-popup-section-header" style="margin-bottom:10px;">Resources</h3>
+                        <div id="skillPopupButtons" class="adv-button-grid"></div>
                     </div>
 
                 </div>
@@ -2532,24 +2612,29 @@
         /*
            ================================================================================
            MAPPING DOCUMENTATION - SPREADSHEET TO POPUPDATA TO HTML
-           Last updated: 2026-04-21 (v28) — Synced to mel_topics_popup_data_apr_21_2026.xlsx: MEL skills renamed/restructured, new product→skill linkages added
+           Last updated: 2026-04-29 (v28) — Non-product popups now have Content/Practice roadmap toggle
            ================================================================================
 
            SPREADSHEET SOURCE:
-           File: mel_topics_popup_data_apr_21_2026.xlsx
+           File: mel_topics_popup_data_apr_22_2026.xlsx
            Sheets used:
              1. all_html_elements_MASTER  - Master list of all elements; defines element_type and who_must_know
              2. product_popup_fields      - Text content for each rfe-product popup (descriptions, tab intro text)
              3. product_popup_lists       - Button data for product popups (related products, content, supp MEL, practice, feedback, other resources)
-             4. non_product_popup_fields  - Text content for non-product popups (philosophies, stages, competencies)
-             5. non_product_popup_lists   - Button data for non-product popups (resource links)
+             4. non_product_popup_fields  - Text content for non-product popups (philosophies, stages, competencies, skills)
+             5. non_product_popup_lists   - Button data for non-product popups with Learning Roadmap classification
 
            HOW TO UPDATE CONTENT (new spreadsheet version):
            1. Upload the new xlsx to this conversation
            2. Claude reads all 5 sheets and compares against current popupData
            3. Claude reports all differences for your review
-           4. After approval, Claude updates the popupData JSON in-place
+           4. After approval, Claude updates the popupData JSON in-place using Python string replacement
            5. Save as new version file (e.g. rfe_products_updated_YYYY-MM-DD_vN.html)
+           
+           CRITICAL: When updating non_product_popup_lists, ALL button fields must be included:
+             - heading, explanation, link, doc_type (existing fields)
+             - learning_roadmap (NEW: "Content" or "Practice" - controls which tab button appears in)
+             - high_priority (NEW: "High Priority" or null - displays priority tag on button)
 
            ================================================================================
            POPUP DATA STRUCTURE (popupData object)
@@ -2589,10 +2674,25 @@
            Fields for non-product entries (rfe-philosophy, mel-competency, stage, consulting-and-communication-skills, etc.):
              display_title           <- all_html_elements_MASTER "Element" column
              element_type            <- category from master sheet
-             description             <- non_product_popup_fields "Comprehensive description"
+             description             <- non_product_popup_fields "General Description"
              why_it_matters          <- non_product_popup_fields "Why it matters"
-             how_rfe_applies         <- non_product_popup_fields "How RFE Applies CART Principles"
-             popup_buttons           <- non_product_popup_lists [{heading, explanation, link}]
+             how_rfe_applies         <- non_product_popup_fields "How RFE Applies"
+             popup_buttons           <- non_product_popup_lists with NEW structure:
+                                        [{heading, explanation, link, doc_type, learning_roadmap, high_priority}]
+                                        
+                                        NEW FIELDS (as of v28):
+                                        - learning_roadmap: "Content" or "Practice" (controls Content/Practice toggle)
+                                        - high_priority: "High Priority" or null (displays priority tag)
+                                        - doc_type: icon displayed (Book, Doc, Video, Web, Slide deck, AI, Course)
+                                        
+                                        BEHAVIOR: Non-product popups now have a Content > Practice toggle in right column.
+                                        Buttons are filtered by learning_roadmap value. If no buttons have learning_roadmap,
+                                        toggle is hidden and all buttons display together. High priority tag displays for
+                                        buttons with high_priority = "High Priority".
+                                        
+             LAYOUT: Non-product popup = 2-column layout:
+               LEFT: Text sections (Description, Why it Matters, How RFE Applies, Relevant RFE Products)
+               RIGHT: Learning Roadmap toggle (Content/Practice) + filtered buttons
 
            ================================================================================
            POPUP TEMPLATES
@@ -2637,6 +2737,10 @@
            - [ ] No console warnings about "key not found" or "related product not found"
            - [ ] Additional Resources tab shows orange buttons for products with data
            - [ ] Teal "Relevant RFE Products" buttons appear in skill popups where expected
+           - [ ] NON-PRODUCT: All popup_buttons have learning_roadmap field ("Content" or "Practice" or null)
+           - [ ] NON-PRODUCT: All popup_buttons have high_priority field ("High Priority" or null)
+           - [ ] NON-PRODUCT: Content/Practice toggle displays when buttons have learning_roadmap values
+           - [ ] NON-PRODUCT: High priority tags display correctly on buttons marked "High Priority"
 
            ================================================================================
         */
@@ -2655,30 +2759,38 @@
     "description": "RFE's philosophy is built on a single foundational belief: that organizations achieve greater impact when they build **sustainable cultures of learning and accountability** — and that the right kind of evidence, generated at the right time and used well, is what makes this possible.\n\nThis belief challenges two common defaults in the development sector. The first is the assumption that *impact measurement* is the primary goal of MEL — leading organizations to invest in expensive, late-stage evaluations while missing the iterative learning that makes programs better in the first place. The second is the assumption that *more rigor is always better* — leading to evaluation designs that are technically impressive but practically useless for the organizations doing the work.",
     "why_it_matters": null,
     "how_rfe_applies": "RFE's alternative is **right-fit evidence**: MEL systems that are credible enough to trust, actionable enough to use, responsible enough to sustain, and transportable enough to benefit others. This is not a compromise on quality — it is a more honest definition of it.\n\nSeveral interconnected principles give this philosophy its shape:\n\n- **CART** provides the decision-making framework for what to measure and how\n- **Stage-Based Learning** ensures evidence generation matches where a program actually is in its development\n- **Early Outcomes** identify the sweet spot between what is attributable and what is meaningful\n- **Causal Inference and Rigor** keep organizations honest about what their data can and cannot claim\n- **Learning Cycles** turn evidence into ongoing practice rather than one-off events\n- **The Generalizability Puzzle** helps organizations learn from evidence beyond their own context\n- **Why Learning Organizations** makes the case that learning is not a cost — it is the mechanism of improvement\n- **Why Capacity Building** ensures that RFE's work leaves organizations more capable, not more dependent",
-    "popup_buttons": [
+        "popup_buttons": [
       {
             "heading": "Welcome to RFE Principles",
-            "explanation": "For onboarding staff getting started with RFE principles.",
+            "explanation": "For onboarding staff getting started with RFE principles. ",
             "link": "https://ipastorage.app.box.com/file/2035486396250",
-            "doc_type": "Doc"
+            "doc_type": "Doc",
+            "learning_roadmap": "Content",
+            "high_priority": null
       },
       {
             "heading": "SSIR Article: Ten reasons not to measure impact",
             "explanation": "Concise argument that summarizes many of the RFE philosophical positions.",
             "link": "https://ipastorage.app.box.com/file/289612755085?s=iwf49re9li2zcj3ema1y4j3x4vum6rj4",
-            "doc_type": "Web"
+            "doc_type": "Web",
+            "learning_roadmap": "Content",
+            "high_priority": "High Priority"
       },
       {
             "heading": "RFE Presention for Country Offices",
             "explanation": "Covers some RFE philosophy topics, next to other information about who RFE works within IPA.",
             "link": "https://ipastorage.box.com/s/ed3lajpy1y8e97rcby70i50memqdwb1w",
-            "doc_type": "Slide deck"
+            "doc_type": "Slide deck",
+            "learning_roadmap": "Content",
+            "high_priority": null
       },
       {
             "heading": "What is Water slidedeck",
             "explanation": "Brief overview of RFE's philosophy that discusses our evolution and what we aim to address/how",
             "link": "https://ipastorage.box.com/s/m4bfki1aeefs9cinl429x60o9hrfemha",
-            "doc_type": "Slide deck"
+            "doc_type": "Slide deck",
+            "learning_roadmap": "Content",
+            "high_priority": null
       }
 ]
   },
@@ -2695,30 +2807,54 @@
     "description": "CART is a framework that guides high-quality MEL decisions. The four principles—Credible, Actionable, Responsible, and Transportable—help ensure that data collection and learning approaches generate useful, trustworthy evidence that leads to better programs and outcomes.\n\n- **Credible**: Indicators should be valid and reliably measured, with data that accurately captures what you intend to measure. The rigor required depends on context: monitoring needs credible output and early outcome data; impact evaluations require additional rigor, including counterfactuals, to make causal claims.\n- **Actionable**: Data is only valuable if organizations commit to acting on it — whether adjusting implementation, shifting strategy, or testing new approaches.\n- **Responsible**: The benefits of data collection must outweigh the costs — financial, staff time, and burden on participants — ensuring your MEL system is efficient relative to its learning value.\n- **Transportable**: Data should produce lessons useful beyond one organization, documented clearly enough that others can determine whether and how findings apply to their context.",
     "why_it_matters": "Poor evaluation practices waste resources and produce misleading information. CART addresses three common problems: biased or unreliable data that leads to inaccurate conclusions about effectiveness; unused results, where data is collected but never acted on; and wasteful data overload, where collection costs exceed learning benefits and create decision paralysis rather than clarity.",
     "how_rfe_applies": "CART functions as a prioritization tool — helping clients determine what to measure, how to measure it, and which learning approaches generate the most value. We apply it flexibly: rigorously for major evaluations, and as a mental checklist for routine decisions. We also use it when advising clients on designing their own MEL systems.",
-    "popup_buttons": [
+        "popup_buttons": [
       {
             "heading": "The Goldilocks Challenge (book)",
-            "explanation": "All RFE staff should read the Goldilocks Challenge, by Dean Karlan and Mary Kay Gugerty. This is a core resource for understanding the CART framework and how it is applied at RFE. Contact your line manager for a copy of the book if you don't have one.",
+            "explanation": "All RFE staff should read the Goldilocks Challenge, by Dean Karlan and Mary Kay Gugerty. This is a core resource for understanding the CART framework and how it is applied at RFE. Contact your line manager for a copy of the book if you don't have one. ",
             "link": null,
-            "doc_type": "Book"
+            "doc_type": "Book",
+            "learning_roadmap": "Content",
+            "high_priority": null
       },
       {
             "heading": "CART brief",
             "explanation": null,
             "link": "https://ipastorage.app.box.com/integrations/googledss/openGoogleEditor?fileId=1955337095527&trackingId=3#",
-            "doc_type": "Doc"
+            "doc_type": "Doc",
+            "learning_roadmap": "Content",
+            "high_priority": null
       },
       {
             "heading": "Goldilocks toolkit: Impact Measurement with the CART Principles",
             "explanation": "Good concise explanation of CART principles in relation to learning --but framed around Impact Evaluations",
             "link": "https://poverty-action.org/goldilocks-toolkit-impact-measurement-cart-principles",
-            "doc_type": "Doc"
+            "doc_type": "Doc",
+            "learning_roadmap": "Content",
+            "high_priority": null
       },
       {
             "heading": "Goldilocks toolkit: Monitoring for Learning and Accountability",
-            "explanation": "Concise explanation of CART principles in relation to monitoring systems. Lacking good images.",
+            "explanation": "Concise explanation of CART principles in relation to monitoring systems. Lacking good images. ",
             "link": "https://poverty-action.org/sites/default/files/publications/Goldilocks-Toolkit-Monitoring-for-Learning-and-Accountability_1.pdf",
-            "doc_type": "Doc"
+            "doc_type": "Doc",
+            "learning_roadmap": "Content",
+            "high_priority": null
+      },
+      {
+            "heading": "Conceptual Practice",
+            "explanation": "Have a conceptual discussion about how CART principles apply to RFE work more generally.",
+            "link": "https://claude.ai/share/9c4118d9-e9a0-4267-a207-00bc746da335",
+            "doc_type": "AI",
+            "learning_roadmap": "Practice",
+            "high_priority": null
+      },
+      {
+            "heading": "Practice Applying CART",
+            "explanation": "Think through how the CART principles apply to a specific product in the RFE suite. ",
+            "link": "https://claude.ai/share/bd3d0f97-7e73-407e-89ad-124482722830",
+            "doc_type": "AI",
+            "learning_roadmap": "Practice",
+            "high_priority": null
       }
 ]
   },
@@ -2735,24 +2871,30 @@
     "description": "Learning cycles are repeated, ongoing processes of collecting, analyzing, and using data to continuously improve program effectiveness. Unlike traditional \"inverted pyramid\" M&E that collects massive amounts of data once or twice over a project's lifecycle, learning cycles emphasize rapid iteration and frequent feedback loops that maximize the learning-to-cost ratio.\n\n**Essential Elements:**\n- **Identify 2-3 critical learning questions** for your current program stage\n- **Plan data use before data collection** — who will see results, when, and what decisions will be made\n- **Start small** — manageable data collection that can be completed quickly\n- **Build in reflection time** — dedicated sessions for stakeholder sense-making\n- **Document adaptations** — track what changes and why for organizational learning",
     "why_it_matters": "**Traditional approach problems:**\n- Data collection is front-loaded and expensive\n- Analysis happens too late to inform decisions\n- Most insights come after programs can no longer adapt\n\n**Learning cycles benefits:**\n- **Higher learning-to-cost ratio:** More actionable insights per dollar spent\n- **Faster feedback loops:** Quick course corrections when problems emerge\n- **Responsive programming:** Programs that adapt based on real-time evidence\n- **Reduced risk:** Early detection of implementation issues before scaling",
     "how_rfe_applies": "RFE integrates learning cycles into its approach across multiple products and contexts. RFE prioritizes designing **short learning cycles** — particularly at early program stages — to enable rapid testing, quick feedback, and frequent adaptation. The specific structure of a cycle depends on the learning context, but all cycles share common elements: planning data use upfront, identifying what decisions the data will inform, and building organizational capacity to act on findings.\n\nWhat unites RFE's approach is the core belief that **learning only happens when organizations commit to using data to adapt**, and when they have built the internal practices and skills to sustain cycles over time. Whether through **Monitoring TA**, **User Research**, **A/B Testing**, or **Communities of Practice**, RFE helps organizations establish the conditions that make short, functional learning cycles possible.",
-    "popup_buttons": [
+        "popup_buttons": [
       {
             "heading": "Learning Cycles slidedeck",
             "explanation": null,
             "link": "https://ipastorage.app.box.com/integrations/googledss/openGoogleEditor?fileId=2037481554234&trackingId=3#slide=id.p1",
-            "doc_type": null
+            "doc_type": null,
+            "learning_roadmap": "Content",
+            "high_priority": null
       },
       {
             "heading": "Learning Cycles brief",
             "explanation": null,
             "link": "https://ipastorage.app.box.com/integrations/googledss/openGoogleEditor?fileId=2037508871438&trackingId=3#?_gfid=docs_editor_frame&fileUrl=https://api.box.com/fsip/files/2037508871438&isInboundFsipRequest=true&jsh=m;/_/scs/abc-static/_/js/k%3Dgapi.lb.en.2kN9-TZiXrM.O/d%3D1/rs%3DAHpOoo_B4hu0FeWRuWHfxnZ3V0WubwN7Qw/m%3D__features__&organizationType=BUSINESS&parent=https://ipastorage.app.box.com&pfname&previewUrl=https://ipastorage.app.box.com/file/2037508871438&rpctoken=15595011&tpat=1!TXNxMVbkmLxZuYFQK7Gf9-mklhL4LUy5f6Se_bls_Vuf4nxWtcYTkD93U1oOHD_PgLOqAKK69-MUNeVmYo5SKwRLNc_AWKWp39zUIRpKwKFdSsXD4fc6nrJahtXkVfNSbD5HF9sGyWOm6Rh8xw4WFyY9M7LX3w-7kKW40ZaV_7TMvkmLy9YEwtXai1YdSVqP9XYQ0I8V3s7DcUzvT29rK-uECIY1h-_i5i7OnJLBELHlpkG4YMa4n6Ea4_68c7cXywYIkF9c7gyR0ejViu8gaXcNEKPCpxQaCmL12gWT0qGlh_HUvbuZcthA8fjsqtbfqoBXK7MYyLveVcKK7iqZ_SkjbLsFvDQlPSJOunTMUeri75ArjtHHrm0BxnspBpwY9-MisfobKiplA3bngDQMKug_xeasXy85a-gk2zi_5LFEaVVee2o_v8g.&tpatExpirationTime=1769530711000&usegapi=1",
-            "doc_type": null
+            "doc_type": null,
+            "learning_roadmap": "Content",
+            "high_priority": null
       },
       {
             "heading": "Iterative Learning Guide (CS project)",
             "explanation": null,
             "link": "https://poverty-action.org/sites/default/files/2024-10/Iterative%20Learning.pdf",
-            "doc_type": null
+            "doc_type": null,
+            "learning_roadmap": "Content",
+            "high_priority": null
       }
 ]
   },
@@ -2769,30 +2911,54 @@
     "description": "Stage-Based Learning is a strategic framework that matches evidence generation to where a program is in its development journey. Rather than applying the same evaluation approach regardless of program maturity, it recognizes that different stages require different kinds of learning to make the most effective decisions about program improvement and scaling. The framework guides implementers and funders to ask the right learning questions at the right time — focusing on program refinement in early stages and rigorous impact measurement when programs are ready to scale.",
     "why_it_matters": "Many organizations struggle with evidence generation because they apply a one-size-fits-all approach that wastes resources and provides limited actionable insights. Stage-Based Learning addresses three critical problems:\n\n- **Insufficient early-stage learning:** Programs scale without adequate testing and refinement, leading to implementation problems, lower impact, and wasted scaling resources. Organizations miss opportunities to improve programs when changes are still feasible and cost-effective.\n- **Premature impact evaluations:** Organizations often conduct expensive impact evaluations before programs are ready, resulting in null results that reflect poor implementation rather than program effectiveness. This wastes evaluation resources and can kill promising interventions that weren't given adequate time to be refined.\n- **Mismatched evidence requirements:** Funders and implementers focus on the wrong learning questions for the program's current stage, creating evaluation burden without decision-relevant insights. This leads to data collection that doesn't inform actual program decisions.\n\nStage-Based Learning ensures that evaluation efforts generate maximum learning value by matching evidence approaches to program maturity and decision needs.",
     "how_rfe_applies": "At RFE, we use Stage-Based Learning as both a diagnostic tool and a design framework across multiple aspects of our work with implementers and funders. SBL helps ensure that evaluation investments generate actionable insights that improve program effectiveness and scaling decisions.\n\n- **Program Assessment and Learning Plan Design:** SBL helps us assess where programs are in their development journey and design appropriate learning approaches. We help organizations identify what learning questions are most important given their stage and design evaluation approaches that will inform their next stage decisions.\n- **Capacity Building and Technical Assistance:** SBL guides our recommendations for organizational MEL systems, helping partners build evaluation capacity that matches their programmatic needs and avoids overwhelming early-stage organizations with evaluation requirements they can't effectively implement.\n- **Funder Guidance and Portfolio Strategy:** We help funders apply SBL principles to their portfolios, supporting different evidence requirements for grantees at different stages. This prevents imposing impact evaluation requirements on early-stage programs while ensuring mature programs generate rigorous evidence.\n\nSBL isn't just about evaluation timing — it's a strategic approach to program development that maximizes learning value while minimizing wasted resources. Before designing any evaluation approach, ask: *What stage is this program in, and what decisions does the organization need to make next?*",
-    "popup_buttons": [
+            "popup_buttons": [
       {
             "heading": "Donor Guide: Stage Based Learning",
-            "explanation": "Enabling Stage-Based Learning: A Funder's Guide to Maximizing Impact is designed to help funders optimize learning at each stage of an intervention’s journey towards scale. This stage-based approach tailors Monitoring, Evaluation and Learning (MEL) activities to generate actionable insights for intervention improvement and future funding decisions, and reduces unnecessary reporting.",
+            "explanation": " Enabling Stage-Based Learning: A Funder's Guide to Maximizing Impact is designed to help funders optimize learning at each stage of an intervention’s journey towards scale. This stage-based approach tailors Monitoring, Evaluation and Learning (MEL) activities to generate actionable insights for intervention improvement and future funding decisions, and reduces unnecessary reporting.",
             "link": "https://poverty-action.org/stage-based-learning",
-            "doc_type": "Doc"
+            "doc_type": "Doc",
+            "learning_roadmap": "Content",
+            "high_priority": "High Priority"
       },
       {
             "heading": "Path-to-Scale Slide deck",
             "explanation": "Old version of SBL under the name 'Path-to-Scale'. Simple explanation of principles with plenty of images.",
             "link": "https://ipastorage.app.box.com/file/830497427017?s=f6iq4ktmtqng19yi02acbvjlmxom6pc9",
-            "doc_type": "Slide deck"
+            "doc_type": "Slide deck",
+            "learning_roadmap": "Content",
+            "high_priority": "High Priority"
       },
       {
             "heading": "Path-to-Scale Implementer Focused Slide deck",
-            "explanation": "Old version of SBL under the name 'Path-to-Scale'. Includes important One Laptop per Child example.",
+            "explanation": "Old version of SBL under the name 'Path-to-Scale'. Includes important One Laptop per Child example. ",
             "link": "https://ipastorage.app.box.com/file/880652398313?s=czwy5aoxd5eeoeipu0woj7szudrclseo",
-            "doc_type": "Slide deck"
+            "doc_type": "Slide deck",
+            "learning_roadmap": "Content",
+            "high_priority": null
       },
       {
             "heading": "Early Learning Guide (POP project)",
             "explanation": "Contextualized project brief on Early learning stages and the importance for new innovations",
             "link": "https://poverty-action.org/sites/default/files/2026-02/IPA-PoP-Early-Stage-Program-Learning.pdf",
-            "doc_type": "Doc"
+            "doc_type": "Doc",
+            "learning_roadmap": "Content",
+            "high_priority": null
+      },
+      {
+            "heading": "Conceptual Practice",
+            "explanation": "Have a conceptual discussion about how Stage-Based Learning principles apply to RFE work more generally.",
+            "link": "https://claude.ai/share/06c972fc-7f6c-46f8-885e-0120055dbf1b",
+            "doc_type": "AI",
+            "learning_roadmap": "Practice",
+            "high_priority": null
+      },
+      {
+            "heading": "Practice Applying CART",
+            "explanation": "Think through how the Stage-Based Learning principles apply to a specific product in the RFE suite. ",
+            "link": "https://claude.ai/share/71e4c748-6b5a-49dc-8dff-cdff4c7c1de5",
+            "doc_type": "AI",
+            "learning_roadmap": "Practice",
+            "high_priority": null
       }
 ]
   },
@@ -2809,24 +2975,30 @@
     "description": "MEL systems face a fundamental tension: indicators that are easy to **attribute** to a program (activities, outputs) don't tell you much about whether it's working; indicators that are truly **meaningful** (final outcomes like improved yields or reduced poverty) are slow, expensive, and hard to attribute without a rigorous counterfactual. **Early outcomes** — typically changes in the knowledge, attitudes, or behaviors of participants — sit at the intersection of both. They go beyond delivery to show whether a program is actually changing what it intends to change, while remaining close enough to the intervention to be attributable without a control group.",
     "why_it_matters": "Most monitoring systems focus either too early (outputs — \"did we deliver?\") or too late (final outcomes — \"did it work?\"), missing the middle ground where the most actionable, cost-effective learning lives. Early outcomes are:\n\n- **Meaningful:** They reflect genuine change in participants, not just program activity\n- **Attributable:** Their proximity to the intervention means pre/post comparisons are credible without a counterfactual\n- **Fast:** Available during implementation, when course corrections are still possible\n- **Cost-effective:** Smaller sample sizes are needed because effect sizes are larger closer to the intervention",
     "how_rfe_applies": "Early outcomes are a cornerstone of RFE's monitoring philosophy and appear across nearly all of our products. In **Learning Plan Design**, we help clients identify early outcomes that sit in the sweet spot — meaningful enough to matter, attributable enough to act on. In **Monitoring TA**, we help partners move away from output-heavy monitoring systems toward ones that capture genuine behavioral and attitudinal change. We also use the **\"cliff of attribution\"** concept as a practical advisory tool: helping clients understand that measuring further along the theory of change is not always better, and that pushing toward final outcomes without a counterfactual can produce data that is neither credible nor actionable.",
-    "popup_buttons": [
+        "popup_buttons": [
       {
             "heading": "No Endline, No problem? slidedeck",
             "explanation": "Using Early Outcomes to Guide and Improve Programs.",
             "link": "https://ipastorage.app.box.com/file/1906607217412?s=t46mm6v713fi3n0qqdj0ig8a26r81uts",
-            "doc_type": "Slide deck"
+            "doc_type": "Slide deck",
+            "learning_roadmap": "Content",
+            "high_priority": "High Priority"
       },
       {
             "heading": "More insight for less measurement?",
             "explanation": "Why “early outcomes” are the sweet spot formonitoring",
             "link": "https://ipastorage.app.box.com/file/1411064488233?s=7ta9vjblttnhpie1z7c8nk95x63ix50e",
-            "doc_type": "Slide deck"
+            "doc_type": "Slide deck",
+            "learning_roadmap": "Content",
+            "high_priority": null
       },
       {
             "heading": "IPA Blog Post",
             "explanation": "Early outcomes -- typically described as changes in the knowledge, attitudes, or behavior of intervention participants – are a “sweet spot” that strikes a balance between making measurement both meaningful and attributable.",
             "link": "https://ipastorage.app.box.com/file/1380496362255?s=5xmoqoho1yevbok62sftovt5xvu5elad",
-            "doc_type": null
+            "doc_type": null,
+            "learning_roadmap": "Content",
+            "high_priority": null
       }
 ]
   },
@@ -2843,18 +3015,22 @@
     "description": "A learning organization is one that systematically uses evidence to improve its programs — treating data not as a compliance requirement, but as a strategic tool for getting better at what it does. RFE's foundational premise is that the most effective path to social impact is building **cultures of learning and accountability** in partner organizations. This means investing in the capacity to generate, interpret, and act on evidence as an ongoing organizational practice — not just at evaluation milestones. Learning and accountability are not separate goals; they are **mutually reinforcing**: transparency about what works and what doesn't drives both internal improvement and external credibility.",
     "why_it_matters": "The development sector has long prioritized demonstrating impact over understanding it. This creates organizations that collect data for donors rather than for decisions — what RFE calls **\"inverted pyramid M&E\"**: massive data collection upfront, minimal use at the end. The cost is high: resources are wasted on data that doesn't inform decisions, programs continue unchanged despite evidence they could improve, and organizations miss the compounding benefits of iterative learning. Research is equally valuable to impact — targeting learning often gets us farther than chasing instant results.",
     "how_rfe_applies": "Building learning culture is not a single product — it is the **underlying goal of everything RFE does**. Every product we deliver aims to leave partners more capable of generating and using evidence independently. In **Data Use and Evidence Culture Support**, we work explicitly on the organizational systems, routines, and leadership behaviors that sustain learning over time. In **Learning Plan Design**, we shift partners from viewing MEL as a burden toward seeing it as a **strategic investment** in program effectiveness. In **Communities of Practice**, we demonstrate the collective ROI of shared learning — helping organizations see that the cost of learning is lower, and the benefit higher, when it is done well and done together.",
-    "popup_buttons": [
+        "popup_buttons": [
       {
             "heading": "No Endline, No problem? slidedeck",
             "explanation": null,
             "link": "https://ipastorage.app.box.com/file/1906607217412?s=t46mm6v713fi3n0qqdj0ig8a26r81uts",
-            "doc_type": null
+            "doc_type": null,
+            "learning_roadmap": "Content",
+            "high_priority": null
       },
       {
             "heading": "Why Learning-focused Monitoring, Evaluation, and Learning is the Best Investment You Can Make Right Now",
             "explanation": "IPA blog on reasons that programs should invest in MEL.",
             "link": "https://poverty-action.org/why-learning-focused-monitoring-evaluation-and-learning-best-investment-you-can-make-right-now",
-            "doc_type": null
+            "doc_type": null,
+            "learning_roadmap": "Content",
+            "high_priority": null
       }
 ]
   },
@@ -2871,7 +3047,9 @@
     "description": "Capacity building is RFE's core approach to delivering advisory services — rather than simply producing MEL deliverables for partners, we work *with* partners to build their ability to generate and use evidence independently. This means that the process of how we work is as important as the outputs we produce. Workshops, co-creation, coaching, and structured practice are the mechanisms through which knowledge transfers from RFE to the organizations we support. The goal is not a well-designed MEL plan — it is a partner team that can design, implement, and iterate on their own MEL systems long after RFE's engagement ends.",
     "why_it_matters": "External advisors who simply deliver outputs create dependency rather than capability. Organizations that rely on consultants for their MEL work cannot sustain learning cultures when the consultants leave — and the development sector has a long history of MEL systems that collapse when external funding or support ends. Sustainable impact requires that **organizations themselves** develop the skills, confidence, and internal practices to use evidence for decisions. Capacity building is also more cost-effective at scale: building one organization's internal capability multiplies impact across every program they run, now and in the future.",
     "how_rfe_applies": "Capacity building shapes *how* RFE delivers every product — not just *what* we deliver. In **Learning Plan Design**, rather than writing partners' MEL plans for them, we guide them through workshops that build their own analytical skills and ownership. In **Monitoring TA**, we accompany partners through implementation, coaching rather than doing. The level of direct support we provide is deliberately calibrated to partner capacity — higher support for lower-capacity organizations, with the explicit goal of reducing that support over time as independence grows. A critical distinction RFE holds: **having a learning culture is not the same as having the capacity to execute it** — which is why building both the belief in learning *and* the practical skills to act on it is central to our work.",
-    "popup_buttons": []
+        "popup_buttons": [
+
+]
   },
   "Causal-Inference-Rigour": {
     "display_title": "Causal Inference / rigour",
@@ -2886,18 +3064,22 @@
     "description": "Causal inference is the ability to determine whether a program *caused* an observed change — as opposed to the change happening for other reasons. This is a foundational belief at RFE: that organizations should care not just about whether good things happened, but whether their program was responsible. Establishing causation requires a credible **counterfactual** — an estimate of what would have happened without the intervention. Without this, even positive outcomes can be misleading. Rigor, in RFE's view, is not about always using the most sophisticated methods — it is about using methods that are **appropriate to the question being asked** and **honest about what they can and cannot claim**.",
     "why_it_matters": "The development sector is full of organizations confidently reporting impact they cannot actually attribute to their work. Common pitfalls include:\n\n- **Before-and-after comparisons** that assume all change was caused by the program, ignoring external factors\n- **Output counting** that mistakes delivery for effectiveness\n- **Self-selection bias** where the people who join a program are already different from those who don't\n\nThese practices don't just produce bad data — they actively mislead decision-making, misallocate resources, and can sustain ineffective programs while starving better ones of funding. Rigor is not a luxury; it is a prerequisite for honest learning.",
     "how_rfe_applies": "At RFE, causal inference is embedded in our **Credible** CART principle and shapes how we advise clients across all products. A core part of our work is helping partners understand the *level* of causal claim their data can support — and being honest when it cannot support a causal claim at all. This is not about demanding RCTs everywhere; it is about **right-fit rigor** — matching the strength of the claim to the strength of the evidence. In **Learning Plan Design**, we help clients design MEL systems that are honest about attribution. In **A/B Testing TA**, we help partners build the infrastructure for genuine causal claims at scale. And across all our work, we push back on the sector norm of overclaiming — helping partners communicate findings in ways that build long-term credibility rather than short-term optics.",
-    "popup_buttons": [
+        "popup_buttons": [
       {
             "heading": "IDInsights Causal Inference course",
             "explanation": "Short video-based course on why we run RCTs",
             "link": "https://sites.google.com/idinsight.org/bootcamp/lessons/4-causal-inference",
-            "doc_type": "Web"
+            "doc_type": "Web",
+            "learning_roadmap": "Content",
+            "high_priority": null
       },
       {
             "heading": "JPAL: Resources on Randomized Evaluations",
             "explanation": "Strong list of videos detailing different aspects of why we run RCTs",
             "link": "https://www.povertyactionlab.org/resource/teaching-resources-randomized-evaluations",
-            "doc_type": "Web"
+            "doc_type": "Web",
+            "learning_roadmap": "Content",
+            "high_priority": "High Priority"
       }
 ]
   },
@@ -2914,30 +3096,38 @@
     "description": "The generalizability puzzle asks: *if a program worked in one context, can we expect it to work in another?* The answer is neither a simple yes nor no — it requires systematically breaking down *why* a program worked and assessing whether those conditions hold in a new context. The framework, developed by Bates and Glennerster, proposes four key questions:\n\n- **What is the disaggregated theory behind the program?** What specific behaviors or mechanisms does it rely on?\n- **Do local conditions support that theory?** Are the preconditions present in the new context?\n- **How strong is the evidence for the required behavior change?** Has this mechanism been demonstrated across multiple contexts?\n- **Can the implementation process be carried out effectively?** Are the delivery structures and capacity in place?",
     "why_it_matters": "The development sector wastes significant resources by treating evidence as either fully transferable (\"it worked in Kenya, let's do it here\") or completely context-specific (\"we can't use evidence from elsewhere\"). Both extremes are wrong. Dismissing external evidence ignores valuable knowledge; applying it uncritically ignores the real ways context shapes outcomes. The generalizability framework offers a structured middle path — making evidence *more* useful, not less, by asking the right questions about transferability rather than assuming the answer.",
     "how_rfe_applies": "The generalizability puzzle is directly embedded in our **Evidence Review** product, where we help partners assess not just *what* the evidence says, but *whether it applies to their context*. Rather than delivering a literature review that simply summarizes findings, we apply the four generalizability questions to translate global evidence into locally actionable recommendations. The framework also informs our work at the **SCALE stage** of stage-based learning — where organizations are adapting proven models to new geographies or implementers, and need a structured approach to understanding which elements of a program are context-dependent and which are likely to transfer.",
-    "popup_buttons": [
+        "popup_buttons": [
       {
             "heading": "SSIR The Generalizability Puzzle article",
-            "explanation": "Rigorous impact evaluations tell us a lot about the world, not just the particular contexts in which they are conducted.",
+            "explanation": "Rigorous impact evaluations tell us a lot about the world, not just the particular contexts in which they are conducted. ",
             "link": "https://ssir.org/articles/entry/the_generalizability_puzzle",
-            "doc_type": "Web"
+            "doc_type": "Web",
+            "learning_roadmap": "Content",
+            "high_priority": "High Priority"
       },
       {
             "heading": "J-PAL Generalizability Framework",
             "explanation": "A practical framework for evidence-informed policy: Addressing the generalizability puzzle. Can results from one context by applied to another",
             "link": "https://www.povertyactionlab.org/blog/5-24-17/practical-framework-evidence-informed-policy-addressing-generalizability-puzzle",
-            "doc_type": "Doc"
+            "doc_type": "Doc",
+            "learning_roadmap": "Content",
+            "high_priority": null
       },
       {
             "heading": "J-PAL Generalizability slidedeck",
             "explanation": null,
             "link": "https://www.povertyactionlab.org/sites/default/files/L3_Generalizability_Fahey.pdf",
-            "doc_type": "Slide deck"
+            "doc_type": "Slide deck",
+            "learning_roadmap": "Content",
+            "high_priority": null
       },
       {
             "heading": "JPAL: Globally Informed, Locally Grounded: A Framework for Applying Evidence",
             "explanation": null,
             "link": "https://www.youtube.com/watch?v=W3HRtoPBdCQ&feature=youtu.be",
-            "doc_type": "Video"
+            "doc_type": "Video",
+            "learning_roadmap": "Content",
+            "high_priority": null
       }
 ]
   },
@@ -3758,36 +3948,46 @@
     "description": "Indicators are measurable signals that tell you whether change is happening. Good indicator design means selecting measures that accurately reflect your theory of change — from outputs and early outcomes through to longer-term impact. In research and evaluation contexts, this involves choosing between different indicator types (e.g. self-reported, observed, administrative) and balancing precision with practicality.",
     "why_it_matters": "Poorly designed indicators are one of the most common ways MEL systems fail. Indicators that are too distal, too proximate, or simply unmeasurable produce data that can't answer your learning questions — wasting resources and potentially misleading program decisions.",
     "how_rfe_applies": "At RFE, indicator design is grounded in CART principles — particularly credibility and actionability. We help clients move away from output-counting toward early outcomes that are both attributable and meaningful. A key part of our advisory work is helping clients resist the temptation to measure everything, instead identifying the smallest set of indicators that will generate the most decision-relevant learning. Indicator design is a core activity in products like Learning Plan Design and Monitoring TA, and connects closely to Theory of Change work — because without a clear causal logic, it's difficult to know what's worth measuring in the first place.",
-    "popup_buttons": [
+        "popup_buttons": [
       {
             "heading": "RFE-style monitoring indicator design",
             "explanation": "This is an brief about how we do indicator design at RFE with practice opportunities to refine your indicator design skills",
             "link": "https://ipastorage.app.box.com/file/2182945969965",
-            "doc_type": null
+            "doc_type": null,
+            "learning_roadmap": "Content",
+            "high_priority": null
       },
       {
             "heading": "Intrac",
             "explanation": "Monitoring and Evaluation Programme Indicators",
             "link": "https://ipastorage.app.box.com/file/1112041916363",
-            "doc_type": null
+            "doc_type": null,
+            "learning_roadmap": "Content",
+            "high_priority": null
       },
       {
             "heading": "World Bank Blogs",
             "explanation": "Three new papers on measuring stuff that is difficult to measure",
             "link": "https://blogs.worldbank.org/en/impactevaluations/three-new-papers-measuring-stuff-difficult-measure",
-            "doc_type": null
+            "doc_type": null,
+            "learning_roadmap": "Content",
+            "high_priority": null
       },
       {
             "heading": "JPAL Research Resources",
             "explanation": "Introduction to Measurement and Indicators",
             "link": "https://www.povertyactionlab.org/resource/introduction-measurement-and-indicators",
-            "doc_type": null
+            "doc_type": null,
+            "learning_roadmap": "Content",
+            "high_priority": null
       },
       {
             "heading": "RFE-style monitoring indicator design",
             "explanation": "This is an brief about how we do indicator design at RFE with practice opportunities to refine your indicator design skills",
             "link": "https://ipastorage.app.box.com/file/2182945969965",
-            "doc_type": null
+            "doc_type": null,
+            "learning_roadmap": "Content",
+            "high_priority": null
       }
 ]
   },
@@ -3804,48 +4004,62 @@
     "description": "Sampling is the process of selecting who or what to include in a study. The right approach depends entirely on your research question and method — probability sampling for generalizable quantitative findings, purposive sampling for qualitative work where you want specific perspectives, and convenience sampling where resources are constrained. When studies aim to detect the effect of an intervention, power calculations determine the minimum sample size needed to reliably detect a meaningful change — if one exists.",
     "why_it_matters": "Poor sampling decisions undermine even well-designed studies. A sample that's too small, unrepresentative, or mismatched to the research question produces findings you can't trust or act on. In evaluation contexts specifically, an underpowered study can produce inconclusive results that are misread as evidence a program doesn't work — unfairly damaging a program's reputation and misleading future investment.",
     "how_rfe_applies": "At RFE, sampling decisions come up across many products — from qualitative interviews in User Research and Problem Diagnostics, to power calculations in A/B Testing TA and impact evaluations. A core part of our advisory role is helping clients match their sampling approach to their method and learning question, rather than defaulting to larger samples as a proxy for rigor. We connect these decisions back to CART principles: a sample that can't answer your learning question fails on both credibility and responsibility grounds.",
-    "popup_buttons": [
+        "popup_buttons": [
       {
             "heading": "IPA Data Hub: Sample Size Power",
             "explanation": "Comprehensive guide to conducting power calculations",
             "link": "https://data.poverty-action.org/research-design/sample-size-power.html",
-            "doc_type": null
+            "doc_type": null,
+            "learning_roadmap": "Content",
+            "high_priority": null
       },
       {
             "heading": "J-PAL: Sampling",
             "explanation": "Comprehensive J-PAL guide to sampling",
             "link": "https://www.povertyactionlab.org/resource/sampling",
-            "doc_type": null
+            "doc_type": null,
+            "learning_roadmap": "Content",
+            "high_priority": null
       },
       {
             "heading": "J-PAL: Power Calculations",
             "explanation": "Comprehensive J-PAL research resource on power calculations",
             "link": "https://www.povertyactionlab.org/resource/power-calculations",
-            "doc_type": null
+            "doc_type": null,
+            "learning_roadmap": "Content",
+            "high_priority": null
       },
       {
             "heading": "DIME Wiki: Sampling",
             "explanation": "World Bank wiki on sampling",
             "link": "https://dimewiki.worldbank.org/Sampling",
-            "doc_type": null
+            "doc_type": null,
+            "learning_roadmap": "Content",
+            "high_priority": null
       },
       {
             "heading": "Cluster design calculator template",
             "explanation": "Filled example of cluster design power calculations with 5 different possibilities based on different sampling assumptions. Create by Steve Glazerman.",
             "link": "https://ipastorage.app.box.com/file/2205396664532",
-            "doc_type": null
+            "doc_type": null,
+            "learning_roadmap": "Content",
+            "high_priority": null
       },
       {
             "heading": "J-PAL Essentials of Sample Size and Power",
             "explanation": "J-PAL presentation on the importance of power calculations",
             "link": "https://www.povertyactionlab.org/sites/default/files/L5a_Essentials%20of%20Sample%20Size%20and%20Power_2024_2.pdf",
-            "doc_type": null
+            "doc_type": null,
+            "learning_roadmap": "Content",
+            "high_priority": null
       },
       {
             "heading": "J-PAL: Power Calculator",
             "explanation": "J-PAL simple power calculator app",
             "link": "https://j-pal.shinyapps.io/power-app/",
-            "doc_type": null
+            "doc_type": null,
+            "learning_roadmap": "Content",
+            "high_priority": null
       }
 ]
   },
@@ -3862,36 +4076,46 @@
     "description": "An instrument is any tool used to collect data — surveys, interview guides, observation checklists, knowledge tests, and more. Good instrument design means crafting questions and structures that reliably capture what you actually want to measure, in a form your respondents can meaningfully engage with. This includes decisions about question type, ordering, language, length, and how the instrument will be administered (in-person, phone, digital, etc.). Piloting instruments before full rollout is a critical — and often skipped — step.",
     "why_it_matters": "Even a well-designed study can produce unreliable data if the instrument is poorly constructed. Leading questions, ambiguous wording, or culturally inappropriate framing introduce bias before data collection even begins. An instrument that's too long or burdensome also violates respondent dignity — a real ethical consideration when working with vulnerable populations.",
     "how_rfe_applies": "Instrument design comes up across nearly all RFE products — from monitoring surveys and pre-post knowledge tests in Monitoring TA, to interview guides and observation protocols in Process Evaluation and User Research. We help clients think carefully about the tradeoff between comprehensiveness and respondent burden — a core Responsible CART consideration. We also emphasize piloting as a non-negotiable step, and connect instrument quality directly to credibility: a technically sound study design is only as good as the tool used to collect its data.",
-    "popup_buttons": [
+        "popup_buttons": [
       {
             "heading": "DIME Wiki: Questionnaire Design",
             "explanation": "World Bank wiki on doing questionnaire design well",
             "link": "https://dimewiki.worldbank.org/Questionnaire_Design",
-            "doc_type": null
+            "doc_type": null,
+            "learning_roadmap": "Content",
+            "high_priority": null
       },
       {
             "heading": "Dime wiki: Field Surveys",
             "explanation": "World Bank wiki on writing and conducitng field surveys",
             "link": "https://dimewiki.worldbank.org/Field_Surveys",
-            "doc_type": null
+            "doc_type": null,
+            "learning_roadmap": "Content",
+            "high_priority": null
       },
       {
             "heading": "IPA Data Hub: Bench testing",
             "explanation": "Details on conducting bench testing, a core activity for improving data collection tools before launching them in the field",
             "link": "https://data.poverty-action.org/data-quality/bench-testing.html",
-            "doc_type": null
+            "doc_type": null,
+            "learning_roadmap": "Content",
+            "high_priority": null
       },
       {
             "heading": "IPA Data Hub: Survey Pilots",
             "explanation": "Details on conducting pilot, a core activity for improving data collection tools before launching them in the field",
             "link": "https://data.poverty-action.org/data-quality/pilot-survey.html",
-            "doc_type": null
+            "doc_type": null,
+            "learning_roadmap": "Content",
+            "high_priority": null
       },
       {
             "heading": "FHI360 Qualitative Methods Manual",
             "explanation": "Chapters on different qual methodologies provide useful content on designing interviews and FGD tools",
             "link": "https://www.fhi360.org/wp-content/uploads/2024/01/Qualitative-Research-Methods-A-Data-Collectors-Field-Guide.pdf#:~:text=information%20that%20participants%20provide,to%20establish%20positive%20interviewer%2Fparticipant%20dynamics",
-            "doc_type": null
+            "doc_type": null,
+            "learning_roadmap": "Content",
+            "high_priority": null
       }
 ]
   },
@@ -3908,36 +4132,46 @@
     "description": "Data collection covers everything that happens between designing your instruments and having clean, usable data — including field logistics, enumerator training, protocols and procedures manuals, and data quality checks. Good data collection requires balancing three things that are often in tension: time, cost, and quality. Methods vary widely depending on context — from large-scale quantitative surveys to qualitative interviews, observation, or phone-based data collection.",
     "why_it_matters": "A well-designed study with a strong instrument can still produce unreliable data if collection is poorly managed. Common failure points include inconsistent enumerator training, inadequate quality checks, and logistics breakdowns. These problems are often invisible until analysis — at which point it's too late to fix them.",
     "how_rfe_applies": "Data collection support is a core component of Monitoring TA, where we help clients build sustainable, high-quality collection systems. A recurring focus in our advisory work is reliability and credibility — asking hard questions like: Are enumerators applying the instrument consistently? Are respondents interpreting questions as intended? Are quality checks catching errors in real time, or only after the fact? We help clients implement concrete mechanisms — back checks, spot checks, and high-frequency monitoring — to catch problems early. We also pay close attention to enumerator behavior as a source of bias, since even well-trained teams can introduce systematic error through leading, skipping, or fabricating responses.",
-    "popup_buttons": [
+        "popup_buttons": [
       {
             "heading": "IPA Data Hub: Data Collection",
             "explanation": "Extensive methodological guide on conducting rigorous data collection",
             "link": "https://data.poverty-action.org/data-collection/",
-            "doc_type": null
+            "doc_type": null,
+            "learning_roadmap": "Content",
+            "high_priority": null
       },
       {
             "heading": "DIME Wiki: Enumerator Training",
-            "explanation": "World Bank wiki on methods for training an enumerator team",
+            "explanation": "World Bank wiki on methods for training an enumerator team ",
             "link": "https://dimewiki.worldbank.org/Enumerator_Training",
-            "doc_type": null
+            "doc_type": null,
+            "learning_roadmap": "Content",
+            "high_priority": null
       },
       {
             "heading": "J-PAL: Field Team Management",
             "explanation": "J-PAL research resource entry on managing the field team during data collection phase",
             "link": "https://www.povertyactionlab.org/resource/field-team-management",
-            "doc_type": null
+            "doc_type": null,
+            "learning_roadmap": "Content",
+            "high_priority": null
       },
       {
             "heading": "J-PAL: Design and Iterate Implementation Strategy",
             "explanation": "J-PAL research resource entry on iteratively conducting data collection to improve data quality and rigour",
             "link": "https://www.povertyactionlab.org/resource/design-and-iterate-implementation-strategy",
-            "doc_type": null
+            "doc_type": null,
+            "learning_roadmap": "Content",
+            "high_priority": null
       },
       {
             "heading": "World Bank Group Institute:",
             "explanation": "Free course: Manage Successful Field Research: New Edition  (not always open for enrollment)",
             "link": "https://courses.wbginstitute.org/course/manage-successful-field-research-new-edition-spring-2026",
-            "doc_type": "Course"
+            "doc_type": "Course",
+            "learning_roadmap": "Content",
+            "high_priority": null
       }
 ]
   },
@@ -3954,42 +4188,54 @@
     "description": "Digital data collection tools replace paper-based systems with software platforms that capture, store, and transmit data electronically. Common tools in international development contexts include SurveyCTO, KoboToolbox, and ODK for surveys, and CommCare or PowerBI for data management and visualization. Choosing the right tool involves weighing factors like connectivity in the operating context, enumerator technical capacity, cost, and the complexity of the survey logic required.",
     "why_it_matters": "Digital tools can dramatically improve data quality and efficiency — enabling real-time validation, automatic skip logic, GPS tracking, and audio reviews that paper simply can't offer. But they are not a silver bullet: poorly programmed tools or undertrained enumerators can introduce new sources of error, and over-reliance on dashboards can create a false sense that data is being 'used' when it isn't.",
     "how_rfe_applies": "Digital tools come up most directly in Monitoring TA, where we help clients select, program, and implement appropriate platforms for their context and capacity. A key part of our advisory role is pushing back on the assumption that more sophisticated tools equal better data — the right tool is the one the team can actually use well. We also help clients think beyond data collection to data systems: how tools connect to dashboards, how data flows to decision-makers, and whether the infrastructure supports genuine actionability — a core CART principle. In A/B Testing TA, this takes on particular importance: a core part of our role is helping partners build or adapt the digital infrastructure needed to assign, track, and compare treatment groups in real time — making the partner's own systems the engine of the test, not just a passive data source.",
-    "popup_buttons": [
+        "popup_buttons": [
       {
             "heading": "J-PAL: Conducting Remote Surveys",
-            "explanation": "Research resource entry on how to conduct rigorous remote surveys.",
+            "explanation": "Research resource entry on how to conduct rigorous remote surveys. ",
             "link": "https://www.povertyactionlab.org/resource/resources-conducting-remote-surveys",
-            "doc_type": null
+            "doc_type": null,
+            "learning_roadmap": "Content",
+            "high_priority": null
       },
       {
             "heading": "DIME Wiki: Innovative Data Sources",
-            "explanation": "World Bank wiki on the use of mobile big data sources for development work.",
+            "explanation": "World Bank wiki on the use of mobile big data sources for development work. ",
             "link": "https://dimewiki.worldbank.org/Innovative_Data_Sources#Mobile_Big_Data",
-            "doc_type": null
+            "doc_type": null,
+            "learning_roadmap": "Content",
+            "high_priority": null
       },
       {
             "heading": "DIME Wiki: Remote Sensing",
-            "explanation": "World wiki on the use of remote sensing data collection for development work",
+            "explanation": "World wiki on the use of remote sensing data collection for development work ",
             "link": "https://dimewiki.worldbank.org/Remote_Sensing",
-            "doc_type": null
+            "doc_type": null,
+            "learning_roadmap": "Content",
+            "high_priority": null
       },
       {
             "heading": "IPA Data Hub: Digital Ethnographic Surveys",
-            "explanation": "See the digital specific section to read about considerations for conducitng digital data collection well.",
+            "explanation": "See the digital specific section to read about considerations for conducitng digital data collection well. ",
             "link": "https://data.poverty-action.org/data-collection/qualitative-methods/ethnographies.html#footnotes",
-            "doc_type": null
+            "doc_type": null,
+            "learning_roadmap": "Content",
+            "high_priority": null
       },
       {
             "heading": "The Agency Fund",
             "explanation": "User Funnel Playbook for the Social Sector. A different approach to assessing effectiveness for digital innovations",
             "link": "https://ipastorage.app.box.com/file/2109753033577",
-            "doc_type": null
+            "doc_type": null,
+            "learning_roadmap": "Content",
+            "high_priority": null
       },
       {
             "heading": "World Bank Group Institute",
             "explanation": "Free course: Foundations in Mobile Phone Data (MPD) for Policy - Design and Implementation of MPD Initiatives  (not always open for enrollment)",
             "link": "https://courses.wbginstitute.org/course/mobile-phone-data",
-            "doc_type": "Course"
+            "doc_type": "Course",
+            "learning_roadmap": "Content",
+            "high_priority": null
       }
 ]
   },
@@ -4006,42 +4252,54 @@
     "description": "Data analysis is the process of transforming raw data into findings that can inform decisions. This includes data cleaning, quantitative analysis (descriptive statistics, regression, significance testing), and qualitative analysis (thematic coding, pattern identification). Good analysis starts before data collection — with a clear analysis plan that links each indicator back to the learning questions it is meant to answer.",
     "why_it_matters": "Analysis is where data either earns its keep or exposes the weaknesses of earlier decisions. Common problems include analyzing data that was never connected to a clear decision, drawing causal conclusions from descriptive data, and producing findings too late or in formats that decision-makers can't use. Data without a credible analysis plan often ends up in a 'data graveyard' — collected but never acted upon.",
     "how_rfe_applies": "At RFE, we treat analysis as inseparable from data use planning — helping clients think ahead about who will use findings, when, and for what decisions, before a single data point is collected. This connects directly to the Actionable CART principle. In Monitoring TA, we support partners in cleaning and analyzing complex datasets, and in facilitating Pause and Reflect sessions that bridge the gap between findings and program decisions. We also help clients distinguish between what their data can credibly show — particularly around attribution — and what requires stronger methods to claim.",
-    "popup_buttons": [
+        "popup_buttons": [
       {
             "heading": "J-PAL: Pre-analysis plans",
             "explanation": "J-PAL research resource entry creating pre-analysis plans in advance of analysis phase",
             "link": "https://www.povertyactionlab.org/resource/pre-analysis-plans",
-            "doc_type": null
+            "doc_type": null,
+            "learning_roadmap": "Content",
+            "high_priority": null
       },
       {
             "heading": "IPA Data Hub: Data cleaning",
             "explanation": "Extensive guide to cleaning data prior to data analysis",
             "link": "https://data.poverty-action.org/data-cleaning/",
-            "doc_type": null
+            "doc_type": null,
+            "learning_roadmap": "Content",
+            "high_priority": null
       },
       {
             "heading": "J-PAL: Data Analysis",
             "explanation": "Comprehensive J-PAL research resource entry on data analysis",
             "link": "https://www.povertyactionlab.org/resource/data-analysis",
-            "doc_type": null
+            "doc_type": null,
+            "learning_roadmap": "Content",
+            "high_priority": null
       },
       {
             "heading": "J-PAL: Communicating to Partners about Results",
             "explanation": "J-PAL research resource entry how to communicate analysis results for better effect with partner organizations",
             "link": "https://www.povertyactionlab.org/resource/communicating-partner-about-results",
-            "doc_type": null
+            "doc_type": null,
+            "learning_roadmap": "Content",
+            "high_priority": null
       },
       {
             "heading": "World Bank Group Institute",
             "explanation": "Free course: Reproducible Research Fundamentals: New Edition (not always open for enrollment)",
             "link": "https://courses.wbginstitute.org/course/reproducible-research-fundamentals-new-edition",
-            "doc_type": "Course"
+            "doc_type": "Course",
+            "learning_roadmap": "Content",
+            "high_priority": null
       },
       {
             "heading": "World Bank Group Insitute",
             "explanation": "Free course: Big Data Analytics (not always open for enrollment)",
             "link": "https://courses.wbginstitute.org/course/big-data-analytics",
-            "doc_type": "Course"
+            "doc_type": "Course",
+            "learning_roadmap": "Content",
+            "high_priority": null
       }
 ]
   },
@@ -4058,18 +4316,22 @@
     "description": "Data visualization is the practice of representing data graphically — through charts, tables, dashboards, and other visual formats — to make findings accessible and interpretable. Storytelling goes one step further: structuring findings into a clear narrative that connects evidence to decisions. Together, they determine whether analysis actually reaches and influences its intended audience. Good visualization is not about making data look attractive — it's about making the right findings visible to the right people at the right moment.",
     "why_it_matters": "Even rigorous, well-analyzed data can fail to drive change if it isn't communicated effectively. Decision-makers rarely engage with raw outputs — they need findings framed around the questions they're actually trying to answer. Poorly designed dashboards can create an illusion of data use while burying the insights that matter most.",
     "how_rfe_applies": "At RFE, data visualization and storytelling are closely tied to the Actionable CART principle — we think of them as the last mile of evidence use. In Monitoring TA and Data Use and Evidence Culture Support, we help partners design dashboards and reports that are built around decisions, not just data availability. A recurring challenge we address is the gap between what MEL teams produce and what program teams actually read and use — which is often as much a communication and framing problem as a technical one. We also coach partners on presenting findings in Pause and Reflect workshops, where how data is introduced and sequenced can make the difference between genuine reflection and a box-ticking exercise.",
-    "popup_buttons": [
+        "popup_buttons": [
       {
             "heading": "IPA Data Hub: Data visualization",
             "explanation": "Comprehensive guide to conducting data visualization",
             "link": "https://data.poverty-action.org/data-science/data-visualization/",
-            "doc_type": null
+            "doc_type": null,
+            "learning_roadmap": "Content",
+            "high_priority": null
       },
       {
             "heading": "World Bank Group Institute:",
             "explanation": "Free course: Fundamentals of data visualization: crafting compelling stories with data (not always open for enrollment)",
             "link": "https://courses.wbginstitute.org/course/data-visualization-fundamentals-from-theory-to-practice",
-            "doc_type": "Course"
+            "doc_type": "Course",
+            "learning_roadmap": "Content",
+            "high_priority": null
       }
 ]
   },
@@ -4086,36 +4348,46 @@
     "description": "Qualitative methods cover a diverse set of approaches for collecting and analyzing non-numerical data — including in-depth interviews, focus groups, observation, key informant interviews, and thematic analysis. What unites them is a focus on understanding how and why — exploring perceptions, experiences, and context that quantitative data alone cannot capture. This category also includes mixed methods, where qualitative and quantitative approaches are intentionally combined to answer different parts of the same research question, often strengthening both.",
     "why_it_matters": "Qualitative methods are frequently undervalued in evaluation contexts dominated by quantitative rigor — but they often answer the most important questions: Why didn't the program work as expected? What are beneficiaries actually experiencing? What implementation barriers are invisible in the numbers? Without qualitative insight, programs risk optimizing for what is measurable rather than what matters.",
     "how_rfe_applies": "Qualitative methods appear across nearly all RFE products — from User Research and Problem Diagnostics (where interviews and observation surface implementation realities) to Process Evaluation (where focus groups and key informant interviews assess fidelity and barriers). A distinctive RFE angle is our emphasis on right-fit methods: we help clients resist the false hierarchy that puts quantitative approaches above qualitative ones, and instead ask which method best answers a given learning question. We also help clients see qualitative methods as a genuine partner to quantitative work — used to identify the right indicators before a quantitative study is designed, to triangulate and contextualize findings as they emerge, and to investigate what drove quantitative results that are surprising, mixed, or hard to act on without deeper understanding.",
-    "popup_buttons": [
+        "popup_buttons": [
       {
             "heading": "IPA Data Hub- Qualitative methods",
             "explanation": "General methodological support for how IPA does qualitative research.",
             "link": "https://data.poverty-action.org/data-collection/qualitative-methods/",
-            "doc_type": null
+            "doc_type": null,
+            "learning_roadmap": "Content",
+            "high_priority": null
       },
       {
             "heading": "J-PAL- Integrating Qual Methods into Randomized Evaluations",
-            "explanation": "Research resource on ways to do mixed methods evaluatory work.",
+            "explanation": "Research resource on ways to do mixed methods evaluatory work. ",
             "link": "https://www.povertyactionlab.org/resource/integrating-qualitative-methods-randomized-evaluations",
-            "doc_type": null
+            "doc_type": null,
+            "learning_roadmap": "Content",
+            "high_priority": null
       },
       {
             "heading": "J-PAL- Implementation Qual Methods in the Field",
-            "explanation": "Research resource on ways to maintain qualitative rigour while working in the field.",
+            "explanation": "Research resource on ways to maintain qualitative rigour while working in the field. ",
             "link": "https://www.povertyactionlab.org/resource/implementing-qualitative-methods-field",
-            "doc_type": null
+            "doc_type": null,
+            "learning_roadmap": "Content",
+            "high_priority": null
       },
       {
             "heading": "RFE TTP Qualitative Research Methods Training Series",
             "explanation": null,
             "link": "https://ipastorage.app.box.com/folder/348528318233?s=kejn4dh4ifcdt01a4exyhlexq6yyrdn3",
-            "doc_type": null
+            "doc_type": null,
+            "learning_roadmap": "Content",
+            "high_priority": null
       },
       {
             "heading": "FHI360 Qualitative Methods Manual",
-            "explanation": "Comprehensive manual on conducting qualitative field work.",
+            "explanation": "Comprehensive manual on conducting qualitative field work. ",
             "link": "https://www.fhi360.org/wp-content/uploads/2024/01/Qualitative-Research-Methods-A-Data-Collectors-Field-Guide.pdf#:~:text=information%20that%20participants%20provide,to%20establish%20positive%20interviewer%2Fparticipant%20dynamics",
-            "doc_type": null
+            "doc_type": null,
+            "learning_roadmap": "Content",
+            "high_priority": null
       }
 ]
   },
@@ -4132,24 +4404,30 @@
     "description": "Establishing attribution — whether a program actually caused an observed change — requires methods that can credibly estimate what would have happened without the intervention. Randomized Controlled Trials (RCTs) are considered the gold standard because random assignment to treatment and control groups eliminates selection bias and creates genuinely comparable groups. Quasi-experimental methods (such as difference-in-differences, regression discontinuity, and matching) attempt to construct credible comparisons when randomization isn't possible, but require stronger assumptions and expert judgment to execute well.",
     "why_it_matters": "Without a credible counterfactual, it is impossible to know whether observed changes are due to the intervention or something else entirely. Before-and-after comparisons, output counts, and anecdotal success stories are not substitutes for causal evidence. Organizations that skip this step risk investing in programs that aren't working, or abandoning programs that are.",
     "how_rfe_applies": "IPA's research department often leads RCT design and implementation, while RFE's work tends to sit at the edges of the causal evidence cycle. Before an RCT, we often help partners strengthen program design and build the implementation quality needed for an intervention to be worth evaluating — work that directly supports stage-based learning at the IDEATE and REFINE stages. After an RCT, we often help organizations apply previously evaluated models in new contexts, using implementation research to understand how findings translate and what adaptations are needed. In OneIPA projects, RFE and research services are combined, requiring RFE staff to engage directly alongside researchers throughout the evaluation process. In all of these contexts, a working knowledge of causal inference and experimental design is essential for RFE staff to engage credibly with partners and IPA colleagues — even when we are not leading the evaluation itself.",
-    "popup_buttons": [
+        "popup_buttons": [
       {
             "heading": "IPA Data Hub: Randomization",
             "explanation": "IPA Guide to randomization for Impact Evaluations",
             "link": "https://data.poverty-action.org/research-design/randomization.html",
-            "doc_type": null
+            "doc_type": null,
+            "learning_roadmap": "Content",
+            "high_priority": null
       },
       {
             "heading": "IPA Data Hub: Addressing Common Criticisms of RCTs",
             "explanation": "Guide to communicating the importance of RCTs",
             "link": "https://data.poverty-action.org/research-design/addressing-rct-criticisms.html",
-            "doc_type": null
+            "doc_type": null,
+            "learning_roadmap": "Content",
+            "high_priority": null
       },
       {
             "heading": "J-PAL: Randomization",
             "explanation": "Comprehensive guide to randomization for Impact Evaluations",
             "link": "https://www.povertyactionlab.org/resource/randomization",
-            "doc_type": null
+            "doc_type": null,
+            "learning_roadmap": "Content",
+            "high_priority": null
       }
 ]
   },
@@ -4166,18 +4444,22 @@
     "description": "Many of IPA’s staff and partners come from anacademic background, which has its own unique conventions for communication format and style. RFE operates closer to the consulting/business world, which typically uses an “answer first”communication style. The pyramid principle is a way to structure communication that prioritizes specific values: Quick to read, Easy to remember. Modular for adaptation across different audiences/stakeholders.",
     "why_it_matters": null,
     "how_rfe_applies": null,
-    "popup_buttons": [
+        "popup_buttons": [
       {
             "heading": "Problem Trees at RFE",
             "explanation": "Slide deck on how we use Problem Trees to Right Fit evidence",
             "link": "https://ipastorage.app.box.com/file/799395059311?s=a6jrejwwlh7j5a0qs44pm4lfmxqsgxos",
-            "doc_type": null
+            "doc_type": null,
+            "learning_roadmap": "Content",
+            "high_priority": null
       },
       {
             "heading": "The Definitive Guide to Issue Trees",
-            "explanation": "Article on Problem Trees in the consulting space.",
+            "explanation": "Article on Problem Trees in the consulting space. ",
             "link": "https://www.craftingcases.com/issue-tree-guide/",
-            "doc_type": null
+            "doc_type": null,
+            "learning_roadmap": "Content",
+            "high_priority": null
       }
 ]
   },
@@ -4194,18 +4476,22 @@
     "description": null,
     "why_it_matters": null,
     "how_rfe_applies": null,
-    "popup_buttons": [
+        "popup_buttons": [
       {
             "heading": "Pyramid Principle at RFE",
             "explanation": "Slide deck detailing how we use Pyramid Principle to support Right-Fit Learning",
             "link": "https://ipastorage.app.box.com/file/832942571792?s=eene1gy70n1o3lspgfm3ub5x4jygv9cz",
-            "doc_type": null
+            "doc_type": null,
+            "learning_roadmap": "Content",
+            "high_priority": null
       },
       {
             "heading": "Engineering' your story narrative using the Pyramid Principle",
-            "explanation": "Article on the Pyramid Principle in consulting spaces.",
+            "explanation": "Article on the Pyramid Principle in consulting spaces. ",
             "link": "https://www.linkedin.com/pulse/engineering-your-story-narrative-using-pyramid-principle-iyer/",
-            "doc_type": null
+            "doc_type": null,
+            "learning_roadmap": "Content",
+            "high_priority": null
       }
 ]
   },
@@ -4222,18 +4508,22 @@
     "description": null,
     "why_it_matters": null,
     "how_rfe_applies": null,
-    "popup_buttons": [
+        "popup_buttons": [
       {
             "heading": "Presentation design at RFE",
             "explanation": "Slide deck on how we advice to develop slide decks for Right Fit Evidence",
             "link": "https://ipastorage.app.box.com/file/795694715108?s=fusvry6qqw8ancl6x6n3btfchtr1s98h",
-            "doc_type": null
+            "doc_type": null,
+            "learning_roadmap": "Content",
+            "high_priority": null
       },
       {
             "heading": "Presentation design at RFE (video)",
             "explanation": "Live session recording on presentation design at RFE",
             "link": "https://ipastorage.app.box.com/file/814711239969",
-            "doc_type": null
+            "doc_type": null,
+            "learning_roadmap": "Content",
+            "high_priority": null
       }
 ]
   },
@@ -4250,18 +4540,22 @@
     "description": null,
     "why_it_matters": null,
     "how_rfe_applies": null,
-    "popup_buttons": [
+        "popup_buttons": [
       {
             "heading": "Remote Workshop Guide",
-            "explanation": "RFE has collected strategies, do's, and don'ts for holding workshops online.",
+            "explanation": "RFE has collected strategies, do's, and don'ts for holding workshops online. ",
             "link": "https://ipastorage.app.box.com/file/1250831669796?s=wbh01nhl8y0tpglpxocphw5b7u2mggaj",
-            "doc_type": null
+            "doc_type": null,
+            "learning_roadmap": "Content",
+            "high_priority": null
       },
       {
             "heading": "Playful Facilitation Guide",
-            "explanation": "If you are interested in adding elements of play to you presentation, check here for some practical ways to facilitate meaningful play.",
+            "explanation": "If you are interested in adding elements of play to you presentation, check here for some practical ways to facilitate meaningful play. ",
             "link": "https://ipastorage.app.box.com/file/928419199090?s=cx5rzn5lftod86zzk2m2ws1ta5jxahvx",
-            "doc_type": null
+            "doc_type": null,
+            "learning_roadmap": "Content",
+            "high_priority": null
       }
 ]
   },
@@ -4278,7 +4572,9 @@
     "description": null,
     "why_it_matters": null,
     "how_rfe_applies": null,
-    "popup_buttons": []
+        "popup_buttons": [
+
+]
   },
   "Using-Ai": {
     "display_title": "Using AI",
@@ -4293,12 +4589,14 @@
     "description": null,
     "why_it_matters": null,
     "how_rfe_applies": null,
-    "popup_buttons": [
+        "popup_buttons": [
       {
             "heading": "Anthropic Skill Jar",
-            "explanation": "Courses for getting the most out of Claude and Claude Code.",
+            "explanation": "Courses for getting the most out of Claude and Claude Code. ",
             "link": "https://anthropic.skilljar.com/",
-            "doc_type": null
+            "doc_type": null,
+            "learning_roadmap": "Practice",
+            "high_priority": null
       }
 ]
   },
@@ -4315,7 +4613,9 @@
     "description": null,
     "why_it_matters": null,
     "how_rfe_applies": null,
-    "popup_buttons": []
+        "popup_buttons": [
+
+]
   },
   "Product-Development": {
     "display_title": "Product Development",
@@ -4330,18 +4630,22 @@
     "description": null,
     "why_it_matters": null,
     "how_rfe_applies": null,
-    "popup_buttons": [
+        "popup_buttons": [
       {
             "heading": "Onboarding slide deck for Mgrs and Directors",
             "explanation": "Product development at RFE (~2024)",
             "link": "https://ipastorage.app.box.com/file/1320838283338?s=bj68pt1i3r4pdwy6x7w735d6wt52q38y",
-            "doc_type": null
+            "doc_type": null,
+            "learning_roadmap": "Content",
+            "high_priority": null
       },
       {
             "heading": "Onboarding video for Product Dev",
             "explanation": "More recent presentation on how we do Product Dev (2025)",
             "link": "https://ipastorage.app.box.com/file/1750749085388?s=lu5nvqvgvv5h6brpqx7kxxq6urdpiztn",
-            "doc_type": null
+            "doc_type": null,
+            "learning_roadmap": "Content",
+            "high_priority": null
       }
 ]
   },
@@ -4358,7 +4662,9 @@
     "description": null,
     "why_it_matters": null,
     "how_rfe_applies": null,
-    "popup_buttons": []
+        "popup_buttons": [
+
+]
   },
   "Ipa-And-Oneipa-Structure": {
     "display_title": "IPA and OneIPA structure",
@@ -4373,7 +4679,9 @@
     "description": null,
     "why_it_matters": null,
     "how_rfe_applies": null,
-    "popup_buttons": []
+        "popup_buttons": [
+
+]
   },
   "Bd-Processes": {
     "display_title": "BD Processes",
@@ -4388,7 +4696,9 @@
     "description": null,
     "why_it_matters": null,
     "how_rfe_applies": null,
-    "popup_buttons": []
+        "popup_buttons": [
+
+]
   },
   "Line-Management": {
     "display_title": "Line Management",
@@ -4403,12 +4713,14 @@
     "description": null,
     "why_it_matters": null,
     "how_rfe_applies": null,
-    "popup_buttons": [
+        "popup_buttons": [
       {
             "heading": "Leading Difficult Conversations",
             "explanation": "Consultant presentation for IPA managers",
             "link": "https://ipastorage.app.box.com/file/1089689695670?s=vi6h66krd0b6p43xvcdr8v7m4xtyw65s",
-            "doc_type": null
+            "doc_type": null,
+            "learning_roadmap": "Content",
+            "high_priority": null
       }
 ]
   },
@@ -4425,7 +4737,9 @@
     "description": null,
     "why_it_matters": null,
     "how_rfe_applies": null,
-    "popup_buttons": []
+        "popup_buttons": [
+
+]
   },
   "Stakeholder-Management": {
     "display_title": "Stakeholder Management",
@@ -4440,30 +4754,38 @@
     "description": null,
     "why_it_matters": null,
     "how_rfe_applies": null,
-    "popup_buttons": [
+        "popup_buttons": [
       {
             "heading": "Client management at RFE",
             "explanation": "Slide deck on how we apply client mgmt to Right Fit Evidence",
             "link": "https://ipastorage.app.box.com/file/864046796151?s=9s3xle4kjmgc4kppz6iyofafl74raaqp",
-            "doc_type": "Slide deck"
+            "doc_type": "Slide deck",
+            "learning_roadmap": "Content",
+            "high_priority": null
       },
       {
             "heading": "Client management at RFE (video)",
             "explanation": "Live presentation on how we apply client mgmt to Right Fit Evidence",
             "link": "https://ipastorage.app.box.com/file/895221576372",
-            "doc_type": "Video"
+            "doc_type": "Video",
+            "learning_roadmap": "Content",
+            "high_priority": null
       },
       {
             "heading": "How much relationship capital do you have?",
             "explanation": "Informational brief on conducting effective stakeholder management, in the context of consulting",
             "link": "https://web-assets.bcg.com/img-src/file119020_tcm9-197714.pdf",
-            "doc_type": "Doc"
+            "doc_type": "Doc",
+            "learning_roadmap": "Content",
+            "high_priority": null
       },
       {
             "heading": "Project Management Institute (PMI)",
             "explanation": "Engaging Stakeholders for Project Success- Comprehensive guide on conducting effective stakeholder management",
             "link": "https://www.pmi.org/learning/library/engaging-stakeholders-project-success-11199",
-            "doc_type": "Doc"
+            "doc_type": "Doc",
+            "learning_roadmap": "Content",
+            "high_priority": null
       }
 ]
   },
@@ -4480,7 +4802,9 @@
     "description": null,
     "why_it_matters": null,
     "how_rfe_applies": null,
-    "popup_buttons": []
+        "popup_buttons": [
+
+]
   },
   "Recruitment-Onboarding": {
     "display_title": "Recruitment & Onboarding",
@@ -4495,7 +4819,9 @@
     "description": null,
     "why_it_matters": null,
     "how_rfe_applies": null,
-    "popup_buttons": []
+        "popup_buttons": [
+
+]
   },
   "Ideate-Stage": {
     "display_title": "Ideate",
@@ -5303,9 +5629,32 @@ You have 12 more indicators to review in 90 minutes. Create a simple tool the te
                 howEl.innerHTML = '';
             }
 
-            // Learning Resources — only show section if buttons exist
+            // Learning Resources — store buttons with learning_roadmap, setup toggle
+            const roadmapSection = document.getElementById('skillPopupRoadmapSection');
             btnsEl.innerHTML = '';
-            if (buttons.length > 0) {
+            
+            // Store buttons globally for filtering
+            window.currentSkillButtons = buttons || [];
+            window.currentSkillElementType = data.element_type;
+            
+            // Check if any buttons have learning_roadmap values
+            const hasRoadmapButtons = buttons.some(btn => btn.learning_roadmap);
+            
+            if (hasRoadmapButtons) {
+                // Show roadmap toggle
+                roadmapSection.style.display = '';
+                btnsSection.style.display = '';
+                
+                // Reset to Content view
+                document.querySelectorAll('.skill-roadmap-option').forEach(opt => {
+                    opt.classList.toggle('active', opt.dataset.roadmap === 'content');
+                });
+                
+                // Render Content buttons initially
+                renderSkillButtons('content');
+            } else if (buttons.length > 0) {
+                // No roadmap values - show all buttons without toggle
+                roadmapSection.style.display = 'none';
                 btnsSection.style.display = '';
                 const colour = SKILL_SECTION_COLOURS[data.element_type] || '#5566b0';
                 buttons.forEach(btn => {
@@ -5321,13 +5670,26 @@ You have 12 more indicators to review in 90 minutes. Create a simple tool the te
                         el.addEventListener('mouseover', function() { this.style.filter = 'brightness(0.85)'; });
                         el.addEventListener('mouseout',  function() { this.style.filter = ''; });
                     }
+                    
+                    // Get doc type icon and high priority tag
+                    const icon = docTypeIcon(btn.doc_type);
+                    const hp = btn.priority === 'High' || btn.high_priority === 'High Priority'
+                        ? '<span class="adv-hp">High priority</span>'
+                        : '';
+                    
                     el.innerHTML = `
-                        <div class="adv-btn-title">${btn.heading}</div>
+                        <div class="adv-btn-row">
+                            ${icon ? '<span class="adv-btn-icon">' + icon + '</span>' : ''}
+                            <span class="adv-btn-title">${btn.heading}</span>
+                            ${hp}
+                        </div>
                         ${btn.explanation ? '<div class="adv-btn-explanation">' + btn.explanation + '</div>' : ''}
                     `;
                     btnsEl.appendChild(el);
                 });
             } else {
+                // No buttons at all
+                roadmapSection.style.display = 'none';
                 btnsSection.style.display = 'none';
             }
 
@@ -5387,6 +5749,72 @@ You have 12 more indicators to review in 90 minutes. Create a simple tool the te
             const isOpen = btn.classList.contains('open');
             btn.classList.toggle('open', !isOpen);
             wrap.classList.toggle('open', !isOpen);
+        }
+
+        // Switch between Content and Practice views
+        function switchSkillRoadmap(element, roadmapType) {
+            // Update active state
+            document.querySelectorAll('.skill-roadmap-option').forEach(opt => {
+                opt.classList.toggle('active', opt.dataset.roadmap === roadmapType);
+            });
+            
+            // Render filtered buttons
+            renderSkillButtons(roadmapType);
+        }
+
+        // Render buttons filtered by learning_roadmap value
+        function renderSkillButtons(roadmapType) {
+            const btnsEl = document.getElementById('skillPopupButtons');
+            btnsEl.innerHTML = '';
+            
+            if (!window.currentSkillButtons) return;
+            
+            // Filter buttons by roadmap type (case-insensitive match)
+            const filteredButtons = window.currentSkillButtons.filter(btn => {
+                if (!btn.learning_roadmap) return false;
+                return btn.learning_roadmap.toLowerCase() === roadmapType.toLowerCase();
+            });
+            
+            // Render filtered buttons
+            const colour = SKILL_SECTION_COLOURS[window.currentSkillElementType] || '#5566b0';
+            filteredButtons.forEach(btn => {
+                if (!btn.heading) return;
+                const hasLink = btn.link && btn.link !== 'None';
+                const el = document.createElement(hasLink ? 'a' : 'div');
+                el.className = 'adv-btn' + (hasLink ? ' has-link' : '');
+                el.style.background = colour;
+                if (hasLink) {
+                    el.href = btn.link;
+                    el.target = '_blank';
+                    el.rel = 'noopener';
+                    el.addEventListener('mouseover', function() { this.style.filter = 'brightness(0.85)'; });
+                    el.addEventListener('mouseout',  function() { this.style.filter = ''; });
+                }
+                
+                // Get doc type icon and high priority tag (same as product buttons)
+                const icon = docTypeIcon(btn.doc_type);
+                const hp = btn.priority === 'High' || btn.high_priority === 'High Priority'
+                    ? '<span class="adv-hp">High priority</span>'
+                    : '';
+                
+                el.innerHTML = `
+                    <div class="adv-btn-row">
+                        ${icon ? '<span class="adv-btn-icon">' + icon + '</span>' : ''}
+                        <span class="adv-btn-title">${btn.heading}</span>
+                        ${hp}
+                    </div>
+                    ${btn.explanation ? '<div class="adv-btn-explanation">' + btn.explanation + '</div>' : ''}
+                `;
+                btnsEl.appendChild(el);
+            });
+            
+            // Show "no resources" message if no buttons for this roadmap type
+            if (filteredButtons.length === 0) {
+                const noResourcesMsg = document.createElement('div');
+                noResourcesMsg.style.cssText = 'font-size:13px;color:#aaa;font-style:italic;padding:10px 0;';
+                noResourcesMsg.textContent = 'No resources available for this section yet.';
+                btnsEl.appendChild(noResourcesMsg);
+            }
         }
 
         // Function to switch to Products tab
