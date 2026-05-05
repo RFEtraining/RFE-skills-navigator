@@ -6306,29 +6306,16 @@ You have 12 more indicators to review in 90 minutes. Create a simple tool the te
             const description = document.getElementById('flagNote').value.trim();
             if (!description) { document.getElementById('flagNote').style.borderColor = '#d94b1f'; return; }
 
-            const body = new URLSearchParams({
-                [FLAG_FIELDS.page]:        _flagCtx.page,
-                [FLAG_FIELDS.element]:     _flagCtx.element,
-                [FLAG_FIELDS.elementType]: _flagCtx.elementType,
-                [FLAG_FIELDS.tab]:         _flagCtx.tab,
-                [FLAG_FIELDS.section]:     _flagCtx.section,
-                [FLAG_FIELDS.description]: description
-            });
-
-            fetch(FLAG_FORM_URL, {
-                method: 'POST',
-                mode: 'no-cors',
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: body.toString()
-            });
+            const url = 'https://docs.google.com/forms/d/e/1FAIpQLSebDqZv-aU6ZH52PxPArkVR7QR0zNACtEg-dXD0ihIGNNBI3A/viewform?usp=pp_url'
+                + '&' + FLAG_FIELDS.page        + '=' + encodeURIComponent(_flagCtx.page)
+                + '&' + FLAG_FIELDS.element     + '=' + encodeURIComponent(_flagCtx.element)
+                + '&' + FLAG_FIELDS.elementType + '=' + encodeURIComponent(_flagCtx.elementType)
+                + '&' + FLAG_FIELDS.tab         + '=' + encodeURIComponent(_flagCtx.tab)
+                + '&' + FLAG_FIELDS.section     + '=' + encodeURIComponent(_flagCtx.section)
+                + '&' + FLAG_FIELDS.description + '=' + encodeURIComponent(description);
 
             closeFlagModal();
-            // Brief success toast
-            const t = document.createElement('div');
-            t.textContent = 'Flag submitted — thank you!';
-            t.style.cssText = 'position:fixed;bottom:28px;left:50%;transform:translateX(-50%);background:#2c3e50;color:white;padding:11px 22px;border-radius:10px;font-size:13px;font-weight:600;z-index:9999;transition:opacity .4s;';
-            document.body.appendChild(t);
-            setTimeout(() => { t.style.opacity = '0'; setTimeout(() => t.remove(), 400); }, 3000);
+            window.open(url, '_blank');
         }
 
         document.getElementById('flagOverlay').addEventListener('click', function(e) {
@@ -6344,7 +6331,7 @@ You have 12 more indicators to review in 90 minutes. Create a simple tool the te
             <div class="flag-chips" id="flagChips"></div>
             <label for="flagNote">What's the issue?</label>
             <textarea id="flagNote" placeholder="e.g. Broken link, incorrect description, outdated content…"></textarea>
-            <p class="flag-modal-note">Your Google account email will be collected with this submission.</p>
+            <p class="flag-modal-note">A pre-filled form will open in a new tab. Your Google account email will be collected on submission.</p>
             <div class="flag-modal-actions">
                 <button class="flag-btn-cancel" onclick="closeFlagModal()">Cancel</button>
                 <button class="flag-btn-submit" onclick="submitFlag()">Submit</button>
