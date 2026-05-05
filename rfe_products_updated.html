@@ -6360,7 +6360,7 @@ You have 12 more indicators to review in 90 minutes. Create a simple tool the te
             if (!resolvedKey) { console.warn('Deep link: popup key not found —', popupKey); return; }
 
             // Open popup
-            if (typeof openPopup === 'function') openPopup(resolvedKey);
+            if (typeof showPopup === 'function') showPopup(resolvedKey);
 
             setTimeout(function() {
                 const isProduct = typeof popupData !== 'undefined' &&
