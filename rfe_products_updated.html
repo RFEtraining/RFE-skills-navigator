@@ -2018,6 +2018,61 @@
         #mainContent {
             flex: 1;
         }
+
+        /* ── FLAG BUTTON ── */
+        .flag-btn {
+            display: inline-flex; align-items: center; gap: 3px;
+            background: none; border: 1px solid transparent; border-radius: 6px;
+            padding: 2px 7px; cursor: pointer;
+            font-size: 11px; font-weight: 600; color: #ccc;
+            transition: all .15s; white-space: nowrap; font-family: inherit;
+            vertical-align: middle; line-height: 1;
+        }
+        .flag-btn .flag-icon { font-size: 13px; font-style: normal; }
+        .flag-btn:hover { color: #d94b1f; border-color: #f5c4b4; background: #fff5f0; }
+
+        /* ── FLAG MODAL ── */
+        .flag-overlay {
+            display: none; position: fixed; inset: 0;
+            background: rgba(0,0,0,.45); z-index: 9000;
+            align-items: center; justify-content: center;
+        }
+        .flag-overlay.show { display: flex; }
+        .flag-modal {
+            background: white; border-radius: 14px; padding: 26px;
+            width: 460px; box-shadow: 0 12px 50px rgba(0,0,0,.25);
+        }
+        .flag-modal-title {
+            display: flex; align-items: center; gap: 8px;
+            font-size: 17px; font-weight: 700; color: #d94b1f; margin: 0 0 4px;
+        }
+        .flag-modal-sub { font-size: 13px; color: #888; margin: 0 0 14px; }
+        .flag-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
+        .flag-chip { background: #f0f2f5; border-radius: 20px; padding: 4px 10px; font-size: 11px; color: #555; }
+        .flag-chip b { color: #2c3e50; }
+        .flag-modal label { font-size: 13px; font-weight: 600; color: #555; display: block; margin-bottom: 6px; }
+        .flag-modal textarea {
+            width: 100%; box-sizing: border-box; border: 1px solid #ddd;
+            border-radius: 8px; padding: 10px 12px; font-size: 13px;
+            min-height: 80px; resize: vertical; font-family: inherit; color: #2c3e50;
+        }
+        .flag-modal textarea:focus { outline: none; border-color: #007d70; }
+        .flag-modal-note { font-size: 11px; color: #bbb; margin: 8px 0 0; }
+        .flag-modal-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 16px; }
+        .flag-btn-cancel {
+            background: none; border: 1px solid #ddd; border-radius: 8px;
+            padding: 8px 16px; font-size: 13px; cursor: pointer; color: #666; font-family: inherit;
+        }
+        .flag-btn-submit {
+            background: #d94b1f; border: none; border-radius: 8px;
+            padding: 8px 18px; font-size: 13px; font-weight: 700;
+            color: white; cursor: pointer; font-family: inherit;
+        }
+
+        /* section-header-row: flex row for label + flag btn */
+        .section-flag-row {
+            display: flex; align-items: center; justify-content: space-between;
+        }
     </style>
 </head>
 <body>
@@ -2182,11 +2237,11 @@
                 <div id="basicInfoTab" class="v7-panel on">
                     <div class="v7-basic-grid">
                         <div class="v7-info-box">
-                            <div class="v7-info-label" style="color:#0F6E56;">Product description</div>
+                            <div class="section-flag-row"><div class="v7-info-label" style="color:#0F6E56;">Product description</div><button class="flag-btn" title="Flag an issue" onclick="openFlag('Product Description')"><span class="flag-icon">⚑</span> Flag</button></div>
                             <p id="productDescription"></p>
                         </div>
                         <div class="v7-info-box">
-                            <div class="v7-info-label" style="color:#185FA5;">When to use</div>
+                            <div class="section-flag-row"><div class="v7-info-label" style="color:#185FA5;">When to use</div><button class="flag-btn" title="Flag an issue" onclick="openFlag('When to Use')"><span class="flag-icon">⚑</span> Flag</button></div>
                             <p id="useCase"></p>
                         </div>
                     </div>
@@ -2194,8 +2249,8 @@
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
                         View product ToC
                     </button>
-                    <div class="v7-related-label">Related products</div>
-                    <div id="relatedProductsGrid" class="v7-chips"></div>
+                    <div class="section-flag-row"><div class="v7-related-label" style="margin:0;">Related products</div><button class="flag-btn" title="Flag an issue" onclick="openFlag('Related Products')"><span class="flag-icon">⚑</span> Flag</button></div>
+                    <div id="relatedProductsGrid" class="v7-chips" style="margin-top:6px;"></div>
                 </div>
 
                 <!-- ── TEMPLATE A: Advanced Info tab ── -->
@@ -2226,7 +2281,7 @@
                     <!-- 01 Content -->
                     <div id="adv-sec-content" class="v7-section-row blue">
                         <div>
-                            <div class="v7-sec-head blue">01 — Content</div>
+                            <div class="section-flag-row"><div class="v7-sec-head blue">01 — Content</div><button class="flag-btn" title="Flag an issue" onclick="openFlag('Content')"><span class="flag-icon">⚑</span> Flag</button></div>
                             <div id="adv-understanding-text" class="adv-section-intro"></div>
                         </div>
                         <div id="adv-understanding-buttons" class="adv-button-grid"></div>
@@ -2235,7 +2290,7 @@
                     <!-- 02 Practice -->
                     <div id="adv-sec-practice" class="v7-section-row amber" style="display:none;">
                         <div>
-                            <div class="v7-sec-head amber">02 — Practice</div>
+                            <div class="section-flag-row"><div class="v7-sec-head amber">02 — Practice</div><button class="flag-btn" title="Flag an issue" onclick="openFlag('Practice')"><span class="flag-icon">⚑</span> Flag</button></div>
                             <div id="adv-pf-text" class="adv-section-intro"></div>
                         </div>
                         <div id="adv-practice-buttons" class="adv-button-grid"></div>
@@ -2244,7 +2299,7 @@
                     <!-- 03 Feedback -->
                     <div id="adv-sec-feedback" class="v7-section-row amber" style="display:none;">
                         <div>
-                            <div class="v7-sec-head amber">03 — Feedback</div>
+                            <div class="section-flag-row"><div class="v7-sec-head amber">03 — Feedback</div><button class="flag-btn" title="Flag an issue" onclick="openFlag('Feedback')"><span class="flag-icon">⚑</span> Flag</button></div>
                         </div>
                         <div id="adv-feedback-buttons" class="adv-button-grid"></div>
                     </div>
@@ -2252,7 +2307,7 @@
                     <!-- Supplementary MEL -->
                     <div id="adv-sec-mel" class="v7-section-row dim" style="display:none;">
                         <div>
-                            <div class="v7-sec-head dim">Supplementary MEL Skills</div>
+                            <div class="section-flag-row"><div class="v7-sec-head dim">Supplementary MEL Skills</div><button class="flag-btn" title="Flag an issue" onclick="openFlag('MEL Skills')"><span class="flag-icon">⚑</span> Flag</button></div>
                             <div id="adv-supp-mel-text" class="adv-section-intro"></div>
                         </div>
                         <div id="adv-supp-mel-buttons" class="adv-button-grid"></div>
@@ -2261,7 +2316,7 @@
                     <!-- Additional Resources -->
                     <div id="adv-sec-resources" class="v7-section-row dim" style="display:none;">
                         <div>
-                            <div class="v7-sec-head dim">Additional resources</div>
+                            <div class="section-flag-row"><div class="v7-sec-head dim">Additional resources</div><button class="flag-btn" title="Flag an issue" onclick="openFlag('Additional Resources')"><span class="flag-icon">⚑</span> Flag</button></div>
                             <p class="nonipa-intro">Supplementary resources — IPA and external — for those who want to go further.</p>
                         </div>
                         <div id="nonipa-buttons" class="adv-button-grid"></div>
@@ -2296,17 +2351,17 @@
                     <!-- Basic info cards -->
                     <div class="v7-basic-grid">
                         <div class="v7-info-box">
-                            <div class="v7-info-label" style="color:#0F6E56;">Product description</div>
+                            <div class="section-flag-row"><div class="v7-info-label" style="color:#0F6E56;">Product description</div><button class="flag-btn" title="Flag an issue" onclick="openFlag('Product Description')"><span class="flag-icon">⚑</span> Flag</button></div>
                             <div id="tb-description"></div>
                         </div>
                         <div class="v7-info-box">
-                            <div class="v7-info-label" style="color:#185FA5;">When to use</div>
+                            <div class="section-flag-row"><div class="v7-info-label" style="color:#185FA5;">When to use</div><button class="flag-btn" title="Flag an issue" onclick="openFlag('When to Use')"><span class="flag-icon">⚑</span> Flag</button></div>
                             <div id="tb-when-to-use"></div>
                         </div>
                     </div>
 
-                    <div class="v7-related-label" style="margin-top:4px;">Related products</div>
-                    <div id="tb-related-products" class="v7-chips" style="margin-bottom:24px;"></div>
+                    <div class="section-flag-row" style="margin-top:4px;"><div class="v7-related-label" style="margin:0;">Related products</div><button class="flag-btn" title="Flag an issue" onclick="openFlag('Related Products')"><span class="flag-icon">⚑</span> Flag</button></div>
+                    <div id="tb-related-products" class="v7-chips" style="margin-bottom:24px; margin-top:6px;"></div>
 
                     <!-- Learner Roadmap header + strip (Template B) -->
                     <div style="margin-bottom:10px;">
@@ -2328,7 +2383,7 @@
                     <!-- 01 Content -->
                     <div id="tb-sec-content" class="v7-section-row blue">
                         <div>
-                            <div class="v7-sec-head blue">01 — Content</div>
+                            <div class="section-flag-row"><div class="v7-sec-head blue">01 — Content</div><button class="flag-btn" title="Flag an issue" onclick="openFlag('Content')"><span class="flag-icon">⚑</span> Flag</button></div>
                             <div id="tb-understanding-text" class="adv-section-intro"></div>
                         </div>
                         <div id="tb-understanding-buttons" class="adv-button-grid"></div>
@@ -2337,7 +2392,7 @@
                     <!-- 02 Practice -->
                     <div id="tb-sec-practice" class="v7-section-row amber" style="display:none;">
                         <div>
-                            <div class="v7-sec-head amber">02 — Practice</div>
+                            <div class="section-flag-row"><div class="v7-sec-head amber">02 — Practice</div><button class="flag-btn" title="Flag an issue" onclick="openFlag('Practice')"><span class="flag-icon">⚑</span> Flag</button></div>
                             <div id="tb-pf-text" class="adv-section-intro"></div>
                         </div>
                         <div id="tb-practice-buttons" class="adv-button-grid"></div>
@@ -2346,7 +2401,7 @@
                     <!-- 03 Feedback -->
                     <div id="tb-sec-feedback" class="v7-section-row amber" style="display:none;">
                         <div>
-                            <div class="v7-sec-head amber">03 — Feedback</div>
+                            <div class="section-flag-row"><div class="v7-sec-head amber">03 — Feedback</div><button class="flag-btn" title="Flag an issue" onclick="openFlag('Feedback')"><span class="flag-icon">⚑</span> Flag</button></div>
                         </div>
                         <div id="tb-feedback-buttons" class="adv-button-grid"></div>
                     </div>
@@ -2354,7 +2409,7 @@
                     <!-- Supplementary MEL -->
                     <div id="tb-sec-mel" class="v7-section-row dim" style="display:none;">
                         <div>
-                            <div class="v7-sec-head dim">Supplementary MEL Skills</div>
+                            <div class="section-flag-row"><div class="v7-sec-head dim">Supplementary MEL Skills</div><button class="flag-btn" title="Flag an issue" onclick="openFlag('MEL Skills')"><span class="flag-icon">⚑</span> Flag</button></div>
                             <div id="tb-supp-mel-text" class="adv-section-intro"></div>
                         </div>
                         <div id="tb-supp-mel-buttons" class="adv-button-grid"></div>
@@ -2363,7 +2418,7 @@
                     <!-- Additional Resources -->
                     <div id="tb-sec-resources" class="v7-section-row dim" style="display:none;">
                         <div>
-                            <div class="v7-sec-head dim">Additional resources</div>
+                            <div class="section-flag-row"><div class="v7-sec-head dim">Additional resources</div><button class="flag-btn" title="Flag an issue" onclick="openFlag('Additional Resources')"><span class="flag-icon">⚑</span> Flag</button></div>
                             <p class="nonipa-intro">Supplementary resources — IPA and external — for those who want to go further.</p>
                         </div>
                         <div id="tb-nonipa-buttons" class="adv-button-grid"></div>
@@ -2538,6 +2593,7 @@
                         </button>
                         <div class="skill-section-body-wrap open">
                             <div id="skillPopupDescription" class="skill-popup-section-body"></div>
+                            <div style="text-align:right; margin-top:10px;"><span class="flag-btn" title="Flag an issue" onclick="openFlag('General Description')"><span class="flag-icon">⚑</span> Flag</span></div>
                         </div>
                     </div>
 
@@ -2550,6 +2606,7 @@
                         </button>
                         <div class="skill-section-body-wrap">
                             <div id="skillPopupWhyMattersBody" class="skill-popup-section-body"></div>
+                            <div style="text-align:right; margin-top:10px;"><span class="flag-btn" title="Flag an issue" onclick="openFlag('Why it Matters')"><span class="flag-icon">⚑</span> Flag</span></div>
                         </div>
                     </div>
 
@@ -2562,6 +2619,7 @@
                         </button>
                         <div class="skill-section-body-wrap">
                             <div id="skillPopupHowRfeBody" class="skill-popup-section-body"></div>
+                            <div style="text-align:right; margin-top:10px;"><span class="flag-btn" title="Flag an issue" onclick="openFlag('How RFE Applies')"><span class="flag-icon">⚑</span> Flag</span></div>
                         </div>
                     </div>
 
@@ -2598,7 +2656,7 @@
                     <!-- Learning Resources -->
                     <!-- MAPPING NOTE: popup_buttons ← non_product_popup_lists filtered by Learning Roadmap -->
                     <div id="skillPopupResourcesSection" style="display:none;">
-                        <h3 class="skill-popup-section-header" style="margin-bottom:10px;">Resources</h3>
+                        <div class="section-flag-row" style="margin-bottom:10px;"><h3 class="skill-popup-section-header" style="margin:0;">Resources</h3><button class="flag-btn" title="Flag an issue" onclick="openFlag('Resources')"><span class="flag-icon">⚑</span> Flag</button></div>
                         <div id="skillPopupButtons" class="adv-button-grid"></div>
                     </div>
 
@@ -6167,7 +6225,133 @@ You have 12 more indicators to review in 90 minutes. Create a simple tool the te
                 });
             });
         });
+
+        // ── FLAG SYSTEM ──────────────────────────────────────────────────────
+        // Silently POSTs to Google Forms via fetch no-cors. User never leaves the page.
+        // No existing functions modified.
+
+        const FLAG_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSebDqZv-aU6ZH52PxPArkVR7QR0zNACtEg-dXD0ihIGNNBI3A/formResponse';
+        const FLAG_FIELDS = {
+            page:        'entry.402340761',
+            element:     'entry.1232084465',
+            elementType: 'entry.774944700',
+            tab:         'entry.1109933997',
+            section:     'entry.1689757651',
+            description: 'entry.94235572'
+        };
+
+        let _flagCtx = {};
+
+        function openFlag(section) {
+            // Page
+            const skillsView = document.getElementById('skillsMapView');
+            const page = (skillsView && skillsView.style.display !== 'none') ? 'Skills Map' : 'Products Map';
+
+            // Element + type + tab
+            let element = '', elementType = '', tab = '';
+
+            if (page === 'Products Map') {
+                // Product popup
+                element = (document.getElementById('productNameTitle') || {}).textContent || '';
+                if (typeof currentProductId !== 'undefined' && currentProductId && typeof popupData !== 'undefined' && popupData[currentProductId]) {
+                    elementType = popupData[currentProductId].element_type || '';
+                }
+                const activeTab = document.querySelector('#popupModal .v7-tab.on');
+                tab = activeTab ? activeTab.textContent.trim() : '';
+
+            } else {
+                // Non-product (skill/philosophy) popup
+                element = (document.getElementById('skillPopupTitle') || {}).textContent || '';
+
+                // Type: find element_type from popupData by matching display_title
+                if (typeof popupData !== 'undefined') {
+                    for (const key of Object.keys(popupData)) {
+                        if ((popupData[key].display_title || '').toLowerCase().trim() === element.toLowerCase().trim()) {
+                            elementType = popupData[key].element_type || '';
+                            break;
+                        }
+                    }
+                }
+
+                // Tab: NA for text sections, Content/Practice for resources
+                const textSections = ['General Description', 'Why it Matters', 'How RFE Applies'];
+                if (textSections.includes(section)) {
+                    tab = 'NA';
+                } else {
+                    const activeRoadmap = document.querySelector('#skillPopupModal .skill-roadmap-option.active .skill-roadmap-label');
+                    tab = activeRoadmap ? activeRoadmap.textContent.trim() : 'Content';
+                }
+            }
+
+            _flagCtx = { page, element, elementType, tab, section };
+
+            // Chips
+            const chips = [
+                ['Page', page], ['Element', element], ['Type', elementType],
+                ['Tab', tab], ['Section', section]
+            ].filter(([,v]) => v)
+             .map(([k,v]) => `<span class="flag-chip"><b>${k}:</b> ${v}</span>`)
+             .join('');
+            document.getElementById('flagChips').innerHTML = chips;
+            document.getElementById('flagNote').value = '';
+            document.getElementById('flagNote').style.borderColor = '#ddd';
+            document.getElementById('flagOverlay').classList.add('show');
+        }
+
+        function closeFlagModal() {
+            document.getElementById('flagOverlay').classList.remove('show');
+        }
+
+        function submitFlag() {
+            const description = document.getElementById('flagNote').value.trim();
+            if (!description) { document.getElementById('flagNote').style.borderColor = '#d94b1f'; return; }
+
+            const body = new URLSearchParams({
+                [FLAG_FIELDS.page]:        _flagCtx.page,
+                [FLAG_FIELDS.element]:     _flagCtx.element,
+                [FLAG_FIELDS.elementType]: _flagCtx.elementType,
+                [FLAG_FIELDS.tab]:         _flagCtx.tab,
+                [FLAG_FIELDS.section]:     _flagCtx.section,
+                [FLAG_FIELDS.description]: description
+            });
+
+            fetch(FLAG_FORM_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: body.toString()
+            });
+
+            closeFlagModal();
+            // Brief success toast
+            const t = document.createElement('div');
+            t.textContent = 'Flag submitted — thank you!';
+            t.style.cssText = 'position:fixed;bottom:28px;left:50%;transform:translateX(-50%);background:#2c3e50;color:white;padding:11px 22px;border-radius:10px;font-size:13px;font-weight:600;z-index:9999;transition:opacity .4s;';
+            document.body.appendChild(t);
+            setTimeout(() => { t.style.opacity = '0'; setTimeout(() => t.remove(), 400); }, 3000);
+        }
+
+        document.getElementById('flagOverlay').addEventListener('click', function(e) {
+            if (e.target === this) closeFlagModal();
+        });
+        // ── END FLAG SYSTEM ──────────────────────────────────────────────────
     </script>
+    <!-- FLAG MODAL -->
+    <div class="flag-overlay" id="flagOverlay">
+        <div class="flag-modal">
+            <p class="flag-modal-title">&#9873; Flag an issue</p>
+            <p class="flag-modal-sub">Sent to the RFE training team for review. Context is captured automatically.</p>
+            <div class="flag-chips" id="flagChips"></div>
+            <label for="flagNote">What's the issue?</label>
+            <textarea id="flagNote" placeholder="e.g. Broken link, incorrect description, outdated content…"></textarea>
+            <p class="flag-modal-note">Your name is not collected.</p>
+            <div class="flag-modal-actions">
+                <button class="flag-btn-cancel" onclick="closeFlagModal()">Cancel</button>
+                <button class="flag-btn-submit" onclick="submitFlag()">Submit</button>
+            </div>
+        </div>
+    </div>
+
     <!-- DATA SOURCE WATERMARK: updates when new spreadsheet is uploaded -->
     <div style="
         position: fixed;
