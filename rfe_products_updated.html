@@ -6324,16 +6324,28 @@ You have 12 more indicators to review in 90 minutes. Create a simple tool the te
         // ── END FLAG SYSTEM ──────────────────────────────────────────────────
 
         // ── DEEP LINK SYSTEM ─────────────────────────────────────────────────
-        // Reads ?popup= and optional ?tab= from the URL on page load.
-        // Example: ...wrapper.html?embed=1&popup=Learning-Plan-Design-Lpd&tab=advanced
+        // Reads ?popup=, ?tab=, and ?section= from the URL on page load.
+        //
+        // Examples:
+        //   ?popup=Learning-Plan-Design-Lpd
+        //   ?popup=Process-Evaluation&tab=advanced
+        //   ?popup=Process-Evaluation&tab=advanced&section=practice
+        //   ?popup=Cart&section=practice   (non-product: switches roadmap toggle)
+        //
+        // tab values:    basic | advanced
+        // section values (product advanced): content | practice | feedback | mel | resources
+        // section values (non-product):      content | practice
+        //
         // No existing functions modified.
+
         window.addEventListener('load', function() {
-            const params = new URLSearchParams(window.location.search);
-            const popupKey = params.get('popup');
-            const tabParam = (params.get('tab') || '').toLowerCase();
+            const params    = new URLSearchParams(window.location.search);
+            const popupKey  = params.get('popup');
+            const tabParam  = (params.get('tab')     || '').toLowerCase().trim();
+            const secParam  = (params.get('section') || '').toLowerCase().trim();
             if (!popupKey) return;
 
-            // Resolve key: try exact match first, then case-insensitive
+            // Resolve key: exact match then case-insensitive
             let resolvedKey = null;
             if (typeof popupData !== 'undefined') {
                 if (popupData[popupKey]) {
@@ -6347,18 +6359,57 @@ You have 12 more indicators to review in 90 minutes. Create a simple tool the te
             }
             if (!resolvedKey) { console.warn('Deep link: popup key not found —', popupKey); return; }
 
-            // Open the popup (reuse existing function)
+            // Open popup
             if (typeof openPopup === 'function') openPopup(resolvedKey);
 
-            // Switch tab if specified (basic / advanced)
-            if (tabParam) {
-                setTimeout(function() {
-                    const tabs = document.querySelectorAll('#popupModal .v7-tab');
-                    tabs.forEach(function(t) {
-                        if (t.textContent.trim().toLowerCase().includes(tabParam)) t.click();
-                    });
-                }, 150);
-            }
+            setTimeout(function() {
+                const isProduct = typeof popupData !== 'undefined' &&
+                                  popupData[resolvedKey] &&
+                                  popupData[resolvedKey].element_type === 'rfe-product';
+
+                if (isProduct) {
+                    // ── Product popup ──
+                    // 1. Switch Basic/Advanced tab
+                    if (tabParam) {
+                        document.querySelectorAll('#popupModal .v7-tab').forEach(function(t) {
+                            if (t.textContent.trim().toLowerCase().includes(tabParam)) t.click();
+                        });
+                    }
+
+                    // 2. Switch Advanced roadmap section
+                    if (secParam && (tabParam === 'advanced' || !tabParam)) {
+                        setTimeout(function() {
+                            // Works for both Template A (adv-) and Template B (tb-)
+                            const sectionMap = {
+                                content:   ['adv-sec-content',   'tb-sec-content'],
+                                practice:  ['adv-sec-practice',  'tb-sec-practice'],
+                                feedback:  ['adv-sec-feedback',  'tb-sec-feedback'],
+                                mel:       ['adv-sec-mel',        'tb-sec-mel'],
+                                resources: ['adv-sec-resources',  'tb-sec-resources']
+                            };
+                            const targets = sectionMap[secParam];
+                            if (targets) {
+                                // Find and click the matching roadmap step button
+                                document.querySelectorAll('#popupModal .v7-rm-step').forEach(function(step) {
+                                    const ds = step.getAttribute('data-section');
+                                    if (targets.includes(ds)) step.click();
+                                });
+                            }
+                        }, 150);
+                    }
+
+                } else {
+                    // ── Non-product popup: switch Content/Practice roadmap toggle ──
+                    if (secParam) {
+                        const toggle = document.querySelector(
+                            '#skillPopupModal .skill-roadmap-option[data-roadmap="' + secParam + '"]'
+                        );
+                        if (toggle && typeof switchSkillRoadmap === 'function') {
+                            switchSkillRoadmap(toggle, secParam);
+                        }
+                    }
+                }
+            }, 200);
         });
         // ── END DEEP LINK SYSTEM ─────────────────────────────────────────────
     </script>
