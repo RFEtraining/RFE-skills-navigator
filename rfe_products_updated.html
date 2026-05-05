@@ -6322,6 +6322,45 @@ You have 12 more indicators to review in 90 minutes. Create a simple tool the te
             if (e.target === this) closeFlagModal();
         });
         // ── END FLAG SYSTEM ──────────────────────────────────────────────────
+
+        // ── DEEP LINK SYSTEM ─────────────────────────────────────────────────
+        // Reads ?popup= and optional ?tab= from the URL on page load.
+        // Example: ...wrapper.html?embed=1&popup=Learning-Plan-Design-Lpd&tab=advanced
+        // No existing functions modified.
+        window.addEventListener('load', function() {
+            const params = new URLSearchParams(window.location.search);
+            const popupKey = params.get('popup');
+            const tabParam = (params.get('tab') || '').toLowerCase();
+            if (!popupKey) return;
+
+            // Resolve key: try exact match first, then case-insensitive
+            let resolvedKey = null;
+            if (typeof popupData !== 'undefined') {
+                if (popupData[popupKey]) {
+                    resolvedKey = popupKey;
+                } else {
+                    const lower = popupKey.toLowerCase();
+                    for (const k of Object.keys(popupData)) {
+                        if (k.toLowerCase() === lower) { resolvedKey = k; break; }
+                    }
+                }
+            }
+            if (!resolvedKey) { console.warn('Deep link: popup key not found —', popupKey); return; }
+
+            // Open the popup (reuse existing function)
+            if (typeof openPopup === 'function') openPopup(resolvedKey);
+
+            // Switch tab if specified (basic / advanced)
+            if (tabParam) {
+                setTimeout(function() {
+                    const tabs = document.querySelectorAll('#popupModal .v7-tab');
+                    tabs.forEach(function(t) {
+                        if (t.textContent.trim().toLowerCase().includes(tabParam)) t.click();
+                    });
+                }, 150);
+            }
+        });
+        // ── END DEEP LINK SYSTEM ─────────────────────────────────────────────
     </script>
     <!-- FLAG MODAL -->
     <div class="flag-overlay" id="flagOverlay">
