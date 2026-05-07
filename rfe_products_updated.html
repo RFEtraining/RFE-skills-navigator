@@ -6247,11 +6247,21 @@ You have 12 more indicators to review in 90 minutes. Create a simple tool the te
                 }
                 if (!resolvedKey) { console.warn('Deep link: key not found —', popupKey); return; }
 
+                const isProduct = popupData[resolvedKey] &&
+                                  popupData[resolvedKey].element_type === 'rfe-product';
+
+                // Switch to the correct view before opening popup
+                if (isProduct) {
+                    productsView.style.display = 'block';
+                    skillsMapView.style.display = 'none';
+                    document.querySelectorAll('.header-tab-button').forEach(function(btn) {
+                        btn.classList.toggle('active', btn.getAttribute('data-view') === 'productsView');
+                    });
+                }
+
                 showPopup(resolvedKey);
 
                 setTimeout(function() {
-                    const isProduct = popupData[resolvedKey] &&
-                                      popupData[resolvedKey].element_type === 'rfe-product';
                     if (isProduct) {
                         if (tabParam) {
                             document.querySelectorAll('#popupModal .v7-tab').forEach(function(t) {
