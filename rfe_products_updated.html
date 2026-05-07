@@ -6579,89 +6579,7 @@ You have 12 more indicators to review in 90 minutes. Create a simple tool the te
 
         // Deep link logic moved inside DOMContentLoaded — see above
 
-        // ── COACH ARFIE ──────────────────────────────────────────────────────
-        const COACH_STEPS = [
-            {
-                title: 'Stop! 🐽',
-                body: 'The RFE training team welcomes you to the RFE Skills Navigator.<br><br>If you are new to the platform, click <strong>Continue</strong> to take a tour of the site.'
-            },
-            {
-                title: 'Two views 🗺️',
-                body: 'The Navigator has two views — switch between them using the tabs at the top:<br><br><strong>Products Map</strong> — all RFE products by learning stage, each with a full learning guide.<br><br><strong>Skills Map</strong> — the MEL skills, consulting skills, and internal processes behind RFE work.'
-            },
-            {
-                title: 'Opening a product 📖',
-                body: 'Click any product box to open its learning guide. Inside you\'ll find:<br><br>• A <strong>Basic</strong> tab — overview and when to use it<br>• An <strong>Advanced</strong> tab — Content, Practice, Feedback, MEL links, and Resources'
-            },
-            {
-                title: 'Exploring skills 🧠',
-                body: 'Switch to the <strong>Skills Map</strong> tab to explore individual skills. Each skill has curated resources and learning paths across Content and Practice sections.'
-            },
-            {
-                title: 'Flag an issue 🚩',
-                body: 'See something wrong or out of date? Every section has a flag button. Click it to send a report directly to the RFE training team — context is captured automatically.'
-            },
-            {
-                title: 'You\'re all set! 🎉',
-                body: 'That\'s the tour. Coach Arfie will always be waiting in the top right corner if you need a refresher.<br><br>Happy learning! 🐷'
-            }
-        ];
-
-        let _coachStep = 0;
-
-        function openCoach() {
-            _coachStep = 0;
-            _renderCoachStep();
-            document.getElementById('coachOverlay').classList.add('show');
-        }
-
-        function closeCoach() {
-            document.getElementById('coachOverlay').classList.remove('show');
-            const bubble = document.getElementById('coachBubble');
-            bubble.classList.add('shrinking');
-            setTimeout(function() { bubble.classList.remove('shrinking'); }, 450);
-        }
-
-        function coachNext() {
-            if (_coachStep < COACH_STEPS.length - 1) {
-                _coachStep++;
-                _renderCoachStep();
-            } else {
-                closeCoach();
-            }
-        }
-
-        function coachBack() {
-            if (_coachStep > 0) { _coachStep--; _renderCoachStep(); }
-        }
-
-        function _renderCoachStep() {
-            const step = COACH_STEPS[_coachStep];
-            document.getElementById('coachStepTitle').textContent = step.title;
-            document.getElementById('coachStepBody').innerHTML  = step.body;
-            document.getElementById('coachDots').innerHTML = COACH_STEPS.map(function(_, i) {
-                return '<div class="coach-dot' + (i === _coachStep ? ' active' : '') + '"></div>';
-            }).join('');
-            const backBtn = document.getElementById('coachBackBtn');
-            backBtn.style.display = _coachStep === 0 ? 'none' : '';
-            document.getElementById('coachNextBtn').textContent =
-                _coachStep === COACH_STEPS.length - 1 ? 'Finish ✓' : 'Continue →';
-        }
-
-        document.getElementById('coachOverlay').addEventListener('click', function(e) {
-            if (e.target === this) closeCoach();
-        });
-
-        // Auto-open if ?coach=open in URL
-        if (new URLSearchParams(window.location.search).get('coach') === 'open') {
-            setTimeout(openCoach, 400);
-        }
-        // Expose coach functions to global scope for onclick handlers
-        window.openCoach  = openCoach;
-        window.closeCoach = closeCoach;
-        window.coachNext  = coachNext;
-        window.coachBack  = coachBack;
-        // ── END COACH ARFIE ──────────────────────────────────────────────────
+        // Coach Arfie JS is in its own <script> tag below the HTML elements
     </script>
     <!-- FLAG MODAL -->
     <div class="flag-overlay" id="flagOverlay">
@@ -6696,13 +6614,13 @@ You have 12 more indicators to review in 90 minutes. Create a simple tool the te
     </div>
 
     <!-- COACH ARFIE BUBBLE -->
-    <button class="coach-bubble" id="coachBubble" onclick="openCoach()" title="Welcome from the RFE training team">🐷</button>
+    <button class="coach-bubble" id="coachBubble" title="Welcome from the RFE training team">🐷</button>
     <div class="coach-bubble-label">Coach Arfie</div>
 
     <!-- COACH ARFIE POPUP -->
     <div class="coach-overlay" id="coachOverlay">
         <div class="coach-modal">
-            <button class="coach-x" onclick="closeCoach()">✕</button>
+            <button class="coach-x" id="coachXBtn">✕</button>
             <div class="coach-avatar">🐷</div>
             <div class="coach-name-tag">Coach Arfie</div>
             <div class="coach-step-title" id="coachStepTitle"></div>
@@ -6710,11 +6628,66 @@ You have 12 more indicators to review in 90 minutes. Create a simple tool the te
             <div class="coach-footer">
                 <div class="coach-dots" id="coachDots"></div>
                 <div class="coach-btns">
-                    <button class="coach-btn-back" id="coachBackBtn" onclick="coachBack()">← Back</button>
-                    <button class="coach-btn-next" id="coachNextBtn" onclick="coachNext()">Continue →</button>
+                    <button class="coach-btn-back" id="coachBackBtn">← Back</button>
+                    <button class="coach-btn-next" id="coachNextBtn">Continue →</button>
                 </div>
             </div>
         </div>
     </div>
+
+    <script>
+    // ── COACH ARFIE (standalone script — guaranteed global scope) ─────────
+    var COACH_STEPS = [
+        { title: 'Stop! 🐽',          body: 'The RFE training team welcomes you to the RFE Skills Navigator.<br><br>If you are new to the platform, click <strong>Continue</strong> to take a tour of the site.' },
+        { title: 'Two views 🗺️',      body: 'The Navigator has two views — switch between them at the top:<br><br><strong>Products Map</strong> — all RFE products by learning stage, each with a full learning guide.<br><br><strong>Skills Map</strong> — MEL skills, consulting skills, and internal processes behind RFE work.' },
+        { title: 'Opening a product 📖', body: 'Click any product box to open its learning guide. Inside you\'ll find:<br><br>• A <strong>Basic</strong> tab — overview and when to use it<br>• An <strong>Advanced</strong> tab — Content, Practice, Feedback, MEL links, and Resources' },
+        { title: 'Exploring skills 🧠', body: 'Switch to the <strong>Skills Map</strong> tab to explore individual skills. Each skill has curated resources and learning paths across Content and Practice sections.' },
+        { title: 'Flag an issue 🚩',   body: 'See something wrong or out of date? Every section has a flag button. Click it to report an issue — context is captured automatically and sent to the RFE training team.' },
+        { title: 'You\'re all set! 🎉', body: 'That\'s the tour. Coach Arfie will always be here in the top right corner if you need a refresher.<br><br>Happy learning! 🐷' }
+    ];
+    var _coachStep = 0;
+
+    function openCoach() {
+        _coachStep = 0;
+        _renderCoachStep();
+        document.getElementById('coachOverlay').classList.add('show');
+    }
+    function closeCoach() {
+        document.getElementById('coachOverlay').classList.remove('show');
+        var bubble = document.getElementById('coachBubble');
+        bubble.classList.add('shrinking');
+        setTimeout(function() { bubble.classList.remove('shrinking'); }, 450);
+    }
+    function coachNext() {
+        if (_coachStep < COACH_STEPS.length - 1) { _coachStep++; _renderCoachStep(); }
+        else { closeCoach(); }
+    }
+    function coachBack() {
+        if (_coachStep > 0) { _coachStep--; _renderCoachStep(); }
+    }
+    function _renderCoachStep() {
+        var step = COACH_STEPS[_coachStep];
+        document.getElementById('coachStepTitle').textContent = step.title;
+        document.getElementById('coachStepBody').innerHTML = step.body;
+        document.getElementById('coachDots').innerHTML = COACH_STEPS.map(function(_, i) {
+            return '<div class="coach-dot' + (i === _coachStep ? ' active' : '') + '"></div>';
+        }).join('');
+        document.getElementById('coachBackBtn').style.display = _coachStep === 0 ? 'none' : '';
+        document.getElementById('coachNextBtn').textContent = _coachStep === COACH_STEPS.length - 1 ? 'Finish ✓' : 'Continue →';
+    }
+
+    document.getElementById('coachBubble').addEventListener('click', openCoach);
+    document.getElementById('coachXBtn').addEventListener('click', closeCoach);
+    document.getElementById('coachNextBtn').addEventListener('click', coachNext);
+    document.getElementById('coachBackBtn').addEventListener('click', coachBack);
+    document.getElementById('coachOverlay').addEventListener('click', function(e) {
+        if (e.target === this) closeCoach();
+    });
+
+    if (new URLSearchParams(window.location.search).get('coach') === 'open') {
+        setTimeout(openCoach, 400);
+    }
+    // ── END COACH ARFIE ───────────────────────────────────────────────────
+    </script>
 </body>
 </html>
