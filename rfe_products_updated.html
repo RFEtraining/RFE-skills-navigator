@@ -6232,8 +6232,62 @@ You have 12 more indicators to review in 90 minutes. Create a simple tool the te
                 });
             });
 
-            // Expose showPopup globally so the deep link system (outside this closure) can call it
-            window._rfeShowPopup = showPopup;
+            // ── DEEP LINK: run at end of DOMContentLoaded so showPopup is in scope ──
+            (function() {
+                const params   = new URLSearchParams(window.location.search);
+                const popupKey = params.get('popup');
+                const tabParam = (params.get('tab')     || '').toLowerCase().trim();
+                const secParam = (params.get('section') || '').toLowerCase().trim();
+                if (!popupKey) return;
+
+                const lower = popupKey.toLowerCase();
+                let resolvedKey = null;
+                for (const k of Object.keys(popupData)) {
+                    if (k.toLowerCase() === lower) { resolvedKey = k; break; }
+                }
+                if (!resolvedKey) { console.warn('Deep link: key not found —', popupKey); return; }
+
+                showPopup(resolvedKey);
+
+                setTimeout(function() {
+                    const isProduct = popupData[resolvedKey] &&
+                                      popupData[resolvedKey].element_type === 'rfe-product';
+                    if (isProduct) {
+                        if (tabParam) {
+                            document.querySelectorAll('#popupModal .v7-tab').forEach(function(t) {
+                                if (t.textContent.trim().toLowerCase().includes(tabParam)) t.click();
+                            });
+                        }
+                        if (secParam && (tabParam === 'advanced' || !tabParam)) {
+                            setTimeout(function() {
+                                const sectionMap = {
+                                    content:   ['adv-sec-content',   'tb-sec-content'],
+                                    practice:  ['adv-sec-practice',  'tb-sec-practice'],
+                                    feedback:  ['adv-sec-feedback',  'tb-sec-feedback'],
+                                    mel:       ['adv-sec-mel',        'tb-sec-mel'],
+                                    resources: ['adv-sec-resources',  'tb-sec-resources']
+                                };
+                                const targets = sectionMap[secParam];
+                                if (targets) {
+                                    document.querySelectorAll('#popupModal .v7-rm-step').forEach(function(step) {
+                                        if (targets.includes(step.getAttribute('data-section'))) step.click();
+                                    });
+                                }
+                            }, 200);
+                        }
+                    } else {
+                        if (secParam) {
+                            const toggle = document.querySelector(
+                                '#skillPopupModal .skill-roadmap-option[data-roadmap="' + secParam + '"]'
+                            );
+                            if (toggle && typeof switchSkillRoadmap === 'function') {
+                                switchSkillRoadmap(toggle, secParam);
+                            }
+                        }
+                    }
+                }, 300);
+            })();
+            // ── END DEEP LINK ──
         });
 
         // ── FLAG SYSTEM ──────────────────────────────────────────────────────
@@ -6333,89 +6387,7 @@ You have 12 more indicators to review in 90 minutes. Create a simple tool the te
         });
         // ── END FLAG SYSTEM ──────────────────────────────────────────────────
 
-        // ── DEEP LINK SYSTEM ─────────────────────────────────────────────────
-        // Reads ?popup=, ?tab=, and ?section= from the URL on page load.
-        //
-        // Examples:
-        //   ?popup=Learning-Plan-Design-Lpd
-        //   ?popup=Process-Evaluation&tab=advanced
-        //   ?popup=Process-Evaluation&tab=advanced&section=practice
-        //   ?popup=Cart&section=practice   (non-product: switches roadmap toggle)
-        //
-        // tab values:    basic | advanced
-        // section values (product advanced): content | practice | feedback | mel | resources
-        // section values (non-product):      content | practice
-        //
-        // No existing functions modified.
-
-        window.addEventListener('load', function() {
-            const params   = new URLSearchParams(window.location.search);
-            const popupKey = params.get('popup');
-            const tabParam = (params.get('tab')     || '').toLowerCase().trim();
-            const secParam = (params.get('section') || '').toLowerCase().trim();
-            if (!popupKey) return;
-
-            // Resolve key case-insensitively against popupData
-            let resolvedKey = null;
-            if (typeof popupData !== 'undefined') {
-                const lower = popupKey.toLowerCase();
-                for (const k of Object.keys(popupData)) {
-                    if (k.toLowerCase() === lower) { resolvedKey = k; break; }
-                }
-            }
-            if (!resolvedKey) { console.warn('Deep link: key not found —', popupKey); return; }
-
-            // Call showPopup via the global reference exposed at DOMContentLoaded end
-            if (typeof window._rfeShowPopup !== 'function') {
-                console.warn('Deep link: _rfeShowPopup not ready'); return;
-            }
-            window._rfeShowPopup(resolvedKey);
-
-            // After popup renders, navigate tab / section
-            setTimeout(function() {
-                const isProduct = popupData[resolvedKey] &&
-                                  popupData[resolvedKey].element_type === 'rfe-product';
-
-                if (isProduct) {
-                    // Switch Basic / Advanced tab
-                    if (tabParam) {
-                        document.querySelectorAll('#popupModal .v7-tab').forEach(function(t) {
-                            if (t.textContent.trim().toLowerCase().includes(tabParam)) t.click();
-                        });
-                    }
-                    // Switch roadmap section
-                    if (secParam && (tabParam === 'advanced' || !tabParam)) {
-                        setTimeout(function() {
-                            const sectionMap = {
-                                content:   ['adv-sec-content',   'tb-sec-content'],
-                                practice:  ['adv-sec-practice',  'tb-sec-practice'],
-                                feedback:  ['adv-sec-feedback',  'tb-sec-feedback'],
-                                mel:       ['adv-sec-mel',        'tb-sec-mel'],
-                                resources: ['adv-sec-resources',  'tb-sec-resources']
-                            };
-                            const targets = sectionMap[secParam];
-                            if (targets) {
-                                document.querySelectorAll('#popupModal .v7-rm-step').forEach(function(step) {
-                                    if (targets.includes(step.getAttribute('data-section'))) step.click();
-                                });
-                            }
-                        }, 200);
-                    }
-
-                } else {
-                    // Non-product: switch roadmap toggle
-                    if (secParam) {
-                        const toggle = document.querySelector(
-                            '#skillPopupModal .skill-roadmap-option[data-roadmap="' + secParam + '"]'
-                        );
-                        if (toggle && typeof switchSkillRoadmap === 'function') {
-                            switchSkillRoadmap(toggle, secParam);
-                        }
-                    }
-                }
-            }, 300);
-        });
-        // ── END DEEP LINK SYSTEM ─────────────────────────────────────────────
+        // Deep link logic moved inside DOMContentLoaded — see above
     </script>
     <!-- FLAG MODAL -->
     <div class="flag-overlay" id="flagOverlay">
