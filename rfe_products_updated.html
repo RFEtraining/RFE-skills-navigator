@@ -6656,6 +6656,11 @@ You have 12 more indicators to review in 90 minutes. Create a simple tool the te
         if (new URLSearchParams(window.location.search).get('coach') === 'open') {
             setTimeout(openCoach, 400);
         }
+        // Expose coach functions to global scope for onclick handlers
+        window.openCoach  = openCoach;
+        window.closeCoach = closeCoach;
+        window.coachNext  = coachNext;
+        window.coachBack  = coachBack;
         // ── END COACH ARFIE ──────────────────────────────────────────────────
     </script>
     <!-- FLAG MODAL -->
