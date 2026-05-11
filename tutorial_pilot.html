@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Coach Arfie – Tutorial Pilot</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: #eef1ee;
+      color: #1a1a1a;
+      min-height: 100vh;
+    }
+
+    .pilot-banner {
+      background: #FFF8E1;
+      border-bottom: 2px solid #F4C430;
+      padding: 7px 24px;
+      font-size: 12px;
+      color: #7A5800;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* ---- App header ---- */
+    #app-header {
+      background: #1D5A42;
+      color: white;
+      display: flex;
+      align-items: center;
+      padding: 0 24px;
+      height: 54px;
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+    #app-header.tutorial-highlight { z-index: 501; }
+
+    .app-logo { font-size: 15px; font-weight: 700; letter-spacing: 0.4px; flex: 1; }
+    .nav-tabs  { display: flex; gap: 4px; }
+    .nav-tab {
+      background: transparent;
+      border: none;
+      color: rgba(255,255,255,0.7);
+      padding: 8px 18px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      transition: background 0.2s, color 0.2s;
+    }
+    .nav-tab:hover  { background: rgba(255,255,255,0.1); color: white; }
+    .nav-tab.active { background: rgba(255,255,255,0.2); color: white; }
+
+    /* ---- Views ---- */
+    .view { display: none; padding: 24px 28px 180px; max-width: 1100px; margin: 0 auto; }
+    .view.active { display: block; }
+    .view-title {
+      font-size: 12px; font-weight: 700; color: #1D5A42;
+      text-transform: uppercase; letter-spacing: 1.2px; margin-bottom: 16px;
+    }
+
+    #must-know-legend {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: white; border: 1px solid #ddd; border-radius: 20px;
+      padding: 5px 14px; font-size: 12px; color: #555; margin-bottom: 20px;
+    }
+    .star { color: #E8A020; font-size: 14px; }
+
+    .skill-section {
+      background: white; border-radius: 8px; padding: 16px 20px;
+      margin-bottom: 12px; border: 1px solid #dde4dd;
+    }
+    .section-header { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+    .section-header h2 { font-size: 14px; font-weight: 600; color: #1D5A42; }
+    .must-know-star { color: #E8A020; font-size: 16px; }
+    .skill-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+    .skill-chip {
+      background: #f0f4f0; border: 1px solid #c5d8c5;
+      border-radius: 14px; padding: 4px 12px; font-size: 12px; color: #2C5F3F;
+    }
+
+    .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px,1fr)); gap: 16px; }
+    .product-card  { background: white; border: 1px solid #dde4dd; border-radius: 8px; padding: 18px 20px; }
+    .product-card h3 { font-size: 14px; color: #1D5A42; font-weight: 600; margin-bottom: 6px; }
+    .product-card p  { font-size: 13px; color: #555; line-height: 1.5; }
+    .product-tag {
+      display: inline-block; background: #e8f0eb; color: #1D5A42;
+      font-size: 11px; font-weight: 600; padding: 3px 9px;
+      border-radius: 10px; margin-top: 10px;
+    }
+
+    /* ---- Coach bubble ---- */
+    #coach-bubble-wrap {
+      position: fixed; bottom: 28px; right: 28px; z-index: 300;
+      display: flex; flex-direction: column; align-items: center; gap: 5px;
+    }
+    #coach-bubble {
+      width: 54px; height: 54px; border-radius: 50%;
+      background: #1D5A42; border: 3px solid white;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+      font-size: 26px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    #coach-bubble:hover { transform: scale(1.08); box-shadow: 0 6px 20px rgba(0,0,0,0.3); }
+    #coach-bubble.shrink { animation: shrink-pop 0.42s ease forwards; }
+    @keyframes shrink-pop {
+      0%   { transform: scale(1);    }
+      40%  { transform: scale(0.58); }
+      70%  { transform: scale(1.12); }
+      100% { transform: scale(1);    }
+    }
+    #coach-bubble-label {
+      font-size: 11px; font-weight: 600; color: #1D5A42;
+      background: white; border-radius: 10px; padding: 2px 9px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.14);
+    }
+
+    /* ---- Overlay ---- */
+    #tutorial-overlay {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.62);
+      z-index: 400; pointer-events: none;
+      opacity: 0; transition: opacity 0.3s;
+    }
+    #tutorial-overlay.active { opacity: 1; }
+
+    /* ---- Highlighted element ---- */
+    .tutorial-highlight {
+      position: relative; z-index: 501; border-radius: 6px;
+      outline: 3px solid #F4C430;
+      box-shadow: 0 0 0 6px rgba(244,196,48,0.18), 0 0 28px rgba(244,196,48,0.3);
+      transition: outline 0.2s, box-shadow 0.2s;
+    }
+
+    /* ---- Floating arrow ---- */
+    #float-arrow {
+      position: fixed; z-index: 502;
+      font-size: 22px; color: #F4C430;
+      text-shadow: 0 0 10px rgba(244,196,48,0.9);
+      pointer-events: none; display: none;
+      transform: translateX(-50%);
+      animation: arrow-float 0.9s ease-in-out infinite;
+    }
+    @keyframes arrow-float {
+      0%, 100% { transform: translateX(-50%) translateY(0px);  }
+      50%       { transform: translateX(-50%) translateY(7px);  }
+    }
+    #float-arrow.up { animation: arrow-float-up 0.9s ease-in-out infinite; }
+    @keyframes arrow-float-up {
+      0%, 100% { transform: translateX(-50%) translateY(0px);  }
+      50%       { transform: translateX(-50%) translateY(-7px); }
+    }
+
+    /* ---- Tutorial panel ---- */
+    #tutorial-panel {
+      position: fixed; bottom: 0; left: 0; right: 0;
+      background: #1D5A42; color: white; z-index: 600;
+      transform: translateY(100%);
+      transition: transform 0.38s cubic-bezier(0.4,0,0.2,1);
+      box-shadow: 0 -6px 24px rgba(0,0,0,0.28);
+    }
+    #tutorial-panel.open { transform: translateY(0); }
+
+    .tutorial-inner {
+      display: flex; align-items: flex-start; gap: 20px;
+      padding: 18px 28px 12px;
+      max-width: 960px; margin: 0 auto;
+    }
+    .coach-col { flex-shrink: 0; text-align: center; padding-top: 2px; }
+    .coach-col .pig  { font-size: 38px; line-height: 1; display: block; }
+    .coach-col .name { font-size: 10px; font-weight: 700; letter-spacing: 0.6px; opacity: 0.75; margin-top: 3px; text-transform: uppercase; }
+
+    .tutorial-content { flex: 1; min-width: 0; }
+    .tutorial-text    { font-size: 17px; font-weight: 500; line-height: 1.55; margin-bottom: 6px; }
+
+    /* Profile radio buttons */
+    .profile-options { display: flex; flex-direction: column; gap: 7px; margin-top: 6px; }
+    .profile-option  { display: flex; align-items: center; gap: 10px; font-size: 14px; cursor: pointer; }
+    .profile-option input[type="radio"] { accent-color: #F4C430; width: 15px; height: 15px; cursor: pointer; }
+    .tutorial-error  { font-size: 12px; color: #F4C430; margin-top: 5px; display: none; }
+
+    /* ---- Footer ---- */
+    .tutorial-footer {
+      display: flex; align-items: center; gap: 12px;
+      padding: 10px 28px 14px;
+      max-width: 960px; margin: 0 auto;
+      border-top: 1px solid rgba(255,255,255,0.14);
+    }
+    .t-dots { flex: 1; display: flex; gap: 5px; justify-content: center; flex-wrap: wrap; }
+    .t-dot  {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: rgba(255,255,255,0.28); transition: background 0.2s;
+    }
+    .t-dot.done   { background: rgba(255,255,255,0.55); }
+    .t-dot.active { background: #F4C430; }
+
+    .t-btn {
+      background: rgba(255,255,255,0.14);
+      border: 1px solid rgba(255,255,255,0.28);
+      color: white; padding: 8px 20px; border-radius: 6px;
+      font-size: 13px; font-weight: 500; cursor: pointer;
+      transition: background 0.2s; white-space: nowrap;
+    }
+    .t-btn:hover     { background: rgba(255,255,255,0.24); }
+    .t-btn:disabled  { opacity: 0.35; cursor: not-allowed; }
+    .t-btn.primary   { background: #F4C430; border-color: #F4C430; color: #1D5A42; font-weight: 700; }
+    .t-btn.primary:hover { background: #e6b820; }
+  </style>
+</head>
+<body>
+
+<div class="pilot-banner">
+  <span>⚗️</span>
+  <strong>Pilot — rfe_onboarder tutorial.</strong>&nbsp; Other profiles show a placeholder. Click Coach Arfie (bottom-right) to begin.
+</div>
+
+<div id="app-header">
+  <div class="app-logo">RFE Skills Navigator</div>
+  <div class="nav-tabs">
+    <button class="nav-tab active" id="tab-skills-map"   data-view="skills-map">Skills Map</button>
+    <button class="nav-tab"        id="tab-products-map" data-view="products-map">Products Map</button>
+  </div>
+</div>
+
+<!-- Skills Map -->
+<div id="skills-map" class="view active">
+  <div class="view-title">Skills Map</div>
+  <div id="must-know-legend">
+    <span class="star">★</span>
+    <span>All RFE staff must know</span>
+  </div>
+  <div id="rfe-philosophy" class="skill-section">
+    <div class="section-header"><span class="must-know-star">★</span><h2>RFE Philosophy</h2></div>
+    <div class="skill-chips">
+      <span class="skill-chip">Right-Fit Evidence</span>
+      <span class="skill-chip">Theory of Change</span>
+      <span class="skill-chip">Learning Orientation</span>
+      <span class="skill-chip">Decision-Relevance</span>
+      <span class="skill-chip">Credibility vs. Burden</span>
+      <span class="skill-chip">Transportability</span>
+    </div>
+  </div>
+  <div id="rfe-products-section" class="skill-section">
+    <div class="section-header"><span class="must-know-star">★</span><h2>RFE Products</h2></div>
+    <div class="skill-chips">
+      <span class="skill-chip">Learning Plan Design</span>
+      <span class="skill-chip">MEL Diagnostic</span>
+      <span class="skill-chip">Data Use</span>
+      <span class="skill-chip">Costing</span>
+      <span class="skill-chip">Scale Readiness</span>
+      <span class="skill-chip">Benchmarking</span>
+    </div>
+  </div>
+  <div id="mel-skills" class="skill-section">
+    <div class="section-header"><h2>MEL Skills</h2></div>
+    <div class="skill-chips">
+      <span class="skill-chip">Indicator Design</span>
+      <span class="skill-chip">Survey Design</span>
+      <span class="skill-chip">Data Quality</span>
+      <span class="skill-chip">Learning Cycles</span>
+      <span class="skill-chip">Research Methods</span>
+    </div>
+  </div>
+  <div id="consulting-and-communication-skills" class="skill-section">
+    <div class="section-header"><h2>Consulting &amp; Communication Skills</h2></div>
+    <div class="skill-chips">
+      <span class="skill-chip">Facilitation</span>
+      <span class="skill-chip">Stakeholder Management</span>
+      <span class="skill-chip">Written Communication</span>
+      <span class="skill-chip">Active Listening</span>
+      <span class="skill-chip">Presenting Findings</span>
+    </div>
+  </div>
+  <div id="internal-processes" class="skill-section">
+    <div class="section-header"><h2>Internal Processes</h2></div>
+    <div class="skill-chips">
+      <span class="skill-chip">Project Management</span>
+      <span class="skill-chip">Knowledge Management</span>
+      <span class="skill-chip">Business Development</span>
+      <span class="skill-chip">IPA Systems</span>
+    </div>
+  </div>
+  <div id="management-skills-and-processes" class="skill-section">
+    <div class="section-header"><h2>Management Skills &amp; Processes</h2></div>
+    <div class="skill-chips">
+      <span class="skill-chip">Performance Management</span>
+      <span class="skill-chip">Team Development</span>
+      <span class="skill-chip">Coaching</span>
+      <span class="skill-chip">Delegation</span>
+    </div>
+  </div>
+</div>
+
+<!-- Products Map -->
+<div id="products-map" class="view">
+  <div class="view-title">Product Suite</div>
+  <div class="products-grid">
+    <div id="lpd-product" class="product-card">
+      <h3>Learning Plan Design (LPD)</h3>
+      <p>RFE facilitates a workshop series to design with clients a Theory of Change, Learning questions, and a MEL plan.</p>
+      <span class="product-tag">Foundation product</span>
+    </div>
+    <div class="product-card">
+      <h3>MEL Diagnostic</h3>
+      <p>RFE assesses partner MEL system effectiveness and provides areas for improvement.</p>
+    </div>
+    <div class="product-card">
+      <h3>Data Use</h3>
+      <p>RFE supports partners in using existing data to make program decisions.</p>
+    </div>
+    <div class="product-card">
+      <h3>Costing</h3>
+      <p>RFE supports partners in understanding the cost-effectiveness of their programs.</p>
+    </div>
+    <div class="product-card">
+      <h3>Scale Readiness</h3>
+      <p>RFE assesses a program's readiness for scale using a standardized framework.</p>
+    </div>
+    <div class="product-card">
+      <h3>Benchmarking</h3>
+      <p>RFE supports partners in comparing program performance to relevant benchmarks.</p>
+    </div>
+  </div>
+</div>
+
+<div id="float-arrow">▼</div>
+<div id="tutorial-overlay"></div>
+
+<div id="coach-bubble-wrap">
+  <button id="coach-bubble" title="Coach Arfie — click for a tour">🐷</button>
+  <div id="coach-bubble-label">Coach Arfie</div>
+</div>
+
+<!-- Tutorial panel -->
+<div id="tutorial-panel">
+  <div class="tutorial-inner">
+    <div class="coach-col">
+      <span class="pig">🐷</span>
+      <div class="name">Coach Arfie</div>
+    </div>
+    <div class="tutorial-content">
+      <div class="tutorial-text" id="tutorial-text"></div>
+      <div class="profile-options" id="profile-options" style="display:none"></div>
+      <div class="tutorial-error"  id="tutorial-error">Please select a profile to continue.</div>
+    </div>
+  </div>
+  <div class="tutorial-footer">
+    <button class="t-btn"         id="t-back">← Back</button>
+    <div class="t-dots"           id="t-dots"></div>
+    <button class="t-btn primary" id="t-next">Continue →</button>
+  </div>
+</div>
+
+<script>
+// ================================================================
+// DATA  — sourced from tutorial_pop_up sheet in the xlsx
+// highlight:  single element ID (or null)
+// highlights: array of IDs for multi-highlight steps
+// arrowTarget: override ID for arrow positioning (when highlight is a parent container)
+// ================================================================
+const PROFILES = [
+  { value: 'rfe_onboarder',        label: 'RFE Onboarding staff' },
+  { value: 'rfe_advanced_learner', label: 'RFE Staff seeking additional learning' },
+  { value: 'ipa_general_learner',  label: 'IPA Staff wanting to browse RFE topics' },
+  { value: 'ipa_targeted_learner', label: 'IPA Staff needing to implement RFE work' }
+];
+
+const STEPS_GENERAL = [
+  {
+    text: 'Hello! *snort*\nI\'m Coach Arfie, and welcome to the RFE Learning Platform.\n\nIf you are new to the site or want a walk-thru, click Continue to take a tour of the site.',
+    page: 'skills-map', highlight: null, type: 'continue'
+  },
+  {
+    text: 'Select the profile that best matches you',
+    page: 'skills-map', highlight: null, type: 'profile'
+  }
+];
+
+const PROFILE_STEPS = {
+  rfe_onboarder: [
+    {
+      text: 'Welcome to RFE! This is the RFE Skills Map tab, where you can see all the areas of knowledge relevant to RFE staff',
+      page: 'skills-map', highlight: 'app-header', arrowTarget: 'tab-skills-map', type: 'continue'
+    },
+    {
+      text: 'Look for stars indicating what all RFE staff should know',
+      page: 'skills-map', highlight: 'must-know-legend', type: 'continue'
+    },
+    {
+      text: 'RFE Philosophy is the most important section, and contains the high-level principles that apply to everything we do',
+      page: 'skills-map', highlight: 'rfe-philosophy', type: 'continue'
+    },
+    {
+      text: 'RFE Products is a combination of research and learning methodologies we have standardized across our projects',
+      page: 'skills-map', highlight: 'rfe-products-section', type: 'continue'
+    },
+    {
+      text: 'MEL Skills includes the most important *additional* skills that aren\'t fully included within the RFE Products',
+      page: 'skills-map', highlight: 'mel-skills', type: 'continue'
+    },
+    {
+      text: 'These sections show all the soft skills and internal processes with which you should familiarize yourself.',
+      page: 'skills-map',
+      highlights: ['consulting-and-communication-skills', 'internal-processes', 'management-skills-and-processes'],
+      type: 'continue'
+    },
+    {
+      text: 'This is the product suite tab, where you can see all of the products we have standardized across RFE projects.',
+      page: 'products-map', highlight: 'app-header', arrowTarget: 'tab-products-map', type: 'continue'
+    },
+    {
+      text: 'It will be most important to start mastering the Learning Plan Design product, since this is the foundation of all RFE work. You should learn other products on a needs-basis, if you will be expected to deliver them through your project work',
+      page: 'products-map', highlight: 'lpd-product', type: 'continue'
+    },
+    {
+      text: 'That\'s the end of this tutorial. Good luck learning!',
+      page: 'products-map', highlight: null, type: 'exit'
+    }
+  ],
+  rfe_advanced_learner: [
+    { text: 'Learner profile tutorial not yet created...', page: 'skills-map', highlight: null, type: 'exit' }
+  ],
+  ipa_general_learner: [
+    { text: 'Learner profile tutorial not yet created...', page: 'skills-map', highlight: null, type: 'exit' }
+  ],
+  ipa_targeted_learner: [
+    {
+      text: 'We are happy to help you deliver an RFE product. This is the Skills Map where you can see the range of RFE knowledge.',
+      page: 'skills-map', highlight: 'app-header', arrowTarget: 'tab-skills-map', type: 'continue'
+    },
+    {
+      text: 'You should start here by reviewing the RFE Philosophies section, understanding the core principles we use across all RFE work.',
+      page: 'skills-map', highlight: 'rfe-philosophy', type: 'continue'
+    },
+    {
+      text: 'When you are ready, come look at the RFE product suite.',
+      page: 'products-map', highlight: 'app-header', arrowTarget: 'tab-products-map', type: 'continue'
+    },
+    {
+      text: 'On the product page, you should start with the LPD product, which is the foundation of RFE work.\nOnce you understand the LPD, you can look to learn any other products you might be delivering.',
+      page: 'products-map', highlight: 'lpd-product', type: 'continue'
+    },
+    {
+      text: 'That\'s the end of this tutorial. Good luck learning!',
+      page: 'products-map', highlight: null, type: 'exit'
+    }
+  ]
+};
+
+// ================================================================
+// TEXT FORMATTER  — handles *italics* and \n line breaks
+// ================================================================
+function formatText(str) {
+  if (!str) return '';
+  return str
+    .replace(/\*(.*?)\*/g, '<em>$1</em>')
+    .replace(/\n/g, '<br>');
+}
+
+// ================================================================
+// STATE
+// ================================================================
+const LS_KEY = 'coach_arfie_profile';
+let currentProfile = null;
+let stepIndex = 0;
+let allSteps  = [];
+
+// ================================================================
+// VIEW SWITCHING
+// ================================================================
+function switchView(viewId) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  const view = document.getElementById(viewId);
+  const tab  = document.getElementById('tab-' + viewId);
+  if (view) view.classList.add('active');
+  if (tab)  tab.classList.add('active');
+}
+document.querySelectorAll('.nav-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    if (!document.getElementById('tutorial-panel').classList.contains('open')) {
+      switchView(tab.getAttribute('data-view'));
+    }
+  });
+});
+
+// ================================================================
+// FLOATING ARROW
+// ================================================================
+function positionArrow(id) {
+  const arrow = document.getElementById('float-arrow');
+  if (!id) { arrow.style.display = 'none'; return; }
+  const el = document.getElementById(id);
+  if (!el)  { arrow.style.display = 'none'; return; }
+  const rect = el.getBoundingClientRect();
+  arrow.style.left = (rect.left + rect.width / 2) + 'px';
+  // Element near top of viewport → point UP, place just below it
+  if (rect.bottom < 120) {
+    arrow.textContent = '▲';
+    arrow.classList.add('up');
+    arrow.style.top = (rect.bottom + 8) + 'px';
+  } else {
+    arrow.textContent = '▼';
+    arrow.classList.remove('up');
+    arrow.style.top = Math.max(62, rect.top - 34) + 'px';
+  }
+  arrow.style.display = 'block';
+}
+
+window.addEventListener('scroll', () => {
+  const step = allSteps[stepIndex];
+  if (!step) return;
+  if (step.highlight)  positionArrow(step.arrowTarget || step.highlight);
+  if (step.highlights) positionArrow(step.highlights[0]);
+}, { passive: true });
+
+// ================================================================
+// HIGHLIGHTS
+// ================================================================
+function clearHighlights() {
+  document.querySelectorAll('.tutorial-highlight').forEach(el => el.classList.remove('tutorial-highlight'));
+  document.getElementById('float-arrow').style.display = 'none';
+}
+
+function applyHighlight(id, arrowTargetId) {
+  clearHighlights();
+  if (!id) return;
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.classList.add('tutorial-highlight');
+  el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  setTimeout(() => positionArrow(arrowTargetId || id), 380);
+}
+
+function applyHighlights(ids) {
+  clearHighlights();
+  ids.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.add('tutorial-highlight');
+  });
+  const first = document.getElementById(ids[0]);
+  if (first) {
+    first.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    setTimeout(() => positionArrow(ids[0]), 380);
+  }
+}
+
+// ================================================================
+// BUILD STEP LIST
+// ================================================================
+function buildSteps() {
+  const profileSteps = (currentProfile && PROFILE_STEPS[currentProfile])
+    ? PROFILE_STEPS[currentProfile]
+    : [{ text: 'Tutorial for this profile is not yet available.', page: 'skills-map', highlight: null, type: 'exit' }];
+  return [...STEPS_GENERAL, ...profileSteps];
+}
+
+// ================================================================
+// RENDER
+// ================================================================
+function render() {
+  const step = allSteps[stepIndex];
+
+  switchView(step.page);
+
+  const overlay = document.getElementById('tutorial-overlay');
+  if (step.highlights) {
+    overlay.classList.add('active');
+    applyHighlights(step.highlights);
+  } else if (step.highlight) {
+    overlay.classList.add('active');
+    applyHighlight(step.highlight, step.arrowTarget);
+  } else {
+    overlay.classList.remove('active');
+    clearHighlights();
+  }
+
+  document.getElementById('tutorial-text').innerHTML = formatText(step.text);
+
+  // Profile selector
+  const profileDiv = document.getElementById('profile-options');
+  document.getElementById('tutorial-error').style.display = 'none';
+  if (step.type === 'profile') {
+    profileDiv.style.display = 'flex';
+    profileDiv.innerHTML = '';
+    PROFILES.forEach(p => {
+      const label = document.createElement('label');
+      label.className = 'profile-option';
+      const radio = document.createElement('input');
+      radio.type = 'radio'; radio.name = 'arfie-profile'; radio.value = p.value;
+      if (currentProfile === p.value) radio.checked = true;
+      radio.addEventListener('change', () => { currentProfile = p.value; });
+      label.appendChild(radio);
+      label.appendChild(document.createTextNode(p.label));
+      profileDiv.appendChild(label);
+    });
+  } else {
+    profileDiv.style.display = 'none';
+  }
+
+  // Progress dots
+  const dotsEl = document.getElementById('t-dots');
+  dotsEl.innerHTML = '';
+  allSteps.forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 't-dot' + (i < stepIndex ? ' done' : '') + (i === stepIndex ? ' active' : '');
+    dotsEl.appendChild(d);
+  });
+
+  document.getElementById('t-back').disabled = (stepIndex === 0);
+  const nextBtn = document.getElementById('t-next');
+  nextBtn.textContent = (step.type === 'exit' || stepIndex === allSteps.length - 1) ? '✓ Done' : 'Continue →';
+}
+
+// ================================================================
+// OPEN / CLOSE
+// ================================================================
+function openTutorial() {
+  const saved = localStorage.getItem(LS_KEY);
+  if (saved && PROFILE_STEPS[saved]) {
+    currentProfile = saved;
+    allSteps  = buildSteps();
+    stepIndex = 2;
+  } else {
+    currentProfile = null;
+    allSteps  = [...STEPS_GENERAL];
+    stepIndex = 0;
+  }
+  document.getElementById('tutorial-panel').classList.add('open');
+  render();
+}
+
+function closeTutorial() {
+  document.getElementById('tutorial-panel').classList.remove('open');
+  document.getElementById('tutorial-overlay').classList.remove('active');
+  clearHighlights();
+  const bubble = document.getElementById('coach-bubble');
+  bubble.classList.add('shrink');
+  bubble.addEventListener('animationend', () => bubble.classList.remove('shrink'), { once: true });
+}
+
+// ================================================================
+// NAVIGATION
+// ================================================================
+document.getElementById('t-next').addEventListener('click', () => {
+  const step = allSteps[stepIndex];
+  if (step.type === 'profile') {
+    if (!currentProfile) { document.getElementById('tutorial-error').style.display = 'block'; return; }
+    localStorage.setItem(LS_KEY, currentProfile);
+    allSteps = buildSteps();
+  }
+  if (step.type === 'exit' || stepIndex >= allSteps.length - 1) { closeTutorial(); return; }
+  stepIndex++;
+  render();
+});
+
+document.getElementById('t-back').addEventListener('click', () => {
+  if (stepIndex > 0) {
+    stepIndex--;
+    if (stepIndex <= 1) {
+      allSteps = [...STEPS_GENERAL, ...(currentProfile && PROFILE_STEPS[currentProfile] ? PROFILE_STEPS[currentProfile] : [])];
+    }
+    render();
+  }
+});
+
+document.getElementById('coach-bubble').addEventListener('click', openTutorial);
+</script>
+</body>
+</html>

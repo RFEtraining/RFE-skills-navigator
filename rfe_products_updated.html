@@ -2253,6 +2253,91 @@
     }
     .coach-btn-next:hover { background: #1e5535; transform: translateY(-1px); }
     /* ── END COACH ARFIE ────────────────────────────────────────────────── */
+
+    /* ── TUTORIAL SYSTEM ────────────────────────────────────────────────── */
+    #tutorial-overlay {
+        position: fixed; inset: 0;
+        background: rgba(0,0,0,0.62);
+        z-index: 700; pointer-events: none;
+        opacity: 0; transition: opacity 0.3s;
+    }
+    #tutorial-overlay.active { opacity: 1; }
+
+    .tutorial-highlight {
+        position: relative; z-index: 701; border-radius: 6px;
+        outline: 3px solid #F4C430;
+        box-shadow: 0 0 0 6px rgba(244,196,48,0.18), 0 0 28px rgba(244,196,48,0.3);
+        transition: outline 0.2s, box-shadow 0.2s;
+    }
+    #headerBar.tutorial-highlight { z-index: 702; }
+
+    #tutorial-float-arrow {
+        position: fixed; z-index: 703;
+        font-size: 22px; color: #F4C430;
+        text-shadow: 0 0 10px rgba(244,196,48,0.9);
+        pointer-events: none; display: none;
+        transform: translateX(-50%);
+        animation: t-arrow-down 0.9s ease-in-out infinite;
+    }
+    #tutorial-float-arrow.up { animation: t-arrow-up 0.9s ease-in-out infinite; }
+    @keyframes t-arrow-down {
+        0%, 100% { transform: translateX(-50%) translateY(0px); }
+        50%       { transform: translateX(-50%) translateY(7px); }
+    }
+    @keyframes t-arrow-up {
+        0%, 100% { transform: translateX(-50%) translateY(0px); }
+        50%       { transform: translateX(-50%) translateY(-7px); }
+    }
+
+    #tutorial-panel {
+        position: fixed; bottom: 0; left: 0; right: 0;
+        background: #1D5A42; color: white; z-index: 800;
+        transform: translateY(100%);
+        transition: transform 0.38s cubic-bezier(0.4,0,0.2,1);
+        box-shadow: 0 -6px 24px rgba(0,0,0,0.28);
+    }
+    #tutorial-panel.open { transform: translateY(0); }
+
+    .tutorial-panel-inner {
+        display: flex; align-items: flex-start; gap: 20px;
+        padding: 18px 28px 12px;
+        max-width: 960px; margin: 0 auto;
+    }
+    .tutorial-coach-col { flex-shrink: 0; text-align: center; padding-top: 2px; }
+    .tutorial-coach-col .t-pig  { font-size: 38px; line-height: 1; display: block; }
+    .tutorial-coach-col .t-name { font-size: 10px; font-weight: 700; letter-spacing: 0.6px; opacity: 0.75; margin-top: 3px; text-transform: uppercase; }
+
+    .tutorial-body-col { flex: 1; min-width: 0; }
+    .tutorial-step-text { font-size: 17px; font-weight: 500; line-height: 1.55; margin-bottom: 6px; }
+    .tutorial-step-text em { font-style: italic; }
+
+    .tutorial-profile-options { display: flex; flex-direction: column; gap: 7px; margin-top: 6px; }
+    .tutorial-profile-option  { display: flex; align-items: center; gap: 10px; font-size: 14px; cursor: pointer; }
+    .tutorial-profile-option input[type="radio"] { accent-color: #F4C430; width: 15px; height: 15px; cursor: pointer; }
+    .tutorial-profile-error   { font-size: 12px; color: #F4C430; margin-top: 5px; display: none; }
+
+    .tutorial-footer {
+        display: flex; align-items: center; gap: 12px;
+        padding: 10px 28px 14px;
+        max-width: 960px; margin: 0 auto;
+        border-top: 1px solid rgba(255,255,255,0.14);
+    }
+    .tutorial-dots { flex: 1; display: flex; gap: 5px; justify-content: center; flex-wrap: wrap; }
+    .tutorial-dot  { width: 7px; height: 7px; border-radius: 50%; background: rgba(255,255,255,0.28); transition: background 0.2s; }
+    .tutorial-dot.done   { background: rgba(255,255,255,0.55); }
+    .tutorial-dot.active { background: #F4C430; }
+
+    .tutorial-btn {
+        background: rgba(255,255,255,0.14); border: 1px solid rgba(255,255,255,0.28);
+        color: white; padding: 8px 20px; border-radius: 6px;
+        font-size: 13px; font-weight: 500; cursor: pointer;
+        transition: background 0.2s; white-space: nowrap;
+    }
+    .tutorial-btn:hover    { background: rgba(255,255,255,0.24); }
+    .tutorial-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+    .tutorial-btn.t-primary { background: #F4C430; border-color: #F4C430; color: #1D5A42; font-weight: 700; }
+    .tutorial-btn.t-primary:hover { background: #e6b820; }
+    /* ── END TUTORIAL SYSTEM ─────────────────────────────────────────────── */
     </style>
 </head>
 <body>
@@ -2261,10 +2346,10 @@
             <div class="header-container">
                 <ul class="header-tabs">
                     <li class="header-tab">
-                        <button class="header-tab-button active" data-view="skillsMapView">RFE Skills Map</button>
+                        <button class="header-tab-button active" id="tutorial-tab-skills" data-view="skillsMapView">RFE Skills Map</button>
                     </li>
                     <li class="header-tab">
-                        <button class="header-tab-button" data-view="productsView">Learn about Products</button>
+                        <button class="header-tab-button" id="tutorial-tab-products" data-view="productsView">Learn about Products</button>
                     </li>
                 </ul>
             </div>
@@ -2315,7 +2400,7 @@
             <div class="products-container">
                 <div class="products-grid">
                     <!-- Learning Plan Design spans across all stages -->
-                    <div class="product-box learning-plan-design" data-popup="learning-plan-design-lpd">Learning Plan Design</div>
+                    <div id="tutorial-lpd-product" class="product-box learning-plan-design" data-popup="learning-plan-design-lpd">Learning Plan Design</div>
                     
                     <!-- Row 2: Evidence Review + Process Evaluation -->
                     <!-- NOTE: Impact Evaluation removed temporarily - needs spreadsheet mapping update -->
@@ -2672,14 +2757,14 @@
                         <p style="font-size: 15px; color: #333; line-height: 1.6; margin: 0 0 20px 0; text-align: center; max-width: 900px; margin-left: auto; margin-right: auto;">
                             Welcome to the skill development page. This is where you can explore our 'knowledge hierarchy' and better understand what you need to know to do your job. Look around and pay attention to the below symbols indicating the expectations for you. Everything else is considered 'as needed', meaning you should know how to implement it <em>if you are delivering it as part of your work</em>.
                         </p>
-                        <p style="font-size: 14px; color: #6c757d; font-style: italic;"><span style="color: #ffc107;">&#9733;</span> = Topics that all team members should know</p>
+                        <p id="tutorial-must-know-legend" style="font-size: 14px; color: #6c757d; font-style: italic;"><span style="color: #ffc107;">&#9733;</span> = Topics that all team members should know</p>
                         <p style="font-size: 14px; color: #6c757d; font-style: italic;"><span style="color: #dc3545;">&#9679;</span> = Topics that only managers and directors should know</p>
                     </div>
                     
                     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 20px;">
                         
                         <!-- RFE Philosophy Section -->
-                        <div style="background: white; border-radius: 12px; padding: 20px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); border: 2px solid #999;">
+                        <div id="tutorial-rfe-philosophy" style="background: white; border-radius: 12px; padding: 20px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); border: 2px solid #999;">
                             <div style="font-size: 18px; font-weight: 600; color: white; text-align: center; padding: 12px 16px; border-radius: 8px; margin-bottom: 20px; background-color: #84d0d4; cursor: pointer;" data-popup="Rfe-Philosophy" onclick="openPopup('Rfe-Philosophy')"><span style="color: #ffc107;">&#9733;</span> RFE Philosophy</div>
                             <div style="background: #f8f9fa; border-radius: 8px; padding: 20px; min-height: 150px;">
                                 <div id="rfe-philosophy-items" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;">
@@ -2689,7 +2774,7 @@
                         </div>
                         
                         <!-- RFE Products Section -->
-                        <div style="background: white; border-radius: 12px; padding: 20px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); border: 2px solid #999;">
+                        <div id="tutorial-rfe-products" style="background: white; border-radius: 12px; padding: 20px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); border: 2px solid #999;">
                             <div onclick="switchToProductsTab()" style="font-size: 18px; font-weight: 600; color: white; text-align: center; padding: 12px 16px; border-radius: 8px; margin-bottom: 20px; background-color: #2b4085; cursor: pointer;">RFE Products</div>
                             <div style="background: #f8f9fa; border-radius: 8px; padding: 20px;">
                                 <p style="font-size: 13px; font-style: italic; color: #666; text-align: center; margin: 0;">RFE products are explored on the Products page.</p>
@@ -2697,7 +2782,7 @@
                         </div>
 
                         <!-- MEL Skills Section -->
-                        <div style="background: white; border-radius: 12px; padding: 20px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); border: 2px solid #999;">
+                        <div id="tutorial-mel-skills" style="background: white; border-radius: 12px; padding: 20px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); border: 2px solid #999;">
                             <div style="font-size: 18px; font-weight: 600; color: white; text-align: center; padding: 12px 16px; border-radius: 8px; margin-bottom: 20px; background-color: #2b4085;">MEL Skills</div>
                             <div style="background: #f8f9fa; border-radius: 8px; padding: 20px; min-height: 150px;">
                                 <div id="mel-competencies-items" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;">
@@ -2707,7 +2792,7 @@
                         </div>
                         
                         <!-- Consulting & Communication Skills Section -->
-                        <div style="background: white; border-radius: 12px; padding: 20px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); border: 2px solid #999;">
+                        <div id="tutorial-consulting" style="background: white; border-radius: 12px; padding: 20px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); border: 2px solid #999;">
                             <div style="font-size: 18px; font-weight: 600; color: white; text-align: center; padding: 12px 16px; border-radius: 8px; margin-bottom: 20px; background-color: #f26529; cursor: pointer;"><span style="color: #ffc107;">&#9733;</span> Consulting & Communication Skills</div>
                             <div style="background: #f8f9fa; border-radius: 8px; padding: 20px; min-height: 150px;">
                                 <div id="consulting-and-communication-skills-items" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;">
@@ -2717,7 +2802,7 @@
                         </div>
                         
                         <!-- Internal Processes Section -->
-                        <div style="background: white; border-radius: 12px; padding: 20px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); border: 2px solid #999;">
+                        <div id="tutorial-internal-processes" style="background: white; border-radius: 12px; padding: 20px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); border: 2px solid #999;">
                             <div style="font-size: 18px; font-weight: 600; color: white; text-align: center; padding: 12px 16px; border-radius: 8px; margin-bottom: 20px; background-color: #be9ffa; cursor: pointer;"><span style="color: #ffc107;">&#9733;</span> Internal Processes</div>
                             <div style="background: #f8f9fa; border-radius: 8px; padding: 20px; min-height: 150px;">
                                 <div id="internal-processes-items" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;">
@@ -2727,7 +2812,7 @@
                         </div>
                         
                         <!-- Management Skills & Processes Section -->
-                        <div style="background: white; border-radius: 12px; padding: 20px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); border: 2px solid #999;">
+                        <div id="tutorial-management" style="background: white; border-radius: 12px; padding: 20px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); border: 2px solid #999;">
                             <div style="font-size: 18px; font-weight: 600; color: white; text-align: center; padding: 12px 16px; border-radius: 8px; margin-bottom: 20px; background-color: #49ac57; cursor: pointer;">Management Skills & Processes</div>
                             <div style="background: #f8f9fa; border-radius: 8px; padding: 20px; min-height: 150px;">
                                 <div id="management-skills-and-processes-items" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;">
@@ -6617,77 +6702,257 @@ You have 12 more indicators to review in 90 minutes. Create a simple tool the te
     <button class="coach-bubble" id="coachBubble" title="Welcome from the RFE training team">🐷</button>
     <div class="coach-bubble-label">Coach Arfie</div>
 
-    <!-- COACH ARFIE POPUP -->
-    <div class="coach-overlay" id="coachOverlay">
-        <div class="coach-modal">
-            <button class="coach-x" id="coachXBtn">✕</button>
-            <div class="coach-avatar">🐷</div>
-            <div class="coach-name-tag">Coach Arfie</div>
-            <div class="coach-step-title" id="coachStepTitle"></div>
-            <div class="coach-step-body" id="coachStepBody"></div>
-            <div class="coach-footer">
-                <div class="coach-dots" id="coachDots"></div>
-                <div class="coach-btns">
-                    <button class="coach-btn-back" id="coachBackBtn">← Back</button>
-                    <button class="coach-btn-next" id="coachNextBtn">Continue →</button>
-                </div>
+    <!-- TUTORIAL SYSTEM -->
+    <div id="tutorial-float-arrow">▼</div>
+    <div id="tutorial-overlay"></div>
+
+    <div id="tutorial-panel">
+        <div class="tutorial-panel-inner">
+            <div class="tutorial-coach-col">
+                <span class="t-pig">🐷</span>
+                <div class="t-name">Coach Arfie</div>
             </div>
+            <div class="tutorial-body-col">
+                <div class="tutorial-step-text"    id="tutorial-step-text"></div>
+                <div class="tutorial-profile-options" id="tutorial-profile-options" style="display:none"></div>
+                <div class="tutorial-profile-error"  id="tutorial-profile-error">Please select a profile to continue.</div>
+            </div>
+        </div>
+        <div class="tutorial-footer">
+            <button class="tutorial-btn"           id="tutorial-back-btn">← Back</button>
+            <div class="tutorial-dots"             id="tutorial-dots"></div>
+            <button class="tutorial-btn t-primary" id="tutorial-next-btn">Continue →</button>
         </div>
     </div>
 
     <script>
-    // ── COACH ARFIE (standalone script — guaranteed global scope) ─────────
-    var COACH_STEPS = [
-        { title: 'Stop! 🐽',          body: 'The RFE training team welcomes you to the RFE Skills Navigator.<br><br>If you are new to the platform, click <strong>Continue</strong> to take a tour of the site.' },
-        { title: 'Two views 🗺️',      body: 'The Navigator has two views — switch between them at the top:<br><br><strong>Products Map</strong> — all RFE products by learning stage, each with a full learning guide.<br><br><strong>Skills Map</strong> — MEL skills, consulting skills, and internal processes behind RFE work.' },
-        { title: 'Opening a product 📖', body: 'Click any product box to open its learning guide. Inside you\'ll find:<br><br>• A <strong>Basic</strong> tab — overview and when to use it<br>• An <strong>Advanced</strong> tab — Content, Practice, Feedback, MEL links, and Resources' },
-        { title: 'Exploring skills 🧠', body: 'Switch to the <strong>Skills Map</strong> tab to explore individual skills. Each skill has curated resources and learning paths across Content and Practice sections.' },
-        { title: 'Flag an issue 🚩',   body: 'See something wrong or out of date? Every section has a flag button. Click it to report an issue — context is captured automatically and sent to the RFE training team.' },
-        { title: 'You\'re all set! 🎉', body: 'That\'s the tour. Coach Arfie will always be here in the top right corner if you need a refresher.<br><br>Happy learning! 🐷' }
+    // ── COACH ARFIE TUTORIAL (standalone script) ──────────────────────────
+
+    var T_PROFILES = [
+        { value: 'rfe_onboarder',        label: 'RFE Onboarding staff' },
+        { value: 'rfe_advanced_learner', label: 'RFE Staff seeking additional learning' },
+        { value: 'ipa_general_learner',  label: 'IPA Staff wanting to browse RFE topics' },
+        { value: 'ipa_targeted_learner', label: 'IPA Staff needing to implement RFE work' }
     ];
-    var _coachStep = 0;
+
+    var T_STEPS_GENERAL = [
+        {
+            text: 'Hello! *snort*\nI\'m Coach Arfie, and welcome to the RFE Learning Platform.\n\nIf you are new to the site or want a walk-thru, click Continue to take a tour of the site.',
+            page: 'skillsMapView', highlight: null, type: 'continue'
+        },
+        {
+            text: 'Select the profile that best matches you',
+            page: 'skillsMapView', highlight: null, type: 'profile'
+        }
+    ];
+
+    var T_PROFILE_STEPS = {
+        rfe_onboarder: [
+            { text: 'Welcome to RFE! This is the RFE Skills Map tab, where you can see all the areas of knowledge relevant to RFE staff', page: 'skillsMapView', highlight: 'headerBar', arrowTarget: 'tutorial-tab-skills', type: 'continue' },
+            { text: 'Look for stars indicating what all RFE staff should know', page: 'skillsMapView', highlight: 'tutorial-must-know-legend', type: 'continue' },
+            { text: 'RFE Philosophy is the most important section, and contains the high-level principles that apply to everything we do', page: 'skillsMapView', highlight: 'tutorial-rfe-philosophy', type: 'continue' },
+            { text: 'RFE Products is a combination of research and learning methodologies we have standardized across our projects', page: 'skillsMapView', highlight: 'tutorial-rfe-products', type: 'continue' },
+            { text: 'MEL Skills includes the most important *additional* skills that aren\'t fully included within the RFE Products', page: 'skillsMapView', highlight: 'tutorial-mel-skills', type: 'continue' },
+            { text: 'These sections show all the soft skills and internal processes with which you should familiarize yourself.', page: 'skillsMapView', highlights: ['tutorial-consulting', 'tutorial-internal-processes', 'tutorial-management'], type: 'continue' },
+            { text: 'This is the product suite tab, where you can see all of the products we have standardized across RFE projects.', page: 'productsView', highlight: 'headerBar', arrowTarget: 'tutorial-tab-products', type: 'continue' },
+            { text: 'It will be most important to start mastering the Learning Plan Design product, since this is the foundation of all RFE work. You should learn other products on a needs-basis, if you will be expected to deliver them through your project work', page: 'productsView', highlight: 'tutorial-lpd-product', type: 'continue' },
+            { text: 'That\'s the end of this tutorial. Good luck learning!', page: 'productsView', highlight: null, type: 'exit' }
+        ],
+        rfe_advanced_learner: [
+            { text: 'Learner profile tutorial not yet created...', page: 'skillsMapView', highlight: null, type: 'exit' }
+        ],
+        ipa_general_learner: [
+            { text: 'Learner profile tutorial not yet created...', page: 'skillsMapView', highlight: null, type: 'exit' }
+        ],
+        ipa_targeted_learner: [
+            { text: 'We are happy to help you deliver an RFE product. This is the Skills Map where you can see the range of RFE knowledge.', page: 'skillsMapView', highlight: 'headerBar', arrowTarget: 'tutorial-tab-skills', type: 'continue' },
+            { text: 'You should start here by reviewing the RFE Philosophies section, understanding the core principles we use across all RFE work.', page: 'skillsMapView', highlight: 'tutorial-rfe-philosophy', type: 'continue' },
+            { text: 'When you are ready, come look at the RFE product suite.', page: 'productsView', highlight: 'headerBar', arrowTarget: 'tutorial-tab-products', type: 'continue' },
+            { text: 'On the product page, you should start with the LPD product, which is the foundation of RFE work.\nOnce you understand the LPD, you can look to learn any other products you might be delivering.', page: 'productsView', highlight: 'tutorial-lpd-product', type: 'continue' },
+            { text: 'That\'s the end of this tutorial. Good luck learning!', page: 'productsView', highlight: null, type: 'exit' }
+        ]
+    };
+
+    var T_LS_KEY = 'coach_arfie_profile';
+    var tProfile  = null;
+    var tStepIdx  = 0;
+    var tAllSteps = [];
+
+    function tFormatText(str) {
+        if (!str) return '';
+        return str.replace(/\*(.*?)\*/g, '<em>$1</em>').replace(/\n/g, '<br>');
+    }
+
+    function tSwitchView(viewId) {
+        var pv = document.getElementById('productsView');
+        var sm = document.getElementById('skillsMapView');
+        if (viewId === 'productsView') {
+            pv.style.display = 'block'; sm.style.display = 'none';
+        } else {
+            pv.style.display = 'none';  sm.style.display = 'block';
+        }
+        document.querySelectorAll('.header-tab-button').forEach(function(btn) {
+            btn.classList.toggle('active', btn.getAttribute('data-view') === viewId);
+        });
+    }
+
+    function tPositionArrow(id) {
+        var arrow = document.getElementById('tutorial-float-arrow');
+        if (!id) { arrow.style.display = 'none'; return; }
+        var el = document.getElementById(id);
+        if (!el) { arrow.style.display = 'none'; return; }
+        var rect = el.getBoundingClientRect();
+        arrow.style.left = (rect.left + rect.width / 2) + 'px';
+        if (rect.bottom < 120) {
+            arrow.textContent = '▲';
+            arrow.classList.add('up');
+            arrow.style.top = (rect.bottom + 8) + 'px';
+        } else {
+            arrow.textContent = '▼';
+            arrow.classList.remove('up');
+            arrow.style.top = Math.max(70, rect.top - 34) + 'px';
+        }
+        arrow.style.display = 'block';
+    }
+
+    window.addEventListener('scroll', function() {
+        var step = tAllSteps[tStepIdx];
+        if (!step) return;
+        if (step.highlight)  tPositionArrow(step.arrowTarget || step.highlight);
+        if (step.highlights) tPositionArrow(step.highlights[0]);
+    }, { passive: true });
+
+    function tClearHighlights() {
+        document.querySelectorAll('.tutorial-highlight').forEach(function(el) { el.classList.remove('tutorial-highlight'); });
+        document.getElementById('tutorial-float-arrow').style.display = 'none';
+    }
+
+    function tApplyHighlight(id, arrowTargetId) {
+        tClearHighlights();
+        if (!id) return;
+        var el = document.getElementById(id);
+        if (!el) return;
+        el.classList.add('tutorial-highlight');
+        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        setTimeout(function() { tPositionArrow(arrowTargetId || id); }, 380);
+    }
+
+    function tApplyHighlights(ids) {
+        tClearHighlights();
+        ids.forEach(function(id) {
+            var el = document.getElementById(id);
+            if (el) el.classList.add('tutorial-highlight');
+        });
+        var first = document.getElementById(ids[0]);
+        if (first) {
+            first.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            setTimeout(function() { tPositionArrow(ids[0]); }, 380);
+        }
+    }
+
+    function tBuildSteps() {
+        var profileSteps = (tProfile && T_PROFILE_STEPS[tProfile])
+            ? T_PROFILE_STEPS[tProfile]
+            : [{ text: 'Tutorial for this profile is not yet available.', page: 'skillsMapView', highlight: null, type: 'exit' }];
+        return T_STEPS_GENERAL.concat(profileSteps);
+    }
+
+    function tRender() {
+        var step = tAllSteps[tStepIdx];
+        tSwitchView(step.page);
+
+        var overlay = document.getElementById('tutorial-overlay');
+        if (step.highlights) {
+            overlay.classList.add('active'); tApplyHighlights(step.highlights);
+        } else if (step.highlight) {
+            overlay.classList.add('active'); tApplyHighlight(step.highlight, step.arrowTarget);
+        } else {
+            overlay.classList.remove('active'); tClearHighlights();
+        }
+
+        document.getElementById('tutorial-step-text').innerHTML = tFormatText(step.text);
+
+        var profileDiv = document.getElementById('tutorial-profile-options');
+        document.getElementById('tutorial-profile-error').style.display = 'none';
+        if (step.type === 'profile') {
+            profileDiv.style.display = 'flex';
+            profileDiv.innerHTML = '';
+            T_PROFILES.forEach(function(p) {
+                var label = document.createElement('label');
+                label.className = 'tutorial-profile-option';
+                var radio = document.createElement('input');
+                radio.type = 'radio'; radio.name = 'arfie-profile'; radio.value = p.value;
+                if (tProfile === p.value) radio.checked = true;
+                radio.addEventListener('change', function() { tProfile = p.value; });
+                label.appendChild(radio);
+                label.appendChild(document.createTextNode(p.label));
+                profileDiv.appendChild(label);
+            });
+        } else {
+            profileDiv.style.display = 'none';
+        }
+
+        var dotsEl = document.getElementById('tutorial-dots');
+        dotsEl.innerHTML = '';
+        tAllSteps.forEach(function(_, i) {
+            var d = document.createElement('div');
+            d.className = 'tutorial-dot' + (i < tStepIdx ? ' done' : '') + (i === tStepIdx ? ' active' : '');
+            dotsEl.appendChild(d);
+        });
+
+        document.getElementById('tutorial-back-btn').disabled = (tStepIdx === 0);
+        var nextBtn = document.getElementById('tutorial-next-btn');
+        nextBtn.textContent = (step.type === 'exit' || tStepIdx === tAllSteps.length - 1) ? '✓ Done' : 'Continue →';
+    }
 
     function openCoach() {
-        _coachStep = 0;
-        _renderCoachStep();
-        document.getElementById('coachOverlay').classList.add('show');
+        var saved = localStorage.getItem(T_LS_KEY);
+        if (saved && T_PROFILE_STEPS[saved]) {
+            tProfile = saved; tAllSteps = tBuildSteps(); tStepIdx = 2;
+        } else {
+            tProfile = null; tAllSteps = T_STEPS_GENERAL.slice(); tStepIdx = 0;
+        }
+        document.getElementById('tutorial-panel').classList.add('open');
+        tRender();
     }
+
     function closeCoach() {
-        document.getElementById('coachOverlay').classList.remove('show');
+        document.getElementById('tutorial-panel').classList.remove('open');
+        document.getElementById('tutorial-overlay').classList.remove('active');
+        tClearHighlights();
         var bubble = document.getElementById('coachBubble');
         bubble.classList.add('shrinking');
         setTimeout(function() { bubble.classList.remove('shrinking'); }, 450);
     }
-    function coachNext() {
-        if (_coachStep < COACH_STEPS.length - 1) { _coachStep++; _renderCoachStep(); }
-        else { closeCoach(); }
-    }
-    function coachBack() {
-        if (_coachStep > 0) { _coachStep--; _renderCoachStep(); }
-    }
-    function _renderCoachStep() {
-        var step = COACH_STEPS[_coachStep];
-        document.getElementById('coachStepTitle').textContent = step.title;
-        document.getElementById('coachStepBody').innerHTML = step.body;
-        document.getElementById('coachDots').innerHTML = COACH_STEPS.map(function(_, i) {
-            return '<div class="coach-dot' + (i === _coachStep ? ' active' : '') + '"></div>';
-        }).join('');
-        document.getElementById('coachBackBtn').style.display = _coachStep === 0 ? 'none' : '';
-        document.getElementById('coachNextBtn').textContent = _coachStep === COACH_STEPS.length - 1 ? 'Finish ✓' : 'Continue →';
-    }
+
+    document.getElementById('tutorial-next-btn').addEventListener('click', function() {
+        var step = tAllSteps[tStepIdx];
+        if (step.type === 'profile') {
+            if (!tProfile) { document.getElementById('tutorial-profile-error').style.display = 'block'; return; }
+            localStorage.setItem(T_LS_KEY, tProfile);
+            tAllSteps = tBuildSteps();
+        }
+        if (step.type === 'exit' || tStepIdx >= tAllSteps.length - 1) { closeCoach(); return; }
+        tStepIdx++;
+        tRender();
+    });
+
+    document.getElementById('tutorial-back-btn').addEventListener('click', function() {
+        if (tStepIdx > 0) {
+            tStepIdx--;
+            if (tStepIdx <= 1) {
+                tAllSteps = T_STEPS_GENERAL.concat(tProfile && T_PROFILE_STEPS[tProfile] ? T_PROFILE_STEPS[tProfile] : []);
+            }
+            tRender();
+        }
+    });
 
     document.getElementById('coachBubble').addEventListener('click', openCoach);
-    document.getElementById('coachXBtn').addEventListener('click', closeCoach);
-    document.getElementById('coachNextBtn').addEventListener('click', coachNext);
-    document.getElementById('coachBackBtn').addEventListener('click', coachBack);
-    document.getElementById('coachOverlay').addEventListener('click', function(e) {
-        if (e.target === this) closeCoach();
-    });
 
     if (new URLSearchParams(window.location.search).get('coach') === 'open') {
         setTimeout(openCoach, 400);
     }
-    // ── END COACH ARFIE ───────────────────────────────────────────────────
+    // ── END COACH ARFIE TUTORIAL ──────────────────────────────────────────
     </script>
 </body>
 </html>
