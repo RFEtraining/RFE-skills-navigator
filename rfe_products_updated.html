@@ -7060,7 +7060,7 @@ You have 12 more indicators to review in 90 minutes. Create a simple tool the te
                 params += field.param + '=' + encodeURIComponent(val);
                 if (i < step.fields.length - 1) params += '&';
             });
-            window.open(step.formUrl + '?' + params, '_blank');
+            window.open(step.formUrl + '?' + params, '_blank', 'width=860,height=720,resizable=yes,scrollbars=yes');
         }
         if (step.type === 'exit' || tStepIdx >= tAllSteps.length - 1) { closeCoach(); return; }
         tStepIdx++;

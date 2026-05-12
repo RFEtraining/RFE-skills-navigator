@@ -778,7 +778,7 @@ document.getElementById('t-next').addEventListener('click', () => {
       params += field.param + '=' + encodeURIComponent(val);
       if (i < step.fields.length - 1) params += '&';
     });
-    window.open(step.formUrl + '?' + params, '_blank');
+    window.open(step.formUrl + '?' + params, '_blank', 'width=860,height=720,resizable=yes,scrollbars=yes');
   }
   if (step.type === 'exit' || stepIndex >= allSteps.length - 1) { closeTutorial(); return; }
   stepIndex++;
