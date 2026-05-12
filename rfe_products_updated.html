@@ -2280,6 +2280,15 @@
         animation: t-arrow-down 0.9s ease-in-out infinite;
     }
     #tutorial-float-arrow.up { animation: t-arrow-up 0.9s ease-in-out infinite; }
+    .t-extra-arrow {
+        position: fixed; z-index: 703;
+        font-size: 22px; color: #F4C430;
+        text-shadow: 0 0 10px rgba(244,196,48,0.9);
+        pointer-events: none;
+        transform: translateX(-50%);
+        animation: t-arrow-down 0.9s ease-in-out infinite;
+    }
+    .t-extra-arrow.up { animation: t-arrow-up 0.9s ease-in-out infinite; }
     @keyframes t-arrow-down {
         0%, 100% { transform: translateX(-50%) translateY(0px); }
         50%       { transform: translateX(-50%) translateY(7px); }
@@ -6827,12 +6836,13 @@ You have 12 more indicators to review in 90 minutes. Create a simple tool the te
         var step = tAllSteps[tStepIdx];
         if (!step) return;
         if (step.highlight)  tPositionArrow(step.arrowTarget || step.highlight);
-        if (step.highlights) tPositionArrow(step.highlights[0]);
+        if (step.highlights) tPositionAllArrows(step.highlights);
     }, { passive: true });
 
     function tClearHighlights() {
         document.querySelectorAll('.tutorial-highlight').forEach(function(el) { el.classList.remove('tutorial-highlight'); });
         document.getElementById('tutorial-float-arrow').style.display = 'none';
+        document.querySelectorAll('.t-extra-arrow').forEach(function(el) { el.remove(); });
     }
 
     function tApplyHighlight(id, arrowTargetId) {
@@ -6845,6 +6855,24 @@ You have 12 more indicators to review in 90 minutes. Create a simple tool the te
         setTimeout(function() { tPositionArrow(arrowTargetId || id); }, 380);
     }
 
+    function tPositionAllArrows(ids) {
+        tPositionArrow(ids[0]);
+        document.querySelectorAll('.t-extra-arrow').forEach(function(el) { el.remove(); });
+        for (var i = 1; i < ids.length; i++) {
+            var el = document.getElementById(ids[i]);
+            if (!el) continue;
+            var rect = el.getBoundingClientRect();
+            var div = document.createElement('div');
+            div.className = 't-extra-arrow';
+            var isUp = rect.bottom < 120;
+            div.textContent = isUp ? '▲' : '▼';
+            if (isUp) div.classList.add('up');
+            div.style.left = (rect.left + rect.width / 2) + 'px';
+            div.style.top = isUp ? (rect.bottom + 8) + 'px' : Math.max(70, rect.top - 34) + 'px';
+            document.body.appendChild(div);
+        }
+    }
+
     function tApplyHighlights(ids) {
         tClearHighlights();
         ids.forEach(function(id) {
@@ -6854,7 +6882,7 @@ You have 12 more indicators to review in 90 minutes. Create a simple tool the te
         var first = document.getElementById(ids[0]);
         if (first) {
             first.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            setTimeout(function() { tPositionArrow(ids[0]); }, 380);
+            setTimeout(function() { tPositionAllArrows(ids); }, 380);
         }
     }
 

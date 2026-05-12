@@ -152,6 +152,15 @@
       50%       { transform: translateX(-50%) translateY(7px);  }
     }
     #float-arrow.up { animation: arrow-float-up 0.9s ease-in-out infinite; }
+    .t-extra-arrow {
+      position: fixed; z-index: 502;
+      font-size: 22px; color: #F4C430;
+      text-shadow: 0 0 10px rgba(244,196,48,0.9);
+      pointer-events: none;
+      transform: translateX(-50%);
+      animation: arrow-float 0.9s ease-in-out infinite;
+    }
+    .t-extra-arrow.up { animation: arrow-float-up 0.9s ease-in-out infinite; }
     @keyframes arrow-float-up {
       0%, 100% { transform: translateX(-50%) translateY(0px);  }
       50%       { transform: translateX(-50%) translateY(-7px); }
@@ -525,7 +534,7 @@ window.addEventListener('scroll', () => {
   const step = allSteps[stepIndex];
   if (!step) return;
   if (step.highlight)  positionArrow(step.arrowTarget || step.highlight);
-  if (step.highlights) positionArrow(step.highlights[0]);
+  if (step.highlights) positionAllArrows(step.highlights);
 }, { passive: true });
 
 // ================================================================
@@ -534,6 +543,7 @@ window.addEventListener('scroll', () => {
 function clearHighlights() {
   document.querySelectorAll('.tutorial-highlight').forEach(el => el.classList.remove('tutorial-highlight'));
   document.getElementById('float-arrow').style.display = 'none';
+  document.querySelectorAll('.t-extra-arrow').forEach(el => el.remove());
 }
 
 function applyHighlight(id, arrowTargetId) {
@@ -546,6 +556,24 @@ function applyHighlight(id, arrowTargetId) {
   setTimeout(() => positionArrow(arrowTargetId || id), 380);
 }
 
+function positionAllArrows(ids) {
+  positionArrow(ids[0]);
+  document.querySelectorAll('.t-extra-arrow').forEach(el => el.remove());
+  for (let i = 1; i < ids.length; i++) {
+    const el = document.getElementById(ids[i]);
+    if (!el) continue;
+    const rect = el.getBoundingClientRect();
+    const div = document.createElement('div');
+    div.className = 't-extra-arrow';
+    const isUp = rect.bottom < 120;
+    div.textContent = isUp ? '▲' : '▼';
+    if (isUp) div.classList.add('up');
+    div.style.left = (rect.left + rect.width / 2) + 'px';
+    div.style.top = isUp ? (rect.bottom + 8) + 'px' : Math.max(62, rect.top - 34) + 'px';
+    document.body.appendChild(div);
+  }
+}
+
 function applyHighlights(ids) {
   clearHighlights();
   ids.forEach(id => {
@@ -555,7 +583,7 @@ function applyHighlights(ids) {
   const first = document.getElementById(ids[0]);
   if (first) {
     first.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    setTimeout(() => positionArrow(ids[0]), 380);
+    setTimeout(() => positionAllArrows(ids), 380);
   }
 }
 
