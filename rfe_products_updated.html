@@ -2115,6 +2115,22 @@
     .coach-bubble.shrinking {
         animation: coach-shrink 0.45s ease forwards;
     }
+    @keyframes arfie-rattle {
+        0%, 100% { transform: rotate(0deg); }
+        10%       { transform: rotate(-10deg); }
+        20%       { transform: rotate(10deg); }
+        30%       { transform: rotate(-8deg); }
+        40%       { transform: rotate(8deg); }
+        55%       { transform: rotate(-5deg); }
+        70%       { transform: rotate(5deg); }
+        85%       { transform: rotate(-2deg); }
+    }
+    @keyframes arfie-glow {
+        0%, 100% { box-shadow: 0 4px 16px rgba(0,0,0,0.25), 0 0 0 0 rgba(244,196,48,0.7); }
+        50%       { box-shadow: 0 4px 16px rgba(0,0,0,0.25), 0 0 0 10px rgba(244,196,48,0); }
+    }
+    .coach-bubble.arfie-rattling { animation: arfie-rattle 0.75s ease forwards; }
+    .coach-bubble.arfie-glowing  { animation: arfie-glow 1.8s ease-in-out infinite; }
     .coach-bubble-label {
         position: fixed;
         top: 72px;
@@ -7001,7 +7017,16 @@ You have 12 more indicators to review in 90 minutes. Create a simple tool the te
                             : step.type === 'form' ? 'Submit →' : 'Continue →';
     }
 
+    var T_NOTICED_KEY = 'coach_arfie_noticed';
+
+    function tClearAttention() {
+        var b = document.getElementById('coachBubble');
+        b.classList.remove('arfie-rattling', 'arfie-glowing');
+        localStorage.setItem(T_NOTICED_KEY, '1');
+    }
+
     function openCoach() {
+        tClearAttention();
         var saved = localStorage.getItem(T_LS_KEY);
         if (saved && T_PROFILE_STEPS[saved]) {
             tProfile = saved; tAllSteps = tBuildSteps(); tStepIdx = 2;
@@ -7055,6 +7080,18 @@ You have 12 more indicators to review in 90 minutes. Create a simple tool the te
     document.getElementById('coachBubble').addEventListener('click', openCoach);
     document.getElementById('tutorial-close-btn').addEventListener('click', closeCoach);
     document.getElementById('tutorial-overlay').addEventListener('click', closeCoach);
+
+    // First-contact attention — rattle then glow, only until first open
+    if (!localStorage.getItem(T_NOTICED_KEY)) {
+        setTimeout(function() {
+            var b = document.getElementById('coachBubble');
+            b.classList.add('arfie-rattling');
+            setTimeout(function() {
+                b.classList.remove('arfie-rattling');
+                if (!localStorage.getItem(T_NOTICED_KEY)) b.classList.add('arfie-glowing');
+            }, 800);
+        }, 1500);
+    }
 
     if (new URLSearchParams(window.location.search).get('coach') === 'open') {
         setTimeout(openCoach, 400);

@@ -109,6 +109,22 @@
     }
     #coach-bubble:hover { transform: scale(1.08); box-shadow: 0 6px 20px rgba(0,0,0,0.3); }
     #coach-bubble.shrink { animation: shrink-pop 0.42s ease forwards; }
+    @keyframes arfie-rattle {
+      0%, 100% { transform: rotate(0deg); }
+      10%       { transform: rotate(-10deg); }
+      20%       { transform: rotate(10deg); }
+      30%       { transform: rotate(-8deg); }
+      40%       { transform: rotate(8deg); }
+      55%       { transform: rotate(-5deg); }
+      70%       { transform: rotate(5deg); }
+      85%       { transform: rotate(-2deg); }
+    }
+    @keyframes arfie-glow {
+      0%, 100% { box-shadow: 0 4px 16px rgba(0,0,0,0.25), 0 0 0 0 rgba(244,196,48,0.7); }
+      50%       { box-shadow: 0 4px 16px rgba(0,0,0,0.25), 0 0 0 10px rgba(244,196,48,0); }
+    }
+    #coach-bubble.arfie-rattling { animation: arfie-rattle 0.75s ease forwards; }
+    #coach-bubble.arfie-glowing  { animation: arfie-glow 1.8s ease-in-out infinite; }
     @keyframes shrink-pop {
       0%   { transform: scale(1);    }
       40%  { transform: scale(0.58); }
@@ -712,7 +728,16 @@ function render() {
 // ================================================================
 // OPEN / CLOSE
 // ================================================================
+const NOTICED_KEY = 'coach_arfie_noticed';
+
+function clearAttention() {
+  const b = document.getElementById('coach-bubble');
+  b.classList.remove('arfie-rattling', 'arfie-glowing');
+  localStorage.setItem(NOTICED_KEY, '1');
+}
+
 function openTutorial() {
+  clearAttention();
   const saved = localStorage.getItem(LS_KEY);
   if (saved && PROFILE_STEPS[saved]) {
     currentProfile = saved;
@@ -773,6 +798,18 @@ document.getElementById('t-back').addEventListener('click', () => {
 document.getElementById('coach-bubble').addEventListener('click', openTutorial);
 document.getElementById('t-close-btn').addEventListener('click', closeTutorial);
 document.getElementById('tutorial-overlay').addEventListener('click', closeTutorial);
+
+// First-contact attention — rattle then glow, only until first open
+if (!localStorage.getItem(NOTICED_KEY)) {
+  setTimeout(() => {
+    const b = document.getElementById('coach-bubble');
+    b.classList.add('arfie-rattling');
+    setTimeout(() => {
+      b.classList.remove('arfie-rattling');
+      if (!localStorage.getItem(NOTICED_KEY)) b.classList.add('arfie-glowing');
+    }, 800);
+  }, 1500);
+}
 </script>
 </body>
 </html>
