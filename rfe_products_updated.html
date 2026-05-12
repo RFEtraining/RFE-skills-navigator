@@ -2261,7 +2261,7 @@
         z-index: 700; pointer-events: none;
         opacity: 0; transition: opacity 0.3s;
     }
-    #tutorial-overlay.active { opacity: 1; }
+    #tutorial-overlay.active { opacity: 1; pointer-events: auto; cursor: pointer; }
 
     .tutorial-highlight {
         position: relative; z-index: 701; border-radius: 6px;
@@ -2303,6 +2303,8 @@
         top: 80px;
         right: 24px;
         width: 360px;
+        height: 220px;
+        display: flex; flex-direction: column;
         background: #1D5A42; color: white; z-index: 800;
         border-radius: 14px;
         box-shadow: 0 8px 32px rgba(0,0,0,0.35), 0 2px 8px rgba(0,0,0,0.2);
@@ -2320,6 +2322,7 @@
     .tutorial-panel-inner {
         display: flex; align-items: flex-start; gap: 12px;
         padding: 16px 16px 10px;
+        flex: 1; overflow-y: auto; min-height: 0;
     }
     .tutorial-coach-col { flex-shrink: 0; text-align: center; }
     .tutorial-coach-col .t-pig  { font-size: 32px; line-height: 1; display: block; }
@@ -2354,6 +2357,13 @@
     .tutorial-btn:disabled { opacity: 0.35; cursor: not-allowed; }
     .tutorial-btn.t-primary { background: #F4C430; border-color: #F4C430; color: #1D5A42; font-weight: 700; }
     .tutorial-btn.t-primary:hover { background: #e6b820; }
+    .tutorial-close-btn {
+        position: absolute; top: 8px; right: 10px;
+        background: none; border: none; color: rgba(255,255,255,0.55);
+        font-size: 18px; line-height: 1; cursor: pointer; padding: 2px 4px;
+        transition: color 0.15s;
+    }
+    .tutorial-close-btn:hover { color: white; }
     /* ── END TUTORIAL SYSTEM ─────────────────────────────────────────────── */
     </style>
 </head>
@@ -6724,6 +6734,7 @@ You have 12 more indicators to review in 90 minutes. Create a simple tool the te
     <div id="tutorial-overlay"></div>
 
     <div id="tutorial-panel">
+        <button class="tutorial-close-btn" id="tutorial-close-btn" aria-label="Close tutorial">×</button>
         <div class="tutorial-panel-inner">
             <div class="tutorial-coach-col">
                 <span class="t-pig">🐷</span>
@@ -6984,6 +6995,8 @@ You have 12 more indicators to review in 90 minutes. Create a simple tool the te
     });
 
     document.getElementById('coachBubble').addEventListener('click', openCoach);
+    document.getElementById('tutorial-close-btn').addEventListener('click', closeCoach);
+    document.getElementById('tutorial-overlay').addEventListener('click', closeCoach);
 
     if (new URLSearchParams(window.location.search).get('coach') === 'open') {
         setTimeout(openCoach, 400);

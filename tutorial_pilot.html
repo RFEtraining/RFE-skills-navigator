@@ -128,7 +128,7 @@
       z-index: 400; pointer-events: none;
       opacity: 0; transition: opacity 0.3s;
     }
-    #tutorial-overlay.active { opacity: 1; }
+    #tutorial-overlay.active { opacity: 1; pointer-events: auto; cursor: pointer; }
 
     /* ---- Highlighted element ---- */
     .tutorial-highlight {
@@ -172,6 +172,8 @@
       top: 148px;
       right: 24px;
       width: 360px;
+      height: 220px;
+      display: flex; flex-direction: column;
       background: #1D5A42; color: white; z-index: 600;
       border-radius: 14px;
       box-shadow: 0 8px 32px rgba(0,0,0,0.35), 0 2px 8px rgba(0,0,0,0.2);
@@ -189,6 +191,7 @@
     .tutorial-inner {
       display: flex; align-items: flex-start; gap: 12px;
       padding: 16px 16px 10px;
+      flex: 1; overflow-y: auto; min-height: 0;
     }
     .coach-col { flex-shrink: 0; text-align: center; }
     .coach-col .pig  { font-size: 32px; line-height: 1; display: block; }
@@ -228,6 +231,13 @@
     .t-btn:disabled  { opacity: 0.35; cursor: not-allowed; }
     .t-btn.primary   { background: #F4C430; border-color: #F4C430; color: #1D5A42; font-weight: 700; }
     .t-btn.primary:hover { background: #e6b820; }
+    .t-close-btn {
+      position: absolute; top: 8px; right: 10px;
+      background: none; border: none; color: rgba(255,255,255,0.55);
+      font-size: 18px; line-height: 1; cursor: pointer; padding: 2px 4px;
+      transition: color 0.15s;
+    }
+    .t-close-btn:hover { color: white; }
   </style>
 </head>
 <body>
@@ -356,6 +366,7 @@
 
 <!-- Tutorial panel -->
 <div id="tutorial-panel">
+  <button class="t-close-btn" id="t-close-btn" aria-label="Close tutorial">×</button>
   <div class="tutorial-inner">
     <div class="coach-col">
       <span class="pig">🐷</span>
@@ -707,6 +718,8 @@ document.getElementById('t-back').addEventListener('click', () => {
 });
 
 document.getElementById('coach-bubble').addEventListener('click', openTutorial);
+document.getElementById('t-close-btn').addEventListener('click', closeTutorial);
+document.getElementById('tutorial-overlay').addEventListener('click', closeTutorial);
 </script>
 </body>
 </html>
