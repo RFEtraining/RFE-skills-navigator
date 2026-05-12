@@ -4209,14 +4209,8 @@
     "other_resources_buttons": [
         {
                 "heading": "What Works Hub (WWB)",
-                "explanation": "A/B Testing in Education. Developed for CIES 2024",
-                "link": "https://ipastorage.app.box.com/file/2109753107494",
-                "doc_type": "Web"
-        },
-        {
-                "heading": "What Works Hub (WWB)",
-                "explanation": "Cheaper by the Dozen. A report on 12 A/B tests run on Teacher Coaching engagements in search of improving the cost-effectiveness of coaching.",
-                "link": "https://ipastorage.app.box.com/file/2024078608363",
+                "explanation": "[A/B Testing in Education — Developed for CIES 2024](https://ipastorage.app.box.com/file/2109753107494) | [Cheaper by the Dozen — 12 A/B tests on Teacher Coaching engagements](https://ipastorage.app.box.com/file/2024078608363)",
+                "link": null,
                 "doc_type": "Web"
         },
         {
@@ -5307,6 +5301,12 @@ function docTypeIcon(docType) {
 //   doc_type → inline SVG icon left of title
 //   priority === 'High' → "High priority" boxed badge right of title
 //   SUPP MEL CONTAINERS: clicking navigates to Skills Map and opens competency popup
+function parseMdLinks(str) {
+    if (!str) return str;
+    return str.replace(/\[([^\]]+)\]\((https?:\/\/[^)]+)\)/g,
+        '<a href="$2" target="_blank" rel="noopener" onclick="event.stopPropagation()">$1</a>');
+}
+
 function renderButtons(containerId, buttons) {
     const container = document.getElementById(containerId);
     if (!container) return;
@@ -5350,7 +5350,7 @@ function renderButtons(containerId, buttons) {
                 <span class="adv-btn-title">${btn.heading || ''}</span>
                 ${hp}
             </div>
-            ${btn.explanation ? '<div class="adv-btn-explanation">' + btn.explanation + '</div>' : ''}
+            ${btn.explanation ? '<div class="adv-btn-explanation">' + parseMdLinks(btn.explanation) + '</div>' : ''}
         `;
         container.appendChild(el);
     });
@@ -5371,7 +5371,7 @@ function renderRelatedProducts(containerId, items) {
     items.forEach(item => {
         const chip = document.createElement('div');
         chip.className = 'v7-chip';
-        chip.innerHTML = `<div class="v7-chip-title">${item.heading}</div>${item.explanation ? '<div class="v7-chip-explanation">' + item.explanation + '</div>' : ''}`;
+        chip.innerHTML = `<div class="v7-chip-title">${item.heading}</div>${item.explanation ? '<div class="v7-chip-explanation">' + parseMdLinks(item.explanation) + '</div>' : ''}`;
         chip.addEventListener('click', function(e) {
             e.stopPropagation();
             let foundId = null;
@@ -6048,7 +6048,7 @@ You have 12 more indicators to review in 90 minutes. Create a simple tool the te
                             <span class="adv-btn-title">${btn.heading}</span>
                             ${hp}
                         </div>
-                        ${btn.explanation ? '<div class="adv-btn-explanation">' + btn.explanation + '</div>' : ''}
+                        ${btn.explanation ? '<div class="adv-btn-explanation">' + parseMdLinks(btn.explanation) + '</div>' : ''}
                     `;
                     btnsEl.appendChild(el);
                 });
@@ -6168,7 +6168,7 @@ You have 12 more indicators to review in 90 minutes. Create a simple tool the te
                         <span class="adv-btn-title">${btn.heading}</span>
                         ${hp}
                     </div>
-                    ${btn.explanation ? '<div class="adv-btn-explanation">' + btn.explanation + '</div>' : ''}
+                    ${btn.explanation ? '<div class="adv-btn-explanation">' + parseMdLinks(btn.explanation) + '</div>' : ''}
                 `;
                 btnsEl.appendChild(el);
             });
