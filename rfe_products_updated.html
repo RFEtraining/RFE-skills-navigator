@@ -4167,13 +4167,13 @@
     "adv_content_buttons": [
         {
                 "heading": "A/B Testing Guide",
-                "explanation": "Step-by-step guide for digital-first organizations seeking to embed A/B testing into their MEL.",
+                "explanation": "This brief provides a step-by-step guide for digital-first organizations seeking to embed A/B testing into their Monitoring, Evaluation, and Learning.",
                 "link": "https://www.wwhge.org/wp-content/uploads/2026/03/A-Practical-Approach-to-Developing-AB-Testing-Systems-for-Digital-First-Organizations.pdf",
                 "doc_type": "Doc"
         },
         {
                 "heading": "A/B Testing Internal training deck",
-                "explanation": "Used to facilitate an internal training on how RFE conducts A/B tests.",
+                "explanation": "Used to facilitate an internal training on how RFE conducts A/B tests, and some of the focuses for meeting RFE objectives",
                 "link": "https://ipastorage.app.box.com/file/1912268701523?s=ckz6a2wrtupixyh31w9xcd5p09u8e806",
                 "doc_type": "Slide deck"
         },
@@ -4186,20 +4186,20 @@
 ],
     "adv_supp_mel_buttons": [
         {
+                "heading": "Attribution, Causal Inference, and Experimental Design",
+                "explanation": "A/B tests fall under the broader umbrella of randomized experiments, since they rely on random assignment across conditions to generate causal evidence.",
+                "link": null,
+                "doc_type": null
+        },
+        {
                 "heading": "Sampling Methods and Power Calculations",
-                "explanation": "A/B tests fall under the broader umbrella of randomized experiments, relying on random assignment across conditions. Power calculations are needed to design a rigorous A/B test.",
+                "explanation": "A/B testing requires collecting data in real time, and hence are often most feasible for testing with digital tools which can collect a lot of data, in real time and at a low cost. RFE also focuses on supporting an organization select and set-up the data infrastructure and tools needed to implement A/B tests. For more details on advisory for setting-up the technological infrastructure see Section 3, Step 3 of the A/B testing guide and this slidedeck designed for Mentu.",
                 "link": null,
                 "doc_type": null
         },
         {
                 "heading": "Digital data collection tools",
-                "explanation": "A/B testing requires collecting data in real time, often most feasible for testing with digital tools. RFE also supports selecting and setting up data infrastructure and tools needed to implement A/B tests.",
-                "link": null,
-                "doc_type": null
-        },
-        {
-                "heading": "Attribution, Causal Inference, and Experimental Design",
-                "explanation": null,
+                "explanation": "A/B testing requires collecting high-quality data in a systematic way. For this reason, A/B testing is very well suited for digital-first organizations, which can naturally collect a lot of data in real time and at a relatively low cost. RFE also focuses on supporting an organization select and set-up the data infrastructure and tools needed to implement A/B tests. For more details on advisory for setting-up the technological infrastructure see (Section 3, Step 3 of the A/B testing guide)[https://www.wwhge.org/wp-content/uploads/2026/03/A-Practical-Approach-to-Developing-AB-Testing-Systems-for-Digital-First-Organizations.pdf] and (this slidedeck)[https://ipastorage.box.com/s/ib11icew6tsoed98bp1s5tn7t5m4p2uz] designed for Mentu.",
                 "link": null,
                 "doc_type": null
         }
@@ -4209,8 +4209,14 @@
     "other_resources_buttons": [
         {
                 "heading": "What Works Hub (WWB)",
-                "explanation": "[A/B Testing in Education — Developed for CIES 2024](https://ipastorage.app.box.com/file/2109753107494) | [Cheaper by the Dozen — 12 A/B tests on Teacher Coaching engagements](https://ipastorage.app.box.com/file/2024078608363)",
-                "link": null,
+                "explanation": "A/B Testing in Education. Developed for CIES 2024",
+                "link": "https://ipastorage.app.box.com/file/2109753107494",
+                "doc_type": "Web"
+        },
+        {
+                "heading": "What Works Hub (WWB)",
+                "explanation": "Cheaper by the Dozen. A report on 12 A/B tests run on Teacher Coaching engagements in search of improving the cost-effectiveness of coaching.",
+                "link": "https://ipastorage.app.box.com/file/2024078608363",
                 "doc_type": "Web"
         },
         {
@@ -5303,8 +5309,13 @@ function docTypeIcon(docType) {
 //   SUPP MEL CONTAINERS: clicking navigates to Skills Map and opens competency popup
 function parseMdLinks(str) {
     if (!str) return str;
-    return str.replace(/\[([^\]]+)\]\((https?:\/\/[^)]+)\)/g,
+    // Standard markdown: [text](url)
+    str = str.replace(/\[([^\]]+)\]\((https?:\/\/[^)]+)\)/g,
         '<a href="$2" target="_blank" rel="noopener" onclick="event.stopPropagation()">$1</a>');
+    // Reversed markdown: (text)[url]
+    str = str.replace(/\(([^)]+)\)\[(https?:\/\/[^\]]+)\]/g,
+        '<a href="$2" target="_blank" rel="noopener" onclick="event.stopPropagation()">$1</a>');
+    return str;
 }
 
 function renderButtons(containerId, buttons) {
