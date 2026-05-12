@@ -2303,7 +2303,7 @@
         top: 80px;
         right: 24px;
         width: 360px;
-        height: 260px;
+        height: 280px;
         display: flex; flex-direction: column;
         background: #1D5A42; color: white; z-index: 800;
         border-radius: 14px;
@@ -2357,6 +2357,20 @@
     .tutorial-btn:disabled { opacity: 0.35; cursor: not-allowed; }
     .tutorial-btn.t-primary { background: #F4C430; border-color: #F4C430; color: #1D5A42; font-weight: 700; }
     .tutorial-btn.t-primary:hover { background: #e6b820; }
+    .tutorial-form-fields { margin-top: 4px; }
+    .t-form-field { margin-top: 6px; }
+    .t-form-label { font-size: 11px; opacity: 0.8; display: block; margin-bottom: 3px; line-height: 1.3; }
+    .t-form-input {
+        width: 100%; box-sizing: border-box;
+        font-size: 12px; padding: 5px 8px; line-height: 1.4;
+        border-radius: 5px;
+        border: 1px solid rgba(255,255,255,0.28);
+        background: rgba(255,255,255,0.12);
+        color: white; resize: none; font-family: inherit;
+    }
+    .t-form-input::placeholder { color: rgba(255,255,255,0.38); }
+    .t-form-input:focus { outline: none; border-color: #F4C430; background: rgba(255,255,255,0.18); }
+
     .tutorial-close-btn {
         position: absolute; top: 8px; right: 10px;
         background: none; border: none; color: rgba(255,255,255,0.55);
@@ -4153,19 +4167,13 @@
     "adv_content_buttons": [
         {
                 "heading": "A/B Testing Guide",
-                "explanation": "This brief provides a step-by-step guide for digital-first organizations seeking to embed A/B testing into their Monitoring, Evaluation, and Learning.",
+                "explanation": "Step-by-step guide for digital-first organizations seeking to embed A/B testing into their MEL.",
                 "link": "https://www.wwhge.org/wp-content/uploads/2026/03/A-Practical-Approach-to-Developing-AB-Testing-Systems-for-Digital-First-Organizations.pdf",
                 "doc_type": "Doc"
         },
         {
-                "heading": "IPA Data Hub: A/B Testing",
-                "explanation": "Guide to conducting A/B testing (built by the RFE team)",
-                "link": "https://data.poverty-action.org/monitoring-evaluation-learning/ab-testing/",
-                "doc_type": "Web"
-        },
-        {
                 "heading": "A/B Testing Internal training deck",
-                "explanation": "Used to facilitate an internal training on how RFE conducts A/B tests, and some of the focuses for meeting RFE objectives",
+                "explanation": "Used to facilitate an internal training on how RFE conducts A/B tests.",
                 "link": "https://ipastorage.app.box.com/file/1912268701523?s=ckz6a2wrtupixyh31w9xcd5p09u8e806",
                 "doc_type": "Slide deck"
         },
@@ -4179,13 +4187,13 @@
     "adv_supp_mel_buttons": [
         {
                 "heading": "Sampling Methods and Power Calculations",
-                "explanation": "A/B Tests are essentially quick RCTs that focus on easily iterated implementation and/or user-facing elements. Power calculation ensure there is sufficient power to arrive at a conclusive finding.",
+                "explanation": "A/B tests fall under the broader umbrella of randomized experiments, relying on random assignment across conditions. Power calculations are needed to design a rigorous A/B test.",
                 "link": null,
                 "doc_type": null
         },
         {
                 "heading": "Digital data collection tools",
-                "explanation": "A/B Tests are often most feasible through digital tools which can collect valuable metadata. RFE also focuses on developing clients' digital systems capacity as a part of the A/B testing product, in order to ensure the partner can implement A/B Testing independently of RFE services.",
+                "explanation": "A/B testing requires collecting data in real time, often most feasible for testing with digital tools. RFE also supports selecting and setting up data infrastructure and tools needed to implement A/B tests.",
                 "link": null,
                 "doc_type": null
         },
@@ -6744,6 +6752,7 @@ You have 12 more indicators to review in 90 minutes. Create a simple tool the te
                 <div class="tutorial-step-text"    id="tutorial-step-text"></div>
                 <div class="tutorial-profile-options" id="tutorial-profile-options" style="display:none"></div>
                 <div class="tutorial-profile-error"  id="tutorial-profile-error">Please select a profile to continue.</div>
+                <div class="tutorial-form-fields"    id="tutorial-form-fields"    style="display:none"></div>
             </div>
         </div>
         <div class="tutorial-footer">
@@ -6765,7 +6774,7 @@ You have 12 more indicators to review in 90 minutes. Create a simple tool the te
 
     var T_STEPS_GENERAL = [
         {
-            text: 'Hello! *snort*\nI\'m Coach Arfie, and welcome to the RFE Learning Platform.\n\nIf you are new to the site or want a walk-thru, click Continue to take a tour of the site.',
+            text: 'Hello! *Snort* I\'m Coach Arfie, and welcome to the RFE Learning Platform. If you are new to the site or want a walk-thru, click Continue to take a tour of the site.',
             page: 'skillsMapView', highlight: null, type: 'continue'
         },
         {
@@ -6777,13 +6786,13 @@ You have 12 more indicators to review in 90 minutes. Create a simple tool the te
     var T_PROFILE_STEPS = {
         rfe_onboarder: [
             { text: 'Welcome to RFE! This is the RFE Skills Map tab, where you can see all the areas of knowledge relevant to RFE staff', page: 'skillsMapView', highlight: 'headerBar', arrowTarget: 'tutorial-tab-skills', type: 'continue' },
-            { text: 'Look for stars indicating what all RFE staff should know', page: 'skillsMapView', highlight: 'tutorial-must-know-legend', type: 'continue' },
+            { text: 'Look for stars indicating what all RFE staff should know. You should start with — and spend the most time developing — starred areas.', page: 'skillsMapView', highlight: 'tutorial-must-know-legend', type: 'continue' },
             { text: 'RFE Philosophy is the most important section, and contains the high-level principles that apply to everything we do', page: 'skillsMapView', highlight: 'tutorial-rfe-philosophy', type: 'continue' },
             { text: 'RFE Products is a combination of research and learning methodologies we have standardized across our projects', page: 'skillsMapView', highlight: 'tutorial-rfe-products', type: 'continue' },
             { text: 'MEL Skills includes the most important *additional* skills that aren\'t fully included within the RFE Products', page: 'skillsMapView', highlight: 'tutorial-mel-skills', type: 'continue' },
             { text: 'These sections show all the soft skills and internal processes with which you should familiarize yourself.', page: 'skillsMapView', highlights: ['tutorial-consulting', 'tutorial-internal-processes', 'tutorial-management'], type: 'continue' },
             { text: 'This is the product suite tab, where you can see all of the products we have standardized across RFE projects.', page: 'productsView', highlight: 'headerBar', arrowTarget: 'tutorial-tab-products', type: 'continue' },
-            { text: 'It will be most important to start mastering the Learning Plan Design product, since this is the foundation of all RFE work. You should learn other products on a needs-basis, if you will be expected to deliver them through your project work', page: 'productsView', highlight: 'tutorial-lpd-product', type: 'continue' },
+            { text: 'It will be most important to start mastering the Learning Plan Design product, since this is the foundation of all RFE work. You should learn other products on a needs-basis, when you will be expected to deliver them through your project work.', page: 'productsView', highlight: 'tutorial-lpd-product', type: 'continue' },
             { text: 'That\'s the end of this tutorial. Good luck learning!', page: 'skillsMapView', highlight: null, type: 'exit' }
         ],
         rfe_advanced_learner: [
@@ -6793,7 +6802,17 @@ You have 12 more indicators to review in 90 minutes. Create a simple tool the te
             { text: 'Learner profile tutorial not yet created...', page: 'skillsMapView', highlight: null, type: 'exit' }
         ],
         ipa_targeted_learner: [
-            { text: 'We are happy to help you deliver an RFE product. This is the Skills Map where you can see the range of RFE knowledge.', page: 'skillsMapView', highlight: 'headerBar', arrowTarget: 'tutorial-tab-skills', type: 'continue' },
+            {
+                text: 'We are happy to help you deliver an RFE product. Can you start by telling us:',
+                page: 'skillsMapView', highlight: null, type: 'form',
+                fields: [
+                    { id: 'tfield_products_context', label: 'What product(s) you will be delivering and in what context?', param: 'entry.941785496' },
+                    { id: 'tfield_important_learn',  label: 'What do you think is most important for you to learn?',      param: 'entry.1733323083' }
+                ],
+                formUrl: 'https://docs.google.com/forms/d/e/1FAIpQLSeB1PAXA5p_UZtmZmHQ4Jesx-xzp2-ClOzdX7HkKrMIsxbKkw/viewform',
+                formBaseParams: 'usp=pp_url'
+            },
+            { text: 'This is the Skills Map where you can see the full range of knowledge and skills expected of RFE staff.', page: 'skillsMapView', highlight: 'headerBar', arrowTarget: 'tutorial-tab-skills', type: 'continue' },
             { text: 'You should start here by reviewing the RFE Philosophies section, understanding the core principles we use across all RFE work.', page: 'skillsMapView', highlight: 'tutorial-rfe-philosophy', type: 'continue' },
             { text: 'When you are ready, come look at the RFE product suite.', page: 'productsView', highlight: 'headerBar', arrowTarget: 'tutorial-tab-products', type: 'continue' },
             { text: 'On the product page, you should start with the LPD product, which is the foundation of RFE work.\nOnce you understand the LPD, you can look to learn any other products you might be delivering.', page: 'productsView', highlight: 'tutorial-lpd-product', type: 'continue' },
@@ -6920,7 +6939,11 @@ You have 12 more indicators to review in 90 minutes. Create a simple tool the te
         document.getElementById('tutorial-step-text').innerHTML = tFormatText(step.text);
 
         var profileDiv = document.getElementById('tutorial-profile-options');
+        var formDiv    = document.getElementById('tutorial-form-fields');
         document.getElementById('tutorial-profile-error').style.display = 'none';
+        profileDiv.style.display = 'none';
+        formDiv.style.display    = 'none';
+
         if (step.type === 'profile') {
             profileDiv.style.display = 'flex';
             profileDiv.innerHTML = '';
@@ -6935,8 +6958,22 @@ You have 12 more indicators to review in 90 minutes. Create a simple tool the te
                 label.appendChild(document.createTextNode(p.label));
                 profileDiv.appendChild(label);
             });
-        } else {
-            profileDiv.style.display = 'none';
+        } else if (step.type === 'form' && step.fields) {
+            formDiv.style.display = 'block';
+            formDiv.innerHTML = '';
+            step.fields.forEach(function(field) {
+                var wrap  = document.createElement('div');
+                wrap.className = 't-form-field';
+                var lbl   = document.createElement('label');
+                lbl.className = 't-form-label';
+                lbl.textContent = field.label;
+                var input = document.createElement('textarea');
+                input.className = 't-form-input';
+                input.id = field.id; input.rows = 2;
+                input.placeholder = 'Type here…';
+                wrap.appendChild(lbl); wrap.appendChild(input);
+                formDiv.appendChild(wrap);
+            });
         }
 
         var dotsEl = document.getElementById('tutorial-dots');
@@ -6949,7 +6986,8 @@ You have 12 more indicators to review in 90 minutes. Create a simple tool the te
 
         document.getElementById('tutorial-back-btn').disabled = (tStepIdx === 0);
         var nextBtn = document.getElementById('tutorial-next-btn');
-        nextBtn.textContent = (step.type === 'exit' || tStepIdx === tAllSteps.length - 1) ? '✓ Done' : 'Continue →';
+        nextBtn.textContent = (step.type === 'exit' || tStepIdx === tAllSteps.length - 1) ? '✓ Done'
+                            : step.type === 'form' ? 'Submit →' : 'Continue →';
     }
 
     function openCoach() {
@@ -6978,6 +7016,15 @@ You have 12 more indicators to review in 90 minutes. Create a simple tool the te
             if (!tProfile) { document.getElementById('tutorial-profile-error').style.display = 'block'; return; }
             localStorage.setItem(T_LS_KEY, tProfile);
             tAllSteps = tBuildSteps();
+        }
+        if (step.type === 'form' && step.fields && step.formUrl) {
+            var params = step.formBaseParams ? step.formBaseParams + '&' : '';
+            step.fields.forEach(function(field, i) {
+                var val = (document.getElementById(field.id) || {}).value || '';
+                params += field.param + '=' + encodeURIComponent(val);
+                if (i < step.fields.length - 1) params += '&';
+            });
+            window.open(step.formUrl + '?' + params, '_blank');
         }
         if (step.type === 'exit' || tStepIdx >= tAllSteps.length - 1) { closeCoach(); return; }
         tStepIdx++;

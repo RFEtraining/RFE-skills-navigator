@@ -172,7 +172,7 @@
       top: 148px;
       right: 24px;
       width: 360px;
-      height: 260px;
+      height: 280px;
       display: flex; flex-direction: column;
       background: #1D5A42; color: white; z-index: 600;
       border-radius: 14px;
@@ -231,6 +231,20 @@
     .t-btn:disabled  { opacity: 0.35; cursor: not-allowed; }
     .t-btn.primary   { background: #F4C430; border-color: #F4C430; color: #1D5A42; font-weight: 700; }
     .t-btn.primary:hover { background: #e6b820; }
+    .tutorial-form-fields { margin-top: 4px; }
+    .t-form-field { margin-top: 6px; }
+    .t-form-label { font-size: 11px; opacity: 0.8; display: block; margin-bottom: 3px; line-height: 1.3; }
+    .t-form-input {
+      width: 100%; box-sizing: border-box;
+      font-size: 12px; padding: 5px 8px; line-height: 1.4;
+      border-radius: 5px;
+      border: 1px solid rgba(255,255,255,0.28);
+      background: rgba(255,255,255,0.12);
+      color: white; resize: none; font-family: inherit;
+    }
+    .t-form-input::placeholder { color: rgba(255,255,255,0.38); }
+    .t-form-input:focus { outline: none; border-color: #F4C430; background: rgba(255,255,255,0.18); }
+
     .t-close-btn {
       position: absolute; top: 8px; right: 10px;
       background: none; border: none; color: rgba(255,255,255,0.55);
@@ -376,6 +390,7 @@
       <div class="tutorial-text" id="tutorial-text"></div>
       <div class="profile-options" id="profile-options" style="display:none"></div>
       <div class="tutorial-error"  id="tutorial-error">Please select a profile to continue.</div>
+      <div class="tutorial-form-fields" id="form-fields" style="display:none"></div>
     </div>
   </div>
   <div class="tutorial-footer">
@@ -401,7 +416,7 @@ const PROFILES = [
 
 const STEPS_GENERAL = [
   {
-    text: 'Hello! *snort*\nI\'m Coach Arfie, and welcome to the RFE Learning Platform.\n\nIf you are new to the site or want a walk-thru, click Continue to take a tour of the site.',
+    text: 'Hello! *Snort* I\'m Coach Arfie, and welcome to the RFE Learning Platform. If you are new to the site or want a walk-thru, click Continue to take a tour of the site.',
     page: 'skills-map', highlight: null, type: 'continue'
   },
   {
@@ -417,7 +432,7 @@ const PROFILE_STEPS = {
       page: 'skills-map', highlight: 'app-header', arrowTarget: 'tab-skills-map', type: 'continue'
     },
     {
-      text: 'Look for stars indicating what all RFE staff should know',
+      text: 'Look for stars indicating what all RFE staff should know. You should start with — and spend the most time developing — starred areas.',
       page: 'skills-map', highlight: 'must-know-legend', type: 'continue'
     },
     {
@@ -443,7 +458,7 @@ const PROFILE_STEPS = {
       page: 'products-map', highlight: 'app-header', arrowTarget: 'tab-products-map', type: 'continue'
     },
     {
-      text: 'It will be most important to start mastering the Learning Plan Design product, since this is the foundation of all RFE work. You should learn other products on a needs-basis, if you will be expected to deliver them through your project work',
+      text: 'It will be most important to start mastering the Learning Plan Design product, since this is the foundation of all RFE work. You should learn other products on a needs-basis, when you will be expected to deliver them through your project work.',
       page: 'products-map', highlight: 'lpd-product', type: 'continue'
     },
     {
@@ -459,7 +474,17 @@ const PROFILE_STEPS = {
   ],
   ipa_targeted_learner: [
     {
-      text: 'We are happy to help you deliver an RFE product. This is the Skills Map where you can see the range of RFE knowledge.',
+      text: 'We are happy to help you deliver an RFE product. Can you start by telling us:',
+      page: 'skills-map', highlight: null, type: 'form',
+      fields: [
+        { id: 'tfield_products_context', label: 'What product(s) you will be delivering and in what context?', param: 'entry.941785496' },
+        { id: 'tfield_important_learn',  label: 'What do you think is most important for you to learn?',      param: 'entry.1733323083' }
+      ],
+      formUrl: 'https://docs.google.com/forms/d/e/1FAIpQLSeB1PAXA5p_UZtmZmHQ4Jesx-xzp2-ClOzdX7HkKrMIsxbKkw/viewform',
+      formBaseParams: 'usp=pp_url'
+    },
+    {
+      text: 'This is the Skills Map where you can see the full range of knowledge and skills expected of RFE staff.',
       page: 'skills-map', highlight: 'app-header', arrowTarget: 'tab-skills-map', type: 'continue'
     },
     {
@@ -630,9 +655,13 @@ function render() {
 
   document.getElementById('tutorial-text').innerHTML = formatText(step.text);
 
-  // Profile selector
+  // Profile selector / form fields
   const profileDiv = document.getElementById('profile-options');
+  const formDiv    = document.getElementById('form-fields');
   document.getElementById('tutorial-error').style.display = 'none';
+  profileDiv.style.display = 'none';
+  formDiv.style.display    = 'none';
+
   if (step.type === 'profile') {
     profileDiv.style.display = 'flex';
     profileDiv.innerHTML = '';
@@ -647,8 +676,22 @@ function render() {
       label.appendChild(document.createTextNode(p.label));
       profileDiv.appendChild(label);
     });
-  } else {
-    profileDiv.style.display = 'none';
+  } else if (step.type === 'form' && step.fields) {
+    formDiv.style.display = 'block';
+    formDiv.innerHTML = '';
+    step.fields.forEach(field => {
+      const wrap  = document.createElement('div');
+      wrap.className = 't-form-field';
+      const lbl   = document.createElement('label');
+      lbl.className = 't-form-label';
+      lbl.textContent = field.label;
+      const input = document.createElement('textarea');
+      input.className = 't-form-input';
+      input.id = field.id; input.rows = 2;
+      input.placeholder = 'Type here…';
+      wrap.appendChild(lbl); wrap.appendChild(input);
+      formDiv.appendChild(wrap);
+    });
   }
 
   // Progress dots
@@ -662,7 +705,8 @@ function render() {
 
   document.getElementById('t-back').disabled = (stepIndex === 0);
   const nextBtn = document.getElementById('t-next');
-  nextBtn.textContent = (step.type === 'exit' || stepIndex === allSteps.length - 1) ? '✓ Done' : 'Continue →';
+  nextBtn.textContent = (step.type === 'exit' || stepIndex === allSteps.length - 1) ? '✓ Done'
+                      : step.type === 'form' ? 'Submit →' : 'Continue →';
 }
 
 // ================================================================
@@ -701,6 +745,15 @@ document.getElementById('t-next').addEventListener('click', () => {
     if (!currentProfile) { document.getElementById('tutorial-error').style.display = 'block'; return; }
     localStorage.setItem(LS_KEY, currentProfile);
     allSteps = buildSteps();
+  }
+  if (step.type === 'form' && step.fields && step.formUrl) {
+    let params = step.formBaseParams ? step.formBaseParams + '&' : '';
+    step.fields.forEach((field, i) => {
+      const val = (document.getElementById(field.id) || {}).value || '';
+      params += field.param + '=' + encodeURIComponent(val);
+      if (i < step.fields.length - 1) params += '&';
+    });
+    window.open(step.formUrl + '?' + params, '_blank');
   }
   if (step.type === 'exit' || stepIndex >= allSteps.length - 1) { closeTutorial(); return; }
   stepIndex++;
