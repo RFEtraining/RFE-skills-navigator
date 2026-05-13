@@ -2389,6 +2389,7 @@
     .tutorial-btn.t-primary { background: #F4C430; border-color: #F4C430; color: #1D5A42; font-weight: 700; }
     .tutorial-btn.t-primary:hover { background: #e6b820; }
     .t-form-note { font-size: 10px; opacity: 0.65; font-style: italic; margin-top: 6px; line-height: 1.4; }
+    .t-form-radio-group { display: flex; gap: 16px; margin-top: 3px; }
     .tutorial-form-fields { margin-top: 4px; }
     .t-form-field { margin-top: 6px; }
     .t-form-label { font-size: 11px; opacity: 0.8; display: block; margin-bottom: 3px; line-height: 1.3; }
@@ -6820,9 +6821,8 @@ You have 12 more indicators to review in 90 minutes. Create a simple tool the te
 
     var T_PROFILES = [
         { value: 'rfe_onboarder',        label: 'RFE Onboarding staff' },
-        { value: 'rfe_advanced_learner', label: 'RFE Staff seeking additional learning' },
-        { value: 'ipa_general_learner',  label: 'IPA Staff wanting to browse RFE topics' },
-        { value: 'ipa_targeted_learner', label: 'IPA Staff needing to implement RFE work' }
+        { value: 'rfe_advanced_learner', label: 'RFE Staff seeking additional / advanced learning' },
+        { value: 'non_rfe_learner',      label: 'Non-RFE learner' }
     ];
 
     var T_STEPS_GENERAL = [
@@ -6851,16 +6851,14 @@ You have 12 more indicators to review in 90 minutes. Create a simple tool the te
         rfe_advanced_learner: [
             { text: 'Learner profile tutorial not yet created...', page: 'skillsMapView', highlight: null, type: 'exit' }
         ],
-        ipa_general_learner: [
-            { text: 'Learner profile tutorial not yet created...', page: 'skillsMapView', highlight: null, type: 'exit' }
-        ],
-        ipa_targeted_learner: [
+        non_rfe_learner: [
             {
-                text: 'We are happy to help you deliver an RFE product. Can you share a little info with the RFE training team?',
+                text: 'We are happy to help you deliver an RFE product. Please share a little info with the RFE training team.',
                 page: 'skillsMapView', highlight: null, type: 'form',
                 fields: [
-                    { id: 'tfield_products_context', label: 'Product(s) you will be delivering and context:', param: 'entry.941785496' },
-                    { id: 'tfield_important_learn',  label: 'Most important topics to learn in your opinion:', param: 'entry.1733323083' }
+                    { id: 'tfield_yes_no',           label: 'Planning to deliver an RFE product:', param: 'entry.941785496', type: 'radio', options: ['Yes', 'No'] },
+                    { id: 'tfield_products_context',  label: 'Product(s) you are interested in and context for learning:', param: 'entry.763315347' },
+                    { id: 'tfield_important_learn',   label: 'What is most important to learn in your opinion?', param: 'entry.1733323083' }
                 ],
                 formNote: 'Note: you will need to click Submit again in the pop-up window to send.',
                 formUrl: 'https://docs.google.com/forms/d/e/1FAIpQLSeB1PAXA5p_UZtmZmHQ4Jesx-xzp2-ClOzdX7HkKrMIsxbKkw/viewform',
@@ -7016,17 +7014,34 @@ You have 12 more indicators to review in 90 minutes. Create a simple tool the te
             formDiv.style.display = 'block';
             formDiv.innerHTML = '';
             step.fields.forEach(function(field) {
-                var wrap  = document.createElement('div');
+                var wrap = document.createElement('div');
                 wrap.className = 't-form-field';
-                var lbl   = document.createElement('label');
+                var lbl = document.createElement('label');
                 lbl.className = 't-form-label';
                 lbl.textContent = field.label;
-                var input = document.createElement('textarea');
-                input.className = 't-form-input';
-                input.id = field.id; input.rows = 2;
-                input.placeholder = 'Type here…';
-                wrap.appendChild(lbl); wrap.appendChild(input);
+                wrap.appendChild(lbl);
+                if (field.type === 'radio' && field.options) {
+                    var rgroup = document.createElement('div');
+                    rgroup.className = 't-form-radio-group';
+                    field.options.forEach(function(opt) {
+                        var optLabel = document.createElement('label');
+                        optLabel.className = 'tutorial-profile-option';
+                        var radio = document.createElement('input');
+                        radio.type = 'radio'; radio.name = field.id; radio.value = opt;
+                        optLabel.appendChild(radio);
+                        optLabel.appendChild(document.createTextNode(opt));
+                        rgroup.appendChild(optLabel);
+                    });
+                    wrap.appendChild(rgroup);
+                } else {
+                    var input = document.createElement('textarea');
+                    input.className = 't-form-input';
+                    input.id = field.id; input.rows = 2;
+                    input.placeholder = 'Type here…';
+                    wrap.appendChild(input);
+                }
                 formDiv.appendChild(wrap);
+            });
             });
             if (step.formNote) {
                 var noteEl = document.createElement('p');
@@ -7089,7 +7104,14 @@ You have 12 more indicators to review in 90 minutes. Create a simple tool the te
         if (step.type === 'form' && step.fields && step.formUrl) {
             var params = step.formBaseParams ? step.formBaseParams + '&' : '';
             step.fields.forEach(function(field, i) {
-                var val = (document.getElementById(field.id) || {}).value || '';
+            step.fields.forEach(function(field, i) {
+                var val;
+                if (field.type === 'radio') {
+                    var checked = document.querySelector('input[name="' + field.id + '"]:checked');
+                    val = checked ? checked.value : '';
+                } else {
+                    val = (document.getElementById(field.id) || {}).value || '';
+                }
                 params += field.param + '=' + encodeURIComponent(val);
                 if (i < step.fields.length - 1) params += '&';
             });
