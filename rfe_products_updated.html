@@ -449,6 +449,43 @@
             text-transform: uppercase; margin-bottom: 10px;
         }
         .v7-info-box p { font-size: 15px; color: #555; line-height: 1.65; margin: 0; }
+        /* ── All-Must-Know banner ── */
+        .amk-banner {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%);
+            color: #fff;
+            padding: 12px 20px;
+            flex-shrink: 0;
+        }
+        .amk-icon {
+            font-size: 22px;
+            color: #fcd34d;
+            flex-shrink: 0;
+        }
+        .amk-text {
+            flex: 1;
+            font-size: 13.5px;
+            line-height: 1.45;
+        }
+        .amk-text strong { font-weight: 700; font-size: 14px; }
+        .amk-text em { font-style: normal; font-weight: 600; text-decoration: underline; }
+        .amk-arrows {
+            display: flex;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+        .amk-pill {
+            background: rgba(255,255,255,0.18);
+            border: 1px solid rgba(255,255,255,0.4);
+            border-radius: 20px;
+            padding: 5px 13px;
+            font-size: 12px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
         .v7-toc-btn {
             display: inline-flex; align-items: center; gap: 7px;
             background: #0F6E56; color: #E1F5EE; border: none; border-radius: 8px;
@@ -2561,6 +2598,19 @@
                 <button class="close-btn" onclick="closePopup()">&times;</button>
             </div>
 
+            <!-- All-Must-Know notice banner (shown only when data.all_must_know_notice = true) -->
+            <div id="allMustKnowBanner" class="amk-banner" style="display:none;">
+                <span class="amk-icon">&#9733;</span>
+                <div class="amk-text">
+                    <strong>All-Must-Know product</strong> — Every RFE staff member is expected to be able to deliver this product.
+                    Review <em>both tabs</em> below:
+                </div>
+                <div class="amk-arrows">
+                    <span class="amk-pill">Basic info &#8595;</span>
+                    <span class="amk-pill">Advanced info &#8595;</span>
+                </div>
+            </div>
+
             <!-- Template A: tab nav (hidden for template-b by CSS) -->
             <!-- MAPPING NOTE: who_must_know = basic-advanced-breakdown → Template A (tabs) -->
             <div class="v7-tab-nav">
@@ -3557,6 +3607,7 @@
     "element_type": "rfe-product",
     "skills_mapping": "rfe-product",
     "who_must_know": "basic-advanced-breakdown",
+    "all_must_know_notice": true,
     "short_description": "RFE facilitates a workshop series to design with clients a Theory of Change, Learning questions, and a MEL plan.",
     "basic_toc_url": "https://rfetraining.github.io/RFE-skills-navigator/images/LPD%20ToC.jpg",
     "associated_concepts": null,
@@ -5573,6 +5624,11 @@ function closeStagePopup() {
                 // Reset section nav to Content
                 resetAdvSection('adv');
             }
+
+            // ── ALL-MUST-KNOW BANNER ─────────────────────────────────────────────
+            // Shown only when data.all_must_know_notice === true
+            var amkBanner = document.getElementById('allMustKnowBanner');
+            if (amkBanner) amkBanner.style.display = data.all_must_know_notice ? '' : 'none';
 
             // Hide construction sticker (all products now have content)
             constructionSticker.style.display = 'none';
