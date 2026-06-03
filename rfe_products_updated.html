@@ -454,36 +454,37 @@
             display: flex;
             align-items: center;
             gap: 12px;
-            background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%);
-            color: #fff;
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+            color: #1c1200;
             padding: 12px 20px;
             flex-shrink: 0;
         }
         .amk-icon {
             font-size: 22px;
-            color: #fcd34d;
+            color: #92400e;
             flex-shrink: 0;
         }
         .amk-text {
             flex: 1;
             font-size: 13.5px;
             line-height: 1.45;
+            color: #1c1200;
         }
         .amk-text strong { font-weight: 700; font-size: 14px; }
         .amk-text em { font-style: normal; font-weight: 600; text-decoration: underline; }
         .amk-arrows {
             display: flex;
-            gap: 8px;
+            gap: 24px;
             flex-shrink: 0;
+            align-items: flex-end;
+            padding-bottom: 2px;
         }
-        .amk-pill {
-            background: rgba(255,255,255,0.18);
-            border: 1px solid rgba(255,255,255,0.4);
-            border-radius: 20px;
-            padding: 5px 13px;
-            font-size: 12px;
-            font-weight: 600;
-            white-space: nowrap;
+        .amk-arrow-down {
+            width: 0;
+            height: 0;
+            border-left: 13px solid transparent;
+            border-right: 13px solid transparent;
+            border-top: 18px solid rgba(0,0,0,0.35);
         }
 
         .v7-toc-btn {
@@ -2606,8 +2607,8 @@
                     Review <em>both tabs</em> below:
                 </div>
                 <div class="amk-arrows">
-                    <span class="amk-pill">Basic info &#8595;</span>
-                    <span class="amk-pill">Advanced info &#8595;</span>
+                    <div class="amk-arrow-down"></div>
+                    <div class="amk-arrow-down"></div>
                 </div>
             </div>
 
