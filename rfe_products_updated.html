@@ -5409,7 +5409,7 @@ function renderButtons(containerId, buttons) {
         }
 
         const icon = docTypeIcon(btn.doc_type);
-        const hp = btn.priority === 'High'
+        const hp = (btn.priority === 'High' || btn.high_priority === true || btn.high_priority === 'High Priority')
             ? '<span class="adv-hp">High priority</span>'
             : '';
 
@@ -6121,7 +6121,7 @@ You have 12 more indicators to review in 90 minutes. Create a simple tool the te
                     
                     // Get doc type icon and high priority tag
                     const icon = docTypeIcon(btn.doc_type);
-                    const hp = btn.priority === 'High' || btn.high_priority === 'High Priority'
+                    const hp = btn.priority === 'High' || btn.high_priority === true || btn.high_priority === 'High Priority'
                         ? '<span class="adv-hp">High priority</span>'
                         : '';
                     
@@ -6241,7 +6241,7 @@ You have 12 more indicators to review in 90 minutes. Create a simple tool the te
                 
                 // Get doc type icon and high priority tag (same as product buttons)
                 const icon = docTypeIcon(btn.doc_type);
-                const hp = btn.priority === 'High' || btn.high_priority === 'High Priority'
+                const hp = btn.priority === 'High' || btn.high_priority === true || btn.high_priority === 'High Priority'
                     ? '<span class="adv-hp">High priority</span>'
                     : '';
                 
