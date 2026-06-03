@@ -472,19 +472,26 @@
         }
         .amk-text strong { font-weight: 700; font-size: 14px; }
         .amk-text em { font-style: normal; font-weight: 600; text-decoration: underline; }
-        .amk-arrows {
+        /* Arrow row — mirrors .v7-tab-nav flex layout for perfect alignment */
+        .amk-tab-arrows {
             display: flex;
-            gap: 24px;
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+            padding: 0 16px;
+            gap: 8px;
             flex-shrink: 0;
-            align-items: flex-end;
-            padding-bottom: 2px;
+        }
+        .amk-tab-arrow {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            padding-bottom: 7px;
         }
         .amk-arrow-down {
             width: 0;
             height: 0;
             border-left: 13px solid transparent;
             border-right: 13px solid transparent;
-            border-top: 18px solid rgba(0,0,0,0.35);
+            border-top: 16px solid rgba(0,0,0,0.3);
         }
 
         .v7-toc-btn {
@@ -2606,10 +2613,11 @@
                     <strong>All-Must-Know product</strong> — Every RFE staff member is expected to be able to deliver this product.
                     Review <em>both tabs</em> below:
                 </div>
-                <div class="amk-arrows">
-                    <div class="amk-arrow-down"></div>
-                    <div class="amk-arrow-down"></div>
-                </div>
+            </div>
+            <!-- Arrow row — flex mirrors .v7-tab-nav so arrows land above each tab -->
+            <div id="allMustKnowArrows" class="amk-tab-arrows" style="display:none;">
+                <div class="amk-tab-arrow"><div class="amk-arrow-down"></div></div>
+                <div class="amk-tab-arrow"><div class="amk-arrow-down"></div></div>
             </div>
 
             <!-- Template A: tab nav (hidden for template-b by CSS) -->
@@ -5628,8 +5636,11 @@ function closeStagePopup() {
 
             // ── ALL-MUST-KNOW BANNER ─────────────────────────────────────────────
             // Shown only when data.all_must_know_notice === true
+            var amkShow = data.all_must_know_notice ? '' : 'none';
             var amkBanner = document.getElementById('allMustKnowBanner');
-            if (amkBanner) amkBanner.style.display = data.all_must_know_notice ? '' : 'none';
+            var amkArrows = document.getElementById('allMustKnowArrows');
+            if (amkBanner) amkBanner.style.display = amkShow;
+            if (amkArrows) amkArrows.style.display = amkShow;
 
             // Hide construction sticker (all products now have content)
             constructionSticker.style.display = 'none';
@@ -6642,6 +6653,21 @@ You have 12 more indicators to review in 90 minutes. Create a simple tool the te
                         }
                     }
                 });
+            });
+
+            // ── ALL-MUST-KNOW STARS: stamp ★ onto product map boxes ──────────────
+            // Any product with all_must_know_notice: true gets a gold star prepended
+            document.querySelectorAll('[data-popup]').forEach(function(box) {
+                var key = resolvePopupKey(box.getAttribute('data-popup'));
+                if (key && popupData[key] && popupData[key].all_must_know_notice) {
+                    if (!box.querySelector('.amk-map-star')) {
+                        var star = document.createElement('span');
+                        star.className = 'amk-map-star';
+                        star.innerHTML = '&#9733; ';
+                        star.style.cssText = 'color:#f59e0b; font-size:1em;';
+                        box.insertBefore(star, box.firstChild);
+                    }
+                }
             });
 
             // ── DEEP LINK: run at end of DOMContentLoaded so showPopup is in scope ──
