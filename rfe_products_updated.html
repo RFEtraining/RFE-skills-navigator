@@ -1490,6 +1490,55 @@
         }
         .adv-coming-soon { font-style: italic; color: #999; font-size: 14px; padding: 10px 0; }
 
+        /* ── AI Practice button ── */
+        .adv-btn.ai-practice {
+            background: #1a1a2e !important;
+            border: 1.5px solid rgba(139,92,246,0.6);
+            cursor: pointer;
+        }
+        .adv-btn.ai-practice:hover { background: #2d2b4e !important; }
+        .adv-btn-ai-instruction {
+            font-size: 11.5px;
+            color: rgba(255,255,255,0.6);
+            margin-top: 6px;
+            line-height: 1.4;
+            border-top: 1px solid rgba(255,255,255,0.12);
+            padding-top: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .adv-btn-ai-instruction::before {
+            content: '';
+            display: inline-block;
+            width: 7px; height: 7px;
+            border-radius: 50%;
+            background: #8b5cf6;
+            flex-shrink: 0;
+        }
+        /* Clipboard toast */
+        #aiCopyToast {
+            position: fixed;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%) translateY(10px);
+            background: #1a1a2e;
+            color: #fff;
+            border: 1px solid #8b5cf6;
+            border-radius: 8px;
+            padding: 10px 20px;
+            font-size: 13px;
+            font-weight: 600;
+            z-index: 9999;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s, transform 0.2s;
+        }
+        #aiCopyToast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
         /* Per-section button colours — muted/desaturated so text reads first */
         #adv-understanding-buttons .adv-btn        { background: #6e9ec7; }
         #adv-understanding-buttons .adv-btn.has-link:hover { background: #5a8ab3; }
@@ -5430,6 +5479,22 @@ function docTypeIcon(docType) {
 //   doc_type → inline SVG icon left of title
 //   priority === 'High' → "High priority" boxed badge right of title
 //   SUPP MEL CONTAINERS: clicking navigates to Skills Map and opens competency popup
+// ── AI Practice: copy prompt + open Claude ───────────────────────────────────
+function launchAIPractice(promptText) {
+    navigator.clipboard.writeText(promptText).then(function() {
+        var toast = document.getElementById('aiCopyToast');
+        if (toast) {
+            toast.classList.add('show');
+            setTimeout(function() { toast.classList.remove('show'); }, 3000);
+        }
+        window.open('https://claude.ai/new', '_blank');
+    }).catch(function() {
+        // Clipboard failed — still open Claude, alert user
+        window.open('https://claude.ai/new', '_blank');
+        alert('Could not auto-copy. Please manually copy your practice prompt.');
+    });
+}
+
 function parseMdLinks(str) {
     if (!str) return str;
     // Standard markdown: [text](url)
@@ -5459,6 +5524,8 @@ function renderButtons(containerId, buttons) {
         const hasLink = btn.link && btn.link !== 'None';
         let el;
 
+        const isAIPractice = (btn.doc_type || '').toLowerCase() === 'ai' && btn.practice_prompt;
+
         if (isSuppMel) {
             el = document.createElement('div');
             el.className = 'adv-btn has-link';
@@ -5467,6 +5534,11 @@ function renderButtons(containerId, buttons) {
             el.addEventListener('click', function() { navigateToSkillCompetency(btn.heading); });
             el.addEventListener('mouseover', function() { this.style.opacity = '0.88'; });
             el.addEventListener('mouseout',  function() { this.style.opacity = ''; });
+        } else if (isAIPractice) {
+            el = document.createElement('div');
+            el.className = 'adv-btn ai-practice';
+            const promptText = btn.practice_prompt;
+            el.addEventListener('click', function() { launchAIPractice(promptText); });
         } else {
             el = document.createElement(hasLink ? 'a' : 'div');
             el.className = 'adv-btn' + (hasLink ? ' has-link' : '');
@@ -5478,6 +5550,10 @@ function renderButtons(containerId, buttons) {
             ? '<span class="adv-hp">High priority</span>'
             : '';
 
+        const aiInstruction = isAIPractice
+            ? '<div class="adv-btn-ai-instruction">Click to copy prompt &amp; open Claude — then paste with Ctrl+V (Windows) or &#8984;+V (Mac)</div>'
+            : '';
+
         el.innerHTML = `
             <div class="adv-btn-row">
                 ${icon ? '<span class="adv-btn-icon">' + icon + '</span>' : ''}
@@ -5485,6 +5561,7 @@ function renderButtons(containerId, buttons) {
                 ${hp}
             </div>
             ${btn.explanation ? '<div class="adv-btn-explanation">' + parseMdLinks(btn.explanation) + '</div>' : ''}
+            ${aiInstruction}
         `;
         container.appendChild(el);
     });
@@ -6173,23 +6250,35 @@ You have 12 more indicators to review in 90 minutes. Create a simple tool the te
                 buttons.forEach(btn => {
                     if (!btn.heading) return;
                     const hasLink = btn.link && btn.link !== 'None';
-                    const el = document.createElement(hasLink ? 'a' : 'div');
-                    el.className = 'adv-btn' + (hasLink ? ' has-link' : '');
-                    el.style.background = colour;
-                    if (hasLink) {
-                        el.href = btn.link;
-                        el.target = '_blank';
-                        el.rel = 'noopener';
-                        el.addEventListener('mouseover', function() { this.style.filter = 'brightness(0.85)'; });
-                        el.addEventListener('mouseout',  function() { this.style.filter = ''; });
+                    const isAIPractice = (btn.doc_type || '').toLowerCase() === 'ai' && btn.practice_prompt;
+                    let el;
+                    if (isAIPractice) {
+                        el = document.createElement('div');
+                        el.className = 'adv-btn ai-practice';
+                        const promptText = btn.practice_prompt;
+                        el.addEventListener('click', function() { launchAIPractice(promptText); });
+                    } else {
+                        el = document.createElement(hasLink ? 'a' : 'div');
+                        el.className = 'adv-btn' + (hasLink ? ' has-link' : '');
+                        el.style.background = colour;
+                        if (hasLink) {
+                            el.href = btn.link;
+                            el.target = '_blank';
+                            el.rel = 'noopener';
+                            el.addEventListener('mouseover', function() { this.style.filter = 'brightness(0.85)'; });
+                            el.addEventListener('mouseout',  function() { this.style.filter = ''; });
+                        }
                     }
-                    
+
                     // Get doc type icon and high priority tag
                     const icon = docTypeIcon(btn.doc_type);
                     const hp = btn.priority === 'High' || btn.high_priority === true || btn.high_priority === 'High Priority'
                         ? '<span class="adv-hp">High priority</span>'
                         : '';
-                    
+                    const aiInstruction = isAIPractice
+                        ? '<div class="adv-btn-ai-instruction">Click to copy prompt &amp; open Claude — then paste with Ctrl+V (Windows) or &#8984;+V (Mac)</div>'
+                        : '';
+
                     el.innerHTML = `
                         <div class="adv-btn-row">
                             ${icon ? '<span class="adv-btn-icon">' + icon + '</span>' : ''}
@@ -6197,6 +6286,7 @@ You have 12 more indicators to review in 90 minutes. Create a simple tool the te
                             ${hp}
                         </div>
                         ${btn.explanation ? '<div class="adv-btn-explanation">' + parseMdLinks(btn.explanation) + '</div>' : ''}
+                        ${aiInstruction}
                     `;
                     btnsEl.appendChild(el);
                 });
@@ -7245,6 +7335,7 @@ You have 12 more indicators to review in 90 minutes. Create a simple tool the te
     }
     // ── END COACH ARFIE TUTORIAL ──────────────────────────────────────────
     </script>
+    <div id="aiCopyToast">&#10003; Prompt copied — paste with Ctrl+V in Claude</div>
     <div style="text-align: right; padding: 8px 20px; font-size: 11px; color: #b0b0b0; font-family: sans-serif;">Last updated: Apr 22, 2026</div>
 </body>
 </html>
