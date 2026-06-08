@@ -1490,6 +1490,19 @@
         }
         .adv-coming-soon { font-style: italic; color: #999; font-size: 14px; padding: 10px 0; }
 
+        /* ── Note row (doc_type = Note) ── */
+        .adv-btn-note {
+            font-size: 12.5px;
+            color: #555;
+            background: #f5f5f0;
+            border-left: 3px solid #d1c84a;
+            border-radius: 6px;
+            padding: 8px 12px;
+            margin-bottom: 6px;
+            line-height: 1.5;
+            font-style: italic;
+        }
+
         /* ── AI Practice button ── */
         .adv-btn.ai-practice {
             background: #1a1a2e !important;
@@ -3313,7 +3326,7 @@
     "popup_buttons": [
       {
         "heading": "The Goldilocks Challenge (book)",
-        "explanation": "All RFE staff should read the Goldilocks Challenge, by Dean Karlan and Mary Kay Gugerty. This is a core resource for understanding the CART framework and how it is applied at RFE. Contact your line manager for a copy of the book if you don't have one. ",
+        "explanation": "All RFE staff should read the Goldilocks Challenge, by Dean Karlan and Mary Kay Gugerty. This is a core resource for understanding the CART framework and how it is applied at RFE. Contact your line manager for a copy of the book if you don't have one.",
         "link": "",
         "doc_type": "Book",
         "learning_roadmap": "Content",
@@ -3335,14 +3348,21 @@
       },
       {
         "heading": "Goldilocks toolkit: Monitoring for Learning and Accountability",
-        "explanation": "Concise explanation of CART principles in relation to monitoring systems. Lacking good images. ",
+        "explanation": "Concise explanation of CART principles in relation to monitoring systems. Lacking good images.",
         "link": "https://poverty-action.org/sites/default/files/publications/Goldilocks-Toolkit-Monitoring-for-Learning-and-Accountability_1.pdf",
         "doc_type": "Doc",
         "learning_roadmap": "Content"
       },
       {
+        "heading": "",
+        "explanation": "Message to user:  The practice buttons will copy an AI-prompt, and take you to Coach Arfie.  When you arrive, click in the chat, paste, and carry on with the conversation.",
+        "link": "",
+        "doc_type": "Note",
+        "learning_roadmap": "Practice"
+      },
+      {
         "heading": "Conceptual Practice",
-        "explanation": "This button will copy a prompt for Coach Arfie, and open Coach Arfie in Claude. In a new chat, paste (ctrl-v) and click enter. The prompt will auto-populate.",
+        "explanation": "Have a conceptual discussion about how CART principles apply to RFE work more generally.",
         "link": "https://claude.ai/share/9c4118d9-e9a0-4267-a207-00bc746da335",
         "doc_type": "AI",
         "learning_roadmap": "Practice",
@@ -3350,7 +3370,7 @@
       },
       {
         "heading": "Practice Applying CART",
-        "explanation": "Think through how the CART principles apply to a specific product in the RFE suite. ",
+        "explanation": "Think through how the CART principles apply to a specific product in the RFE suite.",
         "link": "https://claude.ai/share/bd3d0f97-7e73-407e-89ad-124482722830",
         "doc_type": "AI",
         "learning_roadmap": "Practice",
@@ -5526,7 +5546,16 @@ function renderButtons(containerId, buttons) {
         const hasLink = btn.link && btn.link !== 'None';
         let el;
 
+        const isNote      = (btn.doc_type || '').toLowerCase().startsWith('note');
         const isAIPractice = (btn.doc_type || '').toLowerCase() === 'ai' && btn.practice_prompt;
+
+        if (isNote) {
+            const noteEl = document.createElement('div');
+            noteEl.className = 'adv-btn-note';
+            noteEl.textContent = btn.explanation || btn.heading || '';
+            container.appendChild(noteEl);
+            return;
+        }
 
         if (isSuppMel) {
             el = document.createElement('div');
@@ -6252,7 +6281,15 @@ You have 12 more indicators to review in 90 minutes. Create a simple tool the te
                 buttons.forEach(btn => {
                     if (!btn.heading) return;
                     const hasLink = btn.link && btn.link !== 'None';
+                    const isNote = (btn.doc_type || '').toLowerCase().startsWith('note');
                     const isAIPractice = (btn.doc_type || '').toLowerCase() === 'ai' && btn.practice_prompt;
+                    if (isNote) {
+                        const noteEl = document.createElement('div');
+                        noteEl.className = 'adv-btn-note';
+                        noteEl.textContent = btn.explanation || btn.heading || '';
+                        btnsEl.appendChild(noteEl);
+                        return;
+                    }
                     let el;
                     if (isAIPractice) {
                         el = document.createElement('div');
