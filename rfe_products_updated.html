@@ -3362,8 +3362,8 @@
       },
       {
         "heading": "Conceptual Practice",
-        "explanation": "Have a conceptual discussion about how CART principles apply to RFE work more generally.",
-        "link": "https://claude.ai/share/9c4118d9-e9a0-4267-a207-00bc746da335",
+        "explanation": "Have a conceptual discussion about CART principles to develop a foundation.",
+        "link": "https://claude.ai/project/0197b25f-0c03-732e-8e6e-09611d72ec16",
         "doc_type": "AI",
         "learning_roadmap": "Practice",
         "practice_prompt": "I understand your limitations. \n\nI want to learn about CART at a conceptual level. \n\nCan you facilitate a discussion to deepen my conceptual understanding, and help me apply CART more generally to RFE style work.\n\nYou can ask me if I am onboarding or seeking advanced training on CART."
@@ -3371,7 +3371,7 @@
       {
         "heading": "Practice Applying CART",
         "explanation": "Think through how the CART principles apply to a specific product in the RFE suite.",
-        "link": "https://claude.ai/share/bd3d0f97-7e73-407e-89ad-124482722830",
+        "link": "https://claude.ai/project/0197b25f-0c03-732e-8e6e-09611d72ec16",
         "doc_type": "AI",
         "learning_roadmap": "Practice",
         "practice_prompt": "I understand your limitations. \n\nI want to learn about CART under the context of a specific product. This implies that I am at an 'advanced' level, and aiming to apply CART in a real project, and that I already have some understanding of both CART and that product.\n\nCan you 1) give me a list of all the products to choose from,  2) following my choice, give me real-world scenarios in which I can practice applying CART principles --supported by your feedback and suggestions?"
@@ -3431,7 +3431,7 @@
     "popup_buttons": [
       {
         "heading": "Donor Guide: Stage Based Learning",
-        "explanation": " Enabling Stage-Based Learning: A Funder's Guide to Maximizing Impact is designed to help funders optimize learning at each stage of an intervention’s journey towards scale. This stage-based approach tailors Monitoring, Evaluation and Learning (MEL) activities to generate actionable insights for intervention improvement and future funding decisions, and reduces unnecessary reporting.",
+        "explanation": "Enabling Stage-Based Learning: A Funder's Guide to Maximizing Impact is designed to help funders optimize learning at each stage of an intervention’s journey towards scale. This stage-based approach tailors Monitoring, Evaluation and Learning (MEL) activities to generate actionable insights for intervention improvement and future funding decisions, and reduces unnecessary reporting.",
         "link": "https://poverty-action.org/stage-based-learning",
         "doc_type": "Doc",
         "learning_roadmap": "Content",
@@ -3447,7 +3447,7 @@
       },
       {
         "heading": "Path-to-Scale Implementer Focused Slide deck",
-        "explanation": "Old version of SBL under the name 'Path-to-Scale'. Includes important One Laptop per Child example. ",
+        "explanation": "Old version of SBL under the name 'Path-to-Scale'. Includes important One Laptop per Child example.",
         "link": "https://ipastorage.app.box.com/file/880652398313?s=czwy5aoxd5eeoeipu0woj7szudrclseo",
         "doc_type": "Slide deck",
         "learning_roadmap": "Content"
@@ -3460,18 +3460,27 @@
         "learning_roadmap": "Content"
       },
       {
-        "heading": "Conceptual Practice",
-        "explanation": "Have a conceptual discussion about how Stage-Based Learning principles apply to RFE work more generally.",
-        "link": "https://claude.ai/share/06c972fc-7f6c-46f8-885e-0120055dbf1b",
-        "doc_type": "AI",
+        "heading": "",
+        "explanation": "Message to user:  The practice buttons will copy an AI-prompt, and take you to Coach Arfie.  When you arrive, click in the chat, paste, and carry on with the conversation.",
+        "link": "",
+        "doc_type": "Note",
         "learning_roadmap": "Practice"
       },
       {
-        "heading": "Practice Applying CART",
-        "explanation": "Think through how the Stage-Based Learning principles apply to a specific product in the RFE suite. ",
-        "link": "https://claude.ai/share/71e4c748-6b5a-49dc-8dff-cdff4c7c1de5",
+        "heading": "Conceptual Practice",
+        "explanation": "Have a conceptual discussion about Stage-Based Learning principles to develop a foundation.",
+        "link": "https://claude.ai/project/0197b25f-0c03-732e-8e6e-09611d72ec16",
         "doc_type": "AI",
-        "learning_roadmap": "Practice"
+        "learning_roadmap": "Practice",
+        "practice_prompt": "I understand your limitations. \n\nI want to learn about Stage Based Learning at a conceptual level. \n\nCan you facilitate a discussion to deepen my conceptual understanding, and help me apply Stage Based Learning more generally to RFE style work.\n\nYou can ask me if I am onboarding or seeking advanced training on Stage Based Learning."
+      },
+      {
+        "heading": "Practice Applying CART",
+        "explanation": "Think through how the Stage-Based Learning principles apply to a specific product in the RFE suite.",
+        "link": "https://claude.ai/project/0197b25f-0c03-732e-8e6e-09611d72ec16",
+        "doc_type": "AI",
+        "learning_roadmap": "Practice",
+        "practice_prompt": "I understand your limitations. \n\nI want to learn about Stage Based Learning under the context of a specific product. This implies that I am at an 'advanced' level, and aiming to apply Stage Based Learning in a real project, and that I already have some understanding of both Stage Based Learning and that product.\n\nCan you 1) give me a list of all the products to choose from,  2) following my choice, give me real-world scenarios in which I can practice applying Stage Based Learning principles --supported by your feedback and suggestions?"
       }
     ]
   },
@@ -6420,25 +6429,48 @@ You have 12 more indicators to review in 90 minutes. Create a simple tool the te
             // Render filtered buttons
             const colour = SKILL_SECTION_COLOURS[window.currentSkillElementType] || '#5566b0';
             filteredButtons.forEach(btn => {
+                const isNote      = (btn.doc_type || '').toLowerCase().startsWith('note');
+                const isAIPractice = (btn.doc_type || '').toLowerCase() === 'ai' && btn.practice_prompt;
+
+                // Note row — plain text, no button
+                if (isNote) {
+                    if (!btn.explanation && !btn.heading) return;
+                    const noteEl = document.createElement('div');
+                    noteEl.className = 'adv-btn-note';
+                    noteEl.textContent = btn.explanation || btn.heading || '';
+                    btnsEl.appendChild(noteEl);
+                    return;
+                }
+
                 if (!btn.heading) return;
                 const hasLink = btn.link && btn.link !== 'None';
-                const el = document.createElement(hasLink ? 'a' : 'div');
-                el.className = 'adv-btn' + (hasLink ? ' has-link' : '');
-                el.style.background = colour;
-                if (hasLink) {
-                    el.href = btn.link;
-                    el.target = '_blank';
-                    el.rel = 'noopener';
-                    el.addEventListener('mouseover', function() { this.style.filter = 'brightness(0.85)'; });
-                    el.addEventListener('mouseout',  function() { this.style.filter = ''; });
+                let el;
+                if (isAIPractice) {
+                    el = document.createElement('div');
+                    el.className = 'adv-btn ai-practice';
+                    const promptText = btn.practice_prompt;
+                    el.addEventListener('click', function() { launchAIPractice(promptText); });
+                } else {
+                    el = document.createElement(hasLink ? 'a' : 'div');
+                    el.className = 'adv-btn' + (hasLink ? ' has-link' : '');
+                    el.style.background = colour;
+                    if (hasLink) {
+                        el.href = btn.link;
+                        el.target = '_blank';
+                        el.rel = 'noopener';
+                        el.addEventListener('mouseover', function() { this.style.filter = 'brightness(0.85)'; });
+                        el.addEventListener('mouseout',  function() { this.style.filter = ''; });
+                    }
                 }
-                
-                // Get doc type icon and high priority tag (same as product buttons)
+
                 const icon = docTypeIcon(btn.doc_type);
                 const hp = btn.priority === 'High' || btn.high_priority === true || btn.high_priority === 'High Priority'
                     ? '<span class="adv-hp">High priority</span>'
                     : '';
-                
+                const aiInstruction = isAIPractice
+                    ? '<div class="adv-btn-ai-instruction">Click to copy prompt &amp; open Claude — then paste with Ctrl+V (Windows) or &#8984;+V (Mac)</div>'
+                    : '';
+
                 el.innerHTML = `
                     <div class="adv-btn-row">
                         ${icon ? '<span class="adv-btn-icon">' + icon + '</span>' : ''}
@@ -6446,6 +6478,7 @@ You have 12 more indicators to review in 90 minutes. Create a simple tool the te
                         ${hp}
                     </div>
                     ${btn.explanation ? '<div class="adv-btn-explanation">' + parseMdLinks(btn.explanation) + '</div>' : ''}
+                    ${aiInstruction}
                 `;
                 btnsEl.appendChild(el);
             });
