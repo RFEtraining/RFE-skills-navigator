@@ -320,34 +320,22 @@
             grid-row: 3;
             background: #edf9fa;
             border: 1.5px dashed #5bbfc4;
-            color: #3d7c80;
-            font-size: 11px;
+            color: #2e6e72;
+            font-size: 9.5px;
+            font-style: italic;
+            font-weight: 400;
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
             text-align: center;
-            padding: 10px;
+            padding: 8px 10px;
             border-radius: 8px;
+            line-height: 1.4;
         }
-        
-        .adapt-note-title {
-            font-weight: 400;
-            margin-bottom: 8px;
-            color: #2e6e72;
-            font-size: 9px;
-            line-height: 1.45;
-            font-style: italic;
-        }
-        
-        .adapt-concepts {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4px;
-            margin-top: 6px;
-            width: 100%;
-        }
-        
+
+        .adapt-note-title { display: none; }
+        .adapt-concepts   { display: none; }
+
         .adapt-concept {
             background: white;
             padding: 3px 6px;
@@ -2600,13 +2588,7 @@
                     
                     <!-- Adapt stage explanation -->
                     <div class="adapt-note">
-                        <div class="adapt-note-title">RFE Products in the Adapt stage are the same as those in the Ideate & Refine Stages</div>
-                        <div class="adapt-concepts">
-                            <div class="adapt-concept">Prob Ident</div>
-                            <div class="adapt-concept">User Res.</div>
-                            <div class="adapt-concept">A/B Testing</div>
-                            <div class="adapt-concept">Process Eval</div>
-                        </div>
+                        Adapt stage mirrors Ideate &amp; Refine products
                     </div>
                     
                     <!-- Row 5: Cost Effectiveness Modelling spans all columns -->
