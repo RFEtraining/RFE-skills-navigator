@@ -307,7 +307,7 @@
         .problem-identification { grid-column: 1; grid-row: 2; }
         .monitoring-ta         { grid-column: 2 / 6; grid-row: 2; }
         .user-research         { grid-column: 1; grid-row: 4; }
-        .ab-testing            { grid-column: 2 / 6; grid-row: 4; }
+        .ab-testing            { grid-column: 2; grid-row: 4; }
         .cost-effectiveness-modelling { grid-column: 1 / 6; grid-row: 5; }
 
         .impact-evaluation-unavailable {
@@ -321,29 +321,42 @@
             background: #edf9fa;
             border: 1.5px dashed #5bbfc4;
             color: #2e6e72;
-            font-size: 9.5px;
-            font-style: italic;
-            font-weight: 400;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
             text-align: center;
             padding: 8px 10px;
             border-radius: 8px;
-            line-height: 1.4;
+            gap: 6px;
         }
 
-        .adapt-note-title { display: none; }
-        .adapt-concepts   { display: none; }
+        .adapt-note-title {
+            font-size: 8.5px;
+            font-style: italic;
+            font-weight: 400;
+            line-height: 1.4;
+            color: #2e6e72;
+        }
+
+        .adapt-concepts {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4px;
+            width: 100%;
+        }
 
         .adapt-concept {
             background: white;
-            padding: 3px 6px;
+            padding: 3px 5px;
             border-radius: 4px;
-            font-size: 9px;
+            font-size: 8.5px;
             font-weight: 600;
             border: 1px solid #b8e4e6;
             color: #2e6e72;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
         
         /* Non-aligned sidebar styles above */
@@ -2588,7 +2601,13 @@
                     
                     <!-- Adapt stage explanation -->
                     <div class="adapt-note">
-                        Adapt stage mirrors Ideate &amp; Refine products
+                        <div class="adapt-note-title">Also used in Adapt stage:</div>
+                        <div class="adapt-concepts">
+                            <div class="adapt-concept">Prob. Ident.</div>
+                            <div class="adapt-concept">User Research</div>
+                            <div class="adapt-concept">A/B Testing</div>
+                            <div class="adapt-concept">Process Eval.</div>
+                        </div>
                     </div>
                     
                     <!-- Row 5: Cost Effectiveness Modelling spans all columns -->
