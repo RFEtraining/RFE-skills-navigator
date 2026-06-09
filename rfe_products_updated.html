@@ -5658,17 +5658,17 @@ function docTypeIcon(docType) {
 //   priority === 'High' → "High priority" boxed badge right of title
 //   SUPP MEL CONTAINERS: clicking navigates to Skills Map and opens competency popup
 // ── AI Practice: copy prompt + open Claude ───────────────────────────────────
-function launchAIPractice(promptText) {
+function launchAIPractice(promptText, url) {
+    var destination = (url && url !== 'None' && url.trim()) ? url.trim() : 'https://claude.ai/new';
     navigator.clipboard.writeText(promptText).then(function() {
         var toast = document.getElementById('aiCopyToast');
         if (toast) {
             toast.classList.add('show');
             setTimeout(function() { toast.classList.remove('show'); }, 3000);
         }
-        window.open('https://claude.ai/new', '_blank');
+        window.open(destination, '_blank');
     }).catch(function() {
-        // Clipboard failed — still open Claude, alert user
-        window.open('https://claude.ai/new', '_blank');
+        window.open(destination, '_blank');
         alert('Could not auto-copy. Please manually copy your practice prompt.');
     });
 }
@@ -5725,7 +5725,7 @@ function renderButtons(containerId, buttons) {
             el = document.createElement('div');
             el.className = 'adv-btn ai-practice';
             const promptText = btn.practice_prompt;
-            el.addEventListener('click', function() { launchAIPractice(promptText); });
+            el.addEventListener('click', function() { launchAIPractice(promptText, btn.link); });
         } else {
             el = document.createElement(hasLink ? 'a' : 'div');
             el.className = 'adv-btn' + (hasLink ? ' has-link' : '');
@@ -6451,7 +6451,7 @@ You have 12 more indicators to review in 90 minutes. Create a simple tool the te
                         el = document.createElement('div');
                         el.className = 'adv-btn ai-practice';
                         const promptText = btn.practice_prompt;
-                        el.addEventListener('click', function() { launchAIPractice(promptText); });
+                        el.addEventListener('click', function() { launchAIPractice(promptText, btn.link); });
                     } else {
                         el = document.createElement(hasLink ? 'a' : 'div');
                         el.className = 'adv-btn' + (hasLink ? ' has-link' : '');
@@ -6596,7 +6596,7 @@ You have 12 more indicators to review in 90 minutes. Create a simple tool the te
                     el = document.createElement('div');
                     el.className = 'adv-btn ai-practice';
                     const promptText = btn.practice_prompt;
-                    el.addEventListener('click', function() { launchAIPractice(promptText); });
+                    el.addEventListener('click', function() { launchAIPractice(promptText, btn.link); });
                 } else {
                     el = document.createElement(hasLink ? 'a' : 'div');
                     el.className = 'adv-btn' + (hasLink ? ' has-link' : '');
