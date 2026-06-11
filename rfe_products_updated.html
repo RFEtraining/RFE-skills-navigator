@@ -506,15 +506,21 @@
             font-size: 13px; font-weight: 700; letter-spacing: 1.2px;
             text-transform: uppercase; color: #aaa; margin-bottom: 10px;
         }
-        .v7-chips { display: flex; flex-wrap: wrap; gap: 7px; }
+        .v7-chips {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 7px;
+        }
         .v7-chip {
             font-size: 14px; padding: 10px 14px; border-radius: 7px;
             background: #f8f8f8; border: 0.5px solid #ddd; color: #1a1a1a;
-            cursor: pointer; transition: border-color 0.15s; display: flex; flex-direction: column; gap: 4px;
+            cursor: pointer; transition: border-color 0.15s;
+            display: flex; flex-direction: column; gap: 4px;
+            width: 100%; box-sizing: border-box;
         }
         .v7-chip:hover { border-color: #185FA5; color: #185FA5; }
-        .v7-chip-title { font-size: 14px; font-weight: 600; }
-        .v7-chip-explanation { font-size: 12px; color: #666; font-weight: 400; line-height: 1.4; }
+        .v7-chip-title { font-size: 14px; font-weight: 600; white-space: normal; word-break: break-word; }
+        .v7-chip-explanation { font-size: 12px; color: #666; font-weight: 400; line-height: 1.4; white-space: normal; }
         .v7-chip:hover .v7-chip-explanation { color: #185FA5; }
 
         /* ── roadmap strip ── */
@@ -1461,6 +1467,26 @@
         .adv-subsection-title { display: none; }
         .adv-section-intro { font-size: 16px; color: #444; line-height: 1.7; margin: 0 0 16px 0; }
         .adv-section-intro p  { margin: 0 0 8px 0; }
+
+        /* ── Paragraph spacing across all popup text areas ── */
+        .v7-panel p, .v7-body p,
+        .adv-section-intro p,
+        .skill-section-body p, .skill-section-body-wrap p,
+        #productDescription p, #useCase p,
+        #skillPopupDescription p, #skillPopupWhyMattersBody p, #skillPopupHowRfeBody p,
+        #stagePopupDescription p,
+        .adv-btn-explanation p,
+        .tb-description p {
+            margin-bottom: 10px;
+            line-height: 1.7;
+        }
+        .v7-panel p:last-child, .v7-body p:last-child,
+        .skill-section-body p:last-child, .skill-section-body-wrap p:last-child,
+        #productDescription p:last-child, #useCase p:last-child,
+        #skillPopupDescription p:last-child, #skillPopupWhyMattersBody p:last-child,
+        #skillPopupHowRfeBody p:last-child, #stagePopupDescription p:last-child {
+            margin-bottom: 0;
+        }
         .adv-section-intro ul,
         .adv-section-intro ol { margin: 6px 0 8px 20px; padding: 0; }
         .adv-section-intro li { margin-bottom: 4px; }
