@@ -3842,7 +3842,8 @@
       {
         "heading": "Exception:",
         "explanation": "LPD is the foundation for all RFE products, because it creates underlying logic that supports the strategic approach to learning about how a model works.",
-        "link": ""
+        "link": "",
+        "no_link": true
       }
     ],
     "adv_content_buttons": [
@@ -5770,16 +5771,21 @@ function renderRelatedProducts(containerId, items) {
     items.forEach(item => {
         const chip = document.createElement('div');
         chip.className = 'v7-chip';
+        if (item.no_link) {
+            chip.style.cursor = 'default';
+            chip.style.opacity = '0.75';
+        } else {
+            chip.addEventListener('click', function(e) {
+                e.stopPropagation();
+                let foundId = null;
+                for (const key in popupData) {
+                    if (popupData[key].display_title === item.heading) { foundId = key; break; }
+                }
+                if (foundId) showPopup(foundId);
+                else console.warn('Related product not found:', item.heading);
+            });
+        }
         chip.innerHTML = `<div class="v7-chip-title">${item.heading}</div>${item.explanation ? '<div class="v7-chip-explanation">' + parseMdLinks(item.explanation) + '</div>' : ''}`;
-        chip.addEventListener('click', function(e) {
-            e.stopPropagation();
-            let foundId = null;
-            for (const key in popupData) {
-                if (popupData[key].display_title === item.heading) { foundId = key; break; }
-            }
-            if (foundId) showPopup(foundId);
-            else console.warn('Related product not found:', item.heading);
-        });
         container.appendChild(chip);
     });
 }
