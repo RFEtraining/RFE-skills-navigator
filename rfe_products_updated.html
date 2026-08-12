@@ -3927,21 +3927,35 @@
         "high_priority": true
       },
       {
-        "heading": "Compiled slide deck for LPD product workshops",
-        "explanation": "Comprehensive slide deck with slides for all workshops in one",
-        "link": "https://ipastorage.app.box.com/file/1267914673996?s=a9tmck2mubqc14jjszq77a6ae7f7htwq",
-        "doc_type": "Slide deck"
-      },
-      {
         "heading": "Deep Dive LPD Product training",
         "explanation": "Recording from onboarding call for the LPD product.",
         "link": "https://ipastorage.app.box.com/file/1755646377080?s=5djhjhpxvildhlqfpal0texnkn18k8vc",
-        "doc_type": "Video"
+        "doc_type": "Video",
+        "high_priority": true
       },
       {
-        "heading": "Illustrative LPD Guide for Plan Norway",
-        "explanation": "Strong brief on the LPD product with screenshots from slide decks",
-        "link": "https://ipastorage.app.box.com/file/1722979475162?s=pz7pphh42h0bxeu1tnk5bf6oyjrrc60o",
+        "heading": "Compiled slide deck for LPD product workshops",
+        "explanation": "Comprehensive slide deck with slides for all workshops in one",
+        "link": "https://ipastorage.app.box.com/file/1267914673996?s=a9tmck2mubqc14jjszq77a6ae7f7htwq",
+        "doc_type": "Slide deck",
+        "high_priority": true
+      },
+      {
+        "heading": "Template MEL plan",
+        "explanation": "Familiarize yourself with some of the fields that are likely to feature in RFE MEL plans",
+        "link": "https://ipastorage.app.box.com/file/1307232767960",
+        "doc_type": "Spreadsheet"
+      },
+      {
+        "heading": "Food for Education RFE work",
+        "explanation": "Exemplary ToC, MEL plan, and workshop slides from our 2025 project",
+        "link": "https://ipastorage.app.box.com/folder/319162984038",
+        "doc_type": "Folder"
+      },
+      {
+        "heading": "Streamlining the LPD",
+        "explanation": "Additional insights on how to deliver the LPD when partners are unable to commit to the full 4 workshop sessions.",
+        "link": "https://ipastorage.app.box.com/file/1655131295760?s=vvte1vsb0nzpe5fcwmp1ufrgsmjmhc89",
         "doc_type": "Doc"
       }
     ],
@@ -3951,9 +3965,22 @@
         "explanation": "Getting additional conceptual understanding of indicator design, with an RFE-lens focus on monitoring, can be a big help. This is a skill which can be especially tricky, and RFE staff often have to give immediate feedback to clients during the Monitoring Indicators workshop.",
         "link": "https://ipastorage.app.box.com/file/2182945969965",
         "doc_type": null
+      },
+      {
+        "heading": "Have a conceptual conversation with Arfie about LPD",
+        "explanation": "Have a conceptual discussion about LPD and how it addresses RFE objectives and principles of learning.",
+        "link": "https://claude.ai/project/0197b25f-0c03-732e-8e6e-09611d72ec16",
+        "doc_type": "AI",
+        "practice_prompt": "I understand your limitations. \n\nI want to learn about the LPD product at a conceptual level. \n\nCan you facilitate a discussion to deepen my conceptual understanding, and help me understand how LPD addresses key RFE objectives and principles?\n\nYou can start by asking what I know about LPD."
       }
     ],
     "adv_practice_buttons": [
+      {
+        "heading": "[UNDER CONSTRUCTION] Good Examples practice",
+        "explanation": "Analyze and reflect upon strong examples of a ToC, indicators, and data use plan.",
+        "link": "https://ipastorage.app.box.com/integrations/googledss/openGoogleEditor?fileId=2404653333164&trackingId=3&csrfToken=7916b5f2ca3c5f9b32f55d76f5f5ac2e59038f8b079e3f80b1a3afa3fb08b923#slide=id.g3f6eb61d674_0_32",
+        "doc_type": "Doc"
+      },
       {
         "heading": "Common Scenarios",
         "explanation": "LPD scenarios are linked to the common challenges in the product overview document. Try out these reflection tasks, and follow up with the product owner or Arfie to get feedback.",
@@ -3976,9 +4003,22 @@
         "link": "https://claude.ai/project/0197b25f-0c03-732e-8e6e-09611d72ec16",
         "doc_type": "AI",
         "high_priority": true
+      },
+      {
+        "heading": "MELgpt",
+        "explanation": "Head to RFE's Theory of Change bot and check any of your LPD ideas with the AI.",
+        "link": "https://claude.ai/project/943ab2c6-b4b2-4686-8fbc-00647d3736c3",
+        "doc_type": "AI",
+        "high_priority": true
       }
     ],
     "other_resources_buttons": [
+      {
+        "heading": "Illustrative LPD Guide for Plan Norway",
+        "explanation": "Strong brief on the LPD product with screenshots from slide decks",
+        "link": "https://ipastorage.app.box.com/file/1722979475162?s=pz7pphh42h0bxeu1tnk5bf6oyjrrc60o",
+        "doc_type": "Doc"
+      },
       {
         "heading": "JPAL",
         "explanation": "Theory of Change and Measurement slide deck",
@@ -5899,8 +5939,9 @@ function renderButtons(containerId, buttons) {
         const hasLink = btn.link && btn.link !== 'None';
         let el;
 
-        const isNote      = (btn.doc_type || '').toLowerCase().startsWith('note');
-        const isAIPractice = (btn.doc_type || '').toLowerCase() === 'ai' && btn.practice_prompt;
+        const isNote       = (btn.doc_type || '').toLowerCase().startsWith('note');
+        const isAI         = (btn.doc_type || '').toLowerCase() === 'ai';
+        const isAIPractice = isAI && btn.practice_prompt;
 
         if (isNote) {
             const noteEl = document.createElement('div');
@@ -5910,7 +5951,7 @@ function renderButtons(containerId, buttons) {
             return;
         }
 
-        if (isSuppMel) {
+        if (isSuppMel && !isAI) {
             el = document.createElement('div');
             el.className = 'adv-btn has-link';
             el.style.cursor = 'pointer';
@@ -5918,11 +5959,18 @@ function renderButtons(containerId, buttons) {
             el.addEventListener('click', function() { navigateToSkillCompetency(btn.heading); });
             el.addEventListener('mouseover', function() { this.style.opacity = '0.88'; });
             el.addEventListener('mouseout',  function() { this.style.opacity = ''; });
-        } else if (isAIPractice) {
+        } else if (isAI) {
             el = document.createElement('div');
             el.className = 'adv-btn ai-practice';
-            const promptText = btn.practice_prompt;
-            el.addEventListener('click', function() { launchAIPractice(promptText, btn.link); });
+            const promptText = btn.practice_prompt || null;
+            const linkUrl    = btn.link || null;
+            el.addEventListener('click', function() {
+                if (promptText) {
+                    launchAIPractice(promptText, linkUrl);
+                } else if (linkUrl) {
+                    window.open(linkUrl, '_blank');
+                }
+            });
         } else {
             el = document.createElement(hasLink ? 'a' : 'div');
             el.className = 'adv-btn' + (hasLink ? ' has-link' : '');
@@ -5936,6 +5984,8 @@ function renderButtons(containerId, buttons) {
 
         const aiInstruction = isAIPractice
             ? '<div class="adv-btn-ai-instruction">Click to copy prompt &amp; open Claude — then paste with Ctrl+V (Windows) or &#8984;+V (Mac)</div>'
+            : isAI
+            ? '<div class="adv-btn-ai-instruction">Click to open in Claude</div>'
             : '';
 
         el.innerHTML = `
